@@ -21,9 +21,9 @@ public partial class Sabertooth : AnimalEntity
 		_brain = new CombatAI(this);
 	}
 
-	public override int GetNearbySound() => 344;
-	public override int GetAttackSound() => 343;
-	public override int GetDeathSound() => 345;
+	public override int GetNearbySound() => 347;
+	public override int GetAttackSound() => 346;
+	public override int GetDeathSound() => 348;
 
 	public override ItemEntity OnCorpseTanned()
 	{

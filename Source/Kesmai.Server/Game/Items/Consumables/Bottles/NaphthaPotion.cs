@@ -7,7 +7,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Game;
 
-public partial class NaphthaPotion : Bottle
+public class NaphthaPotion : Bottle
 {
 	private static ConsumableNaphtha content = new ConsumableNaphtha();
 		
@@ -21,6 +21,13 @@ public partial class NaphthaPotion : Bottle
 	/// Initializes a new instance of the <see cref="NaphthaPotion"/> class.
 	/// </summary>
 	public NaphthaPotion() : base(209)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="NaphthaPotion"/> class.
+	/// </summary>
+	public NaphthaPotion(Serial serial) : base(serial)
 	{
 	}
 
@@ -61,6 +68,30 @@ public partial class NaphthaPotion : Bottle
 	
 		entity.Target = new InternalTarget(this);
 		return true;
+	}
+		
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 		
 	private class InternalTarget : Target

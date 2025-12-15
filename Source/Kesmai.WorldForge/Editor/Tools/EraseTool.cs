@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using CommonServiceLocator;
 using DigitalRune.Game.Input;
+using Kesmai.WorldForge.Editor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -19,7 +21,24 @@ public class EraseTool : ComponentTool
 	{
 	}
 
-	public override void OnHandleInput(PresentationTarget target, IInputService inputService)
+	public override bool OnRender(SegmentTile tile, TerrainLayer layer, out Color overrideColor)
+	{
+		if (base.OnRender(tile, layer, out overrideColor))
+			return true;
+		
+		if (_tileUnderMouse != tile)
+			return false;
+		
+		if (_componentUnderMouse != null && _componentUnderMouse.GetRenders().Any(t => t.Terrain.Contains(layer)))
+		{
+			overrideColor = Color.Red;
+			return true;
+		}
+
+		return false;
+	}
+
+	public override void OnHandleInput(WorldPresentationTarget target, IInputService inputService)
 	{
 		base.OnHandleInput(target, inputService);
 			
@@ -39,11 +58,11 @@ public class EraseTool : ComponentTool
 			
 		if (!_isAltDown && !_isShiftDown)
 		{
-			_tileUnderMouse.Components.Remove(_componentUnderMouse);
+			_tileUnderMouse.Providers.Remove(_componentUnderMouse);
 		}
 		else if (_isAltDown)
 		{
-			_tileUnderMouse.Components.Clear();
+			_tileUnderMouse.Providers.Clear();
 		}
 	}
 		

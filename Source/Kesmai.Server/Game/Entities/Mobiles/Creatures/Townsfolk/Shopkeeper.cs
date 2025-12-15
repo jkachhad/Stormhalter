@@ -11,7 +11,6 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-[WorldForge]
 public partial class StockEntry
 {
 	public Func<ItemEntity> Create { get; set; }
@@ -313,25 +312,21 @@ public partial class Shopkeeper : VendorEntity
 	{
 	}
 
-	[WorldForge]
 	public void Stock<T>(string name, int basePrice, int quantity = 1) where T : ItemEntity, new()
 	{
 		Stock(name, () => new T(), basePrice, default, quantity);
 	}
 
-	[WorldForge]
 	public void Stock(string name, Func<ItemEntity> create, int basePrice, Action<PlayerEntity, ItemEntity> purchased = default, int quantity = 1)
 	{
 		Stock(new StockEntry(name, create, basePrice, quantity, purchased));
 	}
 
-	[WorldForge]
 	public void Stock(StockEntry entry)
 	{
 		_stock.Add(entry);
 	}
 
-	[WorldForge]
 	public void RestockAll(bool maximum = false)
 	{
 		foreach (var stock in _stock)
@@ -346,7 +341,6 @@ public partial class Shopkeeper : VendorEntity
 		}
 	}
 
-	[WorldForge]
 	public void Restock()
 	{
 		var stocks = _stock.Where(s => !s.IsFull).ToList();
@@ -359,8 +353,7 @@ public partial class Shopkeeper : VendorEntity
 		if (stock != null)
 			Restock(stock);
 	}
-		
-	[WorldForge]
+
 	public void Restock(StockEntry stock)
 	{
 		if (!stock.IsFull && stock.AllowRestock)

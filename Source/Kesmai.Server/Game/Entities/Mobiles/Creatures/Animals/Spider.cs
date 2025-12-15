@@ -20,9 +20,9 @@ public partial class Spider : AnimalEntity
 		_brain = new CombatAI(this);
 	}
 
-	public override int GetNearbySound() => 241;
-	public override int GetAttackSound() => 242;
-	public override int GetDeathSound() => 243;
+	public override int GetNearbySound() => 244;
+	public override int GetAttackSound() => 245;
+	public override int GetDeathSound() => 246;
 		
 	public override ItemEntity OnCorpseTanned()
 	{

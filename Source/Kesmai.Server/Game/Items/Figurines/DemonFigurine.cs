@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class DemonFigurine : ItemEntity, ITreasure
+public class DemonFigurine : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;
@@ -19,7 +19,6 @@ public partial class DemonFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DemonFigurine"/> class.
 	/// </summary>
-	[WorldForge]
 	public DemonFigurine() : base(376)
 	{
 	}

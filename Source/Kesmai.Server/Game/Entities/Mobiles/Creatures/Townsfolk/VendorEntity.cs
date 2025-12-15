@@ -7,16 +7,12 @@ namespace Kesmai.Server.Game;
 
 public partial class VendorEntity : Humanoid
 {
-	[WorldForge]
 	protected static Regex _sell = new Regex(@"^sell\s([\w\s]*?)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		
-	[WorldForge]
 	protected static Regex _craft = new Regex(@"^craft\s(\w*?)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		
-	[WorldForge]
 	protected List<Point2D> _counters;
 
-	[WorldForge]
 	public List<Point2D> Counters
 	{
 		get => _counters;
@@ -61,14 +57,12 @@ public partial class VendorEntity : Humanoid
 		}
 	}
 
-	[WorldForge]
 	public void AddCounter(Point2D point)
 	{
 		if (!_counters.Contains(point))
 			_counters.Add(point);
 	}
 
-	[WorldForge]
 	public bool AtCounter(MobileEntity entity, out Point2D counter)
 	{
 		counter = default(Point2D);

@@ -1,180 +1,173 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
-using System.Windows;
+using System.Linq;
 using System.Xml.Linq;
-using DigitalRune.Game.UI.Controls;
-using DigitalRune.Mathematics.Algebra;
 using CommunityToolkit.Mvvm.ComponentModel;
-using DigitalRune.Game.UI;
+using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.UI.Documents;
+using Kesmai.WorldForge.Windows;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Models;
 
-public abstract class TerrainComponent : ObservableObject
+public abstract class TerrainComponent : ObservableObject, IComponentProvider
 {
-	#region Static
+    #region Static
 
-	private static Color _defaultColor = Color.White;
+    private static Color _defaultColor = Color.White;
 
-	#endregion
+    #endregion
+    public Guid Id { get; } = Guid.NewGuid();
 
-	#region Fields
+    #region Fields
 
-	#endregion
+    #endregion
 
-	#region Properties and Events
+    #region Properties and Events
 
-	/// <summary>
-	/// Gets the name descriptor for this component. This properly should not be closed or serialized.
-	/// It's primarily internal for tooltips.
-	/// </summary>
-	[Browsable(false)]
-	public string Name { get; set; } = "(unknown)";
+    /// <summary>
+    /// Gets the name descriptor for this component. This properly should not be closed or serialized.
+    /// It's primarily internal for tooltips.
+    /// </summary>
+    [Browsable( false )]
+    public string Name { get; set; } = "(unknown)";
 
-	/// <summary>
-	/// Gets or sets the color.
-	/// </summary>
-	[Browsable(true)]
-	public Color Color { get; set; }
+    /// <summary>
+    /// Gets or sets the color.
+    /// </summary>
+    [Browsable( true )]
+    public Color Color { get; set; }
 
-	/// <summary>
-	/// Gets or sets a comment
-	/// </summary>
-	[Browsable(true)]
-	public String Comment { get; set; }
+    /// <summary>
+    /// Gets or sets a comment
+    /// </summary>
+    [Browsable( true )]
+    public String Comment { get; set; }
 
-	#endregion
+    public bool IsEditable => true;
 
-	#region Constructors and Cleanup
+    #endregion
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="TerrainComponent"/> class.
-	/// </summary>
-	protected TerrainComponent()
-	{
-		Color = _defaultColor;
-	}
-	    
-	protected TerrainComponent(XElement element)
-	{
-		/* The components palette includes a name attribute for the purposes of describing components in the
+    #region Constructors and Cleanup
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TerrainComponent"/> class.
+    /// </summary>
+    protected TerrainComponent()
+    {
+        Color = _defaultColor;
+    }
+
+    protected TerrainComponent( XElement element )
+    {
+        /* The components palette includes a name attribute for the purposes of describing components in the
 		 * editor. It it not serialized. */
-		var nameAttribute = element.Attribute("name");
+        var nameAttribute = element.Attribute( "name" );
 
-		if (nameAttribute != null)
-			Name = nameAttribute.Value;
-		    
-		var colorElement = element.Element("color");
+        if( nameAttribute != null )
+            Name = nameAttribute.Value;
 
-		if (colorElement != null)
-		{
-			var colorR = (int)colorElement.Attribute("r");
-			var colorG = (int)colorElement.Attribute("g");
-			var colorB = (int)colorElement.Attribute("b");
-			var colorA = (int)colorElement.Attribute("a");
+        var colorElement = element.Element( "color" );
 
-			Color = new Color(colorR, colorG, colorB, colorA);
-		}
-		else
-		{
-			Color = _defaultColor;
-		}
+        if( colorElement != null )
+        {
+            var colorR = (int)colorElement.Attribute( "r" );
+            var colorG = (int)colorElement.Attribute( "g" );
+            var colorB = (int)colorElement.Attribute( "b" );
+            var colorA = (int)colorElement.Attribute( "a" );
 
-		var commentElement = element.Element("comment");
-		if (commentElement != null)
-		{
-			Comment = commentElement.Value;
-		}
-	}
+            Color = new Color( colorR, colorG, colorB, colorA );
+        }
+        else
+        {
+            Color = _defaultColor;
+        }
 
-	#endregion
+        var commentElement = element.Element( "comment" );
+        if( commentElement != null )
+        {
+            Comment = commentElement.Value;
+        }
+    }
 
-	#region Methods
-		
-	/// <summary>
-	/// Gets an XML element that describes this component.
-	/// </summary>
-	public virtual XElement GetXElement()
-	{
-		var element = new XElement("component");
+    #endregion
 
-		element.Add(new XAttribute("type", GetTypeAlias()));
+    #region Methods
+    
+    /// <summary>
+    /// Gets an XML element that describes this component.
+    /// </summary>
+    public virtual XElement GetSerializingElement()
+    {
+        var element = new XElement("component");
 
-		if (Color != Color.White)
-		{
-			element.Add(new XElement("color",
-				new XAttribute("r", Color.R), new XAttribute("g", Color.G), new XAttribute("b", Color.B),
-				new XAttribute("a", Color.A)
-			));
-		}
-		if (!String.IsNullOrWhiteSpace(Comment))
-		{
-			element.Add(new XElement("comment", Comment));
-		}
+        element.Add(new XAttribute("type", GetTypeAlias()));
 
+        if (Color != Color.White)
+        {
+            element.Add(new XElement("color",
+                new XAttribute("r", Color.R), new XAttribute("g", Color.G), new XAttribute("b", Color.B),
+                new XAttribute("a", Color.A)
+            ));
+        }
 
-		return element;
-	}
+        if (!String.IsNullOrWhiteSpace(Comment))
+        {
+            element.Add(new XElement("comment", Comment));
+        }
 
-	protected virtual string GetTypeAlias()
-	{
-		return GetType().Name;
-	}
-		
-	/// <summary>
-	/// Gets the rendered terrain.
-	/// </summary>
-	public virtual IEnumerable<ComponentRender> GetTerrain()
-	{
-		yield break;
-	}
-		
-	public void SetColor(int r, int g, int b)
-	{
-		Color = new Color(r, g, b);
-	}
-	    
-	public void SetColor(int r, int g, int b, int a)
-	{
-		Color = new Color(r, g, b, a);
-	}
+        return element;
+    }
 
-	public abstract TerrainComponent Clone();
+    public XElement GetReferencingElement() => GetSerializingElement();
 
-	public virtual IEnumerable<Button> GetInspectorActions()
-	{
-		var templateButton = new Button()
-		{
-			Content = new TextBlock()
-			{
-				Foreground = Color.OrangeRed, Stroke = Color.Black,
-				FontStyle = MSDFStyle.Outline,
+    protected virtual string GetTypeAlias()
+    {
+        return GetType().Name;
+    }
 
-				Font = "Tahoma", FontSize = 10,
-				Text = "Template",
+    public void SetColor( int r, int g, int b )
+    {
+        Color = new Color( r, g, b );
+    }
 
-				Margin = new Vector4F(3, 3, 3, 3)
-			}
-		};
-			
-		templateButton.Click += (o, args) =>
-		{
-			var element = GetXElement();
-			var typeAttribute = element.Attribute("type");
+    public void SetColor( int r, int g, int b, int a )
+    {
+        Color = new Color( r, g, b, a );
+    }
 
-			if (typeAttribute != null)
-			{
-				element.Name = typeAttribute.Value;
-				typeAttribute.Remove();
-			}
+    public abstract IComponentProvider Clone();
 
-			Clipboard.SetText(element.ToString());
-		};
+    #endregion
 
-		yield return templateButton;
-	}
+    public void AddComponent(ObservableCollection<IComponentProvider> collection)
+    {
+        // create a clone of this component and add it to the tile.
+        collection.Add(Clone());
+    }
 
-	#endregion
+    public void RemoveComponent(ObservableCollection<IComponentProvider> collection)
+    {
+        // remove this specific component.
+        collection.Remove(this);
+    }
+    
+    public IEnumerable<IComponentProvider> GetComponents()
+    {
+        yield return this;
+    }
+    
+    public IEnumerable<ComponentRender> GetRenders(int mx, int my) => GetRenders();
+
+    public virtual IEnumerable<ComponentRender> GetRenders()
+    {
+        yield break;
+    }
+    
+    public ComponentFrame GetComponentFrame()
+    {
+        return new TerrainComponentFrame(this);
+    }
 }

@@ -9,12 +9,11 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
+public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 {
 	private int _chargesCurrent;
 	private int _chargesMax;
 
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesCurrent
 	{
@@ -22,7 +21,6 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 		set => _chargesCurrent = value.Clamp(0, _chargesMax);
 	}
 		
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{
@@ -55,19 +53,28 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 		_chargesCurrent = charges;
 		_chargesMax = charges;
 	}
-
-	protected override bool OnEquip(MobileEntity entity)
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="FireIceProtectionAmulet"/> class.
+	/// </summary>
+	public FireIceProtectionAmulet(Serial serial) : base(serial)
 	{
-		if (!base.OnEquip(entity))
-			return false;
-			
+	}
+
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
+	{
+		base.OnActivateBonus(entity);
+
 		if (_chargesCurrent > 0)
 		{
 			if (!entity.GetStatus(typeof(FireProtectionStatus), out var fireStatus))
 			{
 				fireStatus = new FireProtectionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 43 }
+					Inscription = new SpellInscription { SpellId = 43 }
 				};
 				fireStatus.AddSource(new ItemSource(this));
 
@@ -82,7 +89,7 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 			{
 				iceStatus = new IceProtectionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 42 }
+					Inscription = new SpellInscription { SpellId = 42 }
 				};
 				iceStatus.AddSource(new ItemSource(this));
 
@@ -93,22 +100,20 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 				iceStatus.AddSource(new ItemSource(this));
 			}
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
+		base.OnInactivateBonus(entity);
 
 		if (entity.GetStatus(typeof(FireProtectionStatus), out var fireStatus))
 			fireStatus.RemoveSource(this);
 			
 		if (entity.GetStatus(typeof(IceProtectionStatus), out var iceStatus))
 			iceStatus.RemoveSource(this);
-
-		return true;
 	}
 		
 	public override void OnStrip(Corpse corpse)
@@ -130,5 +135,42 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250050)); /* The amulet contains the spell of Protection from Fire and Ice. */
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)2); /* version */
+			
+		writer.Write(_chargesMax);
+		writer.Write(_chargesCurrent);
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 2:
+			{
+				_chargesMax = reader.ReadInt32();
+				goto case 1;
+			}
+			case 1:
+			{
+				_chargesCurrent = reader.ReadInt32();
+				break;
+			}
+		}
 	}
 }

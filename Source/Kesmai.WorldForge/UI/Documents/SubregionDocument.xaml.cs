@@ -1,130 +1,93 @@
 using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml.Linq;
-using Kesmai.WorldForge.Editor;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
+using Kesmai.WorldForge.Editor;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
 public partial class SubregionDocument : UserControl
 {
+	private SubregionViewModel? _viewModel;
+	
 	public SubregionDocument()
 	{
 		InitializeComponent();
-			
-		WeakReferenceMessenger.Default.Register<SubregionDocument, SubregionViewModel.SelectedSubregionChangedMessage>
-		(this, (r, m) => {
-			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-			var segment = segmentRequest.Response;
 
-			var subregion = m.Value;
+		DataContextChanged += OnDataContextChanged;
+    }
 
-			if (subregion != null)
-			{
-				_presenter.Region = segment.GetRegion(subregion.Region);
-				_presenter.SetSubregion(subregion);
-			}
-		});
+	private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+	{
+		if (_viewModel != null)
+			_viewModel.PropertyChanged -= OnViewModelPropertyChanged;
 
-		WeakReferenceMessenger.Default.Register<SubregionDocument, UnregisterEvents>(this,
-			(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
+		_viewModel = e.NewValue as SubregionViewModel;
+
+		if (_viewModel != null)
+			_viewModel.PropertyChanged += OnViewModelPropertyChanged;
+
+		UpdatePresenter();
+	}
+
+	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		if (e.PropertyName == nameof(SubregionViewModel.Subregion) || e.PropertyName == nameof(SubregionViewModel.Region))
+		{
+			UpdatePresenter();
+		}
+	}
+
+	private void UpdatePresenter()
+	{
+		if (_presenter == null || _viewModel == null || _viewModel.Subregion == null || _viewModel.Region == null)
+			return;
+
+		_presenter.Region = _viewModel.Region;
+		_presenter.Subregion = _viewModel.Subregion;
+		_presenter.SetSubregion(_viewModel.Subregion);
+
+		var initialBounds = _viewModel.Subregion.Rectangles.FirstOrDefault();
+
+		if (initialBounds != null)
+		{
+			_presenter.Bounds = initialBounds;
+			_presenter.SetBounds(initialBounds);
+		}
+	}
+
+	private void RectanglesSelectionChanged(object sender, SelectionChangedEventArgs args)
+	{
+		var selectedBounds = args.AddedItems.OfType<SegmentBounds>().FirstOrDefault();
+
+		if (selectedBounds is null && sender is DataGrid grid)
+			selectedBounds = grid.SelectedItem as SegmentBounds;
+
+		if (selectedBounds is null || !selectedBounds.IsValid)
+			return;
+
+		_presenter.SetBounds(selectedBounds);
 	}
 }
 
 public class SubregionViewModel : ObservableRecipient
 {
-	public class SelectedSubregionChangedMessage : ValueChangedMessage<SegmentSubregion>
-	{
-		public SelectedSubregionChangedMessage(SegmentSubregion value) : base(value)
-		{
-		}
-	}
-		
-	private int _newSubregionCount = 1;
-		
+	private SegmentSubregion? _subregion;
+	private SegmentRegion? _region;
+
 	public string Name => "(Subregions)";
-		
-	private Segment _segment;
-	private SegmentSubregion _selectedSubregion;
-		
-	public SegmentSubregion SelectedSubregion
+
+	public SegmentSubregion? Subregion
 	{
-		get => _selectedSubregion;
-		set
-		{
-			SetProperty(ref _selectedSubregion, value, true);
-					
-			if (value != null)
-				WeakReferenceMessenger.Default.Send(new SelectedSubregionChangedMessage(value));
-		}
-	}
-		
-	public SegmentSubregions Subregions => _segment.Subregions;
-		
-	public RelayCommand AddSubregionCommand { get; private set; }
-	public RelayCommand<SegmentSubregion> RemoveSubregionCommand { get; private set; }
-
-	public RelayCommand ImportSubregionCommand { get; private set; }
-	public RelayCommand<SegmentSubregion> ExportSubregionCommand { get; private set; }
-
-	public SubregionViewModel(Segment segment)
-	{
-		_segment = segment ?? throw new ArgumentNullException(nameof(segment));
-			
-		AddSubregionCommand = new RelayCommand(AddSubregion);
-			
-		RemoveSubregionCommand = new RelayCommand<SegmentSubregion>(RemoveSubregion, 
-			(location) => SelectedSubregion != null);
-		RemoveSubregionCommand.DependsOn(() => SelectedSubregion);
-
-		ImportSubregionCommand = new RelayCommand(ImportSubregion);
-
-		ExportSubregionCommand = new RelayCommand<SegmentSubregion>(ExportSubregion,
-			(location) => SelectedSubregion != null);
-		ExportSubregionCommand.DependsOn(() => SelectedSubregion);
-	}
-		
-	private void AddSubregion()
-	{
-		var newSubregion = new SegmentSubregion()
-		{
-			Name = $"Subregion {_newSubregionCount++}"
-		};
-			
-		Subregions.Add(newSubregion);
-		SelectedSubregion = newSubregion;
+		get => _subregion;
+		set => SetProperty(ref _subregion, value);
 	}
 
-	private void RemoveSubregion(SegmentSubregion subregion)
+	public SegmentRegion? Region
 	{
-		var result = MessageBox.Show($"Are you sure with to delete subregion '{subregion.Name}'?",
-			"Warning", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-		if (result != MessageBoxResult.No)
-			Subregions.Remove(subregion);
-	}
-
-	private void ImportSubregion()
-	{
-		XDocument clipboard = null;
-		try
-		{
-			clipboard = XDocument.Parse(Clipboard.GetText());
-		}
-		catch { }
-		if (clipboard is null || clipboard.Root.Name.ToString() != "subregion")
-			return;
-
-		var newSubregion = new SegmentSubregion(clipboard.Root);
-		Subregions.Add(newSubregion);
-	}
-
-	private void ExportSubregion(SegmentSubregion subregion)
-	{
-		Clipboard.SetText(subregion.GetXElement().ToString());
+		get => _region;
+		set => SetProperty(ref _region, value);
 	}
 }

@@ -32,5 +32,5 @@ public partial class FireElemental : CreatureEntity
 	//TODO: check if there's a better sound for this guy: Using Water Elemental stats for now.
 	public override int GetNearbySound() => 69;
 	public override int GetAttackSound() => 69;
-	public override int GetDeathSound() => 224;
+	public override int GetDeathSound() => 226;
 }

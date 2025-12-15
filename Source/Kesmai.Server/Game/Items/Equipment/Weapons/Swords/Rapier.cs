@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class Rapier : Sword
+public class Rapier : Sword
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000071;
@@ -30,6 +30,9 @@ public partial class Rapier : Sword
 
 	/// <inheritdoc />
 	public override WeaponFlags Flags => WeaponFlags.Piercing;
+	
+	/// <inheritdoc />
+	public override int AttackSound => 45;
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Rapier"/> class.
@@ -44,6 +47,13 @@ public partial class Rapier : Sword
 	public Rapier(int rapierId) : base(rapierId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Rapier"/> class.
+	/// </summary>
+	public Rapier(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -52,5 +62,29 @@ public partial class Rapier : Sword
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250012)); /* The rapier appears quite ordinary. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

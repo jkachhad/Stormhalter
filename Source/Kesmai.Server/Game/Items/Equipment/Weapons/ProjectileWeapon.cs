@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class ProjectileWeapon : Weapon
+public abstract class ProjectileWeapon : Weapon
 {
 	private bool _isNocked;
 		
@@ -55,6 +55,13 @@ public abstract partial class ProjectileWeapon : Weapon
 	protected ProjectileWeapon(int projectileWeaponID) : base(projectileWeaponID)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ProjectileWeapon"/> class.
+	/// </summary>
+	protected ProjectileWeapon(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override ActionType GetAction()
@@ -66,7 +73,7 @@ public abstract partial class ProjectileWeapon : Weapon
 
 		return base.GetAction();
 	}
-		
+
 	/// <inheritdoc />
 	public override bool HandleInteraction(MobileEntity entity, ActionType action)
 	{
@@ -119,12 +126,45 @@ public abstract partial class ProjectileWeapon : Weapon
 	{
 		IsNocked = false;
 	}
-		
+
 	/* Projectile weapons take two turns to use. Once to Nock, and the second to shoot.\
 	 * The skill gain should be double. */
+
 	public override double GetSkillMultiplier()
 	{
 		return 2.0;
+	}
+
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+
+		writer.Write(IsNocked);
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				IsNocked = reader.ReadBoolean();
+
+				break;
+			}
+		}
 	}
 }
 

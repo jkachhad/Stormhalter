@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Xml;
 using System.Xml.Linq;
 using CommonServiceLocator;
-using Ionic.Zlib;
 using XNA = Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Editor;
@@ -67,7 +68,7 @@ public class ClipboardManager
 					if (tile != null)
 					{
 						binaryWriter.Write((bool)true);
-						binaryWriter.Write((string)tile.GetXElement().ToString());
+						binaryWriter.Write((string)tile.GetSerializingElement().ToString());
 					}
 					else
 					{
@@ -165,43 +166,60 @@ public class ClipboardManager
 		var mx = ox; //current tile in paste operation
 		var my = oy;
 
-		while (cx <= maxx && cy <= maxy)
+        var stopwatch = Stopwatch.StartNew();
+        while (cx <= maxx && cy <= maxy)
 		{
-			//paste the buffer, but respect the right and bottom edges
-			if (Clipboard.GetDataObject() is DataObject data && data.GetDataPresent("MemoryStream")
-			                                                 && data.GetData("MemoryStream") is MemoryStream stream)
-			{
-				stream.Position = 0;
-				using (var reader = new BinaryReader(stream))
+            //paste the buffer, but respect the right and bottom edges
+            try
+            {
+                if (stopwatch.Elapsed.TotalSeconds > 5)
+					break;
+				if (Clipboard.GetDataObject() is DataObject data && data.GetDataPresent("MemoryStream")
+							  && data.GetData("MemoryStream") is MemoryStream stream)
 				{
-					while (stream.Position < stream.Length)
+					stream.Position = 0;
+					using (var reader = new BinaryReader(stream))
 					{
-						
-						var x = reader.ReadInt32();
-						var y = reader.ReadInt32();
-						var valid = reader.ReadBoolean();
-
-						if (!valid)
-							continue;
-
-						var tileData = reader.ReadString();
-						var tileElement = XElement.Parse(tileData);
-
-						mx = cx + x;
-						my = cy + y;
-
-						if (mx <= maxx && my <= maxy)
+						while (stream.Position < stream.Length)
 						{
-							tileElement.Add(new XAttribute("x", mx));
-							tileElement.Add(new XAttribute("y", my));
+							if (stopwatch.Elapsed.TotalSeconds > 5)
+								break;
 
-							region.SetTile(mx, my, new SegmentTile(tileElement));
+							var x = reader.ReadInt32();
+							var y = reader.ReadInt32();
+							var valid = reader.ReadBoolean();
+
+							if (!valid)
+								continue;
+
+							var tileData = reader.ReadString();
+							var tileElement = XElement.Parse(tileData);
+
+							mx = cx + x;
+							my = cy + y;
+
+							if (mx <= maxx && my <= maxy)
+							{
+								tileElement.Add(new XAttribute("x", mx));
+								tileElement.Add(new XAttribute("y", my));
+
+								region.SetTile(mx, my, new SegmentTile(tileElement));
+							}
 						}
 					}
 				}
+				else
+				{
+					break;
+				}
 			}
-			if (mx<maxx) { cx = mx + 1; } // if there's space to the right, move our target and run again
-			else { cx = ox;cy = my + 1; } // if we've reached the end horizontally, move down and return to origin x. If this moves us below our selection, the loop will stop.
+			catch (Exception ex)
+            {
+                // Optionally log or handle the exception as needed
+                System.Diagnostics.Debug.WriteLine($"Clipboard paste error: {ex}");
+            }
+            if (mx < maxx) { cx = mx + 1; } // if there's space to the right, move our target and run again
+            else { cx = ox; cy = my + 1; } // if we've reached the end horizontally, move down and return to origin x. If this moves us below our selection, the loop will stop.
 		}
 		region.UpdateTiles();
 	}

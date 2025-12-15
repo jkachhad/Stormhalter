@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class IceProtectionRing : Ring, ITreasure
+public class IceProtectionRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.
@@ -24,6 +24,13 @@ public partial class IceProtectionRing : Ring, ITreasure
 	public IceProtectionRing() : base(30)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="IceProtectionRing"/> class.
+	/// </summary>
+	public IceProtectionRing(Serial serial) : base(serial)
+	{
+	}
 
 	/// <summary>
 	/// Gets the description for this instance.
@@ -36,16 +43,18 @@ public partial class IceProtectionRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250047)); /* The ring contains the spell of Protection from Ice. */
 	}
 		
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(IceProtectionStatus), out var iceStatus))
 		{
 			iceStatus = new IceProtectionStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 42 }
+				Inscription = new SpellInscription { SpellId = 42 }
 			};
 			iceStatus.AddSource(new ItemSource(this));
 				
@@ -55,18 +64,44 @@ public partial class IceProtectionRing : Ring, ITreasure
 		{
 			iceStatus.AddSource(new ItemSource(this));
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		if (entity.GetStatus(typeof(IceProtectionStatus), out var iceStatus))
 			iceStatus.RemoveSource(this);
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
 
-		return true;
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

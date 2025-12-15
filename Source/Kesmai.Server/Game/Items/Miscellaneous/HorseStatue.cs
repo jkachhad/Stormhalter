@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class HorseStatue : ItemEntity, ITreasure
+public class HorseStatue : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;
@@ -19,7 +19,6 @@ public partial class HorseStatue : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HorseStatue"/> class.
 	/// </summary>
-	[WorldForge]
 	public HorseStatue() : base(12)
 	{
 	}

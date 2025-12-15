@@ -49,17 +49,21 @@ public class TextBoxPropertyEditor : PropertyEditor
 			{
 				var color = Color.Black;
 				var converter = TypeDescriptor.GetConverter(propertyInfo.PropertyType);
-				var value = args.NewValue;
+				var newValue = args.NewValue;
 
 				try
 				{
-					if ((!String.IsNullOrEmpty(value) || _canBeNull) && converter.CanConvertFrom(typeof(string)))
-						propertyInfo.SetValue(source, converter.ConvertFrom(value), null);
+					if ((!String.IsNullOrEmpty(newValue) || _canBeNull) && converter.CanConvertFrom(typeof(string)))
+						propertyInfo.SetValue(source, converter.ConvertFrom(newValue), null);
 					else
 						color = Color.Red;
 				}
 				catch
 				{
+				}
+				finally
+				{
+					NotifyPropertyChanged(propertyInfo);
 				}
 
 				_internal.Foreground = color;

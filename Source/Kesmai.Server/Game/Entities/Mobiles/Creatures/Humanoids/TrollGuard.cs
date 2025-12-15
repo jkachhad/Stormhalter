@@ -33,10 +33,9 @@ public partial class TrollGuard : CreatureEntity
 	/// <summary>
 	/// Gets the death sound.
 	/// </summary>
-	public override int GetDeathSound() => 264;
-
-	public override int GetNearbySound() => 262;
-	public override int GetAttackSound() => 263;
+	public override int GetNearbySound() => 265;
+	public override int GetAttackSound() => 266;
+	public override int GetDeathSound() => 267;
 
 	public override ItemEntity OnCorpseTanned()
 	{

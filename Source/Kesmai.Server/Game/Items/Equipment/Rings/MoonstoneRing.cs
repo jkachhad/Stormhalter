@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 namespace Kesmai.Server.Items;
 
 [TypeAlias("Kesmai.Server.Internal.AxeGlacier.Cache+MoonstoneRing")]
-public partial class MoonstoneRing : Ring, ITreasure
+public class MoonstoneRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.

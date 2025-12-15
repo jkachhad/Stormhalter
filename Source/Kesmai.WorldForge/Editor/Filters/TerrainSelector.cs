@@ -53,12 +53,12 @@ public abstract class TerrainSelector : ObservableObject
 	/// <summary>
 	/// Returns true if component is valid for this selector.
 	/// </summary>
-	public virtual bool IsValid(TerrainComponent component)
+	public virtual bool IsValid(IComponentProvider provider)
 	{
-		return (bool)GetQuery().DynamicInvoke(component);
+		return (bool)GetQuery().DynamicInvoke(provider);
 	}
 
-	public virtual ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
+	public virtual ComponentRender TransformRender(SegmentTile tile, IComponentProvider provider, ComponentRender render)
 	{
 		return render;
 	}
@@ -107,7 +107,7 @@ public class AllTerrainSelector : TerrainSelector
 	}
 
 	/// <inheritdoc />
-	public override bool IsValid(TerrainComponent component)
+	public override bool IsValid(IComponentProvider provider)
 	{
 		return true;
 	}
@@ -223,7 +223,7 @@ public class FloorSelector : ComponentSelector<FloorComponent>
 	public override string Name => "Filter for only floor components.";
 	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterFloor.png"));
 		
-	public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
+	public override ComponentRender TransformRender(SegmentTile tile, IComponentProvider provider, ComponentRender render)
 	{
 		var wallComponent = tile.GetComponents<WallComponent>();
 
@@ -242,7 +242,7 @@ public class StaticSelector : ComponentSelector<StaticComponent>
 	public override string Name => "Filter for only static components.";
 	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterStatic.png"));
 
-	public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
+	public override ComponentRender TransformRender(SegmentTile tile, IComponentProvider provider, ComponentRender render)
 	{
 		//is there a better way to do this?
 		var wallComponent = tile.GetComponents<WallComponent>();
@@ -266,11 +266,11 @@ public class WallSelector : ComponentSelector<WallComponent>
 	public override string Name => "Filter for destructible/indestructible walls.";
 	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterWall.png"));
 
-	public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
+	public override ComponentRender TransformRender(SegmentTile tile, IComponentProvider provider, ComponentRender render)
 	{
 		var floorComponents = tile.GetComponents<FloorComponent>();
 			
-		if (component is WallComponent wall && wall.IsIndestructible)
+		if (provider is WallComponent wall && wall.IsIndestructible)
 		{
 			if (floorComponents.Any())
 				render.Color = Color.Yellow;

@@ -8,31 +8,27 @@ namespace Kesmai.Server.Game;
 public abstract partial class MobileEntity
 {
 	/// <summary>
-	/// Calculates the damage modifier against the specified item.
+	/// Calculates this <see cref="MobileEntity"/> melee damage mitigation against the specified <see cref="ItemEntity"/>.
 	/// </summary>
-	public int CalculateDamageModifier(ItemEntity item)
-	{
-		var damageModifier = 0;
-
-		/* Calculate armor bonus from chest pieces. */
-		var paperdoll = Paperdoll;
-			
-		if (paperdoll is null)
-			return 0;
-			
-		var armor = paperdoll.Armor;
-			
-		if (armor != null)
-			damageModifier += armor.GetArmorBonus(item);
-
-		return damageModifier;
-	}
+	public int CalculateMeleeMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.MeleeDamageMitigation].Value;
+	
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> projectile damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateProjectileMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.ProjectileDamageMitigation].Value;
+	
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> ranged damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateRangedMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.RangedDamageMitigation].Value;
 		
 	/// <summary>
 	/// Checks if the <see cref="ShieldPenetration"/> value can penetrate the shield for this instance.
 	/// </summary>
 	/// <returns>Returns true if the attack is not blocked by a shield buff.</returns>
-	[WorldForge]
 	public virtual bool CheckShieldPenetration(ShieldPenetration penetration)
 	{
 		if (GetStatus<ShieldStatus>() is ShieldStatus status)
@@ -64,8 +60,7 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Dazes the entity for a specified number of rounds.
 	/// </summary>
-	[WorldForge]
-	public void Daze(int ticks)
+	public virtual void Daze(int ticks)
 	{
 		if (IsInvulnerable)
 			return;
@@ -109,8 +104,7 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Stuns the entity for a specified number of rounds.
 	/// </summary>
-	[WorldForge]
-	public void Stun(int ticks)
+	public virtual void Stun(int ticks)
 	{
 		/* Remove any fear effect. */
 		if (GetStatus<FearStatus>() is FearStatus fearStatus)
@@ -151,7 +145,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Gets a value indicating if this entity can be poisoned by a specific <see cref="Poison"/>.
 	/// </summary>
-	[WorldForge]
 	public virtual bool AllowPoison(Poison poison)
 	{
 		return true;
@@ -160,7 +153,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Poisons the entity using the specified <see cref="Poison"/>.
 	/// </summary>
-	[WorldForge]
 	public void Poison(MobileEntity source, Poison poison)
 	{
 		if (!AllowPoison(poison))
@@ -190,7 +182,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Neutralizes all <see cref="Poison">Poisons</see>.
 	/// </summary>
-	[WorldForge]
 	public void NeutralizePoison(MobileEntity source = default(MobileEntity))
 	{
 		if (GetStatus(typeof(PoisonStatus), out var status))
@@ -207,7 +198,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Clears <see cref="PoisonStatus"/>.
 	/// </summary>
-	[WorldForge]
 	public void ClearPoison()
 	{
 		if (GetStatus(typeof(PoisonStatus), out var status))

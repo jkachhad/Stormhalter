@@ -8,7 +8,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class ShieldRing : Ring, ITreasure
+public class ShieldRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.
@@ -23,7 +23,6 @@ public partial class ShieldRing : Ring, ITreasure
 	/// <summary>
 	/// Gets or sets the shield-value provided by this ring.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int Shield => 3;
 
@@ -39,6 +38,13 @@ public partial class ShieldRing : Ring, ITreasure
 	}
 
 	/// <summary>
+	/// Initializes a new instance of the <see cref="ShieldRing"/> class.
+	/// </summary>
+	public ShieldRing(Serial serial) : base(serial)
+	{
+	}
+
+	/// <summary>
 	/// Gets the description for this instance.
 	/// </summary>
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -49,16 +55,18 @@ public partial class ShieldRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250128)); /* The ring contains a medium spell of Shield. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(ShieldStatus), out var status))
 		{
 			status = new ShieldStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 52 }
+				Inscription = new SpellInscription { SpellId = 52 }
 			};
 			status.AddSource(new ItemSource(this));
 				
@@ -70,20 +78,46 @@ public partial class ShieldRing : Ring, ITreasure
 		}
 
 		entity.Stats[EntityStat.Barrier].Add(+Shield, ModifierType.Constant);
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
+		base.OnInactivateBonus(entity);
 
 		if (entity.GetStatus(typeof(ShieldStatus), out var status))
 			status.RemoveSource(this);
 		
 		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
 
-		return true;
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

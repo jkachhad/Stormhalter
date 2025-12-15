@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class DemonBook : ItemEntity, ITreasure
+public class DemonBook : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;
@@ -19,7 +19,6 @@ public partial class DemonBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DemonBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public DemonBook() : base(192)
 	{
 	}

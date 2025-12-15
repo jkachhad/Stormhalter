@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class HummingbirdSword : ShortSword, ITreasure
+public class HummingbirdSword : ShortSword, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 2000;
@@ -24,6 +24,13 @@ public partial class HummingbirdSword : ShortSword, ITreasure
 	/// Initializes a new instance of the <see cref="HummingbirdSword"/> class.
 	/// </summary>
 	public HummingbirdSword() : base(306)
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="HummingbirdSword"/> class.
+	/// </summary>
+	public HummingbirdSword(Serial serial) : base(serial)
 	{
 	}
 
@@ -48,13 +55,38 @@ public partial class HummingbirdSword : ShortSword, ITreasure
 
 	/* The swing delay for the sword is 1/2 the round timer. The skill gained per swing should
 	 * be adjusted. */
+
 	public override TimeSpan GetSwingDelay(MobileEntity entity)
 	{
 		return entity.GetRoundDelay(0.5);
 	}
-		
+
 	public override double GetSkillMultiplier()
 	{
 		return 0.5;
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

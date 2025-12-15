@@ -16,9 +16,6 @@ namespace Kesmai.Server
 namespace Kesmai.Shared
 #endif
 { 
-#if Server
-	[WorldForge]
-#endif
 	public class ItemQuality
     {
 	    private static Color FromArgb(byte a, byte r, byte g, byte b)
@@ -31,49 +28,16 @@ namespace Kesmai.Shared
 	    }
 	    
 	    /* Do not ever change the index values, can cause items to deserialize into wrong quality. */
-#if Server
-	    [WorldForge]
-#endif
 	    public static ItemQuality Poor			= new (-1,	6301049,	"Poor",			FromArgb(0xFF, 0x9D, 0x9D, 0x9D));
-		
-#if Server
-	    [WorldForge]
-#endif
+
 		public static ItemQuality Common		= new (0,	6301050,	"Common",		FromArgb(0xFF, 0xFF, 0xFF, 0x00));
-
-#if Server
-	    [WorldForge]
-#endif
 		public static ItemQuality Uncommon		= new (1,	6301051,	"Uncommon",		FromArgb(0xFF, 0x1E, 0xFF, 0x00));
-
-#if Server
-	    [WorldForge]
-#endif
 		public static ItemQuality Rare			= new (2,	6301052,	"Rare",			FromArgb(0xFF, 0x00, 0x70, 0xDD));
-
-#if Server
-	    [WorldForge]
-#endif
 		public static ItemQuality Epic			= new (3,	6301053,	"Epic",			FromArgb(0xFF, 0xA3, 0x35, 0xEE));
-
-#if Server
-	    [WorldForge]
-#endif
 		public static ItemQuality Legendary		= new (4,	6301054,	"Legendary",	FromArgb(0xFF, 0xFF, 0x80, 0x00));
-
-#if Server
-	    [WorldForge]
-#endif
 		public static ItemQuality Artifact		= new (5,	6301055,	"Artifact",		FromArgb(0xFF, 0xE6, 0xCC, 0x80));
-
-#if Server
-	    [WorldForge]
-#endif
 		public static ItemQuality Mythical 		= new (6,	6301056,	"Mythical",		FromArgb(0xFF, 0xF9, 0x29, 0x07));
 
-#if Server
-		[WorldForge]
-#endif
 		public static Dictionary<int, ItemQuality> Qualities = new Dictionary<int, ItemQuality>()
 		{
 			[-1]	=	Poor,
@@ -86,9 +50,6 @@ namespace Kesmai.Shared
 			[6]		=	Mythical,
 		};
 
-#if Server
-		[WorldForge]
-#endif
 		public static ItemQuality GetQuality(int value)
 		{
 			if (Qualities.TryGetValue(value, out var quality))
@@ -135,24 +96,12 @@ namespace Kesmai.Shared
 		private string _name;
 		private Color _color;
 
-#if Server
-		[WorldForge]
-#endif
 		public int Localization => _localization;
-		
-#if Server
-		[WorldForge]
-#endif
+
 		public string Name => _name;
-		
-#if Server
-		[WorldForge]
-#endif
+
 		public Color Color => _color;
-		
-#if Server
-		[WorldForge]
-#endif
+
 		public int Value => _value;
 
 		public ItemQuality(int value, int localization, string name, Color color)

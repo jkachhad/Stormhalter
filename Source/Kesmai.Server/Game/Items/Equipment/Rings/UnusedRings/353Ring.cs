@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class ThreeFiftyThreeRing : Ring, ITreasure
+public class ThreeFiftyThreeRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.
@@ -43,16 +43,18 @@ public partial class ThreeFiftyThreeRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250041)); /* The ring contains the spell of Blind Resistance. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
 		{
 			resistance = new BlindResistanceStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 47 }
+				Inscription = new SpellInscription { SpellId = 47 }
 			};
 			resistance.AddSource(new ItemSource(this));
 
@@ -62,19 +64,17 @@ public partial class ThreeFiftyThreeRing : Ring, ITreasure
 		{
 			resistance.AddSource(new ItemSource(this));
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
+		base.OnInactivateBonus(entity);
 
 		if (entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
 			resistance.RemoveSource(this);
-
-		return true;
 	}
 		
 	/// <summary>

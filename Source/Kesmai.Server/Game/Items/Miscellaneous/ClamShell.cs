@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class ClamShell : ItemEntity, ITreasure
+public class ClamShell : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;
@@ -19,8 +19,14 @@ public partial class ClamShell : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ClamShell"/> class.
 	/// </summary>
-	[WorldForge]
 	public ClamShell() : base(65)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ClamShell"/> class.
+	/// </summary>
+	public ClamShell(Serial serial) : base(serial)
 	{
 	}
 
@@ -28,5 +34,29 @@ public partial class ClamShell : ItemEntity, ITreasure
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200286)); /* [You are looking at] [a clam shell.] */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

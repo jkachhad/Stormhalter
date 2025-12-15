@@ -5,7 +5,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game;
 
-public partial class CureBlindnessPotion : Bottle
+public class CureBlindnessPotion : Bottle
 {
 	private static ConsumableBlindnessAntidote content = new ConsumableBlindnessAntidote();
 		
@@ -19,6 +19,13 @@ public partial class CureBlindnessPotion : Bottle
 	/// Initializes a new instance of the <see cref="CureBlindnessPotion"/> class.
 	/// </summary>
 	public CureBlindnessPotion() : base(212)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="CureBlindnessPotion"/> class.
+	/// </summary>
+	public CureBlindnessPotion(Serial serial) : base(serial)
 	{
 	}
 		
@@ -37,5 +44,29 @@ public partial class CureBlindnessPotion : Bottle
 		entries.Add(new LocalizationEntry(6200000, 6200091)); /* [You are looking at] [a clear bottle with a brown label.] */
 
 		base.GetDescription(entries);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

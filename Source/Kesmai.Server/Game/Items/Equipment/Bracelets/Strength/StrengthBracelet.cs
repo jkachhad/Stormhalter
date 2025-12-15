@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class StrengthBracelet : Bracelet, ITreasure
+public class StrengthBracelet : Bracelet, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1000;
@@ -18,7 +18,6 @@ public partial class StrengthBracelet : Bracelet, ITreasure
 	public override int Weight => 4;
 		
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int StrengthBonus => 3;
 
@@ -35,6 +34,13 @@ public partial class StrengthBracelet : Bracelet, ITreasure
 	public StrengthBracelet(int itemId) : base(itemId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="StrengthBracelet"/> class.
+	/// </summary>
+	public StrengthBracelet(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -45,16 +51,18 @@ public partial class StrengthBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250058)); /* The bracelet contains a medium spell of Strength. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(StrengthSpellStatus), out var status))
 		{
 			status = new StrengthSpellStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 53 }
+				Inscription = new SpellInscription { SpellId = 53 }
 			};
 			status.AddSource(new ItemSource(this));
 				
@@ -66,20 +74,42 @@ public partial class StrengthBracelet : Bracelet, ITreasure
 		}
 			
 		entity.Stats[EntityStat.Strength].Add(+StrengthBonus, ModifierType.Constant);
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		entity.Stats[EntityStat.Strength].Remove(+StrengthBonus, ModifierType.Constant);
 			
 		if (entity.GetStatus(typeof(StrengthSpellStatus), out var status))
 			status.RemoveSource(this);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
 
-		return true;
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

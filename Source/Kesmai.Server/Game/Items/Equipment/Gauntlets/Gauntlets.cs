@@ -7,63 +7,52 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Gauntlets : Equipment, IWeapon, IArmored
+public abstract class Gauntlets : Equipment, IWeapon, IArmored
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000043; 
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public Skill Skill => Skill.Hand;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual WeaponFlags Flags => WeaponFlags.Bashing;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int BaseArmorBonus => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int BaseAttackBonus => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int SlashingProtection => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int PiercingProtection => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int BashingProtection => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProjectileProtection => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int MinimumDamage => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int MaximumDamage => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual ShieldPenetration Penetration => ShieldPenetration.Light;
 
@@ -74,7 +63,6 @@ public abstract partial class Gauntlets : Equipment, IWeapon, IArmored
 	public override int AttackSound => 47;
 		
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int MaxRange => 0;
 
@@ -84,6 +72,13 @@ public abstract partial class Gauntlets : Equipment, IWeapon, IArmored
 	/// Initializes a new instance of the <see cref="Gauntlets"/> class.
 	/// </summary>
 	protected Gauntlets(int glovesID) : base(glovesID)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Gauntlets"/> class.
+	/// </summary>
+	protected Gauntlets(Serial serial) : base(serial)
 	{
 	}
 
@@ -164,5 +159,29 @@ public abstract partial class Gauntlets : Equipment, IWeapon, IArmored
 			return false;
 			
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

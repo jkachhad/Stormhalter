@@ -5,7 +5,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class SpellOrb : ItemEntity
+public abstract class SpellOrb : ItemEntity
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000006;
@@ -21,6 +21,37 @@ public abstract partial class SpellOrb : ItemEntity
 	/// </summary>
 	protected SpellOrb(int orbId) : base(orbId)
 	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="SpellOrb"/> class.
+	/// </summary>
+	protected SpellOrb(Serial serial) : base(serial)
+	{
+	}
+		
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 
 	/// <inheritdoc />

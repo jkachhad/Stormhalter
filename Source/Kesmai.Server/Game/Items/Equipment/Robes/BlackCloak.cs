@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class BlackCloak : Robe, ITreasure
+public class BlackCloak : Robe, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000026;
@@ -28,6 +28,13 @@ public partial class BlackCloak : Robe, ITreasure
 	public BlackCloak() : base(253)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BlackCloak"/> class.
+	/// </summary>
+	public BlackCloak(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -36,5 +43,29 @@ public partial class BlackCloak : Robe, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250100)); /* The robe is extremely light. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

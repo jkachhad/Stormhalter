@@ -21,9 +21,9 @@ public partial class Bat : AnimalEntity
 		_brain = new CombatAI(this);
 	}
 
-	public override int GetNearbySound() => 271;
-	public override int GetAttackSound() => 272;
-	public override int GetDeathSound() => 273;
+	public override int GetNearbySound() => 274;
+	public override int GetAttackSound() => 275;
+	public override int GetDeathSound() => 276;
 
 	public override ItemEntity OnCorpseTanned()
 	{

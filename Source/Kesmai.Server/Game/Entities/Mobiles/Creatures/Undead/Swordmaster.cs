@@ -36,9 +36,9 @@ public partial class Swordmaster : CreatureEntity, IUndead
 	/// <summary>
 	/// Gets the death sound.
 	/// </summary>
-	public override int GetNearbySound() => 259;
-	public override int GetAttackSound() => 260;
-	public override int GetDeathSound() => 261;
+	public override int GetNearbySound() => 262;
+	public override int GetAttackSound() => 263;
+	public override int GetDeathSound() => 264;
 
 	public override Corpse GetCorpse() => default(Corpse);
 }

@@ -51,18 +51,6 @@ public class Web : Static, IHandlePathing
 	}
 	
 	private static readonly Dictionary<SegmentTile, Timer> _dispelTimers = new Dictionary<SegmentTile, Timer>();
-
-	[ServerConfigure]
-	public static void Configure()
-	{
-		EventSink.ServerStopped += () =>
-		{
-			foreach (var (_, timer) in _dispelTimers) 
-				timer.Stop();
-			
-			_dispelTimers.Clear();
-		};
-	}
 	
 	private static void StartDispelTimer(SegmentTile parent, Web component, TimeSpan duration)
 	{

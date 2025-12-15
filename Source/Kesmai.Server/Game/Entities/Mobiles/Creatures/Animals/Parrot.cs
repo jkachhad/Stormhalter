@@ -25,7 +25,7 @@ public partial class Parrot : AnimalEntity
 		base.OnLoad();
 	}
 
-	public override int GetNearbySound() => 280;
-	public override int GetAttackSound() => 281;
-	public override int GetDeathSound() => 282;
+	public override int GetNearbySound() => 283;
+	public override int GetAttackSound() => 284;
+	public override int GetDeathSound() => 285;
 }

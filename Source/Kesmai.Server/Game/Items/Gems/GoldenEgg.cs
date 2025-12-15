@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class GoldenEgg : Gem
+public class GoldenEgg : Gem
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000033;
@@ -16,7 +16,6 @@ public partial class GoldenEgg : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldenEgg"/> class.
 	/// </summary>
-	[WorldForge]
 	public GoldenEgg(uint basePrice) : base(191, basePrice)
 	{
 	}
@@ -24,7 +23,6 @@ public partial class GoldenEgg : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldenEgg"/> class.
 	/// </summary>
-	[WorldForge]
 	public GoldenEgg(Serial serial) : base(serial)
 	{
 	}

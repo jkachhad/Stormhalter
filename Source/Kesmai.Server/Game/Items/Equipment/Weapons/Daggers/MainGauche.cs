@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class MainGauche : Dagger, ITreasure
+public class MainGauche : Dagger, ITreasure
 {
 		
 	public override int LabelNumber => 6000106; /*gauche*/

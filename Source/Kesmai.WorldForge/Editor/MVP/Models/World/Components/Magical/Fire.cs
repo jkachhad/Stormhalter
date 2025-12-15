@@ -44,7 +44,7 @@ public class Fire : TerrainComponent
 			_allowDispel = (bool)allowDispel;
 	}
 		
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
@@ -52,9 +52,9 @@ public class Fire : TerrainComponent
 			yield return new ComponentRender(terrain, Color);
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_damage > 0 && _damage != 3)
 			element.Add(new XElement("damage", _damage));
@@ -67,6 +67,6 @@ public class Fire : TerrainComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new Fire(GetXElement());
+		return new Fire(GetSerializingElement());
 	}
 }

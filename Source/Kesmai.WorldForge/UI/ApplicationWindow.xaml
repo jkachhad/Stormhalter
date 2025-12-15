@@ -10,6 +10,7 @@
         xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
         xmlns:editor="clr-namespace:Kesmai.WorldForge.Editor"
         xmlns:documents="clr-namespace:Kesmai.WorldForge.UI.Documents"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
         mc:Ignorable="d"
 		
@@ -20,8 +21,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <!-- Menu -->
@@ -31,8 +32,6 @@
                 <MenuItem Header="_Create Segment..." Command="{Binding CreateSegmentCommand}" />
                 <MenuItem Header="_Open Segment" Command="{Binding OpenSegmentCommand}" />
                 <MenuItem Header="C_lose Segment"  Command="{Binding CloseSegmentCommand}" />
-                <Separator />
-                <MenuItem Header="Compile Segment"  Command="{Binding CompileSegmentCommand}" />
                 <Separator />
                 <MenuItem Header="_Save Segment"  Command="{Binding SaveSegmentCommand}">
                     <MenuItem.Icon>
@@ -57,6 +56,8 @@
                         <Image Source="../Resources/PDF.png" Width="16" Height="16" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <Separator />
+                <MenuItem Header="_Convert Segment..." Command="{Binding ConvertSegmentCommand}" />
                 <Separator />
                 <MenuItem Header="_Exit" Command="{Binding ExitApplicationCommand}" />
             </MenuItem>
@@ -96,87 +97,8 @@
             </MenuItem>
         </Menu>
         
-
-        <ToolBarTray Grid.Row="1" DockPanel.Dock="Top">
-            <!-- Tools -->
-            <ToolBar ItemsSource="{Binding Tools, Source={StaticResource applicationPresenter}}" 
-                     Background="LightBlue" ToolTip="Tools" OverflowMode="Never">
-                <ToolBar.ItemTemplate>
-                    <DataTemplate>
-                        <ToggleButton  Margin="1" Height="32" Width="32" FocusVisualStyle="{x:Null}"
-                                       Command="{Binding SelectToolCommand, Source={StaticResource applicationPresenter}}"
-                                       CommandParameter="{Binding}" IsChecked="{Binding IsActive}">
-                            <ToggleButton.ToolTip>
-                                <TextBlock Text="{Binding Name}" FocusVisualStyle="{x:Null}"/>
-                            </ToggleButton.ToolTip>
-                            <Image Source="{Binding Icon}" FocusVisualStyle="{x:Null}" VerticalAlignment="Center" Height="26" Width="26" />
-                        </ToggleButton>
-                    </DataTemplate>
-                </ToolBar.ItemTemplate>
-            </ToolBar>
-            
-            <!-- Filters -->
-            <ToolBar ItemsSource="{Binding Filters, Source={StaticResource applicationPresenter}}" 
-                     Background="LightYellow" ToolTip="Filters" OverflowMode="Never">
-                <ToolBar.ItemTemplate>
-                    <DataTemplate>
-                        <ToggleButton  Margin="1" Height="32" Width="32" FocusVisualStyle="{x:Null}"
-                                       Command="{Binding SelectFilterCommand, Source={StaticResource applicationPresenter}}"
-                                       CommandParameter="{Binding}" IsChecked="{Binding IsActive}">
-                            <ToggleButton.ToolTip>
-                                <TextBlock Text="{Binding Name}" FocusVisualStyle="{x:Null}"/>
-                            </ToggleButton.ToolTip>
-                            <Image Source="{Binding Icon}" FocusVisualStyle="{x:Null}" VerticalAlignment="Center" Height="26" Width="26" />
-                        </ToggleButton>
-                    </DataTemplate>
-                </ToolBar.ItemTemplate>
-            </ToolBar>
-            
-            <!-- Visibility -->
-            <ToolBar ItemsSource="{Binding Visibility, Source={StaticResource applicationPresenter}}" 
-                     Background="LightPink" ToolTip="Filters" OverflowMode="Never">
-                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.BreakWalls}">
-                    <ToggleButton.ToolTip>
-                        <TextBlock Text="Toggle walls and doors as Destroyed" />
-                    </ToggleButton.ToolTip>
-                    <Image Source="../Resources/FilterWall.png" VerticalAlignment="Center" Height="26" Width="26" />
-                </ToggleButton>
-                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.OpenDoors}">
-                    <ToggleButton.ToolTip>
-                        <TextBlock Text="Toggle Doors Open\Close" />
-                    </ToggleButton.ToolTip>
-                    <Image Source="../Resources/Door.png" VerticalAlignment="Center" Height="26" Width="26" />
-                </ToggleButton>
-                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.HideSecretDoors}">
-                    <ToggleButton.ToolTip>
-                        <TextBlock Text="Show Secret Doors as Secret" />
-                    </ToggleButton.ToolTip>
-                    <Image Source="../Resources/SecretDoor.png" VerticalAlignment="Center" Height="26" Width="26" />
-                </ToggleButton>
-                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.ShowTeleporters}">
-                    <ToggleButton.ToolTip>
-                        <TextBlock Text="Highlight Teleporter source and destinations" />
-                    </ToggleButton.ToolTip>
-                    <Image Source="../Resources/FilterTeleport.png" VerticalAlignment="Center" Height="26" Width="26" />
-                </ToggleButton>
-                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.ShowSpawns}">
-                    <ToggleButton.ToolTip>
-                        <TextBlock Text="Highlight location and region spawners" />
-                    </ToggleButton.ToolTip>
-                    <Image Source="../Resources/Spawns.png" VerticalAlignment="Center" Height="26" Width="26" />
-                </ToggleButton>
-                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.ShowComments}">
-                    <ToggleButton.ToolTip>
-                        <TextBlock Text="Highlight Comments" />
-                    </ToggleButton.ToolTip>
-                    <Image Source="../Resources/Comment.png" VerticalAlignment="Center" Height="26" Width="26" />
-                </ToggleButton>
-            </ToolBar>
-        </ToolBarTray>
-        
-        <DockingManager x:Name="_dockingManager" Grid.Row="2"
-                        DocumentsSource="{Binding Documents}"
-                        ActiveContent="{Binding ActiveDocument, Mode=TwoWay}">
+        <DockingManager x:Name="_dockingManager" Grid.Row="1"
+                        DocumentsSource="{Binding Documents}">
 
             <DockingManager.Resources>
                 <DataTemplate DataType="{x:Type documents:SegmentViewModel}">
@@ -185,6 +107,14 @@
                 
                 <DataTemplate DataType="{x:Type editor:SegmentRegion}">
                     <documents:RegionDocument />
+                </DataTemplate>
+       
+                <DataTemplate DataType="{x:Type documents:SegmentBrushViewModel}">
+                    <documents:SegmentBrushDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type documents:SegmentTemplateViewModel}">
+                    <documents:SegmentTemplateDocument />
                 </DataTemplate>
        
                 <DataTemplate DataType="{x:Type documents:LocationsViewModel}">
@@ -198,13 +128,25 @@
                 <DataTemplate DataType="{x:Type documents:EntitiesViewModel}">
                     <documents:EntitiesDocument />
                 </DataTemplate>
-                
-                <DataTemplate DataType="{x:Type documents:SpawnsViewModel}">
-                    <documents:SpawnsDocument />
+
+                <DataTemplate DataType="{x:Type documents:ComponentViewModel}">
+                    <documents:ComponentDocument />
                 </DataTemplate>
                 
-                <DataTemplate DataType="{x:Type documents:TreasuresViewModel}">
-                    <documents:TreasuresDocument />
+                <DataTemplate DataType="{x:Type documents:LocationSpawnViewModel}">
+                    <documents:LocationSpawnDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type documents:RegionSpawnViewModel}">
+                    <documents:RegionSpawnDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type documents:TreasureViewModel}">
+                    <documents:TreasureDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type documents:HoardViewModel}">
+                    <documents:HoardDocument />
                 </DataTemplate>
             </DockingManager.Resources>
             
@@ -223,6 +165,21 @@
             <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">
                     
+                    <LayoutAnchorablePaneGroup DockWidth="300" Orientation="Vertical">
+                        
+                        <LayoutAnchorablePane DockHeight="*">
+                            <LayoutAnchorable Title="Project" CanDockAsTabbedDocument="False">
+                                <ui:SegmentTreeControl Segment="{Binding Segment}" />
+                            </LayoutAnchorable>
+                        </LayoutAnchorablePane>
+
+                        <LayoutAnchorablePane DockHeight="*">
+                            <LayoutAnchorable Title="Properties" CanDockAsTabbedDocument="False">
+                                <xctk:PropertyGrid SelectedObject="{Binding ActiveContent, Mode=OneWay}" />
+                            </LayoutAnchorable>
+                        </LayoutAnchorablePane>
+                    </LayoutAnchorablePaneGroup>
+                    
                     <!-- Documents -->
                     <LayoutDocumentPaneGroup CanRepositionItems="False">
                         <LayoutDocumentPane>
@@ -231,11 +188,7 @@
                     </LayoutDocumentPaneGroup>
                     
                     <LayoutAnchorablePane FloatingWidth="365" DockWidth="365" DockMinWidth="365" >
-                        <LayoutAnchorable x:Name="_componentsWindow" Title="Components" ContentId="component">
-                                <ui:ComponentsPanel Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
-                                                    OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
-                                                    VerticalAlignment="Stretch" MinWidth="365"></ui:ComponentsPanel>
-                            </LayoutAnchorable>
+
                     </LayoutAnchorablePane>
                 </LayoutPanel>
                 
@@ -252,11 +205,36 @@
             <DockingManager.LayoutItemContainerStyle>
                 <Style TargetType="{x:Type LayoutItem}" >
                     <Setter Property="Title" Value="{Binding Model.Name}" />
-                    <Setter Property="CanClose" Value="False" />
                 </Style>
             </DockingManager.LayoutItemContainerStyle>
            
         </DockingManager>
+        
+        <StatusBar Grid.Row="2">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            
+            <Separator Grid.Column="1" />
+            
+            <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding TileCoordinateDisplay}" TextAlignment="Center"
+                           FontWeight="Bold" />
+            </StatusBarItem>
+            
+            <Separator Grid.Column="3" />
+          
+        </StatusBar>
     </Grid>
 
     <!-- Input bindings -->
@@ -264,51 +242,6 @@
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveSegmentCommand}">
             <KeyBinding.CommandParameter>
                 <system:Boolean>false</system:Boolean>
-            </KeyBinding.CommandParameter>
-        </KeyBinding>
-        <KeyBinding Modifiers="Ctrl" Key="P" Command="{Binding SwapDocumentCommand}" >
-            <KeyBinding.CommandParameter>
-                <system:String>Spawn</system:String>
-            </KeyBinding.CommandParameter>
-        </KeyBinding>
-        <KeyBinding Modifiers="Ctrl" Key="G" Command="{Binding SwapDocumentCommand}" >
-            <KeyBinding.CommandParameter>
-                <system:String>Segment</system:String>
-            </KeyBinding.CommandParameter>
-        </KeyBinding>
-        <KeyBinding Modifiers="Ctrl" Key="E" Command="{Binding SwapDocumentCommand}" >
-            <KeyBinding.CommandParameter>
-                <system:String>Entity</system:String>
-            </KeyBinding.CommandParameter>
-        </KeyBinding>
-        <KeyBinding Modifiers="Ctrl" Key="T" Command="{Binding SwapDocumentCommand}" >
-            <KeyBinding.CommandParameter>
-                <system:String>Treasure</system:String>
-            </KeyBinding.CommandParameter>
-        </KeyBinding>
-        <KeyBinding Modifiers="Ctrl" Key="L" Command="{Binding SwapDocumentCommand}" >
-            <KeyBinding.CommandParameter>
-                <system:String>Location</system:String>
-            </KeyBinding.CommandParameter>
-        </KeyBinding>
-        <KeyBinding Modifiers="Ctrl" Key="U" Command="{Binding SwapDocumentCommand}" >
-            <KeyBinding.CommandParameter>
-                <system:String>Subregion</system:String>
-            </KeyBinding.CommandParameter>
-        </KeyBinding>
-        <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding SwapDocumentCommand}" >
-            <KeyBinding.CommandParameter>
-                <system:String>Teleporter</system:String>
-            </KeyBinding.CommandParameter>
-        </KeyBinding>
-        <KeyBinding Modifiers="Ctrl" Key="Left" Command="{Binding SwapDocumentCommand}" >
-            <KeyBinding.CommandParameter>
-                <system:String>RegionLeft</system:String>
-            </KeyBinding.CommandParameter>
-        </KeyBinding>
-        <KeyBinding Modifiers="Ctrl" Key="Right" Command="{Binding SwapDocumentCommand}" >
-            <KeyBinding.CommandParameter>
-                <system:String>RegionRight</system:String>
             </KeyBinding.CommandParameter>
         </KeyBinding>
     </Window.InputBindings>

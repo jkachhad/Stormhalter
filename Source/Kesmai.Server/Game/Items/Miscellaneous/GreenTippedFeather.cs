@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class GreenTippedFeather : ItemEntity, ITreasure
+public class GreenTippedFeather : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;
@@ -19,7 +19,6 @@ public partial class GreenTippedFeather : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GreenTippedFeather"/> class.
 	/// </summary>
-	[WorldForge]
 	public GreenTippedFeather() : base(39)
 	{
 	}

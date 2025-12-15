@@ -6,6 +6,8 @@ using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using Kesmai.WorldForge.Editor;
+using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge;
 
@@ -42,12 +44,18 @@ public class Tool : ObservableObject
 		IsActive = false;
 	}
 		
-	public virtual void OnHandleInput(PresentationTarget target, IInputService inputService)
+	public virtual void OnHandleInput(WorldPresentationTarget target, IInputService inputService)
 	{
 		if (inputService.IsMouseOrTouchHandled)
 			return;
 			
 		_position = inputService.MousePosition;
+	}
+
+	public virtual bool OnRender(SegmentTile tile, TerrainLayer layer, out Color overrideColor)
+	{
+		overrideColor = Color.White;
+		return false;
 	}
 
 	public virtual void OnRender(RenderContext context)
@@ -63,6 +71,8 @@ public class Tool : ObservableObject
 	{
 		WeakReferenceMessenger.Default.Send(new ToolStopMessage(this));
 	}
+	
+	public override string ToString() => Name;
 }
 
 public class ToolStartMessage

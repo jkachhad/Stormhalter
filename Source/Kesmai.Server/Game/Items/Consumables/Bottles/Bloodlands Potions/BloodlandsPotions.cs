@@ -6,7 +6,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Game;
 
-public partial class ForestBlood : Bottle
+public class ForestBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -72,7 +72,7 @@ public partial class ForestBlood : Bottle
 	}
 }
 
-public partial class KeepBlood : Bottle
+public class KeepBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -138,7 +138,7 @@ public partial class KeepBlood : Bottle
 	}
 }
 
-public partial class LandBlood : Bottle
+public class LandBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -204,7 +204,7 @@ public partial class LandBlood : Bottle
 	}
 }
 
-public partial class ShadowBlood : Bottle
+public class ShadowBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -270,7 +270,7 @@ public partial class ShadowBlood : Bottle
 	}
 }
 
-public partial class CorruptedBlood : Bottle
+public class CorruptedBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -336,7 +336,7 @@ public partial class CorruptedBlood : Bottle
 	}
 }
 
-public partial class MakersBlood : Bottle
+public class MakersBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -402,7 +402,7 @@ public partial class MakersBlood : Bottle
 	}
 }
 
-public partial class UshersBlood : Bottle
+public class UshersBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -468,7 +468,7 @@ public partial class UshersBlood : Bottle
 	}
 }
 
-public partial class FeralBlood : Bottle
+public class FeralBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -534,7 +534,7 @@ public partial class FeralBlood : Bottle
 	}
 }
 
-public partial class FlameBlood : Bottle
+public class FlameBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -600,7 +600,7 @@ public partial class FlameBlood : Bottle
 	}
 }
 
-public partial class AirBlood : Bottle
+public class AirBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -666,7 +666,7 @@ public partial class AirBlood : Bottle
 	}
 }
 
-public partial class IceBlood : Bottle
+public class IceBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -732,7 +732,7 @@ public partial class IceBlood : Bottle
 	}
 }
 
-public partial class WaterBlood : Bottle
+public class WaterBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -798,7 +798,7 @@ public partial class WaterBlood : Bottle
 	}
 }
 
-public partial class RegenerationBlood : Bottle
+public class RegenerationBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 
@@ -864,7 +864,7 @@ public partial class RegenerationBlood : Bottle
 	}
 }
 
-public partial class DeadBlood : Bottle
+public class DeadBlood : Bottle
 {
 	private static ConsumableWater content = new ConsumableWater();
 

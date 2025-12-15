@@ -1,103 +1,77 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge.Scripting;
 
-public class Script : ObservableObject
+/// <summary>
+/// Represents a script with distinct name, signature, header, body and footer sections.
+/// </summary>
+public class Script
 {
-	private string _name;
-	private bool _enabled;
-		
-	private List<string> _blocks;
+	/// <summary>Gets or sets the script name.</summary>
+	public string Name { get; set; } = string.Empty;
+	
+	/// <summary>Gets or sets the script signature.</summary>
+	public string Signature { get; set; } = string.Empty;
 
-	public string Name
-	{
-		get => _name;
-		set => SetProperty(ref _name, value);
-	}
-		
-	public bool IsEnabled
-	{
-		get => _enabled;
-		set => SetProperty(ref _enabled, value);
-	}
-		
-	public ScriptTemplate Template { get; set; }
-		
-	public List<string> Blocks => _blocks;
+	/// <summary>Gets or sets the script header.</summary>
+	public string Header { get; set; } = string.Empty;
 
-	public Script(string name, bool enabled, params string[] blocks)
-	{
-		_name = name;
-		_enabled = enabled;
-			
-		_blocks = new List<string>(blocks);
-	}
+	/// <summary>Gets or sets the script body.</summary>
+	public string Body { get; set; } = string.Empty;
 
+	/// <summary>Gets or sets the script footer.</summary>
+	public string Footer { get; set; } = string.Empty;
+	
+	/// <summary>Gets or sets a value indicating whether this script is enabled.</summary>
+	public bool IsEnabled { get; set; }
+	
+	public bool IsEmpty => String.IsNullOrWhiteSpace(Body);
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Script"/> class.
+	/// </summary>
+	public Script()
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Script"/> class.
+	/// </summary>
 	public Script(XElement element)
 	{
-		_name = (string)element.Attribute("name");
-		_enabled = (bool)element.Attribute("enabled");
+		Name = (string)element.Attribute("name");
+		IsEnabled = (bool)element.Attribute("enabled");
 			
-		_blocks = new List<string>();
-
-		foreach (var block in element.Elements("block"))
-			_blocks.Add(block.Value);
+		Body = (string)element;
 	}
-
-	public XElement GetXElement()
+	
+	/// <summary>
+	/// Gets the XML representation of this script.
+	/// </summary>
+	public XElement GetSerializingElement()
 	{
 		var element = new XElement("script",
-			new XAttribute("name", _name),
-			new XAttribute("enabled", _enabled));
-
-		foreach (var segment in _blocks)
-			element.Add(new XElement("block", new XCData(segment)));
+			new XAttribute("name", Name),
+			new XAttribute("enabled", IsEnabled),
+			new XCData(Body));
 			
 		return element;
 	}
-		
-	public void Parse(ScriptEditor editor)
-	{
-		_blocks.Clear();
-
-		foreach (var segment in editor.GetNonReadOnlySegments())
-			_blocks.Add(editor.Document.GetText(segment));
-	}
-
+	
+	/// <summary>
+	/// Clones this script.
+	/// </summary>
 	public Script Clone()
 	{
-		return new Script(_name, _enabled, _blocks.ToArray())
+		return new Script()
 		{
-			Template = Template,
+			Name = Name,
+			Signature = Signature,
+			Header = Header,
+			Body = Body,
+			Footer = Footer,
+			IsEnabled = IsEnabled
 		};
-	}
-
-	public override string ToString()
-	{
-		var segments = Template.GetSegments().ToList();
-		var blocks = Blocks;
-
-		var builder = new StringBuilder();
-			
-		if (blocks.Any() && blocks.Count >= (segments.Count + 1))
-		{
-			for (var i = 0; i < segments.Count; i++)
-			{
-				builder.Append(segments[i]);
-				builder.Append(blocks[i]);
-					
-				if (i < (segments.Count - 1))
-					continue;
-
-				builder.Append(blocks[i + 1]);
-			}
-		}
-
-		return builder.ToString();
 	}
 }

@@ -7,12 +7,11 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class LocateAmulet : Amulet, ITreasure, ICharged
+public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 {
 	private int _chargesCurrent;
 	private int _chargesMax;
 
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesCurrent
 	{
@@ -20,7 +19,6 @@ public abstract partial class LocateAmulet : Amulet, ITreasure, ICharged
 		set => _chargesCurrent = value.Clamp(0, _chargesMax);
 	}
 		
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{
@@ -35,6 +33,13 @@ public abstract partial class LocateAmulet : Amulet, ITreasure, ICharged
 	{
 		_chargesCurrent = charges;
 		_chargesMax = charges;
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="LocateAmulet"/> class.
+	/// </summary>
+	protected LocateAmulet(Serial serial) : base(serial)
+	{
 	}
 		
 	/// <inheritdoc />
@@ -59,7 +64,7 @@ public abstract partial class LocateAmulet : Amulet, ITreasure, ICharged
 			
 		if (_chargesCurrent > 0)
 		{
-			var spell = new InstantLocateSpell()
+			var spell = new InstantLocateSpell
 			{
 				Item = this,
 				Cost = 0,
@@ -70,5 +75,42 @@ public abstract partial class LocateAmulet : Amulet, ITreasure, ICharged
 		}
 
 		return true;
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)2); /* version */
+			
+		writer.Write(_chargesMax);
+		writer.Write(_chargesCurrent);
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 2:
+			{
+				_chargesMax = reader.ReadInt32();
+				goto case 1;
+			}
+			case 1:
+			{
+				_chargesCurrent = reader.ReadInt32();
+				break;
+			}
+		}
 	}
 }

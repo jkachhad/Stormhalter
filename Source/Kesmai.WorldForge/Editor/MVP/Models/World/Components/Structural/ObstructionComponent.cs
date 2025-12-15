@@ -73,7 +73,7 @@ public class ObstructionComponent : TerrainComponent
 	#region Methods
 
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
@@ -81,9 +81,9 @@ public class ObstructionComponent : TerrainComponent
 			yield return new ComponentRender(terrain, Color);
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("obstruction", _obstruction));
 
@@ -95,7 +95,7 @@ public class ObstructionComponent : TerrainComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new ObstructionComponent(GetXElement());
+		return new ObstructionComponent(GetSerializingElement());
 	}
 
 	#endregion

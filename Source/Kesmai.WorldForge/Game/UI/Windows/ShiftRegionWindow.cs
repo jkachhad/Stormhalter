@@ -128,7 +128,7 @@ public class ShiftRegionWindow : Window
 		if (!int.TryParse(_xTextBox.Text, out var sx) || !int.TryParse(_yTextBox.Text, out var sy))
 			return;
 
-		var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+        var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 		var segment = segmentRequest.Response;
 
 		var oldTiles = _region.GetTiles((tile) => true).ToList();
@@ -143,8 +143,9 @@ public class ShiftRegionWindow : Window
 				
 			var duplicate = new SegmentTile(dx, dy);
 
-			foreach (var component in tile.Components)
-				duplicate.AddComponent(component);
+			// move the provider itself, not the underlying component.
+			foreach (var provider in tile.Providers)
+				duplicate.Providers.Add(provider);
 
 			_region.SetTile(dx, dy, duplicate);
 		}

@@ -70,18 +70,18 @@ public class RopeComponent : ActiveTeleporter
 	#region Methods
 
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		if (!_isSecret)
 		{
-			foreach (var render in base.GetTerrain())
+			foreach (var render in base.GetRenders())
 				yield return render;
 		}
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_isSecret)
 			element.Add(new XElement("isSecret", _isSecret));
@@ -94,7 +94,7 @@ public class RopeComponent : ActiveTeleporter
 
 	public override TerrainComponent Clone()
 	{
-		return new RopeComponent(GetXElement());
+		return new RopeComponent(GetSerializingElement());
 	}
 
 	#endregion

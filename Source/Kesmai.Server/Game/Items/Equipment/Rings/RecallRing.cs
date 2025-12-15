@@ -10,8 +10,39 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class RecallRing : Ring
+public class RecallRing : Ring
 {
+	[ServerConfigure]
+	public new static void Configure()
+	{
+		EventSink.FacetChanged += (player, oldFacet, newFacet) => Reset(player, false);
+		EventSink.SegmentChanged += (player, oldSegment, newSegment) => Reset(player);
+	}
+
+	private static void Reset(MobileEntity entity, bool withinFacet = true)
+	{
+		var rings = entity.Rings;
+
+		if (rings is null)
+			return;
+			
+		var targetIntensity = (withinFacet ? 1 : 2);
+		var recallRings = rings.OfType<RecallRing>()
+			.Where(r => r.IsActive && r.Power <= targetIntensity).ToList();
+
+		if (recallRings.Count > 0)
+		{
+			entity.SendPacket(new PlaySoundPacket(223));
+
+			if (recallRings.Count > 1)
+				entity.SendLocalizedMessage(Color.Fuchsia, 6300423); // Your recall rings have been reset!
+			else
+				entity.SendLocalizedMessage(Color.Fuchsia, 6300065); // A recall ring has been reset!
+				
+			recallRings.ForEach(ring => { ring.Reset(); });
+		}
+	}
+	
 	private bool _isActive;
 	private int _power;
 		
@@ -62,6 +93,13 @@ public partial class RecallRing : Ring
 	public RecallRing(int power) : base((power > 1 ? 393 : 246))
 	{
 		_power = power;
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="RecallRing"/> class.
+	/// </summary>
+	public RecallRing(Serial serial) : base(serial)
+	{
 	}
 
 	/// <summary>
@@ -150,6 +188,9 @@ public partial class RecallRing : Ring
 	{
 		if (!base.OnUnequip(entity))
 			return false;
+		
+		if (Deleted)
+			_isActive = false;
 
 		if (_isActive)
 		{
@@ -189,5 +230,50 @@ public partial class RecallRing : Ring
 		BoundLocation = default(Point2D);
 
 		_isActive = false;
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)2);	/* version */
+
+		writer.Write((byte)_power);
+			
+		writer.Write(BoundSegment);
+		writer.Write(BoundLocation);
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 2:
+			{
+				_power = reader.ReadByte();
+					
+				goto case 1;
+			}
+			case 1:
+			{
+				BoundSegment = reader.ReadSegment();
+				BoundLocation = reader.ReadLocation();
+
+				break;
+			}
+		}
+
+		if (BoundSegment != null && BoundLocation != Point2D.Zero)
+			_isActive = true;
 	}
 }

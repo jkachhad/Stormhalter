@@ -79,7 +79,6 @@ public class Book : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Book"/> class.
 	/// </summary>
-	[WorldForge]
 	public Book(uint publicationId) : base(152)
 	{
 		PublicationId = publicationId;
@@ -225,8 +224,8 @@ public class BookGump : Gump
 		
 		Overlay = true;
 		CanDrag = true;
-		
-		var stackPanel = new StackPanel()
+
+		var stackPanel = new StackPanel
 		{
 			Style = "Client-Pages-Frame-Default",
 			
@@ -241,6 +240,7 @@ public class BookGump : Gump
 			Name = "leftPage",
 			Style = "Client-Page-Left-Default",
 		};
+
 		var rightPanel = new StackPanel()
 		{
 			Name = "rightPage",

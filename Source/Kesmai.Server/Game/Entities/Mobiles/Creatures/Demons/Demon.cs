@@ -9,6 +9,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Demon : CreatureEntity, IDemon
 {
+	/// <summary>
 	/// Initializes a new instance of the <see cref="Demon"/> class.
 	/// </summary>
 	public Demon()
@@ -28,9 +29,9 @@ public partial class Demon : CreatureEntity, IDemon
 		_brain = new CombatAI(this);
 	}
 
-	public override int GetNearbySound() => 129;
-	public override int GetAttackSound() => 148;
-	public override int GetDeathSound() => 167;
+	public override int GetNearbySound() => 117;
+	public override int GetAttackSound() => 124;
+	public override int GetDeathSound() => 7;
 
 	public override Corpse GetCorpse() => default(Corpse);
 }

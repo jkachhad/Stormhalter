@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class PermanentIntelligencePotion : Bottle, ITreasure
+public class PermanentIntelligencePotion : Bottle, ITreasure
 {
 	private static ConsumableIntelligenceStat content = new ConsumableIntelligenceStat();
 		
@@ -14,11 +14,21 @@ public partial class PermanentIntelligencePotion : Bottle, ITreasure
 
 	/// <inheritdoc />
 	public override int Weight => 240;
+	
+	/// <inheritdoc />
+	public override ItemQuality Quality => ItemQuality.Uncommon;
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentIntelligencePotion"/> class.
 	/// </summary>
 	public PermanentIntelligencePotion() : base(216)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="PermanentIntelligencePotion"/> class.
+	/// </summary>
+	public PermanentIntelligencePotion(Serial serial) : base(serial)
 	{
 	}
 		
@@ -37,5 +47,29 @@ public partial class PermanentIntelligencePotion : Bottle, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200095)); /* [You are looking at] [a porcelain bottle stamped with a golden sun.] */
 
 		base.GetDescription(entries);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

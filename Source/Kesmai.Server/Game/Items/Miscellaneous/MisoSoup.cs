@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class MisoSoup : ItemEntity, ITreasure
+public class MisoSoup : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;
@@ -19,7 +19,6 @@ public partial class MisoSoup : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MisoSoup"/> class.
 	/// </summary>
-	[WorldForge]
 	public MisoSoup() : base(24)
 	{
 	}

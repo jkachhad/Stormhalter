@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Kesmai.Server.Game;
 
-public abstract partial class Balm : Bottle
+public abstract class Balm : Bottle
 {
 	private static ConsumableBalm content = new ConsumableBalm();
 		
@@ -16,6 +16,13 @@ public abstract partial class Balm : Bottle
 	protected Balm(int closedId, int openId) : base(closedId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Balm"/> class.
+	/// </summary>
+	protected Balm(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	protected override void OnCreate()
@@ -24,6 +31,30 @@ public abstract partial class Balm : Bottle
 
 		if (_content is null)
 			_content = content;
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1);	/* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }
 

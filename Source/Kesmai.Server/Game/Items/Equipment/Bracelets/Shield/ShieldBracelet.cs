@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class ShieldBracelet : Bracelet, ITreasure
+public class ShieldBracelet : Bracelet, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1000;
@@ -18,7 +18,6 @@ public partial class ShieldBracelet : Bracelet, ITreasure
 	public override int Weight => 4;
 		
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int Shield => 3;
 
@@ -35,6 +34,13 @@ public partial class ShieldBracelet : Bracelet, ITreasure
 	public ShieldBracelet(int braceletId) : base(braceletId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ShieldBracelet"/> class.
+	/// </summary>
+	public ShieldBracelet(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -45,16 +51,18 @@ public partial class ShieldBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250127)); /* The bracelet contains a medium spell of Shield. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(ShieldStatus), out var status))
 		{
 			status = new ShieldStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 52 }
+				Inscription = new SpellInscription { SpellId = 52 }
 			};
 			status.AddSource(new ItemSource(this));
 				
@@ -66,20 +74,42 @@ public partial class ShieldBracelet : Bracelet, ITreasure
 		}
 		
 		entity.Stats[EntityStat.Barrier].Add(+Shield, ModifierType.Constant);
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		if (entity.GetStatus(typeof(ShieldStatus), out var status))
 			status.RemoveSource(this);
 		
 		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
 
-		return true;
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }
