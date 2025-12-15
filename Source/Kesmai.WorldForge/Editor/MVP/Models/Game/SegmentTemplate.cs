@@ -101,9 +101,6 @@ public class SegmentTemplate : ObservableObject, ISegmentObject, IComponentProvi
             if (providerElement is null)
                 continue;
 
-            if (providerElement.Attribute("name") is null && !String.IsNullOrWhiteSpace(provider.Name))
-                providerElement.Add(new XAttribute("name", provider.Name));
-
             element.Add(providerElement);
         }
 
