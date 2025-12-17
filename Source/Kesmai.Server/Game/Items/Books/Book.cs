@@ -318,18 +318,9 @@ public class ScrollGump : Gump
 			VerticalAlignment = VerticalAlignment.Bottom,
 		};
 
-		var closeButton = new TextureButton()
-		{
-			Style = "Client-Scroll-Frame-Close",
-			
-			HorizontalAlignment = HorizontalAlignment.Right,
-			VerticalAlignment = VerticalAlignment.Top,
-		};
-
 		titlePanel.Children.Add(titleText);
 
 		headerPanel.Children.Add(titlePanel);
-		headerPanel.Children.Add(closeButton);
 		
 		// content
 		var scrollViewer = new ScrollViewer()
