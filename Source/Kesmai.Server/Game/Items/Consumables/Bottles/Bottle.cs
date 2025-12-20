@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
@@ -43,6 +43,12 @@ public abstract class Bottle : Consumable
 	public bool IsOpen => _isOpen;
 
 	public bool IsFull => _content != null;
+	
+	/// <inheritdoc />
+	protected override bool IsConsumable(MobileEntity entity)
+	{
+		return IsFull;
+	}
 
 	public override int ItemId
 	{
@@ -200,6 +206,24 @@ public abstract class Bottle : Consumable
 		return base.ThrowAt(source, location);
 	}
 	
+	private static DrinkBottleInteraction _drinkBottleInteraction = new DrinkBottleInteraction();
+	private static OpenBottleInteraction _openBottleInteraction = new OpenBottleInteraction();
+	private static CloseBottleInteraction _closeBottleInteraction = new CloseBottleInteraction();
+	
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		entries.Add(_drinkBottleInteraction);
+		
+		entries.Add(new InteractionSeparator());
+		
+		entries.Add(_closeBottleInteraction);
+		entries.Add(_openBottleInteraction);
+		
+		entries.Add(new InteractionSeparator());
+		
+		base.GetInteractions(source, entries);
+	}
+	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
@@ -230,5 +254,120 @@ public abstract class Bottle : Consumable
 				break;
 			}
 		}
+	}
+
+	internal bool CanToggle(PlayerEntity source, bool opening, bool sendTranceMessage = false)
+	{
+		if (source is null || source.Deleted || Deleted)
+			return false;
+
+		if (!source.CanPerformAction)
+			return false;
+
+		if (source.Tranced && !source.IsSteering)
+		{
+			if (sendTranceMessage)
+				source.SendLocalizedMessage(System.Drawing.Color.Red, 6300200); /* You can't do that while in a trance. */
+			return false;
+		}
+
+		var owner = source.IsSteering ? source.Steering : source;
+
+		if (owner is null || Parent != owner)
+			return false;
+
+		if (Container is not Hands)
+			return false;
+
+		return opening ? !IsOpen : IsOpen;
+	}
+}
+
+public class DrinkBottleInteraction : InteractionEntry
+{
+	public DrinkBottleInteraction() : base("Drink")
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (target is not Bottle bottle)
+			return;
+
+		if (bottle.Consume(source, !bottle.IsOpen))
+			source.QueueRoundTimer();
+	}
+
+	public override bool CanExecute(PlayerEntity source, WorldEntity target)
+	{
+		if (!base.CanExecute(source, target))
+			return false;
+		
+		if (target is not Bottle bottle)
+			return false;
+
+		return bottle.CanConsume(source);
+	}
+}
+
+public class OpenBottleInteraction : InteractionEntry
+{
+	public OpenBottleInteraction() : base("Open")
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (target is not Bottle bottle)
+			return;
+
+		if (!bottle.CanToggle(source, opening: true, sendTranceMessage: true))
+			return;
+
+		bottle.Open(source);
+		
+		source.QueueRoundTimer();
+	}
+
+	public override bool CanExecute(PlayerEntity source, WorldEntity target)
+	{
+		if (!base.CanExecute(source, target))
+			return false;
+		
+		if (target is not Bottle bottle)
+			return false;
+		
+		return bottle.CanToggle(source, opening: true);
+	}
+}
+
+public class CloseBottleInteraction : InteractionEntry
+{
+	public CloseBottleInteraction() : base("Close")
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (target is not Bottle bottle)
+			return;
+
+		if (!bottle.CanToggle(source, opening: false, sendTranceMessage: true))
+			return;
+
+		bottle.Close(source);
+		
+		source.QueueRoundTimer();
+	}
+
+	public override bool CanExecute(PlayerEntity source, WorldEntity target)
+	{
+		if (!base.CanExecute(source, target))
+			return false;
+		
+		if (target is not Bottle bottle)
+			return false;
+		
+		return bottle.CanToggle(source, opening: false);
 	}
 }

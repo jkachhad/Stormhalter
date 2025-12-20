@@ -133,23 +133,128 @@ public abstract class Consumable : ItemEntity
 	}
 		
 	/// <summary>
+	/// Determines whether this instance may be consumed by the specified entity.
+	/// </summary>
+	/// <remarks>
+	/// This method performs validation checks to determine if the specified entity
+	/// may consume this item. It checks if the entity is alive, if the item is
+	/// consumable by the entity, and if the entity can lift and carry the item.
+	/// </remarks>
+	public bool CanConsume(MobileEntity entity, bool requireLiftChecks = true)
+	{
+		// Validate if the entity can consume this item without performing lift actions.
+		return ValidateConsume(entity, requireLiftChecks, performLiftActions: false);
+	}
+
+	/// <summary>
+	/// Overridable. Determines whether this instance is consumable.
+	/// </summary>
+	/// <remarks>
+	/// Override this method to provide custom logic to determine if the specified entity
+	/// may consume this item. For example, a potion that can only be consumed by a specific
+	/// class or alignment. The default implementation always returns true.
+	/// </remarks>
+	protected virtual bool IsConsumable(MobileEntity entity)
+	{
+		// By default, all consumables are consumable.
+		return true;
+	}
+
+	/// <summary>
 	/// Called when the specified entity consumes this item.
 	/// </summary>
+	/// <remarks>
+	/// This method performs validation checks and, if successful, triggers the consumption
+	/// process. It checks if the entity is alive, if the item is consumable by the entity,
+	/// and if the entity can lift and carry the item. If the item is held by any entities,
+	/// it is dropped before consumption. The <see cref="OnConsume"/> method is then called to handle
+	/// the actual consumption logic. If the <paramref name="destroy"/> parameter is true, the item is deleted
+	/// after consumption.
+	/// </remarks>
 	public bool Consume(MobileEntity entity, bool destroy = true)
 	{
-		if (Deleted || entity.Deleted)
+		// Validate if the entity can consume this item.
+		if (!ValidateConsume(entity, requireLiftChecks: true, performLiftActions: true))
 			return false;
 
+		// If the item is held by any entities, drop it first.
 		if (HeldBy.Count > 0)
 			OnDropped();
-			
+
+		// Trigger the consumption process.
 		OnConsume(entity, destroy);
 
 		_content = null;
 
+		// Delete the item if specified.
 		if (destroy)
 			Delete();
 
+		// Consumption successful.
+		return true;
+	}
+
+	private bool ValidateConsume(MobileEntity entity, bool requireLiftChecks, bool performLiftActions)
+	{
+		if (Deleted || entity is null || entity.Deleted)
+			return false;
+
+		// Check if the entity is alive. Dead entities cannot consume items.
+		if (!entity.IsAlive)
+			return false;
+
+		// Check if this item is consumable by the entity. The consumable may be in a state
+		// that prevents it from being consumed, such as being empty or spoiled.
+		if (!IsConsumable(entity))
+			return false;
+
+		// Check if the entity can lift and carry this item. If the item is already held by the entity,
+		// we skip the lift checks to avoid redundant validation.
+		var heldByEntity = ReferenceEquals(entity.Holding, this) && HeldBy.Contains(entity);
+
+		if (entity.Holding != null && !heldByEntity)
+			return false;
+
+		var applyLiftChecks = requireLiftChecks && !heldByEntity;
+
+		// Perform lift checks if required.
+		if (!applyLiftChecks)
+			return true;
+		
+		// Check if the entity can perform lift actions. If not, consumption is not possible.
+		if (!entity.CanPerformLift || !entity.CheckLift(entity, this))
+			return false;
+		
+		// Check for non-local lift restrictions from the parent container.
+		if (Parent is MobileEntity parent && !parent.CheckNonlocalLift(entity, this))
+			return false;
+		
+		// Notify both the entity and the item about the lift action.
+		if (performLiftActions)
+		{
+			if (!entity.OnDragLift(this))
+				return false;
+
+			if (!OnDragLift(entity))
+				return false;
+		}
+
+		// Check if the container can have this item removed.
+		var container = Container;
+
+		if (container is null || !container.CanRemove(this))
+			return false;
+
+		// Finally, check if the entity can carry the additional weight of this item.
+		if (!entity.CanCarry(this, Amount))
+		{
+			if (performLiftActions)
+				entity.SendLocalizedMessage(6300320); /* You are not able to carry that much more weight. */
+			
+			return false;
+		}
+
+		// All checks passed; the item can be consumed by the entity.
 		return true;
 	}
 		
