@@ -199,6 +199,10 @@ public abstract class Consumable : ItemEntity
 		if (Deleted || entity is null || entity.Deleted)
 			return false;
 
+		// Entity must be able to perform actions to consume items.
+		if (!entity.CanPerformAction)
+			return false;
+
 		// Check if the entity is alive. Dead entities cannot consume items.
 		if (!entity.IsAlive)
 			return false;

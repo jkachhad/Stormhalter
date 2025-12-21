@@ -206,20 +206,17 @@ public abstract class Bottle : Consumable
 		return base.ThrowAt(source, location);
 	}
 	
-	private static DrinkBottleInteraction _drinkBottleInteraction = new DrinkBottleInteraction();
-	private static OpenBottleInteraction _openBottleInteraction = new OpenBottleInteraction();
-	private static CloseBottleInteraction _closeBottleInteraction = new CloseBottleInteraction();
-	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
-		entries.Add(_drinkBottleInteraction);
+		entries.Add(DrinkBottleInteraction.Instance);
+		entries.Add(InteractionSeparator.Instance);
+
+		if (!IsOpen)
+			entries.Add(OpenBottleInteraction.Instance);
+		else
+			entries.Add(CloseBottleInteraction.Instance);
 		
-		entries.Add(new InteractionSeparator());
-		
-		entries.Add(_closeBottleInteraction);
-		entries.Add(_openBottleInteraction);
-		
-		entries.Add(new InteractionSeparator());
+		entries.Add(InteractionSeparator.Instance);
 		
 		base.GetInteractions(source, entries);
 	}
@@ -283,9 +280,17 @@ public abstract class Bottle : Consumable
 	}
 }
 
+/// <summary>
+/// Interaction entry for drinking from a bottle.
+/// </summary>
+/// <remarks>
+/// This interaction allows a player to drink from a bottle if it is open and contains consumable content.
+/// </remarks>
 public class DrinkBottleInteraction : InteractionEntry
 {
-	public DrinkBottleInteraction() : base("Drink")
+	public static readonly DrinkBottleInteraction Instance = new DrinkBottleInteraction();
+	
+	private DrinkBottleInteraction() : base("Drink")
 	{
 	}
 
@@ -310,9 +315,17 @@ public class DrinkBottleInteraction : InteractionEntry
 	}
 }
 
+/// <summary>
+/// Interaction entry for opening a bottle.
+/// </summary>
+/// <remarks>
+/// This interaction allows a player to open a bottle if it is currently closed.
+/// </remarks>
 public class OpenBottleInteraction : InteractionEntry
 {
-	public OpenBottleInteraction() : base("Open")
+	public static readonly OpenBottleInteraction Instance = new OpenBottleInteraction();
+	
+	private OpenBottleInteraction() : base("Open")
 	{
 	}
 
@@ -341,9 +354,17 @@ public class OpenBottleInteraction : InteractionEntry
 	}
 }
 
+/// <summary>
+/// Interaction entry for closing a bottle.
+/// </summary>
+/// <remarks>
+/// This interaction allows a player to close a bottle if it is currently open.
+/// </remarks>
 public class CloseBottleInteraction : InteractionEntry
 {
-	public CloseBottleInteraction() : base("Close")
+	public static readonly CloseBottleInteraction Instance = new CloseBottleInteraction();
+	
+	private CloseBottleInteraction() : base("Close")
 	{
 	}
 

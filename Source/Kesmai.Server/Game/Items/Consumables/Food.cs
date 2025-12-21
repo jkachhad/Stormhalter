@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
@@ -29,6 +31,20 @@ public abstract class Food : Consumable
 		/* Call the base method to execute the content effect. */
 		base.OnConsume(entity, destroy);
 	}
+
+	/// <inheritdoc />
+	protected override bool IsConsumable(MobileEntity entity)
+	{
+		return _content != null;
+	}
+
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		entries.Add(EatFoodInteraction.Instance);
+		entries.Add(InteractionSeparator.Instance);
+		
+		base.GetInteractions(source, entries);
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
@@ -52,5 +68,43 @@ public abstract class Food : Consumable
 				break;
 			}
 		}
+	}
+}
+
+/// <summary>
+/// Interaction for consuming food.
+/// </summary>
+/// <remarks>
+/// This interaction allows a player to eat food items in the game.
+/// When executed, it checks if the target entity is a food item and
+/// attempts to consume it. If the consumption is successful, it queues
+/// a round timer for the player.
+/// </remarks>
+public class EatFoodInteraction : InteractionEntry
+{
+	public static readonly EatFoodInteraction Instance = new EatFoodInteraction();
+
+	private EatFoodInteraction() : base("Eat")
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (target is not Food food)
+			return;
+		
+		if (food.Consume(source))
+			source.QueueRoundTimer();
+	}
+
+	public override bool CanExecute(PlayerEntity source, WorldEntity target)
+	{
+		if (!base.CanExecute(source, target))
+			return false;
+		
+		if (target is not Food food)
+			return false;
+
+		return food.CanConsume(source);
 	}
 }
