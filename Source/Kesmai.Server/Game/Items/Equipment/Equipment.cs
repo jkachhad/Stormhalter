@@ -198,7 +198,7 @@ public abstract class Equipment : ItemEntity
 			player.AwardExperience(value);
 	}
 
-	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	public override void GetInteractions(PlayerEntity source, InteractionEntries entries)
 	{
 		base.GetInteractions(source, entries);
 
