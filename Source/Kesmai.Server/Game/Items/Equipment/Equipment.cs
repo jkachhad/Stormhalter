@@ -1,6 +1,7 @@
-using System.IO;
+using System.Collections.Generic;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
@@ -194,5 +195,125 @@ public abstract class Equipment : ItemEntity
 				
 		if (value > 0)
 			player.AwardExperience(value);
+	}
+	
+	private static EquipEquipmentInteraction _equipEquipmentInteraction = new EquipEquipmentInteraction();
+	private static UnequipEquipmentInteraction _unequipEquipmentInteraction = new UnequipEquipmentInteraction();
+	
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		entries.Add(_equipEquipmentInteraction);
+		entries.Add(_unequipEquipmentInteraction);
+		
+		entries.Add(InteractionSeparator.Instance);
+		
+		base.GetInteractions(source, entries);
+	}
+}
+
+public class EquipEquipmentInteraction : InteractionEntry
+{
+	public EquipEquipmentInteraction() : base("Equip", range: 0)
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (target is not Equipment equipment)
+			return;
+
+		var slot = source.Paperdoll.CheckHold(equipment);
+		
+		if (!slot.HasValue)
+			return;
+
+		if (equipment.DropToContainer(source, source.Paperdoll.Group, slot.Value))
+			source.QueueRoundTimer();
+	}
+
+	public override bool CanExecute(PlayerEntity source, WorldEntity target)
+	{
+		if (!base.CanExecute(source, target))
+			return false;
+		
+		if (target is not Equipment equipment || !source.CanCarry(equipment, equipment.Amount))
+			return false;
+
+		if (equipment.Container is EquipmentContainer)
+			return false;
+		
+		return (source.Paperdoll.CheckHold(equipment).HasValue);
+	}
+}
+
+public class UnequipEquipmentInteraction : InteractionEntry
+{
+	public UnequipEquipmentInteraction() : base("Unequip")
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (target is not Equipment equipment)
+			return;
+
+		var backpackSlot = source.Backpack.CheckHold(equipment);
+
+		if (backpackSlot.HasValue)
+		{
+			if (equipment.DropToContainer(source, source.Backpack.Group, backpackSlot.Value))
+				source.QueueRoundTimer();
+
+			return;
+		}
+		
+		var beltSlot = source.Belt.CheckHold(equipment);
+
+		if (beltSlot.HasValue)
+		{
+			if (equipment.DropToContainer(source, source.Belt.Group, beltSlot.Value))
+				source.QueueRoundTimer();
+
+			return;
+		}
+		
+		var handSlot = source.Hands.CheckHold(equipment);
+
+		if (handSlot.HasValue)
+		{
+			if (equipment.DropToContainer(source, source.Hands.Group, handSlot.Value))
+				source.QueueRoundTimer();
+
+			return;
+		}
+	}
+
+	public override bool CanExecute(PlayerEntity source, WorldEntity target)
+	{
+		if (!base.CanExecute(source, target))
+			return false;
+		
+		if (target is not Equipment equipment || !source.CanCarry(equipment, equipment.Amount))
+			return false;
+
+		if (equipment.Container is not EquipmentContainer)
+			return false;
+
+		var backpackSlot = source.Backpack.CheckHold(equipment);
+		
+		if (backpackSlot.HasValue)
+			return true;
+		
+		var beltSlot = source.Belt.CheckHold(equipment);
+		
+		if (beltSlot.HasValue)
+			return true;
+		
+		var handSlot = source.Hands.CheckHold(equipment);
+		
+		if (handSlot.HasValue)
+			return true;
+		
+		return false;
 	}
 }
