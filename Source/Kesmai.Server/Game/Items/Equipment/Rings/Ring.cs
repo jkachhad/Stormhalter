@@ -34,14 +34,14 @@ public abstract class Ring : ItemEntity
 	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
-		base.GetInteractions(source, entries);
-
-		entries.Add(InteractionSeparator.Instance);
-		
 		if (Container is Rings)
 			entries.Add(UnequipRingInteraction.Instance);
 		else
 			entries.Add(EquipRingInteraction.Instance);
+		
+		entries.Add(InteractionSeparator.Instance);
+		
+		base.GetInteractions(source, entries);
 	}
 
 	/// <summary>
