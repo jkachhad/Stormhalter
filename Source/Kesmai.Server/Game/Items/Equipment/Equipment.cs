@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Engines.Interactions;
@@ -196,14 +197,13 @@ public abstract class Equipment : ItemEntity
 		if (value > 0)
 			player.AwardExperience(value);
 	}
-	
-	private static EquipEquipmentInteraction _equipEquipmentInteraction = new EquipEquipmentInteraction();
-	private static UnequipEquipmentInteraction _unequipEquipmentInteraction = new UnequipEquipmentInteraction();
-	
+
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
-		entries.Add(_equipEquipmentInteraction);
-		entries.Add(_unequipEquipmentInteraction);
+		if (Container is Paperdoll)
+			entries.Add(UnequipPaperdollInteraction.Instance);
+		else
+			entries.Add(EquipPaperdollInteraction.Instance);
 		
 		entries.Add(InteractionSeparator.Instance);
 		
@@ -211,109 +211,123 @@ public abstract class Equipment : ItemEntity
 	}
 }
 
-public class EquipEquipmentInteraction : InteractionEntry
+public class EquipPaperdollInteraction : InteractionEntry
 {
-	public EquipEquipmentInteraction() : base("Equip", range: 0)
+	public static readonly EquipPaperdollInteraction Instance = new EquipPaperdollInteraction();
+
+	private EquipPaperdollInteraction() : base("Equip", range: 0)
 	{
 	}
 
 	public override void OnClick(PlayerEntity source, WorldEntity target)
 	{
-		if (target is not Equipment equipment)
+		if (source is null || target is not Equipment equipment || equipment.Deleted)
 			return;
 
-		var slot = source.Paperdoll.CheckHold(equipment);
-		
-		if (!slot.HasValue)
+		if (!source.CanPerformAction)
 			return;
 
-		if (equipment.DropToContainer(source, source.Paperdoll.Group, slot.Value))
-			source.QueueRoundTimer();
-	}
+		if (source.Tranced && !source.IsSteering)
+		{
+			source.SendLocalizedMessage(Color.Red, 6300200); /* You can't do that while in a trance. */
+			return;
+		}
 
-	public override bool CanExecute(PlayerEntity source, WorldEntity target)
-	{
-		if (!base.CanExecute(source, target))
-			return false;
-		
-		if (target is not Equipment equipment || !source.CanCarry(equipment, equipment.Amount))
-			return false;
+		var container = source.Paperdoll;
 
-		if (equipment.Container is EquipmentContainer)
-			return false;
-		
-		return (source.Paperdoll.CheckHold(equipment).HasValue);
+		if (container is null)
+			return;
+
+		var destinationSlot = container.CheckHold(equipment);
+
+		if (!destinationSlot.HasValue)
+		{
+			source.SendLocalizedMessage(Color.Red, 6300372); /* You do not have enough room to do that. */
+			return;
+		}
+
+		source.Lift(equipment, equipment.Amount, out var liftRejectReason);
+
+		if (liftRejectReason.HasValue)
+			return;
+
+		source.DropHeld(InventoryGroup.Portrait, destinationSlot.Value);
 	}
 }
 
-public class UnequipEquipmentInteraction : InteractionEntry
+public class UnequipPaperdollInteraction : InteractionEntry
 {
-	public UnequipEquipmentInteraction() : base("Unequip")
+	public static readonly UnequipPaperdollInteraction Instance = new UnequipPaperdollInteraction();
+	
+	private UnequipPaperdollInteraction() : base("Unequip")
 	{
 	}
 
 	public override void OnClick(PlayerEntity source, WorldEntity target)
 	{
-		if (target is not Equipment equipment)
+		if (source is null || target is not Equipment equipment || equipment.Deleted)
 			return;
 
-		var backpackSlot = source.Backpack.CheckHold(equipment);
+		if (!source.CanPerformAction)
+			return;
 
-		if (backpackSlot.HasValue)
+		if (source.Tranced && !source.IsSteering)
 		{
-			if (equipment.DropToContainer(source, source.Backpack.Group, backpackSlot.Value))
-				source.QueueRoundTimer();
-
+			source.SendLocalizedMessage(Color.Red, 6300200); /* You can't do that while in a trance. */
 			return;
 		}
-		
-		var beltSlot = source.Belt.CheckHold(equipment);
 
-		if (beltSlot.HasValue)
+		/* Determine the best destination for the unequipped item. Prefer backpack,
+		 * then belt, and finally a free hand. */
+		var destinationGroup = default(InventoryGroup?);
+		var destinationSlot = default(int?);
+
+		var backpack = source.Backpack;
+
+		if (backpack != null)
 		{
-			if (equipment.DropToContainer(source, source.Belt.Group, beltSlot.Value))
-				source.QueueRoundTimer();
+			destinationSlot = backpack.CheckHold(equipment);
 
+			if (destinationSlot.HasValue)
+				destinationGroup = InventoryGroup.Backpack;
+		}
+
+		if (!destinationGroup.HasValue)
+		{
+			var belt = source.Belt;
+
+			if (belt != null)
+			{
+				destinationSlot = belt.CheckHold(equipment);
+
+				if (destinationSlot.HasValue)
+					destinationGroup = InventoryGroup.Belt;
+			}
+		}
+
+		if (!destinationGroup.HasValue)
+		{
+			if (source.HasFreeHand(out var handSlot) && handSlot.HasValue)
+			{
+				destinationGroup = InventoryGroup.Hands;
+				destinationSlot = handSlot.Value;
+			}
+		}
+
+		// If we couldn't find a destination, inform the user and exit.
+		if (!destinationGroup.HasValue)
+		{
+			source.SendLocalizedMessage(Color.Red, 6300372); /* You do not have enough room to do that. */
 			return;
 		}
-		
-		var handSlot = source.Hands.CheckHold(equipment);
 
-		if (handSlot.HasValue)
-		{
-			if (equipment.DropToContainer(source, source.Hands.Group, handSlot.Value))
-				source.QueueRoundTimer();
+		// Attempt to lift the item first.
+		source.Lift(equipment, equipment.Amount, out var liftRejectReason);
 
+		if (liftRejectReason.HasValue)
 			return;
-		}
-	}
 
-	public override bool CanExecute(PlayerEntity source, WorldEntity target)
-	{
-		if (!base.CanExecute(source, target))
-			return false;
-		
-		if (target is not Equipment equipment || !source.CanCarry(equipment, equipment.Amount))
-			return false;
-
-		if (equipment.Container is not EquipmentContainer)
-			return false;
-
-		var backpackSlot = source.Backpack.CheckHold(equipment);
-		
-		if (backpackSlot.HasValue)
-			return true;
-		
-		var beltSlot = source.Belt.CheckHold(equipment);
-		
-		if (beltSlot.HasValue)
-			return true;
-		
-		var handSlot = source.Hands.CheckHold(equipment);
-		
-		if (handSlot.HasValue)
-			return true;
-		
-		return false;
+		// Drop the item into the destination.
+		source.DropHeld(destinationGroup.Value, destinationSlot.Value);
 	}
 }
