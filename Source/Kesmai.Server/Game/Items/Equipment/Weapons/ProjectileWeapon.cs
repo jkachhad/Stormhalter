@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Collections.Generic;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Entity;
 using Kesmai.Server.Targeting;
 
@@ -61,6 +63,27 @@ public abstract class ProjectileWeapon : Weapon
 	/// </summary>
 	protected ProjectileWeapon(Serial serial) : base(serial)
 	{
+	}
+
+	/// <inheritdoc />
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (Container is Hands && ReferenceEquals(source.RightHand, this))
+		{
+			if (IsNocked)
+			{
+				entries.Add(ShootProjectileInteraction.Instance);
+				entries.Add(UnnockProjectileInteraction.Instance);
+			}
+			else
+			{
+				entries.Add(NockProjectileInteraction.Instance);
+			}
+		}
+
+		entries.Add(InteractionSeparator.Instance);
+
+		base.GetInteractions(source, entries);
 	}
 
 	/// <inheritdoc />
@@ -200,5 +223,115 @@ public class ShootItemTarget : MobileTarget
 				source.SendLocalizedMessage(Color.Red, 6100009); /* You can't do that here. */
 			}
 		}
+	}
+}
+
+public class NockProjectileInteraction : InteractionEntry
+{
+	public static readonly NockProjectileInteraction Instance = new NockProjectileInteraction();
+
+	private NockProjectileInteraction() : base("Nock", range: 0)
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (source is null || target is not ProjectileWeapon weapon || weapon.Deleted)
+			return;
+
+		if (!source.CanPerformAction)
+			return;
+
+		if (source.Tranced && !source.IsSteering)
+		{
+			source.SendLocalizedMessage(Color.Red, 6300200); /* You can't do that while in a trance. */
+			return;
+		}
+		
+		if (!source.HasFreeHand(out var slot))
+		{
+			source.SendLocalizedMessage(Color.Red, 6100020); /* You must have a free hand to do that. */
+			return;
+		}
+
+		// Must be wielded in right hand to nock.
+		if (source.RightHand != weapon)
+			return;
+
+		if (weapon.IsNocked)
+			return;
+
+		weapon.Nock();
+
+		var nockSound = weapon.NockSound;
+
+		if (nockSound > 0)
+			source.EmitSound(nockSound, 3, 6);
+
+		source.QueueRoundTimer();
+	}
+}
+
+public class UnnockProjectileInteraction : InteractionEntry
+{
+	public static readonly UnnockProjectileInteraction Instance = new UnnockProjectileInteraction();
+
+	private UnnockProjectileInteraction() : base("Unnock", range: 0)
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (source is null || target is not ProjectileWeapon weapon || weapon.Deleted)
+			return;
+
+		if (!source.CanPerformAction)
+			return;
+
+		if (source.Tranced && !source.IsSteering)
+		{
+			source.SendLocalizedMessage(Color.Red, 6300200); /* You can't do that while in a trance. */
+			return;
+		}
+		
+		// Must be wielded in right hand to unnock.
+		if (source.RightHand != weapon)
+			return;
+		
+		if (!weapon.IsNocked)
+			return;
+		
+		weapon.Unnock();
+		source.QueueRoundTimer();
+	}
+}
+
+public class ShootProjectileInteraction : InteractionEntry
+{
+	public static readonly ShootProjectileInteraction Instance = new ShootProjectileInteraction();
+
+	private ShootProjectileInteraction() : base("Shoot", range: 0)
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (source is null || target is not ProjectileWeapon weapon || weapon.Deleted)
+			return;
+
+		if (!source.CanPerformAction)
+			return;
+
+		if (source.Tranced && !source.IsSteering)
+		{
+			source.SendLocalizedMessage(Color.Red, 6300200); /* You can't do that while in a trance. */
+			return;
+		}
+
+		// Must be wielded in right hand and nocked to shoot.
+		if (source.RightHand != weapon || !weapon.IsNocked)
+			return;
+
+		source.Target = new ShootItemTarget(weapon);
 	}
 }
