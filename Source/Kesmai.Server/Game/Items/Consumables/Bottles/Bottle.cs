@@ -208,6 +208,8 @@ public abstract class Bottle : Consumable
 	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
+		base.GetInteractions(source, entries);
+
 		entries.Add(DrinkBottleInteraction.Instance);
 		entries.Add(InteractionSeparator.Instance);
 
@@ -217,8 +219,6 @@ public abstract class Bottle : Consumable
 			entries.Add(CloseBottleInteraction.Instance);
 		
 		entries.Add(InteractionSeparator.Instance);
-		
-		base.GetInteractions(source, entries);
 	}
 	
 	/// <inheritdoc />

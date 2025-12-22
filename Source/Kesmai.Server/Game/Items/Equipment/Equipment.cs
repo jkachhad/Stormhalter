@@ -200,14 +200,14 @@ public abstract class Equipment : ItemEntity
 
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
+		base.GetInteractions(source, entries);
+
 		if (Container is Paperdoll)
 			entries.Add(UnequipPaperdollInteraction.Instance);
 		else
 			entries.Add(EquipPaperdollInteraction.Instance);
 		
 		entries.Add(InteractionSeparator.Instance);
-		
-		base.GetInteractions(source, entries);
 	}
 }
 

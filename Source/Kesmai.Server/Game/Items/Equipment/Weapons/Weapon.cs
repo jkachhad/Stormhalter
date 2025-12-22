@@ -138,14 +138,14 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
+		base.GetInteractions(source, entries);
+
 		if (Container is Hands)
 			entries.Add(UnwieldWeaponInteraction.Instance);
 		else
 			entries.Add(WieldWeaponInteraction.Instance);
 
 		entries.Add(InteractionSeparator.Instance);
-
-		base.GetInteractions(source, entries);
 	}
 
 	/// <summary>
