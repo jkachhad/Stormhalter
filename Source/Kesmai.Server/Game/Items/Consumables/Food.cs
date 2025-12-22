@@ -38,12 +38,13 @@ public abstract class Food : Consumable
 		return _content != null;
 	}
 
-	public override void GetInteractions(PlayerEntity source, InteractionEntries entries)
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		base.GetInteractions(source, entries);
+		
+		entries.Add(InteractionSeparator.Instance);
 
 		entries.Add(EatFoodInteraction.Instance);
-		entries.Add(InteractionSeparator.Instance);
 	}
 	
 	/// <inheritdoc />

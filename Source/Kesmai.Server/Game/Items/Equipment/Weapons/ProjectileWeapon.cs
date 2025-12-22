@@ -66,9 +66,11 @@ public abstract class ProjectileWeapon : Weapon
 	}
 
 	/// <inheritdoc />
-	public override void GetInteractions(PlayerEntity source, InteractionEntries entries)
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		base.GetInteractions(source, entries);
+		
+		entries.Add(InteractionSeparator.Instance);
 
 		if (Container is Hands && ReferenceEquals(source.RightHand, this))
 		{
@@ -82,8 +84,6 @@ public abstract class ProjectileWeapon : Weapon
 				entries.Add(NockProjectileInteraction.Instance);
 			}
 		}
-
-		entries.Add(InteractionSeparator.Instance);
 	}
 
 	/// <inheritdoc />

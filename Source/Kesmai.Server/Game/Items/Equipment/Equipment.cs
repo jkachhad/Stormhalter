@@ -198,16 +198,16 @@ public abstract class Equipment : ItemEntity
 			player.AwardExperience(value);
 	}
 
-	public override void GetInteractions(PlayerEntity source, InteractionEntries entries)
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		base.GetInteractions(source, entries);
 
+		entries.Add(InteractionSeparator.Instance);
+		
 		if (Container is Paperdoll)
 			entries.Add(UnequipPaperdollInteraction.Instance);
 		else
 			entries.Add(EquipPaperdollInteraction.Instance);
-		
-		entries.Add(InteractionSeparator.Instance);
 	}
 }
 

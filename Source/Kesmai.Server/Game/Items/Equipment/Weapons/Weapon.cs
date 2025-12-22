@@ -136,16 +136,24 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 	}
 
-	public override void GetInteractions(PlayerEntity source, InteractionEntries entries)
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		base.GetInteractions(source, entries);
+
+		entries.Add(InteractionSeparator.Instance);
+
+		if (Container is Hands || Container is Belt || (Container is Backpack && Container.GetSlot(this) < 5))
+		{
+			// Only add the throw interaction if the weapon is throwable and is in a valid container.
+			// Use AddOrReplace to remove previously added throw interactions from base.GetInteractions.
+			if ((Flags & WeaponFlags.Throwable) != 0)
+				entries.AddOrReplace(ThrowItemInteraction.Instance);
+		}
 
 		if (Container is Hands)
 			entries.Add(UnwieldWeaponInteraction.Instance);
 		else
 			entries.Add(WieldWeaponInteraction.Instance);
-
-		entries.Add(InteractionSeparator.Instance);
 	}
 
 	/// <summary>
