@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 using Kesmai.Server.Spells;
 
@@ -131,6 +134,18 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// </summary>
 	protected Weapon(Serial serial) : base(serial)
 	{
+	}
+
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (Container is Hands)
+			entries.Add(UnwieldWeaponInteraction.Instance);
+		else
+			entries.Add(WieldWeaponInteraction.Instance);
+
+		entries.Add(InteractionSeparator.Instance);
+
+		base.GetInteractions(source, entries);
 	}
 
 	/// <summary>
@@ -440,5 +455,106 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 		Envenomed = 0x00000010,
 		IsEnchanted = 0x00000020
+	}
+}
+
+public class WieldWeaponInteraction : InteractionEntry
+{
+	public static readonly WieldWeaponInteraction Instance = new WieldWeaponInteraction();
+
+	private WieldWeaponInteraction() : base("Wield", range: 0)
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (source is null || target is not Weapon weapon || weapon.Deleted)
+			return;
+
+		if (!source.CanPerformAction)
+			return;
+
+		if (source.Tranced && !source.IsSteering)
+		{
+			source.SendLocalizedMessage(Color.Red, 6300200); /* You can't do that while in a trance. */
+			return;
+		}
+
+		if (!source.HasFreeHand(out var handSlot) || !handSlot.HasValue)
+		{
+			source.SendLocalizedMessage(Color.Red, 6100020); /* You must have a free hand to do that. */
+			return;
+		}
+
+		source.Lift(weapon, weapon.Amount, out var liftRejectReason);
+
+		if (liftRejectReason.HasValue)
+			return;
+
+		source.DropHeld(InventoryGroup.Hands, handSlot.Value);
+	}
+}
+
+public class UnwieldWeaponInteraction : InteractionEntry
+{
+	public static readonly UnwieldWeaponInteraction Instance = new UnwieldWeaponInteraction();
+
+	private UnwieldWeaponInteraction() : base("Unwield")
+	{
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (source is null || target is not Weapon weapon || weapon.Deleted)
+			return;
+
+		if (!source.CanPerformAction)
+			return;
+
+		if (source.Tranced && !source.IsSteering)
+		{
+			source.SendLocalizedMessage(Color.Red, 6300200); /* You can't do that while in a trance. */
+			return;
+		}
+
+		/* Prefer belt, then backpack. If both fail, keep in hands and inform the player. */
+		var destinationGroup = default(InventoryGroup?);
+		var destinationSlot = default(int?);
+
+		var belt = source.Belt;
+
+		if (belt != null)
+		{
+			destinationSlot = belt.CheckHold(weapon);
+
+			if (destinationSlot.HasValue)
+				destinationGroup = InventoryGroup.Belt;
+		}
+
+		if (!destinationGroup.HasValue)
+		{
+			var backpack = source.Backpack;
+
+			if (backpack != null)
+			{
+				destinationSlot = backpack.CheckHold(weapon);
+
+				if (destinationSlot.HasValue)
+					destinationGroup = InventoryGroup.Backpack;
+			}
+		}
+
+		if (!destinationGroup.HasValue)
+		{
+			source.SendLocalizedMessage(Color.Red, 6300372); /* You do not have enough room to do that. */
+			return;
+		}
+
+		source.Lift(weapon, weapon.Amount, out var liftRejectReason);
+
+		if (liftRejectReason.HasValue)
+			return;
+
+		source.DropHeld(destinationGroup.Value, destinationSlot.Value);
 	}
 }
