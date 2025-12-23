@@ -276,7 +276,7 @@ public abstract partial class TrainerEntity : VendorEntity
 	/// <summary>
 	/// Determines whether this instance can train the specified skill.
 	/// </summary>
-	private bool CanTrain(Skill skill, out TrainingEntry entry)
+	public bool CanTrain(Skill skill, out TrainingEntry entry)
 	{
 		return _training.TryGetValue(skill, out entry);
 	}
