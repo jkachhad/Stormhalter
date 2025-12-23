@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
@@ -107,6 +108,18 @@ public class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
 		}
 
 		return false;
+	}
+	
+	/// <inheritdoc />
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (Container is Hands)
+		{
+			entries.Add(ItemActionInteraction.Use);
+			entries.Add(InteractionSeparator.Instance);
+		}
+
+		base.GetInteractions(source, entries);
 	}
 		
 	protected void OnTarget(MobileEntity source, Corpse corpse)
