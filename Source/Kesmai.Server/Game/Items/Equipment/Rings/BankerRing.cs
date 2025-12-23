@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 using Kesmai.Server.Miscellaneous;
 using Kesmai.Server.Network;
@@ -155,6 +156,18 @@ public class BankerRing : Ring, ITreasure
 		}
 			
 		return true;
+	}
+
+	/// <inheritdoc />
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (Container is Rings)
+		{
+			entries.Add(ItemActionInteraction.Use);
+			entries.Add(InteractionSeparator.Instance);
+		}
+
+		base.GetInteractions(source, entries);
 	}
 		
 	private class InternalTarget : Target

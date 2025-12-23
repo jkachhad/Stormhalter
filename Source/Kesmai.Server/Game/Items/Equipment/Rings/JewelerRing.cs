@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 using Kesmai.Server.Targeting;
@@ -102,6 +103,18 @@ public class JewelerRing : Ring, ITreasure
 		entity.SendLocalizedMessage(6200350); /* Target a gem to transmute. */
 		entity.Target = new InternalTarget(this);
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (Container is Rings && CanTransmute)
+		{
+			entries.Add(ItemActionInteraction.Use);
+			entries.Add(InteractionSeparator.Instance);
+		}
+
+		base.GetInteractions(source, entries);
 	}
 		
 	private class InternalTarget : Target
