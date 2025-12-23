@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 using Kesmai.Server.Spells;
 using Kesmai.Server.Targeting;
@@ -61,6 +62,19 @@ public abstract class Wand : MeleeWeapon, IEmpowered, ICharged
 	/// </summary>
 	protected Wand(Serial serial) : base(serial)
 	{
+	}
+
+	/// <inheritdoc />
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		// Add primary use action when wielded.
+		if (Container is Hands)
+		{
+			entries.Add(ItemActionInteraction.Use);
+			entries.Add(InteractionSeparator.Instance);
+		}
+
+		base.GetInteractions(source, entries);
 	}
 
 	#region ICharged
