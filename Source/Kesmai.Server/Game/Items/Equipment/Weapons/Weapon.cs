@@ -143,7 +143,7 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 			// Only add the throw interaction if the weapon is throwable and is in a valid container.
 			// Use AddOrReplace to remove previously added throw interactions from base.GetInteractions.
 			if ((Flags & WeaponFlags.Throwable) != 0)
-				entries.AddOrIgnore(ThrowItemInteraction.Instance);
+				entries.AddOrIgnore(ItemActionInteraction.Throw);
 		}
 
 		if (Container is Hands)
