@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
 using Kesmai.Server.Targeting;
@@ -67,6 +68,18 @@ public class NitroPotion : Bottle
 	
 		entity.Target = new InternalTarget(this);
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if ((Container is Hands) || (Container is Backpack && Container.GetSlot(this) < 5))
+		{
+			entries.Add(ItemActionInteraction.Throw);
+			entries.Add(InteractionSeparator.Instance);
+		}
+
+		base.GetInteractions(source, entries);
 	}
 	
 	/// <inheritdoc />
