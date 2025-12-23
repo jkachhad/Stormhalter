@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Humanizer;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
@@ -107,6 +108,18 @@ public class Corpse : ItemEntity
 			return base.GetAction();
 			
 		return ActionType.Search;
+	}
+
+	/// <inheritdoc />
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (Parent is null)
+		{
+			entries.Add(ItemActionInteraction.Search);
+			entries.Add(InteractionSeparator.Instance);
+		}
+
+		base.GetInteractions(source, entries);
 	}
 
 	/// <inheritdoc />
