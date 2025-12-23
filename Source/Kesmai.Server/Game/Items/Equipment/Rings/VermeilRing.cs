@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -77,6 +78,18 @@ public class VermeilRing : Ring, ITreasure
 		}
 
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (ReferenceEquals(source.LeftHand, this))
+		{
+			entries.Add(ItemActionInteraction.Use);
+			entries.Add(InteractionSeparator.Instance);
+		}
+
+		base.GetInteractions(source, entries);
 	}
 	
 	/// <summary>
