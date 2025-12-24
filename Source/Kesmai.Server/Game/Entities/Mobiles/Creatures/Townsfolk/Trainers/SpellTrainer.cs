@@ -1,8 +1,10 @@
 using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
+using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
@@ -12,6 +14,23 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 		
 	public SpellTrainer()
 	{
+	}
+	
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (source != null && CanTrain(source.Profession))
+		{
+			var skillLevel = source.GetSkillLevel(Skill.Magic);
+			var profession = source.Profession;
+
+			var spells = profession.GetSpells();
+			var available = spells.Where(st => st.SkillLevel <= skillLevel && !st.IsTaught(source)).ToList();
+
+			foreach (var spell in available)
+				entries.Add(new TeachSpellInteraction(spell));
+		}
+
+		base.GetInteractions(source, entries);
 	}
 
 	public override void HandleOrder(OrderEventArgs args)
@@ -35,8 +54,7 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 				var profession = source.Profession;
 
 				var spells = profession.GetSpells();
-				var available = spells.Where(st => st.SkillLevel <= skillLevel
-				                                   && !st.IsTaught(source)).ToList();
+				var available = spells.Where(st => st.SkillLevel <= skillLevel && !st.IsTaught(source)).ToList();
 
 				if (available.Any())
 				{
@@ -72,8 +90,7 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 					var profession = source.Profession;
 
 					var spells = profession.GetSpells();
-					var available = spells.Where(st => st.SkillLevel <= skillLevel
-					                                   && !st.IsTaught(source)).ToList();
+					var available = spells.Where(st => st.SkillLevel <= skillLevel && !st.IsTaught(source)).ToList();
 
 					if (available.Any())
 					{
@@ -141,6 +158,89 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 			}
 
 			return;
+		}
+	}
+
+	public class TeachSpellInteraction : InteractionEntry
+	{
+		private ProfessionSpell _spell;
+
+		public TeachSpellInteraction(ProfessionSpell spell) : base(new LocalizationEntry(6500012, spell.Name, spell.Cost.ToString()))
+		{
+			_spell = spell;
+		}
+
+		public override void OnClick(PlayerEntity source, WorldEntity target)
+		{
+			if (source is null || target is not SpellTrainer trainer)
+				return;
+
+			if (!trainer.CanTrain(source.Profession))
+				return;
+
+			if (!source.CanPerformAction)
+				return;
+
+			if (source.Tranced && !source.IsSteering)
+			{
+				source.SendLocalizedMessage(System.Drawing.Color.Red, 6300200); /* You can't do that while in a trance. */
+				return;
+			}
+
+			if (trainer.AtCounter(source, out var counter))
+			{
+				var skillLevel = source.GetSkillLevel(Skill.Magic);
+				var profession = source.Profession;
+
+				var spells = profession.GetSpells();
+				var available = spells.Where(st => st.SkillLevel <= skillLevel && !st.IsTaught(source)).ToList();
+
+				if (!available.Any())
+				{
+					trainer.SayTo(source, 6300323); /* There are no spells I can teach you. */
+					return;
+				}
+				
+				if (!available.Contains(_spell))
+				{
+					trainer.SayTo(source, 6300321); /* That spell is not yet available to you. */
+					return;
+				}
+
+				var segment = trainer.Segment;
+				var gold = segment.GetItemsAt(counter).OfType<Gold>().ToList();
+
+				if (!gold.Any())
+				{
+					if (trainer.Counters.Any())
+						trainer.SayTo(source, 6300246); /* Please put some coins on the counter. */
+					else
+						trainer.SayTo(source, 6300247); /* Please put some coins on the ground. */
+
+					return;
+				}
+
+				var totalGold = gold.Sum(g => g.Amount);
+				var spellCost = (uint)_spell.Cost;
+
+				if (totalGold < spellCost || !trainer.ConsumeFromLocation<Gold>(counter, spellCost))
+				{
+					trainer.SayTo(source, 6300243); /* Are you trying to be funny? */
+					return;
+				}
+
+				foreach (var spellType in _spell.Spells)
+					source.Spells.Learn(spellType);
+
+				trainer.SayTo(source, 6300325, _spell.Name); /* You have learned the {0} spell. */
+			}
+			else
+			{
+				if (trainer.Counters.Any())
+					trainer.SayTo(source, 6300236); /* Please step up to a counter. */
+				else
+					trainer.SayTo(source, 6300237); /* Please stand closer to me. */
+			}
 		}
 	}
 }
