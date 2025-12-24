@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using Kesmai.Server.Accounting;
-using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
 using Kesmai.Server.Network;
+using Testura.Code.Extensions.Naming;
 
 namespace Kesmai.Server.Game;
 
@@ -21,18 +19,13 @@ public partial class WeaponTrainer : TrainerEntity
 	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
-		/*
 		foreach (var skill in Skill.All)
 		{
-			if (CanTrain(skill, out var entry))
-			{
-				entries.Add(new TrainSkillInteraction(skill)
-				{
-					Enabled = source.Skills[skill] >= entry.Minimum && source.Skills[skill] < entry.Maximum,
-				});
-			}
+			var skillLevel = source.GetSkillLevel(skill);
+			
+			if (CanTrain(skill, out var entry) && skillLevel >= entry.Minimum && skillLevel < entry.Maximum)
+				entries.Add(new TrainSkillInteraction(skill));
 		}
-		*/
 		
 		base.GetInteractions(source, entries);
 	}
@@ -42,7 +35,7 @@ public class TrainSkillInteraction : InteractionEntry
 {
 	private Skill Skill { get; }
 
-	public TrainSkillInteraction(Skill skill) : base(new LocalizationEntry(6500020, skill.Name), range: 0)
+	public TrainSkillInteraction(Skill skill) : base(new LocalizationEntry(6500020, skill.Name.FirstLetterToUpperCase()), range: 0)
 	{
 		Skill = skill;
 	}
