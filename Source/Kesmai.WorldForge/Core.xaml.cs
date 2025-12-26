@@ -128,10 +128,10 @@ public partial class Core : Application
 		{
 			try
 			{
-				vfsStorage.MountInfos.Add(new VfsMountInfo(new GZipStorage(vfsStorage, "Data.bin"), null));
-				vfsStorage.MountInfos.Add(new VfsMountInfo(new GZipStorage(vfsStorage, "Kesmai.bin"), null));
-				vfsStorage.MountInfos.Add(new VfsMountInfo(new GZipStorage(vfsStorage, "Stormhalter.bin"), null));
-				vfsStorage.MountInfos.Add(new VfsMountInfo(new GZipStorage(vfsStorage, "UI.bin"), null));
+				vfsStorage.MountInfos.Add(new VfsMountInfo(new ZipStorage(vfsStorage, "Data.bin"), null));
+				vfsStorage.MountInfos.Add(new VfsMountInfo(new ZipStorage(vfsStorage, "Kesmai.bin"), null));
+				vfsStorage.MountInfos.Add(new VfsMountInfo(new ZipStorage(vfsStorage, "Stormhalter.bin"), null));
+				vfsStorage.MountInfos.Add(new VfsMountInfo(new ZipStorage(vfsStorage, "UI.bin"), null));
 			}
 			catch
 			{

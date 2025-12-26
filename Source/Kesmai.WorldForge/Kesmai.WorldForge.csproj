@@ -8,15 +8,9 @@
         <UseWPF>true</UseWPF>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <FileAlignment>512</FileAlignment>
         <Deterministic>true</Deterministic>
-        
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-        
-        <BaseIntermediateOutputPath>.vs</BaseIntermediateOutputPath>
-        
+
         <LangVersion>13</LangVersion>
 
         <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
@@ -25,8 +19,6 @@
         <NoWarn>$(NoWarn);VSTHRD003</NoWarn>
         <NoWarn>$(NoWarn);VSTHRD110</NoWarn>
         <NoWarn>$(NoWarn);MSB3539</NoWarn>
-        <Configurations>Release;Debug</Configurations>
-        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
     
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -107,8 +99,10 @@
     <PropertyGroup>
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
     </PropertyGroup>
-    
-    <Target Name="CopySingleFile" AfterTargets="Publish">
-        <Copy SourceFiles="$(PublishedSingleFilePath)" DestinationFolder="..\..\..\Kesmai\Build\Publish" />
+
+    <Target Name="CleanupAfterPublish" AfterTargets="Publish">
+        <!-- Clean-up -->
+        <Message Text="Deleting reference: @(ReferenceCopyLocalPaths->'$(PublishDir)%(Filename)%(Extension)')" />
+        <Delete Files="@(ReferenceCopyLocalPaths->'$(PublishDir)%(Filename)%(Extension)')" ContinueOnError="WarnAndContinue" />
     </Target>
 </Project>

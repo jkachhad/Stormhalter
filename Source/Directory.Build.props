@@ -3,10 +3,6 @@
         <!-- Set the solution directory to the directory of this file -->
         <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
 
-        <!-- Clean -->
-        <BaseIntermediateOutputPath>.vs</BaseIntermediateOutputPath>
-        <MSBuildProjectExtensionsPath>.vs</MSBuildProjectExtensionsPath>
-
         <!-- Common target framework -->
         <TargetFramework>net8.0-windows</TargetFramework>
 
@@ -16,10 +12,19 @@
         <!-- Common configuration and platform settings -->
         <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
+		
+		 <!-- Shared runtime/emit defaults -->
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 
-        <!-- Project state -->
-        <ProjectState>Beta</ProjectState>
+		 <!-- Centralized build and intermediate output paths outside the source tree -->
+        <BuildRoot>$([System.IO.Path]::GetFullPath('$(SolutionDir)..\Build\'))</BuildRoot>
+        <BaseIntermediateOutputPath>$(BuildRoot)\.obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
 
-        <DefineConstants>$(ProjectState)</DefineConstants>
+        <!-- Default output subdirectory follows the project name -->
+        <OutputSubdirectory>$(MSBuildProjectName)</OutputSubdirectory>
+    </PropertyGroup>
+	
+	<PropertyGroup>
+        <OutputPath>$(BuildRoot)\$(OutputSubdirectory)\$(Configuration)\</OutputPath>
     </PropertyGroup>
 </Project>
