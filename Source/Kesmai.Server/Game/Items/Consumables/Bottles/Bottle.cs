@@ -302,17 +302,6 @@ public class DrinkBottleInteraction : InteractionEntry
 		if (bottle.Consume(source, !bottle.IsOpen))
 			source.QueueRoundTimer();
 	}
-
-	public override bool CanExecute(PlayerEntity source, WorldEntity target)
-	{
-		if (!base.CanExecute(source, target))
-			return false;
-		
-		if (target is not Bottle bottle)
-			return false;
-
-		return bottle.CanConsume(source);
-	}
 }
 
 /// <summary>
@@ -341,17 +330,6 @@ public class OpenBottleInteraction : InteractionEntry
 		
 		source.QueueRoundTimer();
 	}
-
-	public override bool CanExecute(PlayerEntity source, WorldEntity target)
-	{
-		if (!base.CanExecute(source, target))
-			return false;
-		
-		if (target is not Bottle bottle)
-			return false;
-		
-		return bottle.CanToggle(source, opening: true);
-	}
 }
 
 /// <summary>
@@ -379,16 +357,5 @@ public class CloseBottleInteraction : InteractionEntry
 		bottle.Close(source);
 		
 		source.QueueRoundTimer();
-	}
-
-	public override bool CanExecute(PlayerEntity source, WorldEntity target)
-	{
-		if (!base.CanExecute(source, target))
-			return false;
-		
-		if (target is not Bottle bottle)
-			return false;
-		
-		return bottle.CanToggle(source, opening: false);
 	}
 }

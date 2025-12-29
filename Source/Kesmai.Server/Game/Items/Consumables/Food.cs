@@ -96,15 +96,4 @@ public class EatFoodInteraction : InteractionEntry
 		if (food.Consume(source))
 			source.QueueRoundTimer();
 	}
-
-	public override bool CanExecute(PlayerEntity source, WorldEntity target)
-	{
-		if (!base.CanExecute(source, target))
-			return false;
-		
-		if (target is not Food food)
-			return false;
-
-		return food.CanConsume(source);
-	}
 }
