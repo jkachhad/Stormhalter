@@ -18,9 +18,17 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
-		if (source != null && CanTrain(source.Profession))
+		var skill = Skill.Magic;
+		var skillLevel = source.GetSkillLevel(skill);
+
+		if (CanTrain(skill, out var entry) && skillLevel >= entry.Minimum && skillLevel < entry.Maximum)
 		{
-			var skillLevel = source.GetSkillLevel(Skill.Magic);
+			entries.Add(new TrainSkillInteraction(skill));
+			entries.Add(InteractionSeparator.Instance);
+		}
+
+		if (CanTrain(source.Profession))
+		{
 			var profession = source.Profession;
 
 			var spells = profession.GetSpells();
@@ -28,6 +36,8 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 
 			foreach (var spell in available)
 				entries.Add(new TeachSpellInteraction(spell));
+			
+			entries.Add(InteractionSeparator.Instance);
 		}
 
 		base.GetInteractions(source, entries);
