@@ -23,7 +23,9 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 
 		if (CanTrain(skill, out var entry) && skillLevel >= entry.Minimum && skillLevel < entry.Maximum)
 		{
+			entries.Add(new CritiqueSkillInteraction(skill));
 			entries.Add(new TrainSkillInteraction(skill));
+
 			entries.Add(InteractionSeparator.Instance);
 		}
 

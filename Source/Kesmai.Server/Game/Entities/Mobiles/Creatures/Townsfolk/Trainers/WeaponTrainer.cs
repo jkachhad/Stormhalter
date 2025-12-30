@@ -164,3 +164,53 @@ public class TrainSkillInteraction : InteractionEntry
 		}
 	}
 }
+
+public class CritiqueSkillInteraction : InteractionEntry
+{
+	private Skill Skill { get; }
+
+	public CritiqueSkillInteraction(Skill skill) : base(new LocalizationEntry(6500021, skill.Name.FirstLetterToUpperCase()), range: 0)
+	{
+		Skill = skill;
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (source is null || target is not TrainerEntity trainer)
+			return;
+
+		if (!trainer.CanTrain(source.Profession))
+		{
+			trainer.SayTo(source, 6300322); /* You are not of my profession! Get out! */
+			return;
+		}
+
+		if (!trainer.CanTrain(Skill, out var _))
+		{
+			trainer.SayTo(source, 6300248); /* I am not qualified to critique that skill. */
+			return;
+		}
+
+		var skillAchieved = source.Skills.GetAchievedLevel(Skill);
+		var skillAchievedLevel = (int)skillAchieved;
+		var skillPercent = (skillAchieved - skillAchievedLevel) * 100;
+		var skillAchievedTitle = Skill.GetTitle(source, skillAchievedLevel);
+
+		var skillCurrent = source.Skills.GetCurrentLevel(Skill);
+		var skillCurrentTitle = Skill.GetTitle(source, (int)skillCurrent);
+
+		var entries = new List<LocalizationEntry>();
+
+		if (skillPercent > 0)
+			entries.Add(new LocalizationEntry(6300249, $"{(int)skillPercent}", skillCurrentTitle)); /* You are {0:#0} percent above the level of {1}. */
+		else if (skillAchievedLevel > 0)
+			entries.Add(new LocalizationEntry(6300250, skillCurrentTitle)); /* You have achieved the level of {0}. */
+		else
+			entries.Add(new LocalizationEntry(6300251, skillCurrentTitle)); /* You are {0}. */
+
+		if (skillCurrent < skillAchieved)
+			entries.Add(new LocalizationEntry(6300252, skillAchievedTitle)); /* You are below your potential level of {0}. */
+
+		trainer.SayTo(source, entries.ToArray());
+	}
+}
