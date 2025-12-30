@@ -1,16 +1,45 @@
-using System.IO;
-using System.Linq;
+using System;
+using System.Collections.Generic;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
+using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game;
 
 public partial class Humanoid : CreatureEntity
 {
+	private static readonly TimeSpan GossipCooldown = TimeSpan.FromMinutes(10);
+	
+	private record GossipConversation(DateTime NextGossipTime, int RequestCount = 0)
+	{
+		public DateTime NextGossipTime { get; set; } = NextGossipTime;
+		public int RequestCount { get; set; } = RequestCount;
+		
+		public bool IsAvailable => (Server.Now >= NextGossipTime);
+	}
+	
+	private Dictionary<PlayerEntity, GossipConversation> _gossips = new Dictionary<PlayerEntity, GossipConversation>();
+	
+	/// <summary>
+	/// Gets or sets the gossip interactions for this humanoid.
+	/// </summary>
+	/// <remarks>
+	/// Gossiping is typically initiated by a player using an interaction. The reaction from the humanoid
+	/// can vary based on the implementation of this action. This could involve providing information,
+	/// giving quests, or other behaviors.
+	///
+	/// Try to keep the number of gossip interactions reasonable to avoid overwhelming players with options. Furthermore,
+	/// implement interactions as static instances where possible to reduce memory overhead. For example, if multiple humanoids
+	/// share the same gossip interaction, they should reference the same instance rather than creating new one.
+	/// </remarks>
+	public List<GossipInteraction> Gossips { get; set; }
+	
 	public Humanoid()
 	{
 		Alignment = Alignment.Chaotic;
 		CanSwim = true;
+
 		AddStatus(new BreatheWaterStatus(this));
 	}
 		
@@ -33,5 +62,94 @@ public partial class Humanoid : CreatureEntity
 			_brain = new RangedAI(this);
 		else
 			_brain = new CombatAI(this);
+	}
+	
+	/// <inheritdoc/>
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (Gossips != null && CanGossip(source))
+		{
+			entries.AddRange(Gossips);
+			entries.Add(InteractionSeparator.Instance);
+		}
+		
+		base.GetInteractions(source, entries);
+	}
+	
+	protected virtual bool CanGossip(PlayerEntity source)
+	{
+		// By default, all players can gossip with humanoids that have gossip interactions.
+		return true;
+	}
+
+	/// <summary>
+	/// Handles a gossip request from the specified yapper.
+	/// </summary>
+	/// <param name="yapper">The player looking to gossip with this instance.</param>
+	public virtual bool HandleGossip(PlayerEntity yapper)
+	{
+		// Can the player gossip with this humanoid?
+		if (!CanGossip(yapper))
+			return false;
+
+		// Look up or create the gossip conversation state for this player.
+		if (!_gossips.TryGetValue(yapper, out var gossip))
+			_gossips.Add(yapper, gossip = new GossipConversation(Server.Now));
+		
+		if (!gossip.IsAvailable)
+		{
+			// Increase the frustration level based on the number of requests.
+			gossip.RequestCount++;
+			
+			var frustrationTier = Math.Min(((gossip.RequestCount + 1) / 2), 6);
+			var frustrationRoll = Utility.RandomBetween(1, 4);
+			
+			var responseLocalization = 6300435 + ((frustrationTier - 1) * 4) + (frustrationRoll - 1);
+			
+			SayTo(yapper, responseLocalization);
+			
+			if (Utility.RandomDouble() < 0.2)
+			{
+				var emoteText = frustrationTier switch
+				{
+					1 => "lowers their voice and glances around",
+					2 => "folds their arms and looks around nervously",
+					3 => "rubs their face and sighs",
+					4 => "turns slightly away from you",
+					5 => "covers their mouth and looks panicked",
+					_ => "refuses to engage further"
+				};
+				
+				Emote(emoteText);
+			}
+
+			return false;
+		}
+
+		// Reset the gossip state and allow the gossip interaction to proceed.
+		gossip.NextGossipTime = Server.Now + GossipCooldown;
+		gossip.RequestCount = 0;
+			
+		return true;
+	}
+}
+
+public class GossipInteraction : InteractionEntry
+{
+	private Action<Humanoid, PlayerEntity> _action;
+	
+	public GossipInteraction(string subject, Action<Humanoid, PlayerEntity> action) : base(new LocalizationEntry(6500013, subject), range: 2)
+	{
+		_action = action;
+	}
+	
+	public override void OnClick(PlayerEntity yapper, WorldEntity target)
+	{
+		if (yapper is null || target is not Humanoid humanoid)
+			return;
+
+		// Can the player gossip with this humanoid?
+		if (humanoid.HandleGossip(yapper) && _action != null)
+			_action(humanoid, yapper);
 	}
 }
