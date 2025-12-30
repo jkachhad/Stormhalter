@@ -11,11 +11,10 @@ public partial class Humanoid : CreatureEntity
 {
 	private static readonly TimeSpan GossipCooldown = TimeSpan.FromMinutes(10);
 	
-	private record GossipConversation(DateTime NextGossipTime, int RequestCount = 0)
+	private record GossipConversation(DateTime NextGossipTime)
 	{
 		public DateTime NextGossipTime { get; set; } = NextGossipTime;
-		public int RequestCount { get; set; } = RequestCount;
-		
+
 		public bool IsAvailable => (Server.Now >= NextGossipTime);
 	}
 	
@@ -78,6 +77,10 @@ public partial class Humanoid : CreatureEntity
 	
 	protected virtual bool CanGossip(PlayerEntity source)
 	{
+		// Check if there is an existing gossip conversation state for this player.
+		if (_gossips.TryGetValue(source, out var gossip))
+			return gossip.IsAvailable;
+		
 		// By default, all players can gossip with humanoids that have gossip interactions.
 		return true;
 	}
@@ -95,40 +98,9 @@ public partial class Humanoid : CreatureEntity
 		// Look up or create the gossip conversation state for this player.
 		if (!_gossips.TryGetValue(yapper, out var gossip))
 			_gossips.Add(yapper, gossip = new GossipConversation(Server.Now));
-		
-		if (!gossip.IsAvailable)
-		{
-			// Increase the frustration level based on the number of requests.
-			gossip.RequestCount++;
-			
-			var frustrationTier = Math.Min(((gossip.RequestCount + 1) / 2), 6);
-			var frustrationRoll = Utility.RandomBetween(1, 4);
-			
-			var responseLocalization = 6300435 + ((frustrationTier - 1) * 4) + (frustrationRoll - 1);
-			
-			SayTo(yapper, responseLocalization);
-			
-			if (Utility.RandomDouble() < 0.2)
-			{
-				var emoteText = frustrationTier switch
-				{
-					1 => "lowers their voice and glances around",
-					2 => "folds their arms and looks around nervously",
-					3 => "rubs their face and sighs",
-					4 => "turns slightly away from you",
-					5 => "covers their mouth and looks panicked",
-					_ => "refuses to engage further"
-				};
-				
-				Emote(emoteText);
-			}
-
-			return false;
-		}
 
 		// Reset the gossip state and allow the gossip interaction to proceed.
 		gossip.NextGossipTime = Server.Now + GossipCooldown;
-		gossip.RequestCount = 0;
 			
 		return true;
 	}
