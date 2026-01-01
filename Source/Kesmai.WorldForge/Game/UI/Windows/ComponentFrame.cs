@@ -80,7 +80,7 @@ public abstract class ComponentFrame : Grid
 	{
 		Style = "Client-Content";
 		HorizontalAlignment = HorizontalAlignment.Stretch;
-		MinWidth = 420;
+		MinWidth = 800;
 		
 		_componentProvider = provider;
 	}

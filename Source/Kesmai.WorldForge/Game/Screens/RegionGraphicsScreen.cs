@@ -21,7 +21,7 @@ namespace Kesmai.WorldForge;
 
 public class RegionGraphicsScreen : WorldGraphicsScreen
 {
-	private const float ComponentPanelWidth = 420f;
+	private const float ComponentPanelWidth = 550f;
 
 	private static List<Keys> _selectorKeys = new List<Keys>()
 	{
