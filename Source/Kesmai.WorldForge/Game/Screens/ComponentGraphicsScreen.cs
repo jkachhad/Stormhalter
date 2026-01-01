@@ -34,8 +34,9 @@ public class ComponentGraphicsScreen : InteropGraphicsScreen
 		spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
 		
 		// render the component at the center.
-		var cx = (int)(PresentationTarget.ActualWidth - 100) / 2;
-		var cy = (int)(PresentationTarget.ActualHeight - 100) / 2;
+		var viewport = graphicsDevice.Viewport;
+		var cx = (viewport.Width - 100) / 2;
+		var cy = (viewport.Height - 100) / 2;
 		
 		// calculate bounds
 		var bounds = new Rectangle(cx - 100, cy - 100, 200, 200);
@@ -60,7 +61,7 @@ public class ComponentGraphicsScreen : InteropGraphicsScreen
 					if (sprite.Offset != Vector2F.Zero)
 						spriteBounds.Offset((int)Math.Floor(sprite.Offset.X), (int)Math.Floor(sprite.Offset.Y));
 
-					spriteBatch.Draw(sprite.Texture, bounds, render.Color);
+					spriteBatch.Draw(sprite.Texture, spriteBounds, render.Color);
 				}
 			}
 		}

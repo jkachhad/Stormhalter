@@ -29,7 +29,7 @@ public class DropDownPropertyEditor : PropertyEditor
 			
 		_internal = new DropDownButton()
 		{
-			Width = 150,
+			Width = 220,
 		};
 			
 		_internal.CreateControlForItem += (o) =>

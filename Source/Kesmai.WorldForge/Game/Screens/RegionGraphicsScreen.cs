@@ -21,6 +21,8 @@ namespace Kesmai.WorldForge;
 
 public class RegionGraphicsScreen : WorldGraphicsScreen
 {
+	private const float ComponentPanelWidth = 420f;
+
 	private static List<Keys> _selectorKeys = new List<Keys>()
 	{
 		Keys.F1, Keys.F2, Keys.F3, Keys.F4, Keys.F5, Keys.F6, Keys.F7, Keys.F8
@@ -36,7 +38,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	protected RegionVisibility _visibility;
 
 	private Grid _grid;
+	private ColumnDefinition _componentColumn;
 	private Button _resetButton;
+	private Button _componentToggleButton;
 	private ScrollViewer _componentScrollViewer;
 	private StackPanel _componentFrames;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 	
@@ -45,6 +49,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	private ComponentFrame _selectedComponentFrame;
 
 	private bool _invalidated;
+	private bool _isComponentPanelCollapsed;
 
 	public override bool DisplayComments => _visibility.ShowComments;
 
@@ -205,7 +210,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		};
 		
 		_grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
-		_grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
+		_componentColumn = new ColumnDefinition() { Width = new GridLength(ComponentPanelWidth) };
+		_grid.ColumnDefinitions.Add(_componentColumn);
 
 		_grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
 		_grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
@@ -230,6 +236,26 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 		_resetButton.Click += (o, args) => { Reset(); };
 		
+		if (_componentToggleButton is null)
+		{
+			_componentToggleButton = new Button()
+			{
+				Content = new TextBlock()
+				{
+					Text = ">", FontSize = 10, HorizontalAlignment = HorizontalAlignment.Center,
+					Font = "Tahoma", Foreground = Color.White,
+				},
+				Style = "Client-Button",
+				
+				HorizontalAlignment = HorizontalAlignment.Right,
+				VerticalAlignment = VerticalAlignment.Top,
+				Margin = new Vector4F(0, 4, 30, 0),
+				
+				ToolTip = "Collapse"
+			};
+		}
+		_componentToggleButton.Click += (o, args) => { ToggleComponentPanel(); };
+
 		_grid.AddChild(_resetButton, 2, 2);
 		
 		_componentFrames = new StackPanel()
@@ -242,6 +268,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			Style = "Client-ScrollViewer",
 			Content = _componentFrames,
 
+			MinWidth = ComponentPanelWidth,
 			HorizontalAlignment = HorizontalAlignment.Stretch,
 			VerticalAlignment = VerticalAlignment.Stretch,
 
@@ -250,6 +277,41 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		};
 
 		_grid.AddChild(_componentScrollViewer, 2, 1);
+		_grid.AddChild(_componentToggleButton, 2, 1);
+
+		UpdateComponentPanelLayout();
+	}
+
+	private void ToggleComponentPanel()
+	{
+		_isComponentPanelCollapsed = !_isComponentPanelCollapsed;
+		UpdateComponentPanelLayout();
+	}
+
+	private void UpdateComponentPanelLayout()
+	{
+		if (_componentScrollViewer is null || _componentToggleButton is null || _componentColumn is null)
+			return;
+
+		_componentScrollViewer.IsVisible = !_isComponentPanelCollapsed;
+		_componentToggleButton.ToolTip = _isComponentPanelCollapsed
+			? "Expand"
+			: "Collapse";
+		_componentToggleButton.Content = new TextBlock()
+		{
+			Text = _isComponentPanelCollapsed ? "<" : ">",
+			FontSize = 10,
+			HorizontalAlignment = HorizontalAlignment.Center,
+			Font = "Tahoma",
+			Foreground = Color.White,
+		};
+		_componentToggleButton.Margin = _isComponentPanelCollapsed
+			? new Vector4F(0, 4, 4, 0)
+			: new Vector4F(0, 4, 30, 0);
+
+		_componentColumn.Width = _isComponentPanelCollapsed
+			? new GridLength(0, GridUnitType.Auto)
+			: new GridLength(ComponentPanelWidth);
 	}
 
 	public void InvalidateFrames()

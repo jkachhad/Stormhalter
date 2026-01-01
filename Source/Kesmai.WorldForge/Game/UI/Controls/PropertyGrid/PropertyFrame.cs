@@ -51,7 +51,7 @@ public class PropertyFrame : StackPanel
 
 		var nameCanvas = new Canvas()
 		{
-			Width = 150,
+			Width = 180,
 			VerticalAlignment = VerticalAlignment.Center,
 		};
 		_nameBlock = new TextBlock()
