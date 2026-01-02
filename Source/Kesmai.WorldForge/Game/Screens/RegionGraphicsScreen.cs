@@ -209,9 +209,10 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			IsVisible = false
 		};
 		
+		// Create a 2x2 grid.
 		_grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
-		_componentColumn = new ColumnDefinition() { Width = new GridLength(ComponentPanelWidth) };
-		_grid.ColumnDefinitions.Add(_componentColumn);
+		_grid.ColumnDefinitions.Add(_componentColumn = new ColumnDefinition()
+			{ Width = new GridLength(ComponentPanelWidth) });
 
 		_grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
 		_grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
@@ -245,18 +246,15 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 					Text = ">", FontSize = 10, HorizontalAlignment = HorizontalAlignment.Center,
 					Font = "Tahoma", Foreground = Color.White,
 				},
-				Style = "Client-Button",
+				Style = "Client-Button-Orange",
 				
 				HorizontalAlignment = HorizontalAlignment.Right,
-				VerticalAlignment = VerticalAlignment.Top,
-				Margin = new Vector4F(0, 4, 30, 0),
+				VerticalAlignment = VerticalAlignment.Center,
 				
 				ToolTip = "Collapse"
 			};
 		}
 		_componentToggleButton.Click += (o, args) => { ToggleComponentPanel(); };
-
-		_grid.AddChild(_resetButton, 2, 2);
 		
 		_componentFrames = new StackPanel()
 		{
@@ -277,7 +275,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		};
 
 		_grid.AddChild(_componentScrollViewer, 2, 1);
-		_grid.AddChild(_componentToggleButton, 2, 1);
+		_grid.AddChild(_resetButton, 2, 2);
+		_grid.AddChild(_componentToggleButton, 1, 2);
 
 		UpdateComponentPanelLayout();
 	}
@@ -305,12 +304,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			Font = "Tahoma",
 			Foreground = Color.White,
 		};
-		_componentToggleButton.Margin = _isComponentPanelCollapsed
-			? new Vector4F(0, 4, 4, 0)
-			: new Vector4F(0, 4, 30, 0);
 
 		_componentColumn.Width = _isComponentPanelCollapsed
-			? new GridLength(0, GridUnitType.Auto)
+			? new GridLength(0, GridUnitType.Pixel)
 			: new GridLength(ComponentPanelWidth);
 	}
 
