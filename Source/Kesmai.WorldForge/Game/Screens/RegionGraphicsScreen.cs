@@ -49,7 +49,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	private ComponentFrame _selectedComponentFrame;
 
 	private bool _invalidated;
-	private bool _isComponentPanelCollapsed;
+	private bool _collapsedComponents;
 
 	public override bool DisplayComments => _visibility.ShowComments;
 
@@ -208,8 +208,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		{
 			IsVisible = false
 		};
-		
-		// Create a 2x2 grid.
+
 		_grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
 		_grid.ColumnDefinitions.Add(_componentColumn = new ColumnDefinition()
 			{ Width = new GridLength(ComponentPanelWidth) });
@@ -243,15 +242,13 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			{
 				Content = new TextBlock()
 				{
-					Text = ">", FontSize = 10, HorizontalAlignment = HorizontalAlignment.Center,
+					FontSize = 10, HorizontalAlignment = HorizontalAlignment.Center,
 					Font = "Tahoma", Foreground = Color.White,
 				},
 				Style = "Client-Button-Orange",
 				
 				HorizontalAlignment = HorizontalAlignment.Right,
 				VerticalAlignment = VerticalAlignment.Center,
-				
-				ToolTip = "Collapse"
 			};
 		}
 		_componentToggleButton.Click += (o, args) => { ToggleComponentPanel(); };
@@ -283,7 +280,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	private void ToggleComponentPanel()
 	{
-		_isComponentPanelCollapsed = !_isComponentPanelCollapsed;
+		_collapsedComponents = !_collapsedComponents;
+		
 		UpdateComponentPanelLayout();
 	}
 
@@ -292,22 +290,13 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		if (_componentScrollViewer is null || _componentToggleButton is null || _componentColumn is null)
 			return;
 
-		_componentScrollViewer.IsVisible = !_isComponentPanelCollapsed;
-		_componentToggleButton.ToolTip = _isComponentPanelCollapsed
-			? "Expand"
-			: "Collapse";
-		_componentToggleButton.Content = new TextBlock()
-		{
-			Text = _isComponentPanelCollapsed ? "<" : ">",
-			FontSize = 10,
-			HorizontalAlignment = HorizontalAlignment.Center,
-			Font = "Tahoma",
-			Foreground = Color.White,
-		};
+		_componentScrollViewer.IsVisible = !_collapsedComponents;
+		_componentToggleButton.ToolTip = (_collapsedComponents ? "Expand" : "Collapse");
 
-		_componentColumn.Width = _isComponentPanelCollapsed
-			? new GridLength(0, GridUnitType.Pixel)
-			: new GridLength(ComponentPanelWidth);
+		if (_componentToggleButton.Content is TextBlock textBlock)
+			textBlock.Text = _collapsedComponents ? "<" : ">";
+
+		_componentColumn.Width = new GridLength((_collapsedComponents ? 0 : ComponentPanelWidth), GridUnitType.Pixel);
 	}
 
 	public void InvalidateFrames()
