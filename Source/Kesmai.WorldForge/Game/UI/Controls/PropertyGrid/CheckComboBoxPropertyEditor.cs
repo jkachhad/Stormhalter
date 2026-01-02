@@ -32,7 +32,7 @@ public class CheckComboBoxPropertyEditor : PropertyEditor
 			
 		_comboBoxButton = new CheckComboBoxButton()
 		{
-			Width = 150,
+			Width = 220,
 		};
 			
 		_comboBoxButton.CreateControlForItem += (o) =>

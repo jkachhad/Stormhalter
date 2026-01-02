@@ -48,7 +48,7 @@ public class ColorPropertyEditor : PropertyEditor
 				
 			sliderPanel.Children.Add(_sliders[i] = new Slider()
 			{
-				Width = 150,
+				Width = 220,
 				Minimum = 0, Maximum = 255,
 			});
 			sliderPanel.Children.Add(_labels[i] = new TextBlock()

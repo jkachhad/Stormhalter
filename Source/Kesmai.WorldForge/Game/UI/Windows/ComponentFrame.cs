@@ -79,7 +79,8 @@ public abstract class ComponentFrame : Grid
 	public ComponentFrame(IComponentProvider provider)
 	{
 		Style = "Client-Content";
-		Width = 500;
+		HorizontalAlignment = HorizontalAlignment.Stretch;
+		MinWidth = 800;
 		
 		_componentProvider = provider;
 	}
