@@ -93,13 +93,13 @@ public abstract partial class ProfessionTrainer : TrainerEntity
 		base.GetInteractions(source, entries);
 	}
 
-	private class SellBookInteraction : SellItemInteraction
+	private class SellBookInteraction : SellItemInteraction<Gold>
 	{
-		public SellBookInteraction() : base(new LocalizationEntry(6500010, "Book"))
+		public SellBookInteraction() : base("Book")
 		{
 		}
 
-		protected override uint GetCost(PlayerEntity player, VendorEntity vendor) 
+		protected override uint GetCost(PlayerEntity player) 
 			=> (uint)(((int)player.GetSkillLevel(Skill.Magic) + 1) * 100);
 
 		protected override ItemEntity CreateItem(PlayerEntity player, VendorEntity vendor) 
