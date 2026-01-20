@@ -93,64 +93,16 @@ public abstract partial class ProfessionTrainer : TrainerEntity
 		base.GetInteractions(source, entries);
 	}
 
-	private class SellBookInteraction : InteractionEntry
+	private class SellBookInteraction : SellItemInteraction
 	{
 		public SellBookInteraction() : base(new LocalizationEntry(6500010, "Book"))
 		{
 		}
 
-		public override void OnClick(PlayerEntity source, WorldEntity target)
-		{
-			if (source is null || target is not ProfessionTrainer trainer)
-				return;
+		protected override uint GetCost(PlayerEntity player, VendorEntity vendor) 
+			=> (uint)(((int)player.GetSkillLevel(Skill.Magic) + 1) * 100);
 
-			if (!source.CanPerformAction)
-				return;
-
-			if (source.Tranced && !source.IsSteering)
-			{
-				source.SendLocalizedMessage(System.Drawing.Color.Red, 6300200); /* You can't do that while in a trance. */
-				return;
-			}
-
-			var segment = trainer.Segment;
-
-			if (trainer.AtCounter(source, out var counter))
-			{
-				var skillLevel = (int)source.GetSkillLevel(Skill.Magic) + 1;
-				var cost = (uint)(skillLevel * 100);
-				
-				var gold = segment.GetItemsAt(counter).OfType<Gold>().ToList();
-
-				if (gold.Any())
-				{
-					if (trainer.ConsumeFromLocation<Gold>(counter, cost))
-					{
-						new Spellbook(source)
-							.Move(counter, true, segment);
-
-						trainer.SayTo(source, 6300340); /* Don't go losing it again. */
-					}
-					else
-					{
-						trainer.SayTo(source, 6300339, cost); /* For you, I will sell one for {0} coins. */
-					}
-				}
-				else
-				{
-					if (trainer.Counters.Any())
-						trainer.SayTo(source, 6300246); /* Please put some coins on the counter. */
-					else
-						trainer.SayTo(source, 6300247); /* Please put some coins on the ground. */
-				}
-			}
-			else
-			{
-				if (trainer.Counters.Any())
-					trainer.SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					trainer.SayTo(source, 6300237); /* Please stand closer to me. */
-			}
-		}
+		protected override ItemEntity CreateItem(PlayerEntity player, VendorEntity vendor) 
+			=> new Spellbook(player);
 	}
 }
