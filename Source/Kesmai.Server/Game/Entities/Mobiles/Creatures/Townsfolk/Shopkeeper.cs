@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Humanizer;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 
@@ -83,6 +84,17 @@ public partial class Shopkeeper : VendorEntity
 			_restockTimer.Stop();
 
 		_restockTimer = null;
+	}
+	
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (_stock.Any(s => !s.IsEmpty))
+		{
+			entries.Add(ShowPricesInteraction.Instance);
+			entries.Add(InteractionSeparator.Instance);
+		}
+		
+		base.GetInteractions(source, entries);
 	}
 
 	public override void HandleOrder(OrderEventArgs args)
@@ -360,5 +372,52 @@ public partial class Shopkeeper : VendorEntity
 			stock.CurrentQuantity++;
 			
 		QueueRestockTimer();
+	}
+
+	private sealed class ShowPricesInteraction : InteractionEntry
+	{
+		public static readonly ShowPricesInteraction Instance = new ShowPricesInteraction();
+		
+		private ShowPricesInteraction() : base("Show prices", range: 0)
+		{
+		}
+
+		public override void OnClick(PlayerEntity source, WorldEntity target)
+		{
+			if (source is null || !(target is Shopkeeper shopkeeper))
+				return;
+
+			if (shopkeeper.AtCounter(source, out var _))
+			{
+				/* We Iterate all the items in the stock to keep index values consistent with list. */
+				if (shopkeeper._stock.Any(s => !s.IsEmpty))
+				{
+					shopkeeper.SayTo(source, 6300382); /* I will sell to you .. */
+						
+					for (int i = 0; i < shopkeeper._stock.Count; i++)
+					{
+						var stock = shopkeeper._stock[i];
+
+						/* Do not list empty entries. */
+						if (!stock.IsEmpty)
+							shopkeeper.SayTo(source, 6300384, stock.Name.WithArticle(), stock.Cost.ToString(), (i + 1).ToString());
+					}
+				}
+				else
+				{
+					shopkeeper.SayTo(source, 6300381); /* I don't have anything of interest. */
+
+					if (shopkeeper._stock.Any(s => !s.IsFull) && (shopkeeper._restockTimer is null || !shopkeeper._restockTimer.Running))
+						Log.Warn($"[{shopkeeper.Segment.Name}] Shopkeeper '{shopkeeper.Name}' at {shopkeeper.Location} not restocking.");
+				}
+			}
+			else
+			{
+				if (shopkeeper._counters.Any())
+					shopkeeper.SayTo(source, 6300236); /* Please step up to a counter. */
+				else
+					shopkeeper.SayTo(source, 6300237); /* Please stand closer to me. */
+			}
+		}
 	}
 }
