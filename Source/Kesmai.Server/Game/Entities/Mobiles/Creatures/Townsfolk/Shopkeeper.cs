@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Humanizer;
@@ -9,6 +9,7 @@ using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
 using Kesmai.Server.Network;
+using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Game;
 
@@ -88,11 +89,12 @@ public partial class Shopkeeper : VendorEntity
 	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
+		entries.Add(AppraiseInteraction.Instance);
+
 		if (_stock.Any(s => !s.IsEmpty))
-		{
 			entries.Add(ShowPricesInteraction.Instance);
-			entries.Add(InteractionSeparator.Instance);
-		}
+
+		entries.Add(InteractionSeparator.Instance);
 		
 		base.GetInteractions(source, entries);
 	}
@@ -378,7 +380,7 @@ public partial class Shopkeeper : VendorEntity
 	{
 		public static readonly ShowPricesInteraction Instance = new ShowPricesInteraction();
 		
-		private ShowPricesInteraction() : base("Show prices", range: 0)
+		private ShowPricesInteraction() : base("Show prices", range: 2)
 		{
 		}
 
@@ -418,6 +420,71 @@ public partial class Shopkeeper : VendorEntity
 				else
 					shopkeeper.SayTo(source, 6300237); /* Please stand closer to me. */
 			}
+		}
+	}
+
+	private sealed class AppraiseInteraction : InteractionEntry
+	{
+		public static readonly AppraiseInteraction Instance = new AppraiseInteraction();
+		
+		private AppraiseInteraction() : base("Appraise", range: 2)
+		{
+		}
+
+		public override void OnClick(PlayerEntity source, WorldEntity target)
+		{
+			if (source is null || (target is not Shopkeeper shopkeeper))
+				return;
+
+			source.SendMessage(Color.LimeGreen, "Target the item you want appraised.");
+			source.Target = new AppraiseItemTarget(shopkeeper);
+		}
+	}
+
+	private sealed class AppraiseItemTarget : ItemTarget
+	{
+		private readonly Shopkeeper _shopkeeper;
+
+		public AppraiseItemTarget(Shopkeeper shopkeeper)
+		{
+			_shopkeeper = shopkeeper;
+		}
+
+		protected override void OnTarget(MobileEntity source, ItemEntity target)
+		{
+			if (source is null || !(source is PlayerEntity player))
+				return;
+
+			if (_shopkeeper is null || _shopkeeper.Deleted)
+				return;
+
+			if (!_shopkeeper.AtCounter(source, out var counter))
+			{
+				if (_shopkeeper._counters.Any())
+					_shopkeeper.SayTo(player, 6300236); /* Please step up to a counter. */
+				else
+					_shopkeeper.SayTo(player, 6300237); /* Please stand closer to me. */
+
+				return;
+			}
+
+			target.Identified = true;
+
+			var entries = new List<LocalizationEntry>();
+
+			target.GetDescriptionPrefix(entries);
+			target.GetDescription(entries);
+			target.GetDescriptionSuffix(entries);
+
+			var grammar = _shopkeeper.Name.IsPlural() ? "are" : "is";
+			var actualPrice = target.ActualPrice;
+
+			if (actualPrice > 0)
+				entries.Add(new LocalizationEntry(6300261, target.Name, grammar, actualPrice.ToString()));
+			else
+				entries.Add(new LocalizationEntry(6300262, target.Name, grammar));
+
+			_shopkeeper.SayTo(player, entries.ToArray());
 		}
 	}
 }
