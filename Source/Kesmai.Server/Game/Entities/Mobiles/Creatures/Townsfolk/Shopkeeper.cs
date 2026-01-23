@@ -89,6 +89,7 @@ public partial class Shopkeeper : VendorEntity
 	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
+		entries.Add(BuyItemInteraction.Instance);
 		entries.Add(AppraiseInteraction.Instance);
 
 		if (_stock.Any(s => !s.IsEmpty))
@@ -126,6 +127,8 @@ public partial class Shopkeeper : VendorEntity
 				{
 					foreach (var item in items)
 						item.Delete();
+
+					source.PlaySound(10007);
 
 					var gold = new Gold()
 					{
@@ -260,6 +263,8 @@ public partial class Shopkeeper : VendorEntity
 
 							if (item != null)
 							{
+								source.PlaySound(10008);
+
 								if (!item.Deleted)
 									item.Move(counter, true, Segment);
 									
@@ -438,6 +443,98 @@ public partial class Shopkeeper : VendorEntity
 
 			source.SendMessage(Color.LimeGreen, "Target the item you want appraised.");
 			source.Target = new AppraiseItemTarget(shopkeeper);
+		}
+	}
+
+	private sealed class BuyItemInteraction : InteractionEntry
+	{
+		public static readonly BuyItemInteraction Instance = new BuyItemInteraction();
+		
+		private BuyItemInteraction() : base("Buy", range: 2)
+		{
+		}
+
+		public override void OnClick(PlayerEntity source, WorldEntity target)
+		{
+			if (source is null || (target is not Shopkeeper shopkeeper))
+				return;
+
+			source.SendMessage(Color.LimeGreen, "Target the item you want to sell.");
+			source.Target = new BuyItemTarget(shopkeeper);
+		}
+	}
+
+	private sealed class BuyItemTarget : ItemTarget
+	{
+		private static bool IsEligibleTarget(PlayerEntity player, Point2D counter, ItemEntity target)
+		{
+			if (target is Gold)
+				return false;
+
+			if (target.Parent is null)
+				return target.Location == counter;
+
+			if (target.Parent is not PlayerEntity owner || owner != player)
+				return false;
+
+			return target.Container is Backpack;
+		}
+		
+		private readonly Shopkeeper _shopkeeper;
+
+		public BuyItemTarget(Shopkeeper shopkeeper)
+		{
+			_shopkeeper = shopkeeper;
+		}
+
+		protected override void OnTarget(MobileEntity source, ItemEntity target)
+		{
+			if (source is null || (source is not PlayerEntity player))
+				return;
+
+			if (_shopkeeper is null || _shopkeeper.Deleted)
+				return;
+
+			if (!_shopkeeper.AtCounter(source, out var counter))
+			{
+				if (_shopkeeper._counters.Any())
+					_shopkeeper.SayTo(player, 6300236); /* Please step up to a counter. */
+				else
+					_shopkeeper.SayTo(player, 6300237); /* Please stand closer to me. */
+
+				return;
+			}
+
+			if (!IsEligibleTarget(player, counter, target))
+			{
+				_shopkeeper.SayTo(player, 6300264); /* There is nothing of value here. */
+				return;
+			}
+
+			var totalValue = target.ActualPrice * target.Amount;
+
+			if (totalValue > 0)
+			{
+				target.Delete();
+				
+				player.PlaySound(10007);
+
+				var gold = new Gold
+				{
+					Amount = totalValue,
+				};
+
+				gold.Move(counter, true, _shopkeeper.Segment);
+				
+				_shopkeeper.SayTo(player, 6300350); /* Thank you for your business. */
+
+				player.SendMessage(Color.LimeGreen, "Target the item you want to sell.");
+				player.Target = new BuyItemTarget(_shopkeeper);
+			}
+			else
+			{
+				_shopkeeper.SayTo(player, 6300264); /* There is nothing of value here. */
+			}
 		}
 	}
 
