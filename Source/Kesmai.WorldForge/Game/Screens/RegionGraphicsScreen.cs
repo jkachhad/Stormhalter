@@ -805,10 +805,27 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, color, 0, Vector2.Zero, _zoomFactor / sprite.Resolution, SpriteEffects.None, 0f);
 		}
 	}
+	private readonly record struct TeleporterMark(int X, int Y, string Label);
+	private static void AddMark(
+	Dictionary<(int X, int Y), List<string>> marks,
+	int x, int y,
+	string label)
+	{
+		var key = (x, y);
 
+		if (!marks.TryGetValue(key, out var list))
+		{
+			list = new List<string>(2);
+			marks[key] = list;
+		}
+
+		// avoid duplicate spam on the same tile
+		if (!list.Contains(label))
+			list.Add(label);
+	}
 	protected override void OnAfterRender(SpriteBatch spriteBatch)
 	{
-		base.OnAfterRender(spriteBatch);
+		base.OnAfterRender(spriteBatch); 
 
 		var services = ServiceLocator.Current;
 		var applicationPresenter = services.GetInstance<ApplicationPresenter>();
@@ -820,69 +837,167 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		if (_visibility.ShowComments || _visibility.ShowTeleporters || _visibility.ShowSpawns)
 			spriteBatch.FillRectangle(GetRenderRectangle(viewRectangle, viewRectangle),
 				Color.FromNonPremultiplied(0, 0, 0, 128));
-
+		// Teleporter overlay debug rendering (with on-tile labels)
+		// Teleporter overlay debug rendering (with on-tile labels)
 		if (_visibility.ShowTeleporters)
 		{
+			// Local = orange, Global = green
 			var localFillColor = Color.FromNonPremultiplied(255, 91, 0, 50);
 			var localBorderColor = Color.FromNonPremultiplied(255, 91, 0, 255);
+
 			var globalFillColor = Color.FromNonPremultiplied(0, 255, 91, 50);
 			var globalBorderColor = Color.FromNonPremultiplied(0, 255, 91, 255);
 
-			var global = new List<(int X, int Y)>();
-			var local = new List<(int X, int Y)>();
+			// One rectangle per tile, multiple labels per tile
+			var globalMarks = new Dictionary<(int X, int Y), List<string>>();
+			var localMarks = new Dictionary<(int X, int Y), List<string>>();
+
+			var tileMarks = new Dictionary<(int X, int Y), int>();
 
 			foreach (var searchRegion in segment.Regions)
 			{
+				// Your existing approach (works, but can be heavy). Keeping it as-is.
 				var regionTeleporters = searchRegion.GetTiles()
 					.Where(tile => tile.Providers.OfType<TeleportComponent>().Any())
-					.ToDictionary((tile => tile), tile => tile.Providers.OfType<TeleportComponent>().FirstOrDefault());
+					.ToDictionary(tile => tile, tile => tile.Providers.OfType<TeleportComponent>().FirstOrDefault());
 
 				foreach (var (segmentTile, teleporter) in regionTeleporters)
 				{
+					if (teleporter == null)
+						continue;
+
 					if (searchRegion != region)
 					{
-						// not in this region, skip unless it's a destination here.
+						// Not in this region: show only if destination lands in this region
 						if (teleporter.DestinationRegion != region.ID)
 							continue;
 
-						global.Add(new(teleporter.DestinationX, teleporter.DestinationY));
+						AddMark(
+							globalMarks,
+							teleporter.DestinationX, teleporter.DestinationY,
+							$"IN [{segmentTile.X},{segmentTile.Y} , {searchRegion.ID}]"
+						);
 					}
 					else
 					{
-						// in this region, skip unless it's a source here.
+						// In this region
 						if (teleporter.DestinationRegion != region.ID)
 						{
-							global.Add((teleporter.DestinationX, teleporter.DestinationY));
+							// Points outside this region: mark the destination as global
+							AddMark(
+								globalMarks,
+								segmentTile.X, segmentTile.Y,
+								$"OUT [{teleporter.DestinationX},{teleporter.DestinationY} , {teleporter.DestinationRegion}]"
+							);
 						}
 						else
 						{
-							local.Add((segmentTile.X, segmentTile.Y));
-							local.Add((teleporter.DestinationX, teleporter.DestinationY));
+							// Local link: mark both ends
+							AddMark(
+								localMarks,
+								teleporter.DestinationX, teleporter.DestinationY,
+								$"IN [{segmentTile.X},{segmentTile.Y}]"
+							);
+
+							AddMark(
+								localMarks,
+								segmentTile.X, segmentTile.Y,
+								$"OUT [{teleporter.DestinationX},{teleporter.DestinationY}]"
+							);
 						}
 					}
 				}
 			}
-
-			void renderTeleporters(List<(int X, int Y)> teleporters, Color fillColor, Color borderColor)
+			void RenderMarks(
+				Dictionary<(int X, int Y), List<string>> globalMarks,
+				Dictionary<(int X, int Y), List<string>> localMarks,
+				Color globalFillColor, Color globalBorderColor,
+				Color localFillColor, Color localBorderColor)
 			{
-				foreach (var teleporter in teleporters.Distinct()
-					         .Where((entry, _) => viewRectangle.Contains(entry.X, entry.Y)))
+				const float lineHeight = 12f; // tweak if needed
+				const int maxLines = 4;       // prevents text soup
+
+				// Union of tile coords from both dictionaries
+				var keys = new HashSet<(int X, int Y)>(globalMarks.Count + localMarks.Count);
+				foreach (var k in globalMarks.Keys) keys.Add(k);
+				foreach (var k in localMarks.Keys) keys.Add(k);
+
+				foreach (var key in keys)
 				{
-					var bounds = GetRenderRectangle(viewRectangle, teleporter.X, teleporter.Y);
+					var x = key.X;
+					var y = key.Y;
 
-					spriteBatch.FillRectangle(bounds, fillColor);
-					spriteBatch.DrawRectangle(bounds, borderColor);
+					if (!viewRectangle.Contains(x, y))
+						continue;
 
-					/*_font.Style = MSDFStyle.BoldOutline;
+					var bounds = GetRenderRectangle(viewRectangle, x, y);
+
+					globalMarks.TryGetValue(key, out var gLines);
+					localMarks.TryGetValue(key, out var lLines);
+
+					// Fill/border reflect presence (and "both" naturally blends because of alpha)
+					if (gLines is { Count: > 0 })
+					{
+						spriteBatch.FillRectangle(bounds, globalFillColor);
+						spriteBatch.DrawRectangle(bounds, globalBorderColor);
+					}
+
+					if (lLines is { Count: > 0 })
+					{
+						spriteBatch.FillRectangle(bounds, localFillColor);
+						spriteBatch.DrawRectangle(bounds, localBorderColor);
+					}
+
+					var pos = new Vector2(bounds.Left + 2, bounds.Top);
+
+					_font.Style = MSDFStyle.BoldOutline;
 					_font.Stroke = Color.Black;
-					_font.DrawString(spriteBatch, RenderTransform.Identity, $"[{teleporter.X},{teleporter.Y}]",
-						new Vector2(bounds.Left + 2, bounds.Top + 2), borderColor);*/
+
+					int totalCount = (gLines?.Count ?? 0) + (lLines?.Count ?? 0);
+					int drawn = 0;
+
+					void DrawList(List<string>? lines, Color textColor /*per-source*/)
+					{
+						if (lines == null || lines.Count == 0)
+							return;
+
+						for (int i = 0; i < lines.Count && drawn < maxLines; i++)
+						{
+							var addon = (drawn > 0) ? 5: 0;
+							var p = pos + new Vector2(0, (drawn * lineHeight) + addon);
+
+							//_font.DrawString(spriteBatch, RenderTransform.Identity, lines[i],
+							//	p + new Vector2(1, 1), Color.Black); // shadow
+							_font.DrawString(spriteBatch, RenderTransform.Identity, lines[i],
+								p, textColor);                       // main
+
+							drawn++;
+						}
+					}
+
+					// Order is up to you: global then local (or swap)
+					DrawList(gLines, globalBorderColor);
+					DrawList(lLines, new Color(255, 40, 40) );
+
+					if (totalCount > maxLines)
+					{
+						var p = pos + new Vector2(0, drawn * lineHeight);
+
+						//_font.DrawString(spriteBatch, RenderTransform.Identity, $"+{totalCount - maxLines} more",
+						//	p + new Vector2(1, 1), Color.Black);
+
+						// Pick something readable; using white keeps it neutral
+						_font.DrawString(spriteBatch, RenderTransform.Identity, $"+{totalCount - maxLines} more",
+							p, Color.White);
+					}
 				}
 			}
 
-			renderTeleporters(global, globalFillColor, globalBorderColor);
-			renderTeleporters(local, localFillColor, localBorderColor);
+			// One call now:
+			RenderMarks(globalMarks, localMarks, globalFillColor, globalBorderColor, localFillColor, localBorderColor);
+
 		}
+
 
 		if (_visibility.ShowSpawns)
 		{
