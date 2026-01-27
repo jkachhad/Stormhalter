@@ -90,6 +90,7 @@ public partial class Shopkeeper : VendorEntity
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		entries.Add(BuyItemInteraction.Instance);
+		entries.Add(BuyAllInteraction.Instance);
 		entries.Add(AppraiseInteraction.Instance);
 
 		if (_stock.Any(s => !s.IsEmpty))
@@ -461,6 +462,60 @@ public partial class Shopkeeper : VendorEntity
 
 			source.SendMessage(Color.LimeGreen, "Target the item you want to sell.");
 			source.Target = new BuyItemTarget(shopkeeper);
+		}
+	}
+
+	private sealed class BuyAllInteraction : InteractionEntry
+	{
+		public static readonly BuyAllInteraction Instance = new BuyAllInteraction();
+		
+		private BuyAllInteraction() : base("Buy All", range: 2)
+		{
+		}
+
+		public override void OnClick(PlayerEntity source, WorldEntity target)
+		{
+			if (source is null || !(target is Shopkeeper shopkeeper))
+				return;
+
+			if (!shopkeeper.AtCounter(source, out var counter))
+			{
+				if (shopkeeper._counters.Any())
+					shopkeeper.SayTo(source, 6300236); /* Please step up to a counter. */
+				else
+					shopkeeper.SayTo(source, 6300237); /* Please stand closer to me. */
+
+				return;
+			}
+
+			var segment = shopkeeper.Segment;
+
+			if (segment is null)
+				return;
+
+			var items = segment.GetItemsAt(counter, "all", (i) => i is Gold).ToList();
+			var totalValue = (uint)items.Sum(i => i.ActualPrice * i.Amount);
+
+			if (totalValue > 0)
+			{
+				foreach (var item in items)
+					item.Delete();
+
+				source.PlaySound(10007);
+
+				var gold = new Gold
+				{
+					Amount = totalValue,
+				};
+
+				gold.Move(counter, true, segment);
+				
+				shopkeeper.SayTo(source, 6300350); /* Thank you for your business. */
+			}
+			else
+			{
+				shopkeeper.SayTo(source, 6300264); /* There is nothing of value here. */
+			}
 		}
 	}
 
