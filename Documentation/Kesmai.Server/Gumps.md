@@ -119,8 +119,8 @@ Use a plain `Gump` when the window structure is easier to express directly in co
 
 Stormhalter examples:
 
-- `BookGump` in [Book.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Game/Items/Books/Book.cs#L196)
-- `ScrollGump` in [Book.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Game/Items/Books/Book.cs#L267)
+- `BookGump` in [Book.cs](../../Source/Kesmai.Server/Game/Items/Books/Book.cs#L196)
+- `ScrollGump` in [Book.cs](../../Source/Kesmai.Server/Game/Items/Books/Book.cs#L267)
 
 This pattern is a good fit when:
 
@@ -134,8 +134,8 @@ Use `LocalizedGump` when the client template already exists and the server only 
 
 Stormhalter examples:
 
-- `LocateSpellGump` in [InstantLocateSpell.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs#L164)
-- `PeekSpellGump` in [PeekSpell.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Spells/Wizard/PeekSpell.cs#L123)
+- `LocateSpellGump` in [InstantLocateSpell.cs](../../Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs#L164)
+- `PeekSpellGump` in [PeekSpell.cs](../../Source/Kesmai.Server/Spells/Wizard/PeekSpell.cs#L123)
 
 This pattern is a good fit when:
 
@@ -288,7 +288,7 @@ public class LocateSpellGump : LocalizedGump
 }
 ```
 
-Reference: [InstantLocateSpell.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs#L164)
+Reference: [InstantLocateSpell.cs](../../Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs#L164)
 
 What each part does:
 
@@ -340,7 +340,7 @@ private void Locate(GumpResponseArgs args)
 }
 ```
 
-Reference: [InstantLocateSpell.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs#L195)
+Reference: [InstantLocateSpell.cs](../../Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs#L195)
 
 This shows the normal pattern:
 
@@ -368,7 +368,7 @@ protected override void OnClose(Client source)
 }
 ```
 
-Reference: [InstantLocateSpell.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs#L209)
+Reference: [InstantLocateSpell.cs](../../Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs#L209)
 
 Use this pattern when the UI is tied to:
 
@@ -544,9 +544,9 @@ public class ExampleLocalizedGump : LocalizedGump
 
 If you want working examples from this repo, start here:
 
-- [InstantLocateSpell.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs)
-- [PeekSpell.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Spells/Wizard/PeekSpell.cs)
-- [Book.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Game/Items/Books/Book.cs)
+- [InstantLocateSpell.cs](../../Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs)
+- [PeekSpell.cs](../../Source/Kesmai.Server/Spells/Wizard/PeekSpell.cs)
+- [Book.cs](../../Source/Kesmai.Server/Game/Items/Books/Book.cs)
 
 Those files show:
 

@@ -71,7 +71,7 @@ public new static void Configure()
 }
 ```
 
-Reference: [RecallRing.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Game/Items/Equipment/Rings/RecallRing.cs#L15)
+Reference: [RecallRing.cs](../../Source/Kesmai.Server/Game/Items/Equipment/Rings/RecallRing.cs#L15)
 
 That means recall rings automatically reset when a player changes facet or segment.
 
@@ -291,7 +291,7 @@ Common examples:
 
 ## Stormhalter note
 
-Stormhalter currently shows direct use of this system in [RecallRing.cs](/root/stormsmith/Stormhalter/Source/Kesmai.Server/Game/Items/Equipment/Rings/RecallRing.cs), where recall rings subscribe to `FacetChanged` and `SegmentChanged`.
+Stormhalter currently shows direct use of this system in [RecallRing.cs](../../Source/Kesmai.Server/Game/Items/Equipment/Rings/RecallRing.cs), where recall rings subscribe to `FacetChanged` and `SegmentChanged`.
 
 That is a good example of the intended pattern:
 
