@@ -1,6 +1,6 @@
 # Stormhalter EventSink
 
-This is a human-friendly guide to the `EventSink` system, using the shared `Kesmai.Server` implementation as the reference model for Stormhalter.
+This guide explains the `EventSink` system.
 
 ## What EventSink is
 
@@ -192,9 +192,7 @@ Think about `EventSink` like this:
 - `[ServerProcess]` is where you keep something running over time
 - Runtime events are where your feature reacts to gameplay and infrastructure activity
 
-## All EventSink events in Kesmai.Server
-
-The list below is the shared `Kesmai.Server` `EventSink` event catalog, which Stormhalter is assumed to follow.
+## All EventSink events
 
 ## Application events
 
@@ -255,7 +253,7 @@ The list below is the shared `Kesmai.Server` `EventSink` event catalog, which St
 
 ## Internal-only events
 
-These exist in the shared implementation but are intended for internal server flow rather than general gameplay extension:
+These are intended for internal server flow rather than general gameplay extension:
 
 - `AuthenticationUpdated`: Fired when account authentication data changes.
 - `LoginRequest`: Fired when a login request is being evaluated.

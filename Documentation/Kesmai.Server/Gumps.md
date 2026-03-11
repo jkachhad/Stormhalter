@@ -1,6 +1,6 @@
 # Stormhalter Gumps
 
-This guide explains gumps in human terms, assuming Stormhalter follows the same gump model as `Kesmai.Server`. It is meant to help someone understand how gumps work, when to use each pattern, and how to add new ones safely.
+This guide explains how gumps work, when to use each pattern, and how to add new ones safely.
 
 ## Overview
 
@@ -19,21 +19,6 @@ Typical uses include:
 - Confirmation dialogs
 - Read-only windows such as books, scrolls, or character information
 - Data-driven modal windows backed by templates
-
-## High-level flow
-
-The usual flow is:
-
-1. The server creates a gump instance.
-2. The server sends it with `SendGump(...)`.
-3. The client renders the window.
-4. The player clicks a button, submits text, picks from a dropdown, or closes the window.
-5. The server routes the response back to the active gump instance.
-6. The gump handles the action and usually closes itself or opens a replacement.
-
-Important idea:
-
-- The server is authoritative. The client only renders and reports input.
 
 ## End-to-end flow
 
@@ -69,7 +54,7 @@ In practice, use `Gump` when you want to build the UI directly in C#.
 
 `GumpControl` is the base type for controls inside a gump.
 
-Examples of controls commonly used in the Kesmai-style system:
+Examples of controls commonly used in the gump system:
 
 - `StackPanel`
 - `Grid`
@@ -111,7 +96,7 @@ It typically contains:
 
 ## Packet pipeline
 
-Assuming Stormhalter matches `Kesmai.Server`, the packet flow looks like this.
+The packet flow looks like this.
 
 ### Server to client
 
@@ -265,7 +250,7 @@ This is useful when:
 
 ### Option B: Attach button actions and call the base handler
 
-In the Kesmai-style system, buttons can often have delegates attached, and `base.OnResponse(...)` dispatches to the matching button by name.
+Buttons can have delegates attached, and `base.OnResponse(...)` dispatches to the matching button by name.
 
 ```csharp
 protected override void OnResponse(Client source, GumpResponseArgs args)
