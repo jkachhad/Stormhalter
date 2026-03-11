@@ -81,7 +81,7 @@ Use it when:
 - The server mostly needs to send data and bind response actions
 - You want a clean separation between layout and gameplay logic
 
-This is the pattern used by Stormhalter examples such as `LocateSpellGump` and `PeekSpellGump`.
+This is the pattern used by gumps such as `LocateSpellGump` and `PeekSpellGump`.
 
 ### `GumpResponseArgs`
 
@@ -94,30 +94,13 @@ It typically contains:
 - `DropDowns`: selected dropdown indexes by control name
 - `Client`: the client that sent the response
 
-## Packet pipeline
-
-The packet flow looks like this.
-
-### Server to client
-
-- `GumpShowPacket`: sends a fully compiled gump layout
-- `LocalizedGumpShowPacket`: sends a layout shell, template name, and model data
-- `GumpUpdateLayoutPacket`: replaces a named control subtree
-- `GumpUpdatePropertyPacket`: changes one property on one named control
-- `GumpClosePacket`: closes an active gump from the server side
-
-### Client to server
-
-- `ClientGumpResponse`: includes gump serial, action name, text input values, and dropdown selections
-- `ClientGumpClose`: includes the serial of the gump that was closed
-
 ## Two main patterns
 
 ### Pattern 1: Build the whole UI in C#
 
 Use a plain `Gump` when the window structure is easier to express directly in code.
 
-Stormhalter examples:
+Examples:
 
 - `BookGump` in [Book.cs](../../Source/Kesmai.Server/Game/Items/Books/Book.cs#L196)
 - `ScrollGump` in [Book.cs](../../Source/Kesmai.Server/Game/Items/Books/Book.cs#L267)
@@ -132,7 +115,7 @@ This pattern is a good fit when:
 
 Use `LocalizedGump` when the client template already exists and the server only needs to provide values and handle named actions.
 
-Stormhalter examples:
+Examples:
 
 - `LocateSpellGump` in [InstantLocateSpell.cs](../../Source/Kesmai.Server/Spells/Knight/InstantLocateSpell.cs#L164)
 - `PeekSpellGump` in [PeekSpell.cs](../../Source/Kesmai.Server/Spells/Wizard/PeekSpell.cs#L123)
@@ -158,7 +141,7 @@ Why this is useful:
 - It avoids stale responses from an older gump instance
 - It keeps the UI state easy to reason about
 
-Stormhalter already does this for:
+This pattern is already used for:
 
 - `LocateSpellGump`
 - `PeekSpellGump`
@@ -267,7 +250,7 @@ Important:
 
 This pattern is smaller because the client owns most of the layout.
 
-Stormhalter’s `LocateSpellGump` is the clearest example:
+`LocateSpellGump` is the clearest example:
 
 ```csharp
 public class LocateSpellGump : LocalizedGump
@@ -378,7 +361,7 @@ Use this pattern when the UI is tied to:
 
 ## Dynamic updates without reopening
 
-Assuming Stormhalter matches `Kesmai.Server`, gumps can also be updated in place instead of being fully reopened.
+Gumps can also be updated in place instead of being fully reopened.
 
 Typical update patterns are:
 
@@ -444,17 +427,6 @@ When creating a new gump:
 - Close the gump when the task is complete unless persistence is intentional
 - If closing the window should cancel gameplay state, override `OnClose`
 - Prefer in-place updates for small feedback changes if the shared gump API is available
-
-## Agent checklist
-
-- Choose `Gump` versus `LocalizedGump` before writing the UI
-- Give every interactive control a stable `Name`
-- Validate input read from `args.Texts` and `args.DropDowns`
-- Decide close behavior explicitly
-- Use `OnEnterKey` for prompt-style dialogs
-- Prefer targeted updates over full rebuilds when that API is available
-- Keep response names deterministic and easy to trace
-- Make sure delayed or async callbacks still target the correct client and active gump
 
 ## Common pitfalls
 
