@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using System.Drawing;
 using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 
@@ -59,6 +58,33 @@ public class Spellbook : ItemEntity, ITreasure
 
 		if (Identified && Owner != null)
 			entries.Add(new LocalizationEntry(6300341, Profession.Info.Name.ToLower())); /* This book belongs to a {0}. */
+	}
+
+	/// <inheritdoc />
+	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		base.AddProperties(tooltip, beholder);
+
+		if (!Identified)
+		{
+			tooltip.Add(new EntityPropertyTextBlock(LocalizationEntry.Get(6302001), Color.Red)); /* Unidentified */
+			return;
+		}
+
+		if (Owner is null)
+			return;
+
+		var owner = Owner;
+		var learnedSpells = owner.Spells.Learned;
+		
+		tooltip.Add(new EntityPropertyTextBlock(new LocalizationEntry(6500001, "Spells", learnedSpells.Count.ToString()), Color.White)); /* Spells: {1} */
+		tooltip.Add(new EntityPropertyTextBlock(new LocalizationEntry(6500001, "Owner", owner.Name), Color.Aqua)); /* Owner: {1} */
+	}
+
+	/// <inheritdoc />
+	public override void AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		tooltip.Add(new EntityPropertyDescription(LocalizationEntry.Get(6200216)));
 	}
 	
 	public override void Serialize(SpanWriter writer)

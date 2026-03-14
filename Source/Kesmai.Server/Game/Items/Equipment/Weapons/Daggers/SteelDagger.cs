@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
@@ -34,6 +33,12 @@ public class SteelDagger : Dagger
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250014)); /* The dagger appears quite ordinary. */
+	}
+	
+	/// <inheritdoc />
+	public override void AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		tooltip.Add(new EntityPropertyDescription(LocalizationEntry.Get(6200015))); /* [a steel dagger.] */
 	}
 
 	/// <inheritdoc />
