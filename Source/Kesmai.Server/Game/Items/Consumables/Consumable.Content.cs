@@ -16,6 +16,11 @@ public interface IConsumableContent
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries);
 
 	/// <summary>
+	/// Gets the description entries for tooltip properties.
+	/// </summary>
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder);
+
+	/// <summary>
 	/// Called when consumed by an entity.
 	/// </summary>
 	public void OnConsume(MobileEntity entity, Consumable item);
@@ -55,6 +60,11 @@ public class ConsumableHeal : IConsumableContent
 
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		yield break;
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -99,6 +109,11 @@ public class ConsumableDamage : IConsumableContent
 
 	public virtual void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
+	}
+
+	public virtual IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		yield break;
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -150,6 +165,12 @@ public class ConsumablePoison : IConsumableContent
 			entries.Add(new LocalizationEntry(6300393)); /* The bottle contains a poison. */
 	}
 
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6300393); /* The bottle contains a poison. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		entity.Poison(item.Owner, new Poison(TimeSpan.Zero, _potency));
@@ -197,6 +218,12 @@ public class ConsumablePoisonAntidote : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6300394)); /* The bottle contains a Neutralize Poison potion. */
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6300394); /* The bottle contains a Neutralize Poison potion. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -257,6 +284,12 @@ public class ConsumableBlindnessAntidote : IConsumableContent
 			entries.Add(new LocalizationEntry(6250066)); /* The bottle contains a Cure Blindness potion. */
 	}
 
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250066); /* The bottle contains a Cure Blindness potion. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity.GetStatus(typeof(BlindStatus), out var status))
@@ -314,6 +347,12 @@ public class ConsumableRestoreMana : IConsumableContent
 			entries.Add(new LocalizationEntry(6250060)); /* The bottle contains a potion to restore mana. */
 	}
 
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250060); /* The bottle contains a potion to restore mana. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (_amount.HasValue)
@@ -366,6 +405,12 @@ public class ConsumableIncreaseMana : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250078)); /* The liquid increases mana. */
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250078); /* The liquid increases mana. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -437,6 +482,12 @@ public class ConsumableRestoreStamina : IConsumableContent
 			entries.Add(new LocalizationEntry(6250067)); /* The bottle contains a stamina potion. */
 	}
 
+	public virtual IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250067); /* The bottle contains a stamina potion. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (_amount.HasValue)
@@ -485,6 +536,14 @@ public class ConsumableWater : ConsumableRestoreStamina
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250062)); /* The bottle contains water. */
 	}
+
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		yield return LocalizationEntry.Get(6250132); /* Inside you see a clear liquid. */
+
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250062); /* The bottle contains water. */
+	}
 		
 	public override void Serialize(SpanWriter writer)
 	{
@@ -525,6 +584,14 @@ public class ConsumableUrine : ConsumableDamage
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250064, _owner)); /* The bottle contains {_owner} urine. */
 	}
+
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		yield return LocalizationEntry.Get(6250133); /* Inside you see a yellow liquid. */
+
+		if (consumable.Identified)
+			yield return new LocalizationEntry(6250064, _owner); /* The bottle contains {_owner} urine. */
+	}
 		
 	public override void Serialize(SpanWriter writer)
 	{
@@ -557,6 +624,12 @@ public class ConsumableAmbrosia : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250074)); /* The liquid inside restores youth. */
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250074); /* The liquid inside restores youth. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -601,6 +674,12 @@ public class ConsumableNaphtha : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250061)); /* The bottle contains an ounce of Naphtha. */
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250061); /* The bottle contains an ounce of Naphtha. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -657,6 +736,14 @@ public class ConsumableNitro : IConsumableContent
 			
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250063)); /* The bottle contains Nitro. */
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		yield return LocalizationEntry.Get(6250132); /* Inside you see a clear liquid. */
+
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250063); /* The bottle contains Nitro. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -716,6 +803,14 @@ public class ConsumableStrengthSpell : IConsumableContent
 			entries.Add(new LocalizationEntry(6250065)); /* The bottle contains a potion of temporary strength. */
 	}
 
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		yield return LocalizationEntry.Get(6250131); /* Inside you see a red liquid. */
+
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250065); /* The bottle contains a potion of temporary strength. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity is PlayerEntity player)
@@ -756,6 +851,12 @@ public class ConsumableStrengthStat : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250072)); /* The liquid permanently increases strength. */
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250072); /* The liquid permanently increases strength. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -803,6 +904,12 @@ public class ConsumableDexterityStat : IConsumableContent
 			entries.Add(new LocalizationEntry(6250069)); /* The liquid permanently increases dexterity. */
 	}
 
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250069); /* The liquid permanently increases dexterity. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity is PlayerEntity player)
@@ -848,6 +955,12 @@ public class ConsumableIntelligenceStat : IConsumableContent
 			entries.Add(new LocalizationEntry(6250068)); /* The liquid permanently increases intelligence. */
 	}
 
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250068); /* The liquid permanently increases intelligence. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity is PlayerEntity player)
@@ -886,6 +999,12 @@ public class ConsumableWillpowerStat : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250077)); /* The liquid permanently increases willpower. */
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250077); /* The liquid permanently increases willpower. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -928,6 +1047,12 @@ public class ConsumableWisdomStat : IConsumableContent
 			entries.Add(new LocalizationEntry(6250076)); /* The liquid permanently increases wisdom. */
 	}
 
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250076); /* The liquid permanently increases wisdom. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity is PlayerEntity player)
@@ -966,6 +1091,12 @@ public class ConsumableConstitutionStat : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250073)); /* The liquid permanently increases constitution. */
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250073); /* The liquid permanently increases constitution. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -1026,6 +1157,14 @@ public class ConsumableBalm : IConsumableContent
 			
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250004)); /* The bottle contains balm. */
+	}
+
+	public IEnumerable<LocalizationEntry> AddDescriptionProperty(ItemEntity consumable, PlayerEntity beholder)
+	{
+		yield return LocalizationEntry.Get(6250130); /* Inside you see a cloudy white liquid. */
+
+		if (consumable.Identified)
+			yield return LocalizationEntry.Get(6250004); /* The bottle contains balm. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)

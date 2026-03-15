@@ -269,6 +269,24 @@ public abstract class Consumable : ItemEntity
 			_content.GetDescription(this, entries);
 	}
 
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		if (_content is null)
+			yield break;
+
+		var entries = _content.AddDescriptionProperty(this, beholder);
+
+		if (entries is null)
+			yield break;
+
+		foreach (var entry in entries)
+		{
+			if (entry != null)
+				yield return entry;
+		}
+	}
+
 	/// <summary>
 	/// Called when this instance is consumed by the specified entity.
 	/// </summary>
