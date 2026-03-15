@@ -36,9 +36,9 @@ public class SteelDagger : Dagger
 	}
 	
 	/// <inheritdoc />
-	public override void AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		tooltip.Add(new EntityPropertyDescription(LocalizationEntry.Get(6200015))); /* [a steel dagger.] */
+		yield return LocalizationEntry.Get(6200015); /* [a steel dagger.] */
 	}
 
 	/// <inheritdoc />

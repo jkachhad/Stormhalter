@@ -82,9 +82,9 @@ public class Spellbook : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		tooltip.Add(new EntityPropertyDescription(LocalizationEntry.Get(6200216)));
+		yield return LocalizationEntry.Get(6200216); /* a small leather-bound book, with mystic runes engraved on the cover. */
 	}
 	
 	public override void Serialize(SpanWriter writer)
