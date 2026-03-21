@@ -49,12 +49,12 @@ public class MisericordeDagger : Dagger, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200159)); /* [You are looking at] [an exquisite lemurian misericorde dagger whose honed finish reveals the wood grained texture of the metal. The dagger is emitting a faint blue glow. The weapon is neutral.] */
+		yield return LocalizationEntry.Get(6200159); /* [an exquisite lemurian misericorde dagger whose honed finish reveals the wood grained texture of the metal. The dagger is emitting a faint blue glow. The weapon is neutral.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
+			yield return LocalizationEntry.Get(6250003); /* The combat adds for this weapon are +4. */
 	}
 
 	/// <inheritdoc />

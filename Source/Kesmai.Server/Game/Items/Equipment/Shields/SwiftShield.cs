@@ -40,12 +40,12 @@ public class SwiftShield : Shield, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200385)); /* [You are looking at] [a red and black shield adorned with a griffin. Magical properties are embued within.] */
+		yield return LocalizationEntry.Get(6200385); /* [a red and black shield adorned with a griffin. Magical properties are embued within.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6300429)); /* The shield contains the spell of Medium Shield. */
+			yield return LocalizationEntry.Get(6300429); /* The shield contains the spell of Medium Shield. */
 	}
 
 	/// <summary>

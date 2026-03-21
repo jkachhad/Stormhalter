@@ -37,14 +37,14 @@ public class WoodenFlail : Flail
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200158)); /* [You are looking at] [a wooden flail.] */
+		yield return LocalizationEntry.Get(6200158); /* [a wooden flail.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250090)); /* The flail appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250090); /* The flail appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -40,15 +41,13 @@ public class GoldenTorc : StunDeathProtectionAmulet
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200070)); /* [You are looking at] [a twisted gold torc inscribed with glowing runes.] */
+		yield return LocalizationEntry.Get(6200070); /* [a twisted gold torc inscribed with glowing runes.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250052)); /* The amulet contains the spell of Protection from Stun and Death. */
+			yield return LocalizationEntry.Get(6250052); /* The amulet contains the spell of Protection from Stun and Death. */
 	}
 		
 	/// <summary>

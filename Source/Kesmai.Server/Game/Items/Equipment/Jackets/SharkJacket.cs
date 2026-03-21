@@ -32,12 +32,12 @@ public class SharkJacket : Jacket, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200179)); /* [You are looking at] [a jacket made from the skin of a shark.] */
+		yield return LocalizationEntry.Get(6200179); /* [a jacket made from the skin of a shark.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250099); /* The jacket appears quite ordinary. */
 	}
 
 	/// <summary>

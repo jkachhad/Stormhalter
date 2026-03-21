@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -25,11 +26,11 @@ public class OvalOnyx : Gem
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200291)); /* [You are looking at] [an onyx, cut into an oval shape.] */
+		yield return LocalizationEntry.Get(6200291); /* [an onyx, cut into an oval shape.] */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

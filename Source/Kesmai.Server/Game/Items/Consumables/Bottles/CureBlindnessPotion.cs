@@ -39,13 +39,14 @@ public class CureBlindnessPotion : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200091)); /* [You are looking at] [a clear bottle with a brown label.] */
+		yield return LocalizationEntry.Get(6200091); /* [a clear bottle with a brown label.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

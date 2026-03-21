@@ -46,14 +46,14 @@ public class Longbow : Bow
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200035)); /* [You are looking at] [a yew longbow.] */
+		yield return LocalizationEntry.Get(6200035); /* [a yew longbow.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250027)); /* The longbow appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250027); /* The longbow appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

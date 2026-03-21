@@ -36,13 +36,14 @@ public class StaminaPotion : Bottle
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200093)); /* [You are looking at] [a pale-blue bottle streaked with white lines.] */
+		yield return LocalizationEntry.Get(6200093); /* [a pale-blue bottle streaked with white lines.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

@@ -31,11 +31,11 @@ public class RolledScroll : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200317)); /* [You are looking at] [a small leather scroll.] */
+		yield return LocalizationEntry.Get(6200317); /* [a small leather scroll.] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

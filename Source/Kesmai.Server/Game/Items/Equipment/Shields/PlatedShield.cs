@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -38,14 +39,14 @@ public class PlatedShield : Shield
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200032)); /* [You are looking at] [a wooden shield faced with thin steel plates.] */
+		yield return LocalizationEntry.Get(6200032); /* [a wooden shield faced with thin steel plates.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250024)); /* The shield provides fairly good protection. */
+			yield return LocalizationEntry.Get(6250024); /* The shield provides fairly good protection. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

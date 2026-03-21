@@ -33,12 +33,12 @@ public class HickoryWand : Wand, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200227)); /* [You are looking at] [a hickory wand with gold and silver inlay.] */
+		yield return LocalizationEntry.Get(6200227); /* [a hickory wand with gold and silver inlay.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250116)); /* The wand contains the spell of Create Portal. */
+			yield return LocalizationEntry.Get(6250116); /* The wand contains the spell of Create Portal. */
 	}
 
 	public override Spell GetSpell()

@@ -40,14 +40,14 @@ public class SpikedFlail : Flail
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200166)); /* [You are looking at] [a heavy flail with a huge spiked ball on a steel chain.] */
+		yield return LocalizationEntry.Get(6200166); /* [a heavy flail with a huge spiked ball on a steel chain.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250090)); /* The flail appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250090); /* The flail appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

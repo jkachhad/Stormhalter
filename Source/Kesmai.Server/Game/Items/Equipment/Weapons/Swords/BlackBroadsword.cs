@@ -72,14 +72,13 @@ public class BlackBroadsword : Sword, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200004)); /* [You are looking at] [a black broadsword. The sword is emitting a faint blue glow. The weapon is lawful.] */
+		yield return LocalizationEntry.Get(6200004); /* [a black broadsword. The sword is emitting a faint blue glow. The weapon is lawful.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
+			yield return LocalizationEntry.Get(6250003); /* The combat adds for this weapon are +4. */
 	}
-
 
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

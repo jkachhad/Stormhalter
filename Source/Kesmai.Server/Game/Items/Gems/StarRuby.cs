@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -31,9 +32,9 @@ public class StarRuby : Gem
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200121)); /* [You are looking at] [a highly polished star ruby with a peculiar glow eminating from its core.] */
+		yield return LocalizationEntry.Get(6200121); /* [a highly polished star ruby with a peculiar glow eminating from its core.] */
 	}
 
 	/// <inheritdoc />

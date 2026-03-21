@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -52,19 +53,18 @@ public class WingedHelm : Helmet, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200043)); /* [You are looking at] [a steel helm set with white wings.] */
+		yield return LocalizationEntry.Get(6200043); /* [a steel helm set with white wings.] */
 
 		if (Identified)
 		{
-			entries.Add(
-				new LocalizationEntry(ProvidesNightVision 
+			yield return LocalizationEntry.Get(ProvidesNightVision
 					? 6250104 /* The helm contains the spell of Night Vision. */
-					: 6250033)); /* The helm appears quite ordinary. */
+					: 6250033); /* The helm appears quite ordinary. */
 		}
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

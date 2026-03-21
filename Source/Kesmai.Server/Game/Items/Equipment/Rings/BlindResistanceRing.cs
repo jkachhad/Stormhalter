@@ -32,15 +32,13 @@ public class BlindResistanceRing : Ring, ITreasure
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200050)); /* [You are looking at] [a soft ring of tiny green feathers.] */
+		yield return LocalizationEntry.Get(6200050); /* [a soft ring of tiny green feathers.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250041)); /* The ring contains the spell of Blind Resistance. */
+			yield return LocalizationEntry.Get(6250041); /* The ring contains the spell of Blind Resistance. */
 	}
 
 	/// <summary>

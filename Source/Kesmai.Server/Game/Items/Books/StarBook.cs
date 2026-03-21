@@ -24,8 +24,8 @@ public class StarBook : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200310)); /* [You are looking at] [a small iron-bound book with a mysterious star-shaped emblem emblazoned on the cover.] */
+		yield return LocalizationEntry.Get(6200310); /* [a small iron-bound book with a mysterious star-shaped emblem emblazoned on the cover.] */
 	}
 }

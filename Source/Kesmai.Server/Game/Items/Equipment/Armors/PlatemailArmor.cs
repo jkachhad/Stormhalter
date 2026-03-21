@@ -70,14 +70,14 @@ public class PlatemailArmor : Armor
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200026)); /* [You are looking at] [an iron breastplate and greaves.] */
+		yield return LocalizationEntry.Get(6200026); /* [an iron breastplate and greaves.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250022)); /* The armor appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250022); /* The armor appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

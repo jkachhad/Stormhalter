@@ -36,9 +36,9 @@ public class PowerBracelet : Bracelet, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200377)); /* [You are looking at] [a golden bracelet embued with sapphires.] */
+		yield return LocalizationEntry.Get(6200377); /* [a golden bracelet embued with sapphires.] */
 	}
 
 	public override bool CanUse(MobileEntity entity)

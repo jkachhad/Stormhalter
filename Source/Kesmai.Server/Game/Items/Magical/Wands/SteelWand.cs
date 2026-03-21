@@ -33,12 +33,12 @@ public class SteelWand : Wand, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200223)); /* [You are looking at] [a steel wand.] */
+		yield return LocalizationEntry.Get(6200223); /* [a steel wand.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250112)); /* The wand contains the spell of Lightning Bolt. */
+			yield return LocalizationEntry.Get(6250112); /* The wand contains the spell of Lightning Bolt. */
 	}
 
 	public override Spell GetSpell()

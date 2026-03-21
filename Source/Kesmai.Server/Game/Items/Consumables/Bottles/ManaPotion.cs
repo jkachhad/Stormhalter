@@ -44,13 +44,14 @@ public class ManaPotion : Bottle, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200085)); /* [You are looking at] [a white porcelain bottle adorned with lotus blossoms.] */
+		yield return LocalizationEntry.Get(6200085); /* [a white porcelain bottle adorned with lotus blossoms.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

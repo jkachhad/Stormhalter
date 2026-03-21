@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
@@ -20,14 +21,30 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 	public int ChargesCurrent
 	{
 		get => _chargesCurrent;
-		set => _chargesCurrent = value.Clamp(0, _chargesMax);
+		set
+		{
+			var newValue = value.Clamp(0, _chargesMax);
+
+			if (_chargesCurrent != newValue)
+			{
+				_chargesCurrent = newValue;
+				InvalidateTooltip();
+			}
+		}
 	}
 		
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{
 		get => _chargesMax;
-		set => _chargesMax = value;
+		set
+		{
+			if (_chargesMax != value)
+			{
+				_chargesMax = value;
+				InvalidateTooltip();
+			}
+		}
 	}
 		
 	/// <summary>
@@ -95,15 +112,13 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 		base.GetInteractions(source, entries);
 	}
 		
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200067)); /* [You are looking at] [a silver chain with a silver and onyx scorpion.] */
+		yield return LocalizationEntry.Get(6200067); /* [a silver chain with a silver and onyx scorpion.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250051)); /* The amulet contains the spell of Neutralize. */
+			yield return LocalizationEntry.Get(6250051); /* The amulet contains the spell of Neutralize. */
 	}
 
 	private class InternalTarget : MobileTarget

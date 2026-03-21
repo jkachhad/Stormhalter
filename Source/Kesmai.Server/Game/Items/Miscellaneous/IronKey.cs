@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
@@ -35,11 +35,11 @@ public class IronKey : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200333)); /* [You are looking at] [an iron key with silver runes.] */
+		yield return LocalizationEntry.Get(6200333); /* [an iron key with silver runes.] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

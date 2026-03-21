@@ -31,11 +31,11 @@ public class DemonFigurine : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200318)); /* [You are looking at] [a bronze figurine of a fearsome demon.] */
+		yield return LocalizationEntry.Get(6200318); /* [a bronze figurine of a fearsome demon.] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

@@ -30,12 +30,12 @@ public class GlassWand : Wand, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200222)); /* [You are looking at] [a glass wand.] */
+		yield return LocalizationEntry.Get(6200222); /* [a glass wand.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250111)); /* The wand contains the spell of Ice Storm. */
+			yield return LocalizationEntry.Get(6250111); /* The wand contains the spell of Ice Storm. */
 	}
 
 	public override Spell GetSpell()

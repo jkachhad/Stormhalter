@@ -27,18 +27,12 @@ public class SteelDagger : Dagger
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
-	{
-		entries.Add(new LocalizationEntry(6200000, 6200015)); /* [You are looking at] [a steel dagger.] */
-
-		if (Identified)
-			entries.Add(new LocalizationEntry(6250014)); /* The dagger appears quite ordinary. */
-	}
-	
-	/// <inheritdoc />
 	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
 		yield return LocalizationEntry.Get(6200015); /* [a steel dagger.] */
+
+		if (Identified)
+			yield return LocalizationEntry.Get(6250014); /* The dagger appears quite ordinary. */
 	}
 
 	/// <inheritdoc />

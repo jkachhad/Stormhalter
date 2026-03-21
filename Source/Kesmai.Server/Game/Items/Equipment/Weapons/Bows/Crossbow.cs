@@ -62,14 +62,14 @@ public class Crossbow : ProjectileWeapon
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200036)); /* [You are looking at] [a crossbow.] */
+		yield return LocalizationEntry.Get(6200036); /* [a crossbow.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250028)); /* The crossbow appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250028); /* The crossbow appears quite ordinary. */
 	}
-		
+
 	/// <inheritdoc />
 	/// <remarks>
 	/// All two-handed weapons will break hide, but crossbows are an exception.

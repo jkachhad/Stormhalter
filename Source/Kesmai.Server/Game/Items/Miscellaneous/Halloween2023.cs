@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
@@ -33,13 +33,13 @@ public class Halloween2023 : ItemEntity, ITreasure
 	public Halloween2023(Serial serial) : base(serial)
 	{
 	}
-		
+
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200395)); /* [You are looking at] [a beautifully wrapped gift box.] */
+		yield return LocalizationEntry.Get(6200395); /* [a beautifully wrapped gift box.] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

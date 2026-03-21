@@ -32,12 +32,12 @@ public class FeatherFallBoots : Boots, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200039)); /* [You are looking at] [a pair of gray boots rimmed with white fur.] */
+		yield return LocalizationEntry.Get(6200039); /* [a pair of gray boots rimmed with white fur.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250029)); /* The boots contain the spell of Feather Fall. */
+			yield return LocalizationEntry.Get(6250029); /* The boots contain the spell of Feather Fall. */
 	}
 
 	/// <summary>

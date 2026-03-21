@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
@@ -33,13 +33,13 @@ public class PetrifiedWood : ItemEntity, ITreasure
 	public PetrifiedWood(Serial serial) : base(serial)
 	{
 	}
-		
+
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200328)); /* [You are looking at] [a piece of petrified wood.] */
+		yield return LocalizationEntry.Get(6200328); /* [a piece of petrified wood.] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

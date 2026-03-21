@@ -42,15 +42,13 @@ public class StrengthRing : Ring, ITreasure
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200044)); /* [You are looking at] [a gold ring with a large red gem set into it.] */
+		yield return LocalizationEntry.Get(6200044); /* [a gold ring with a large red gem set into it.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250034)); /* The ring contains a medium spell of Strength. */
+			yield return LocalizationEntry.Get(6250034); /* The ring contains a medium spell of Strength. */
 	}
 
 	/// <summary>

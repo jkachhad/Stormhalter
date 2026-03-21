@@ -41,12 +41,10 @@ public class Yttril : ItemEntity, ITreasure
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200221)); /* [You are looking at] [a blue_gray stone flecked with bits of glowing metal.  The stone is known as yttril.] */
+		yield return LocalizationEntry.Get(6200221); /* [a blue-gray stone flecked with bits of glowing metal.  The stone is known as yttril.] */
 	}
 
 	/// <summary>

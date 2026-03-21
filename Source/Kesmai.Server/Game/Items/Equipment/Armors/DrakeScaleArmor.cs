@@ -76,14 +76,14 @@ public class DrakeScaleArmor : Armor, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200182)); /* [You are looking at] [a vest made from the silvery scales of a drake.] */
+		yield return LocalizationEntry.Get(6200182); /* [a vest made from the silvery scales of a drake.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250096)); /* The armor appears to have some magical properties. */
+			yield return LocalizationEntry.Get(6250096); /* The armor appears to have some magical properties. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

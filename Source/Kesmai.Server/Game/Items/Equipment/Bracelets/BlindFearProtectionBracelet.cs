@@ -31,12 +31,12 @@ public class BlindFearProtectionBracelet : Bracelet, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200042)); /* [You are looking at] [a wavy silver bracelet set with aquamarines.] */
+		yield return LocalizationEntry.Get(6200042); /* [a wavy silver bracelet set with aquamarines.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250032)); /* The bracelet contains the spell of Protection from Blind and Fear. */
+			yield return LocalizationEntry.Get(6250032); /* The bracelet contains the spell of Protection from Blind and Fear. */
 	}
 
 	/// <summary>

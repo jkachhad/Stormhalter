@@ -50,12 +50,12 @@ public class ReturningAxe : Axe, IReturningWeapon, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200003)); /* [You are looking at] [a heavy battle axe with gleaming steel blades. The axe is emitting a faint blue glow. The weapon is lawful.] */
+		yield return LocalizationEntry.Get(6200003); /* [a heavy battle axe with gleaming steel blades. The axe is emitting a faint blue glow. The weapon is lawful.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250002)); /* The combat adds for this weapon are +5. */
+			yield return LocalizationEntry.Get(6250002); /* The combat adds for this weapon are +5. */
 	}
 
 	/// <inheritdoc />

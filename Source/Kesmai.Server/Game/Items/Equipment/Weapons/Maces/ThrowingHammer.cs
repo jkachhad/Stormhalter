@@ -49,14 +49,14 @@ public class ThrowingHammer : Mace
 	}
 	
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200138)); /* [You are looking at] [a large steel throwing hammer.] */
+		yield return LocalizationEntry.Get(6200138); /* [a large steel throwing hammer.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250079)); /* The hammer appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250079); /* The hammer appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

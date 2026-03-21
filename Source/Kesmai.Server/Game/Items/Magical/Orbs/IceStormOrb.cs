@@ -26,12 +26,12 @@ public class IceStormOrb : SpellOrb, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200276)); /* [You are looking at] [a small sphere of blue glass.] */
+		yield return LocalizationEntry.Get(6200276); /* [a small sphere of blue glass.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250123)); /* The ball contains the spell of icestorm. */
+			yield return LocalizationEntry.Get(6250123); /* The ball contains the spell of icestorm. */
 	}
 
 	/// <inheritdoc />

@@ -21,13 +21,14 @@ public class YellowBalm : Balm
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200088)); /* [You are looking at] [a clear bottle made of yellowish glass.] */
+		yield return LocalizationEntry.Get(6200088); /* [a clear bottle made of yellowish glass.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

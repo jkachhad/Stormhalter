@@ -65,11 +65,11 @@ public class WyvernScales : Armor, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200029)); /* [You are looking at] [a vest made from the scales of a wyvern.] */
+		yield return LocalizationEntry.Get(6200029); /* [a vest made from the scales of a wyvern.] */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

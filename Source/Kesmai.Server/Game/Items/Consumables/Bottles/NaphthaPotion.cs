@@ -42,13 +42,14 @@ public class NaphthaPotion : Bottle
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200086)); /* [You are looking at] [a black ceramic bottle.] */
+		yield return LocalizationEntry.Get(6200086); /* [a black ceramic bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-		
+
 	/// <inheritdoc />
 	public override ActionType GetAction()
 	{

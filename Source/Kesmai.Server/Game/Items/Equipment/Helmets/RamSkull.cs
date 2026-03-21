@@ -42,14 +42,14 @@ public class RamSkull : Helmet, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200213)); /* [You are looking at] [a ram skull.] */
+		yield return LocalizationEntry.Get(6200213); /* [a ram skull.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250108)); /* The skull is rather fragile. */
+			yield return LocalizationEntry.Get(6250108); /* The skull is rather fragile. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

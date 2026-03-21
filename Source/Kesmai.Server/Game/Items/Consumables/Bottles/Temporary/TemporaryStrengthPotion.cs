@@ -47,13 +47,14 @@ public class TemporaryStrengthPotion : Bottle, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200090)); /* [You are looking at] [a clear bottle made of yellowish glass.] [Inside is a clear red liquid.] */
+		yield return LocalizationEntry.Get(6200090); /* [a clear bottle made of yellowish glass.] [Inside is a clear red liquid.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

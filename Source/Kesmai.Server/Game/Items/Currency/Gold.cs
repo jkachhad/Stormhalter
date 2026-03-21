@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -59,17 +60,12 @@ public class Gold : Currency
 		return (noun.Matches("coins", true) || noun.Matches("gold", true));
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		if (Amount > 1)
-			entries.Add(new LocalizationEntry(6199999, Amount.ToString(), 6199998)); /* You are looking at [#] [gold coins.]*/
-		else
-			entries.Add(new LocalizationEntry(6200000, 6200001)); /* [You are looking at] [a gold coin.]*/
+		yield return LocalizationEntry.Get(6200001); /* [a gleaming golden coin etched with three concentric rings encircling the sun and moon.]*/
 	}
-	
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

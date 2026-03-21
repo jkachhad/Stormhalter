@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
@@ -49,12 +49,12 @@ public class Katana : Sword
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200150)); /* [You are looking at] [a sharp steel katana.] */
+		yield return LocalizationEntry.Get(6200150); /* [a sharp steel katana.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250088)); /* The katana appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250088); /* The katana appears quite ordinary. */
 	}
 
 	/// <inheritdoc />

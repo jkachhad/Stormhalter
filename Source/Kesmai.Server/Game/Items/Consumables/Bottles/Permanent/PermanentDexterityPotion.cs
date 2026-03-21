@@ -42,13 +42,14 @@ public class PermanentDexterityPotion : Bottle, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200096)); /* [You are looking at] [a black ceramic bottle with small gold whorls around its base.] */
+		yield return LocalizationEntry.Get(6200096); /* [a black ceramic bottle with small gold whorls around its base.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

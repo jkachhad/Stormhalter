@@ -51,14 +51,14 @@ public class MainGauche : Dagger, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200341)); /* [You are looking at] [an antique Lengian parrying dagger with a gold heron inscribed in the smooth blue gilted metal. The weapon feels exceptionally well balanced. The weapon is neutral.] */
+		yield return LocalizationEntry.Get(6200341); /* [an antique Lengian parrying dagger with a gold heron inscribed in the smooth blue gilted metal. The weapon feels exceptionally well balanced. The weapon is neutral.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
+			yield return LocalizationEntry.Get(6250080); /* The combat adds for this weapon are +2. */
 	}
-		
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

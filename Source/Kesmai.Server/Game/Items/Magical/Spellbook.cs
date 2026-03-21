@@ -27,7 +27,11 @@ public class Spellbook : ItemEntity, ITreasure
 	/// </summary>
 	public override int Category => 3;
 
+	/// <inheritdoc />
 	public override bool CanBind => true;
+	
+	/// <inheritdoc />
+	public override bool RequiresIdentification => true;
 
 	public Profession Profession
 	{
@@ -42,43 +46,13 @@ public class Spellbook : ItemEntity, ITreasure
 		
 	public Spellbook(PlayerEntity owner) : base(152)
 	{
+		Identified = true;
+
 		Bind(owner);
 	}
 	
 	public Spellbook(Serial serial) : base(serial)
 	{
-	}
-	
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
-	{
-		entries.Add(new LocalizationEntry(6200000, 6200216)); /* [You are looking at] [a small leather-bound book, with mystic runes engraved on the cover.] */
-
-		if (Identified && Owner != null)
-			entries.Add(new LocalizationEntry(6300341, Profession.Info.Name.ToLower())); /* This book belongs to a {0}. */
-	}
-
-	/// <inheritdoc />
-	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
-	{
-		base.AddProperties(tooltip, beholder);
-
-		if (!Identified)
-		{
-			tooltip.Add(new EntityPropertyTextBlock(LocalizationEntry.Get(6302001), Color.Red)); /* Unidentified */
-			return;
-		}
-
-		if (Owner is null)
-			return;
-
-		var owner = Owner;
-		var learnedSpells = owner.Spells.Learned;
-		
-		tooltip.Add(new EntityPropertyTextBlock(new LocalizationEntry(6500001, "Spells", learnedSpells.Count.ToString()), Color.White)); /* Spells: {1} */
-		tooltip.Add(new EntityPropertyTextBlock(new LocalizationEntry(6500001, "Owner", owner.Name), Color.Aqua)); /* Owner: {1} */
 	}
 
 	/// <inheritdoc />

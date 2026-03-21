@@ -46,12 +46,12 @@ public class BayonetHammer : Mace
 	}
 	
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200149)); /* [You are looking at] [a steel bayonet fitted with a hammer head.] */
+		yield return LocalizationEntry.Get(6200149); /* [a steel bayonet fitted with a hammer head.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250087)); /* The bayonet appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250087); /* The bayonet appears quite ordinary. */
 	}
 
 	/// <inheritdoc />

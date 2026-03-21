@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -25,9 +26,9 @@ public class PerfectRuby : Gem
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200299)); /* [You are looking at] [an exquisitely carved ruby.] */
+		yield return LocalizationEntry.Get(6200299); /* [an exquisitely carved ruby.] */
 	}
 
 	/// <inheritdoc />

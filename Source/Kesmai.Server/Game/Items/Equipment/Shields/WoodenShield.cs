@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -39,17 +40,15 @@ public class WoodenShield : Shield
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200031)); /* [You are looking at] [a small wooden shield.]*/
+		yield return LocalizationEntry.Get(6200031); /* [a small wooden shield.]*/
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250023)); /* The shield appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250023); /* The shield appears quite ordinary. */
 	}
-	
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

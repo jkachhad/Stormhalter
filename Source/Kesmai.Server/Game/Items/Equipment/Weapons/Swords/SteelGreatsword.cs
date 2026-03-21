@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -23,11 +24,12 @@ public class SteelGreatsword : Greatsword
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200153)); /* [You are looking at an unusually] [light shining steel greatsword.] */
+		yield return LocalizationEntry.Get(6200153); /* [an unusually] [light shining steel greatsword.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
+			yield return LocalizationEntry.Get(6250003); /* The combat adds for this weapon are +4. */
 	}
+
 }

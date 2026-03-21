@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -44,12 +45,12 @@ public class BlackSteelRapier : Rapier, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200280)); /* [You are looking at] [an impossibly thin black blade mounted on a silver hilt.  The rapier is emitting a faint blue glow.] */
+		yield return LocalizationEntry.Get(6200280); /* [an impossibly thin black blade mounted on a silver hilt.  The rapier is emitting a faint blue glow.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
+			yield return LocalizationEntry.Get(6250003); /* The combat adds for this weapon are +4. */
 	}
 
 	/// <inheritdoc />

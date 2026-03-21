@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -29,14 +30,14 @@ public class WeakDexterityRing : DexterityRing, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200049)); /* [You are looking at] [a flexible ring of interwoven gold wire.] */
+		yield return LocalizationEntry.Get(6200049); /* [a flexible ring of interwoven gold wire.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250040)); /* The ring increases dexterity slightly. */
+			yield return LocalizationEntry.Get(6250040); /* The ring increases dexterity slightly. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

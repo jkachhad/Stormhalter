@@ -42,13 +42,14 @@ public class PermanentWillpowerPotion : Bottle, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200110)); /* [You are looking at] [a porcelain bottle with small irises in raised relief around its base.] */
+		yield return LocalizationEntry.Get(6200110); /* [a porcelain bottle with small irises in raised relief around its base.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

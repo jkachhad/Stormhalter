@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -40,14 +41,14 @@ public class SaffronRobe : Robe, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200184)); /* [You are looking at] [a saffron robe made of a fine cloth.] */
+		yield return LocalizationEntry.Get(6200184); /* [a saffron robe made of a fine cloth.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250100)); /* The robe is extremely light. */
+			yield return LocalizationEntry.Get(6250100); /* The robe is extremely light. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

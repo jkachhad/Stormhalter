@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
@@ -31,11 +31,11 @@ public class AncientCoin : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200307)); /* [You are looking at] [an old piece of currency, the face of a forgotten monarch engraved upon it.] */
+		yield return LocalizationEntry.Get(6200307); /* [an old piece of currency, the face of a forgotten monarch engraved upon it.] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

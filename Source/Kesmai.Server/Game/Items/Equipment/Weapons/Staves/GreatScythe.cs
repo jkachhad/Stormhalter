@@ -52,11 +52,12 @@ public class GreatScythe : Staff
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200376)); /* [You are looking at] [a bloodied great scythe with magical runes embued within.] */
+		yield return LocalizationEntry.Get(6200376); /* [a bloodied great scythe with magical runes embued within.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6300426)); /* The combat adds for this weapon are +6. */
+			yield return LocalizationEntry.Get(6300426); /* The combat adds for this weapon are +6. */
 	}
+
 }

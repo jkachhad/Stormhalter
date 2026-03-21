@@ -46,14 +46,14 @@ public class BlackStaff : Staff
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200147)); /* [You are looking at] [a large black staff covered with mystic runes.] */
+		yield return LocalizationEntry.Get(6200147); /* [a large black staff covered with mystic runes.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250085)); /* The combat adds for this weapon are +1. */
+			yield return LocalizationEntry.Get(6250085); /* The combat adds for this weapon are +1. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

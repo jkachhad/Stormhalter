@@ -31,11 +31,11 @@ public class DragonFigurine : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200271)); /* [You are looking at] [a red figurine of a flying dragon.] */
+		yield return LocalizationEntry.Get(6200271); /* [a red figurine of a flying dragon.] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

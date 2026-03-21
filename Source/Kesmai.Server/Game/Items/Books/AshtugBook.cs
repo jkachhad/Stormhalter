@@ -24,8 +24,8 @@ public class AshtugBook : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200309)); /* [You are looking at] [a small leather-bound book, with a title lettered on the cover. The book is slightly charred, and the title is faded beyond recognition.] */
+		yield return LocalizationEntry.Get(6200309); /* [a small leather-bound book, with a title lettered on the cover. The book is slightly charred, and the title is faded beyond recognition.] */
 	}
 }

@@ -40,14 +40,14 @@ public class BattleAxe : Axe
 	}
 	
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200016)); /* [You are looking at] [a large battle axe.] */
+		yield return LocalizationEntry.Get(6200016); /* [a large battle axe.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250015)); /* The battle axe appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250015); /* The battle axe appears quite ordinary. */
 	}
-		
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

@@ -41,15 +41,13 @@ public class TigerSkull : Helmet, ITreasure
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200212)); /* [You are looking at] [a tiger skull.] */
+		yield return LocalizationEntry.Get(6200212); /* [a tiger skull.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250107)); /* The skull is fairly thick. */
+			yield return LocalizationEntry.Get(6250107); /* The skull is fairly thick. */
 	}
 
 	/// <summary>

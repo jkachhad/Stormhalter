@@ -24,8 +24,8 @@ public class WeaponBook : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200315)); /* [You are looking at] [a book detailing historical weapon techniques nearly lost to the ages.] */
+		yield return LocalizationEntry.Get(6200315); /* [a book detailing historical weapon techniques nearly lost to the ages.] */
 	}
 }

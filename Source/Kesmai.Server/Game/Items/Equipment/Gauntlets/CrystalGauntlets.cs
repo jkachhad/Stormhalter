@@ -61,14 +61,14 @@ public class CrystalGauntlets : Gauntlets, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200172)); /* [You are looking at] [a pair of gauntlets made of flat black steel lamallae with rosy crystalline claws projecting from the knuckles.] */
+		yield return LocalizationEntry.Get(6200172); /* [a pair of gauntlets made of flat black steel lamallae with rosy crystalline claws projecting from the knuckles.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250095)); /* The combat adds for the gauntlets are +4. */
+			yield return LocalizationEntry.Get(6250095); /* The combat adds for the gauntlets are +4. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

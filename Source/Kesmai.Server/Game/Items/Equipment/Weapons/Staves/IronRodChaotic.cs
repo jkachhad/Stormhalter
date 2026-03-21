@@ -46,14 +46,14 @@ public class IronRodChaotic : Staff
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200136)); /* [You are looking at] [a long black iron rod with glowing red gems arranged in a ring near the center. The rod is chaotic.] */
+		yield return LocalizationEntry.Get(6200136); /* [a long black iron rod with glowing red gems arranged in a ring near the center. The rod is chaotic.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250007)); /* The combat adds for this weapon are +3. */
+			yield return LocalizationEntry.Get(6250007); /* The combat adds for this weapon are +3. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

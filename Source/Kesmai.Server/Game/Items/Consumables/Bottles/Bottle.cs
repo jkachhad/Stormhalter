@@ -77,14 +77,16 @@ public abstract class Bottle : Consumable
 	{
 	}
 
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 
 		if (IsOpen)
-			entries.Add(new LocalizationEntry(6300383)); /* The container is open. */
+			yield return LocalizationEntry.Get(6300383); /* The container is open. */
 	}
-	
+
 	public override void OnDropped()
 	{
 		base.OnDropped();

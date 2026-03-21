@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -35,14 +36,14 @@ public class SpectreCloak : Robe, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, "an experimental cloak.")); /* [You are looking at] [a long black cloak.] */
+		yield return LocalizationEntry.Get("an experimental cloak."); /* [a long black cloak.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry("The robe is visible when inspected closely."));
+			yield return LocalizationEntry.Get("The robe is visible when inspected closely.");
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

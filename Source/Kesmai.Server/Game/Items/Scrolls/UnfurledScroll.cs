@@ -31,11 +31,11 @@ public class UnfurledScroll : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200316)); /* [You are looking at] [a small scroll, made out of a strange leather.] */
+		yield return LocalizationEntry.Get(6200316); /* [a small scroll, made out of a strange leather.] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

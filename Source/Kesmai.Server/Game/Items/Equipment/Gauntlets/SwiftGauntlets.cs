@@ -48,9 +48,9 @@ public class SwiftGauntlets : Gauntlets, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200284)); /* [You are looking at] [a pair of gloves that emanate strands of darkness.] */
+		yield return LocalizationEntry.Get(6200284); /* [a pair of gloves that emanate strands of darkness.] */
 	}
 
 	public override TimeSpan GetSwingDelay(MobileEntity entity)

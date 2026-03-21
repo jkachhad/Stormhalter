@@ -33,15 +33,13 @@ public class FireIceProtectionRing : Ring, ITreasure
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200048)); /* [You are looking at] [a gold ring set with four small diamonds encircling a fiery ruby.] */
+		yield return LocalizationEntry.Get(6200048); /* [a gold ring set with four small diamonds encircling a fiery ruby.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250038)); /* The ring contains the spell of Protection from Fire and Ice. */
+			yield return LocalizationEntry.Get(6250038); /* The ring contains the spell of Protection from Fire and Ice. */
 	}
 
 	/// <summary>

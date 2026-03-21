@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -37,14 +38,14 @@ public class BlackCloak : Robe, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200189)); /* [You are looking at] [a long black cloak.] */
+		yield return LocalizationEntry.Get(6200189); /* [a long black cloak.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250100)); /* The robe is extremely light. */
+			yield return LocalizationEntry.Get(6250100); /* The robe is extremely light. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

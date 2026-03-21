@@ -42,13 +42,14 @@ public class PermanentWisdomPotion : Bottle, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200107)); /* [You are looking at] [a heavy glass bottle mounted on a gold base and set with emeralds.] */
+		yield return LocalizationEntry.Get(6200107); /* [a heavy glass bottle mounted on a gold base and set with emeralds.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

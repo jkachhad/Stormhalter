@@ -24,8 +24,8 @@ public class BookSix : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200308)); /* [You are looking at] [a yellow book with a silver mark, 'VI', on its spine.] */
+		yield return LocalizationEntry.Get(6200308); /* [a yellow book with a silver mark, 'VI', on its spine.] */
 	}
 }

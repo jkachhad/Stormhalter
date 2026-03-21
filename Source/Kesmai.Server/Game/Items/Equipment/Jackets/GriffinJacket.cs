@@ -33,9 +33,9 @@ public class GriffinJacket : Jacket, ITreasure
 	}
         
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200195)); /* [You are looking at] [a vest made from the feathers of a griffin.] */
+		yield return LocalizationEntry.Get(6200195); /* [a vest made from the feathers of a griffin.] */
 	}
 
 	/// <summary>

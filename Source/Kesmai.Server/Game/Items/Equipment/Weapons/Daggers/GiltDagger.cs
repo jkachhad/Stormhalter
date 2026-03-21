@@ -40,12 +40,12 @@ public class GiltDagger : Dagger
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200155)); /* [You are looking at] [a gilt-handled dagger with a fine steel blade.] */
+		yield return LocalizationEntry.Get(6200155); /* [a gilt-handled dagger with a fine steel blade.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250007)); /* The combat adds for this weapon are +3. */
+			yield return LocalizationEntry.Get(6250007); /* The combat adds for this weapon are +3. */
 	}
 
 	/// <inheritdoc />

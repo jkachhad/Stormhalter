@@ -36,10 +36,11 @@ public class FalconStaminaPotion : Bottle
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200383)); /* [You are looking at] [a burnished steel bottle with the icon of a falcon.] [Inside is a clear jade-colored liquid that smells of jasmine.] */
+		yield return LocalizationEntry.Get(6200383); /* [a burnished steel bottle with the icon of a falcon.] [Inside is a clear jade-colored liquid that smells of jasmine.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 }

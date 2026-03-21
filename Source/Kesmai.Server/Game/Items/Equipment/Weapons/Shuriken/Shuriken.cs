@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
@@ -65,12 +65,12 @@ public class Shuriken : Weapon
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200167)); /* [You are looking at] [a steel shuriken.] */
+		yield return LocalizationEntry.Get(6200167); /* [a steel shuriken.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250093)); /* The shuriken appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250093); /* The shuriken appears quite ordinary. */
 	}
 
 	/// <inheritdoc />

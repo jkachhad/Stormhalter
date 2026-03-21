@@ -46,12 +46,12 @@ public class SpikedClub : Mace
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200139)); /* [You are looking at] [a huge wooden club with a metal spike.] */
+		yield return LocalizationEntry.Get(6200139); /* [a huge wooden club with a metal spike.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
+			yield return LocalizationEntry.Get(6250080); /* The combat adds for this weapon are +2. */
 	}
 
 	/// <inheritdoc />

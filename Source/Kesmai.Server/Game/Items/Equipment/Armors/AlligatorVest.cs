@@ -63,16 +63,24 @@ public class AlligatorVest : Armor
 		entity.Stats[EntityStat.MeleeDamageMitigation].Remove(+1, ModifierType.Constant);
 		entity.Stats[EntityStat.RangedDamageMitigation].Remove(+1, ModifierType.Constant);
 	}
-		
+
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200175)); /* [You are looking at] [a vest made from the hide of a alligator.] */
+		tooltip.AddMitigations(1, 0, 1);
+		
+		base.AddProperties(tooltip, beholder);
+	}
+
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		yield return LocalizationEntry.Get(6200175); /* [a vest made from the hide of a alligator.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250097)); /* The vest appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250097); /* The vest appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

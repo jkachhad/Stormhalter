@@ -37,12 +37,12 @@ public class BirchWand : Wand, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200225)); /* [You are looking at] [a birch wand.] */
+		yield return LocalizationEntry.Get(6200225); /* [a birch wand.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250114)); /* The wand contains the spell of Blind. */
+			yield return LocalizationEntry.Get(6250114); /* The wand contains the spell of Blind. */
 	}
 		
 	public override Spell GetSpell()

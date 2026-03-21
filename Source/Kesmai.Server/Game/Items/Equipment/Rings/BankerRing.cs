@@ -197,12 +197,12 @@ public class BankerRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200343)); /* [You are looking at] [a heavy gold ring with a faded inscription that reads "Pr..-rt. of .a-.er's G'.ld."] */
+		yield return LocalizationEntry.Get(6200343); /* [a heavy gold ring with a faded inscription that reads "Pr..-rt. of .a-.er's G'.ld."] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6300424, Consumed.ToString())); /* The ring whispers: {0}. */
+			yield return new LocalizationEntry(6300424, Consumed.ToString()); /* The ring whispers: {0}. */
 	}
 
 	/// <inheritdoc />

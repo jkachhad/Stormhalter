@@ -40,13 +40,14 @@ public class ForestBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200375)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200375); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-		
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
@@ -106,11 +107,12 @@ public class KeepBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200362)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200362); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -172,11 +174,12 @@ public class LandBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200363)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200363); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -238,11 +241,12 @@ public class ShadowBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200364)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200364); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -304,11 +308,12 @@ public class CorruptedBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200365)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200365); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -370,11 +375,12 @@ public class MakersBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200366)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200366); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -436,11 +442,12 @@ public class UshersBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200367)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200367); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -502,11 +509,12 @@ public class FeralBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200368)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200368); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -568,11 +576,12 @@ public class FlameBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200369)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200369); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -634,11 +643,12 @@ public class AirBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200370)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200370); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -700,11 +710,12 @@ public class IceBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200371)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200371); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -766,11 +777,12 @@ public class WaterBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200372)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200372); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -832,11 +844,12 @@ public class RegenerationBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200373)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200373); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />
@@ -898,11 +911,12 @@ public class DeadBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200374)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200374); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />

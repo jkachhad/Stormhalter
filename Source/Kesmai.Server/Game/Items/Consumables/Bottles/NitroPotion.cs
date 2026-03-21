@@ -41,11 +41,12 @@ public class NitroPotion : Bottle
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200087)); /* [You are looking at] [a clear glass bottle.] */
+		yield return LocalizationEntry.Get(6200087); /* [a clear glass bottle.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 
 	/// <inheritdoc />

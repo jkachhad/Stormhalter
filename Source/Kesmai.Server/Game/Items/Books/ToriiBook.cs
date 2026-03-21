@@ -31,11 +31,11 @@ public class ToriiBook : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200313)); /* [You are looking at] [a book describing a mysterious land called "Torii".] */
+		yield return LocalizationEntry.Get(6200313); /* [a book describing a mysterious land called "Torii".] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

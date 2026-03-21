@@ -37,12 +37,12 @@ public class OakWand : Wand, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200224)); /* [You are looking at] [an oak wand adorned with black lines.] */
+		yield return LocalizationEntry.Get(6200224); /* [an oak wand adorned with black lines.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250113)); /* The wand contains the spell of Death. */
+			yield return LocalizationEntry.Get(6250113); /* The wand contains the spell of Death. */
 	}
 
 	public override Spell GetSpell()

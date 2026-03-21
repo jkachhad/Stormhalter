@@ -35,12 +35,12 @@ public class HummingbirdSword : ShortSword, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200281)); /* [You are looking at] [a fine sword made of an otherworldly metal. Looking at the blade makes you dizzy, as if you were looking at the wings of a hummingbird. The longsword is emitting a faint blue glow.] */
+		yield return LocalizationEntry.Get(6200281); /* [a fine sword made of an otherworldly metal. Looking at the blade makes you dizzy, as if you were looking at the wings of a hummingbird. The longsword is emitting a faint blue glow.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
+			yield return LocalizationEntry.Get(6250003); /* The combat adds for this weapon are +4. */
 	}
 
 #if (Alpha)

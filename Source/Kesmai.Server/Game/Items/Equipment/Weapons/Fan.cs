@@ -55,9 +55,9 @@ public class Fan : Weapon, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200302)); /* [You are looking at] [a fan with black steel blades.] */
+		yield return LocalizationEntry.Get(6200302); /* [a fan with black steel blades.] */
 	}
 
 	/// <inheritdoc />

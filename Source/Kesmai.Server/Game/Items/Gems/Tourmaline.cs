@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -30,9 +31,9 @@ public class Tourmaline : Gem
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200118)); /* [You are looking at] [a rainbow hued bar of tourmaline.] */
+		yield return LocalizationEntry.Get(6200118); /* [a rainbow hued bar of tourmaline.] */
 	}
 
 	/// <inheritdoc />

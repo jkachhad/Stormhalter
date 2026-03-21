@@ -80,11 +80,12 @@ public class UnholyScepter : Mace
     }
 
     /// <inheritdoc />
-    public override void GetDescription(List<LocalizationEntry> entries)
+    public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
     {
-        entries.Add(new LocalizationEntry(6200000, 6200382)); /* [You are looking at] [an unholy scepter that has the markings of a king. The weapon emanates power. The weapon is lawful.] */
+        yield return LocalizationEntry.Get(6200382); /* [an unholy scepter that has the markings of a king. The weapon emanates power. The weapon is lawful.] */
 
         if (Identified)
-            entries.Add(new LocalizationEntry(6250134)); /* The scepter seems to have some magical properties. */
+            yield return LocalizationEntry.Get(6250134); /* The scepter seems to have some magical properties. */
     }
+
 }

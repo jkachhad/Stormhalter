@@ -65,14 +65,14 @@ public class ChainmailArmor : Armor
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200027)); /* [You are looking at] [a suit of chainmail.] */
+		yield return LocalizationEntry.Get(6200027); /* [a suit of chainmail.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250022)); /* The armor appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250022); /* The armor appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

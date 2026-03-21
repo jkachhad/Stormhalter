@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -42,14 +43,14 @@ public class SteelGauntlets : Gauntlets, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200170)); /* [You are looking at] [a pair of leather gauntlets with steel plates.] */
+		yield return LocalizationEntry.Get(6200170); /* [a pair of leather gauntlets with steel plates.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250094)); /* The combat adds for the gauntlets are +2. */
+			yield return LocalizationEntry.Get(6250094); /* The combat adds for the gauntlets are +2. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

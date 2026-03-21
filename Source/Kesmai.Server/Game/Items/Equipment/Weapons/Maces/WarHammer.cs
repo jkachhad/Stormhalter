@@ -46,14 +46,14 @@ public class WarHammer : Mace
 	}
 	
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200142)); /* [You are looking at] [a steel war hammer.] */
+		yield return LocalizationEntry.Get(6200142); /* [a steel war hammer.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250079)); /* The hammer appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250079); /* The hammer appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

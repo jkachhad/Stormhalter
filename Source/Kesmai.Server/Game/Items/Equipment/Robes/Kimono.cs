@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -40,12 +41,12 @@ public class Kimono : Robe, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200202)); /* [You are looking at] [a satiny kimono of brilliant green silk in which golden threads weave a pattern of tiny dragons.] */
+		yield return LocalizationEntry.Get(6200202); /* [a satiny kimono of brilliant green silk in which golden threads weave a pattern of tiny dragons.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250101)); /* The kimono is extremely light. */
+			yield return LocalizationEntry.Get(6250101); /* The kimono is extremely light. */
 	}
 
 	/// <inheritdoc />

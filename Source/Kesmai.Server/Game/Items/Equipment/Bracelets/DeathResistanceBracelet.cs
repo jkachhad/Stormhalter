@@ -31,12 +31,12 @@ public class DeathResistanceBracelet : Bracelet, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200080)); /* [You are looking at] [a silver bracelet set with violet carbuncles.] */
+		yield return LocalizationEntry.Get(6200080); /* [a silver bracelet set with violet carbuncles.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250056)); /* The bracelet contains the spell of Death Resistance. */
+			yield return LocalizationEntry.Get(6250056); /* The bracelet contains the spell of Death Resistance. */
 	}
 
 	/// <summary>

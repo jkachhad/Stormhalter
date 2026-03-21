@@ -39,12 +39,12 @@ public class LightningShield : Shield, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200215)); /* [You are looking at] [a steel shield adorned with a black lightning bolt.] */
+		yield return LocalizationEntry.Get(6200215); /* [a steel shield adorned with a black lightning bolt.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250109)); /* The shield contains the spell of Lightning Resist. */
+			yield return LocalizationEntry.Get(6250109); /* The shield contains the spell of Lightning Resist. */
 	}
 
 	public override void OnWield(MobileEntity entity)

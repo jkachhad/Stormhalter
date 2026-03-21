@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -30,12 +31,12 @@ public class ManticoraJacket : Jacket
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200180)); /* [You are looking at] [a long coat made from the fur of a manticora.] */
+		yield return LocalizationEntry.Get(6200180); /* [a long coat made from the fur of a manticora.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250099); /* The jacket appears quite ordinary. */
 	}
 
 	/// <inheritdoc />

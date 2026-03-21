@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -27,9 +28,9 @@ public class OysterPearl : Gem
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200229)); /* [You are looking at] [an oyster with a shiny pearl in it.] */
+		yield return LocalizationEntry.Get(6200229); /* [an oyster with a shiny pearl in it.] */
 	}
 
 	/// <inheritdoc />

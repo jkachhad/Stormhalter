@@ -47,9 +47,11 @@ public class TemporaryBullStrengthPotion : Bottle, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
-	{			entries.Add(new LocalizationEntry(6200000, 6200384)); /* [You are looking at] [a steel bottle stamped with the icon of a bull.] [Inside is a dark crimson liquid that smells of earth and mushrooms.] */
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+			yield return LocalizationEntry.Get(6200384); /* [a steel bottle stamped with the icon of a bull.] [Inside is a dark crimson liquid that smells of earth and mushrooms.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
 }

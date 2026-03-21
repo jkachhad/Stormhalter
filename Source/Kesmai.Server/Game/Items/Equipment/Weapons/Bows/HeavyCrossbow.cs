@@ -49,14 +49,14 @@ public class HeavyCrossbow : Crossbow, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200038)); /* [You are looking at] [a heavy crossbow with an ornately carved tiller and a peculiar black steel bow. The crossbow is emitting a soft blue glow.] */
+		yield return LocalizationEntry.Get(6200038); /* [a heavy crossbow with an ornately carved tiller and a peculiar black steel bow. The crossbow is emitting a soft blue glow.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
+			yield return LocalizationEntry.Get(6250003); /* The combat adds for this weapon are +4. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

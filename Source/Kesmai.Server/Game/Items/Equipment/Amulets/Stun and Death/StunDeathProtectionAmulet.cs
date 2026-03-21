@@ -1,8 +1,10 @@
 using System;
+using System.Drawing;
 using System.IO;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
+using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
@@ -16,14 +18,30 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 	public int ChargesCurrent
 	{
 		get => _chargesCurrent;
-		set => _chargesCurrent = value.Clamp(0, _chargesMax);
+		set
+		{
+			var newValue = value.Clamp(0, _chargesMax);
+
+			if (_chargesCurrent != newValue)
+			{
+				_chargesCurrent = newValue;
+				InvalidateTooltip();
+			}
+		}
 	}
 		
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{
 		get => _chargesMax;
-		set => _chargesMax = value;
+		set
+		{
+			if (_chargesMax != value)
+			{
+				_chargesMax = value;
+				InvalidateTooltip();
+			}
+		}
 	}
 
 	/// <summary>

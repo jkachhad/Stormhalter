@@ -53,14 +53,14 @@ public class Longsword : Sword
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200014)); /* [You are looking at] [a fine longsword.] */
+		yield return LocalizationEntry.Get(6200014); /* [a fine longsword.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250013)); /* The longsword appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250013); /* The longsword appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

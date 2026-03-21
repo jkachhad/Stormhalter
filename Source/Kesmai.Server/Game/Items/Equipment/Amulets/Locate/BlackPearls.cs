@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -35,17 +36,15 @@ public class BlackPearls : LocateAmulet
 	{
 	}
 		
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200069)); /* [You are looking at] [a necklace of lustrous black pearls.] */
+		yield return LocalizationEntry.Get(6200069); /* [a necklace of lustrous black pearls.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250010)); /* The amulet contains the spell of Locate. */
+			yield return LocalizationEntry.Get(6250010); /* The amulet contains the spell of Locate. */
 	}
-	
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

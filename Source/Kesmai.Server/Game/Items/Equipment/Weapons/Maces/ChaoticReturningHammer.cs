@@ -49,11 +49,12 @@ public class ChaoticReturningHammer : Mace, IReturningWeapon, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200386)); /* [You are looking at] [a large steel throwing hammer. The hammer is emitting a soft yellow glow. The weapon is chaotic.] */
+		yield return LocalizationEntry.Get(6200386); /* [a large steel throwing hammer. The hammer is emitting a soft yellow glow. The weapon is chaotic.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250007)); /* The combat adds for this weapon are +3. */
+			yield return LocalizationEntry.Get(6250007); /* The combat adds for this weapon are +3. */
 	}
+
 }

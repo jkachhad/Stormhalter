@@ -33,7 +33,7 @@ public class IceDragonScaleArmor : Armor, ITreasure
 
 
 	/// <inheritdoc />
-	public override int ProtectionFromConcussion => 30;
+	public override int ProtectionFromDaze => 30;
 		
 	/// <inheritdoc />
 	public override int ProtectionFromFire => 15;
@@ -78,16 +78,24 @@ public class IceDragonScaleArmor : Armor, ITreasure
 		entity.Stats[EntityStat.RangedDamageMitigation].Remove(+5, ModifierType.Constant);
 		entity.Stats[EntityStat.ProjectileDamageMitigation].Remove(+5, ModifierType.Constant);
 	}
+	
+	/// <inheritdoc />
+	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		tooltip.AddMitigations(5, 5, 5);
+
+		base.AddProperties(tooltip, beholder);
+	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200181)); /* [You are looking at] [a vest made from the milky white scales of an ice dragon.] */
+		yield return LocalizationEntry.Get(6200181); /* [a vest made from the milky white scales of an ice dragon.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250096)); /* The armor appears to have some magical properties. */
+			yield return LocalizationEntry.Get(6250096); /* The armor appears to have some magical properties. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

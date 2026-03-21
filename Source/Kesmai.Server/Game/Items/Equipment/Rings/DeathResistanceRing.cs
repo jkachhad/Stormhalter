@@ -33,15 +33,13 @@ public class DeathResistanceRing : Ring, ITreasure
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200057)); /* [You are looking at] [a shiny gold ring set with a tiny bejeweled scarab.] */
+		yield return LocalizationEntry.Get(6200057); /* [a shiny gold ring set with a tiny bejeweled scarab.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250045)); /* The ring contains the spell of Death Resistance. */
+			yield return LocalizationEntry.Get(6250045); /* The ring contains the spell of Death Resistance. */
 	}
 
 	/// <summary>

@@ -33,14 +33,14 @@ public class StrongStrengthBracelet : StrengthBracelet, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200082)); /* [You are looking at] [a silver bracelet engraved for decoration.] */
+		yield return LocalizationEntry.Get(6200082); /* [a silver bracelet engraved for decoration.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250118)); /* The bracelet contains a powerful spell of Strength. */
+			yield return LocalizationEntry.Get(6250118); /* The bracelet contains a powerful spell of Strength. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

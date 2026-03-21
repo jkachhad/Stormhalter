@@ -46,14 +46,14 @@ public class SteelMace : Mace
 	}
 	
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200018)); /* [You are looking at] [a steel mace.] */
+		yield return LocalizationEntry.Get(6200018); /* [a steel mace.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250017)); /* The mace appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250017); /* The mace appears quite ordinary. */
 	}
-		
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

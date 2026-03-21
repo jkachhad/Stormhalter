@@ -31,12 +31,12 @@ public class StunDeathProtectionBracelet : Bracelet, ITreasure
 	}
 	
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200081)); /* [You are looking at] [a heavy golden bracelet patterned with maple leaves.] */
+		yield return LocalizationEntry.Get(6200081); /* [a heavy golden bracelet patterned with maple leaves.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250057)); /* The bracelet contains the spell of Protection from Stun and Death. */
+			yield return LocalizationEntry.Get(6250057); /* The bracelet contains the spell of Protection from Stun and Death. */
 	}
 
 	/// <summary>

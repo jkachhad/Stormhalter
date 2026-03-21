@@ -55,14 +55,14 @@ public class EbonyStaff : Staff, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200163)); /* [You are looking at] [an ebony staff encrusted with diamonds. The weapon emanates power. The weapon is lawful.] */
+		yield return LocalizationEntry.Get(6200163); /* [an ebony staff encrusted with diamonds. The weapon emanates power. The weapon is lawful.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250092)); /* The staff seems to have some magical properties. */
+			yield return LocalizationEntry.Get(6250092); /* The staff seems to have some magical properties. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

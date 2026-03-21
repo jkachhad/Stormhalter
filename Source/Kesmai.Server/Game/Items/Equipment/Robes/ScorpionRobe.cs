@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -36,14 +37,14 @@ public class ScorpionRobe : Robe, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200197)); /* [You are looking at] [a white robe with a black and silver scorpion.] */
+		yield return LocalizationEntry.Get(6200197); /* [a white robe with a black and silver scorpion.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250030)); /* The robe looks thick and heavy. */
+			yield return LocalizationEntry.Get(6250030); /* The robe looks thick and heavy. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

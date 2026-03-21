@@ -4,6 +4,7 @@ using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
+using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
@@ -23,9 +24,6 @@ public abstract class Equipment : ItemEntity
 		
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProtectionFromIce => 0;
-		
-	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int ProtectionFromConcussion => 0;
 		
 	/// <summary>
 	/// Gets the health regeneration provided by this <see cref="Equipment"/>
@@ -161,6 +159,14 @@ public abstract class Equipment : ItemEntity
 			if (ManaRegeneration > 0)
 				entity.Stats[EntityStat.ManaRegenerationRate].Remove(+ManaRegeneration, ModifierType.Constant);
 		}
+	}
+	
+	/// <inheritdoc />
+	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		tooltip.AddProtections(ProtectionFromFire, ProtectionFromIce, ProtectionFromDaze);
+		
+		base.AddProperties(tooltip, beholder);
 	}
 	
 	/// <inheritdoc />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -38,12 +39,12 @@ public class StarsRobe : Robe, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200186)); /* [You are looking at] [a glossy black robe with swirling stars.] */
+		yield return LocalizationEntry.Get(6200186); /* [a glossy black robe with swirling stars.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250030)); /* The robe looks thick and heavy. */
+			yield return LocalizationEntry.Get(6250030); /* The robe looks thick and heavy. */
 	}
 
 	/// <inheritdoc />

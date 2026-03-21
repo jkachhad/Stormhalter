@@ -32,12 +32,12 @@ public class CrocodileBoots : Boots, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200207)); /* [You are looking at] [a pair of boots made from crocodile hide.] */
+		yield return LocalizationEntry.Get(6200207); /* [a pair of boots made from crocodile hide.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250103)); /* The boots contain the spell of Breathe Water. */
+			yield return LocalizationEntry.Get(6250103); /* The boots contain the spell of Breathe Water. */
 	}
 
 	/// <summary>

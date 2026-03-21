@@ -43,14 +43,14 @@ public class YasnakiDagger : Dagger, IReturningWeapon, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200164)); /* [You are looking at] [a fine throwing dagger with the symbol of the yasnaki marking the hilt.] */
+		yield return LocalizationEntry.Get(6200164); /* [a fine throwing dagger with the symbol of the yasnaki marking the hilt.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250002)); /* The combat adds for this weapon are +5. */
+			yield return LocalizationEntry.Get(6250002); /* The combat adds for this weapon are +5. */
 	}
-		
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

@@ -43,12 +43,12 @@ public class ShieldBracelet : Bracelet, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200074)); /* [You are looking at] [a silver bracelet made of scales.] */
+		yield return LocalizationEntry.Get(6200074); /* [a silver bracelet made of scales.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250127)); /* The bracelet contains a medium spell of Shield. */
+			yield return LocalizationEntry.Get(6250127); /* The bracelet contains a medium spell of Shield. */
 	}
 
 	/// <summary>

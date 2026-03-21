@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -36,12 +37,12 @@ public class PurpleSilkRobe : Robe, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200040)); /* [You are looking at] [a robe of imperial purple silk embroidered in gold thread with a chrysanthemum.] */
+		yield return LocalizationEntry.Get(6200040); /* [a robe of imperial purple silk embroidered in gold thread with a chrysanthemum.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250030)); /* The robe looks thick and heavy. */
+			yield return LocalizationEntry.Get(6250030); /* The robe looks thick and heavy. */
 	}
 
 	/// <inheritdoc />

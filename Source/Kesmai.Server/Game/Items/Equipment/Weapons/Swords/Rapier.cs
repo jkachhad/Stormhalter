@@ -56,14 +56,14 @@ public class Rapier : Sword
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200013)); /* [You are looking at] [a shiny steel rapier.] */
+		yield return LocalizationEntry.Get(6200013); /* [a shiny steel rapier.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250012)); /* The rapier appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250012); /* The rapier appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

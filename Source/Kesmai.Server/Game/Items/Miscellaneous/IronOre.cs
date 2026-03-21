@@ -42,14 +42,12 @@ public class IronOre : ItemEntity, ITreasure
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200220)); /* [You are looking at] [a lump of iron ore.] */
+		yield return LocalizationEntry.Get(6200220); /* [a lump of iron ore.] */
 	}
-	
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

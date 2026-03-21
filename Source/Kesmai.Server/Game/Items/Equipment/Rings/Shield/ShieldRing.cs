@@ -44,15 +44,13 @@ public class ShieldRing : Ring, ITreasure
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200046)); /* [You are looking at] [a small iron ring with a large black stone.] */
+		yield return LocalizationEntry.Get(6200046); /* [a small iron ring with a large black stone.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250128)); /* The ring contains a medium spell of Shield. */
+			yield return LocalizationEntry.Get(6250128); /* The ring contains a medium spell of Shield. */
 	}
 
 	/// <summary>

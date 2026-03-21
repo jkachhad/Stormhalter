@@ -56,12 +56,12 @@ public class Greatsword : Sword
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200019)); /* [You are looking at] [a large iron greatsword.] */
+		yield return LocalizationEntry.Get(6200019); /* [a large iron greatsword.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250018)); /* The iron greatsword appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250018); /* The iron greatsword appears quite ordinary. */
 	}
 
 	/// <inheritdoc />

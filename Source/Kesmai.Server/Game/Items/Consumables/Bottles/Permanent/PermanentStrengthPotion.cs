@@ -42,13 +42,14 @@ public class PermanentStrengthPotion : Bottle, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200099)); /* [You are looking at] [a reddish clay bottle with three black concentric circles painted on one side.] */
+		yield return LocalizationEntry.Get(6200099); /* [a reddish clay bottle with three black concentric circles painted on one side.] */
 
-		base.GetDescription(entries);
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

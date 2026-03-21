@@ -26,12 +26,12 @@ public class LightOrb : SpellOrb, ITreasure
 	}
 	
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200277)); /* [You are looking at] [a white glass ball.] */
+		yield return LocalizationEntry.Get(6200277); /* [a white glass ball.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250124)); /* The ball contains the spell of light. */
+			yield return LocalizationEntry.Get(6250124); /* The ball contains the spell of light. */
 	}
 
 	/// <inheritdoc />

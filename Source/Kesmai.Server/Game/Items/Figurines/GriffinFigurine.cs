@@ -31,11 +31,11 @@ public class GriffinFigurine : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200270)); /* [You are looking at] [a white porcelain figurine of a snarling griffin.] */
+		yield return LocalizationEntry.Get(6200270); /* [a white porcelain figurine of a snarling griffin.] */
 	}
-		
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

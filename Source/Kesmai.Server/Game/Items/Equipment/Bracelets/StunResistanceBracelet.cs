@@ -31,12 +31,12 @@ public class StunResistanceBracelet : Bracelet, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200077)); /* [You are looking at] [a jade bracelet.] */
+		yield return LocalizationEntry.Get(6200077); /* [a jade bracelet.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250055)); /* The bracelet contains the spell of Stun Resistance. */
+			yield return LocalizationEntry.Get(6250055); /* The bracelet contains the spell of Stun Resistance. */
 	}
 
 	/// <summary>

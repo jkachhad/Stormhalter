@@ -43,14 +43,14 @@ public class Javelin : Staff
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200161)); /* [You are looking at] [a silver colored javelin shaped like a lightning bolt.] */
+		yield return LocalizationEntry.Get(6200161); /* [a silver colored javelin shaped like a lightning bolt.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250091)); /* The javelin casts a lightning bolt when thrown. */
+			yield return LocalizationEntry.Get(6250091); /* The javelin casts a lightning bolt when thrown. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

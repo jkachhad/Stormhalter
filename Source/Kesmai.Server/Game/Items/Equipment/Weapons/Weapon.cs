@@ -136,26 +136,6 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	protected Weapon(Serial serial) : base(serial)
 	{
 	}
-	
-	/// <inheritdoc />
-	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
-	{
-		base.AddProperties(tooltip, beholder);
-		
-		tooltip.Add(new EntityPropertyTextBlock(6500001, Color.White, "Damage", $"{MinimumDamage} - {MaximumDamage}"));
-		tooltip.Add(new EntityPropertyTextBlock(6500001, Color.White, "Speed", GetSwingDelay(beholder).TotalSeconds.ToString("0.00") + "s"));
-		tooltip.Add(new EntityPropertyTextBlock(6500001, Color.White, "Range", MaxRange.ToString()));
-		tooltip.Add(new EntityPropertyTextBlock(6500001, Color.White, "Skill", Skill.ToString()));
-
-		if (!Identified)
-			return;
-		
-		if (BaseArmorBonus != 0)
-			tooltip.Add(new EntityPropertyTextBlock(6500001, Color.White, "Armor Bonus", BaseArmorBonus.ToString()));
-		
-		if (BaseAttackBonus != 0)
-			tooltip.Add(new EntityPropertyTextBlock(6500001, Color.White, "Attack Bonus", BaseAttackBonus.ToString()));
-	}
 
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{

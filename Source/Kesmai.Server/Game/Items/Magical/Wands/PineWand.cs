@@ -33,12 +33,12 @@ public class PineWand : Wand, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200228)); /* [You are looking at] [a pine wand inscribed with tiny red runes.] */
+		yield return LocalizationEntry.Get(6200228); /* [a pine wand inscribed with tiny red runes.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250117)); /* The wand contains the spell of Fireball. */
+			yield return LocalizationEntry.Get(6250117); /* The wand contains the spell of Fireball. */
 	}
 
 	public override Spell GetSpell()

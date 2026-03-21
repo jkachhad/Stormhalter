@@ -46,14 +46,14 @@ public class Mugwort : Food
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200231)); /* [You are looking at] [a dark-green sprig of mugwort.] */
+		yield return LocalizationEntry.Get(6200231); /* [a dark-green sprig of mugwort.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250119)); /* The sprig contains the spell of Neutralize. */
+			yield return LocalizationEntry.Get(6250119); /* The sprig contains the spell of Neutralize. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

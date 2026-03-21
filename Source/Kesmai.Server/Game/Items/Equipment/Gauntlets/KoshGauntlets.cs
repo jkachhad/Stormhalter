@@ -52,14 +52,14 @@ public class KoshGauntlets : Gauntlets, ITreasure
 	}
 	
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200342)); /* [You are looking at] [a pair of gauntlets made from leathery dragon skin with shiny blue-steel plates. The Gauntlets emit a Blue Glow.] */
+		yield return LocalizationEntry.Get(6200342); /* [a pair of gauntlets made from leathery dragon skin with shiny blue-steel plates. The Gauntlets emit a Blue Glow.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250094)); /* The combat adds for the gauntlets are +2. */
+			yield return LocalizationEntry.Get(6250094); /* The combat adds for the gauntlets are +2. */
 	}
-		
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

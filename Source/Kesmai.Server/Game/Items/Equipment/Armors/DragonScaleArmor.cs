@@ -76,14 +76,14 @@ public class DragonScaleArmor : Armor, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200173)); /* [You are looking at] [a vest made of dragon scales.] */
+		yield return LocalizationEntry.Get(6200173); /* [a vest made of dragon scales.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250096)); /* The armor appears to have some magical properties. */
+			yield return LocalizationEntry.Get(6250096); /* The armor appears to have some magical properties. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -26,12 +27,10 @@ public class FieryRuby : Gem
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200127)); /* [You are looking at] [a fiery ruby that smoulders like the eye of a salamander.] */
+		yield return LocalizationEntry.Get(6200127); /* [a fiery ruby that smoulders like the eye of a salamander.] */
 	}
 
 	/// <summary>

@@ -33,15 +33,13 @@ public class BreatheWaterRing : Ring, ITreasure
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200006)); /* [You are looking at] [a small silver ring with a shiny black stone.] */
+		yield return LocalizationEntry.Get(6200006); /* [a small silver ring with a shiny black stone.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250005)); /* The ring contains the spell of Breathe Water. */
+			yield return LocalizationEntry.Get(6250005); /* The ring contains the spell of Breathe Water. */
 	}
 
 	/// <summary>

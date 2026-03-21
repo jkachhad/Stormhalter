@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -25,9 +26,9 @@ public class PantherSapphire : Gem
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200129)); /* [You are looking at] [an icy-blue sapphire cut into the shape of a stalking panther.] */
+		yield return LocalizationEntry.Get(6200129); /* [an icy-blue sapphire cut into the shape of a stalking panther.] */
 	}
 
 	/// <inheritdoc />

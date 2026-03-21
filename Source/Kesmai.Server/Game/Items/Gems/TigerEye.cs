@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -25,9 +26,9 @@ public class TigerEye : Gem
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200134)); /* [You are looking at] [a rich, chocolate-brown tiger's eye streaked with amber bands.] */
+		yield return LocalizationEntry.Get(6200134); /* [a rich, chocolate-brown tiger's eye streaked with amber bands.] */
 	}
 
 	/// <inheritdoc />

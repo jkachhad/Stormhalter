@@ -92,11 +92,11 @@ public class Book : ItemEntity
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
 		if (Publication is not null)
-			entries.Add(new LocalizationEntry(
-				6200259, Publication.Title, Publication.Author)); /* [You are looking at a book entitled '{0}' written by {1}.] */
+			yield return new LocalizationEntry(
+				6200259, Publication.Title, Publication.Author); /* [a book entitled '{0}' written by {1}.] */
 	}
 
 	/// <inheritdoc />

@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -25,9 +26,9 @@ public class FlawlessSapphire : Gem
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200131)); /* [You are looking at] [a huge flawless sapphire of deepest blue.] */
+		yield return LocalizationEntry.Get(6200131); /* [a huge flawless sapphire of deepest blue.] */
 	}
 
 	/// <inheritdoc />

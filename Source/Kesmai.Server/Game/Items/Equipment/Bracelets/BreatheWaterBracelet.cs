@@ -29,12 +29,12 @@ public class BreatheWaterBracelet : Bracelet, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200041)); /* [You are looking at] [a silver bracelet set with tiny jade dolphins.] */
+		yield return LocalizationEntry.Get(6200041); /* [a silver bracelet set with tiny jade dolphins.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250031)); /* The bracelet contains the spell of Breathe Water. */
+			yield return LocalizationEntry.Get(6250031); /* The bracelet contains the spell of Breathe Water. */
 	}
 
 	/// <summary>

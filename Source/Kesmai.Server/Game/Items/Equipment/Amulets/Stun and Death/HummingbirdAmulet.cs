@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -34,15 +35,13 @@ public class HummingbirdAmulet : StunDeathProtectionAmulet
 	{
 	}
 		
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200073)); /* [You are looking at] [a crystal hummingbird hanging from a golden chain.] */
+		yield return LocalizationEntry.Get(6200073); /* [a crystal hummingbird hanging from a golden chain.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250052)); /* The amulet contains the spell of Protection from Stun and Death. */
+			yield return LocalizationEntry.Get(6250052); /* The amulet contains the spell of Protection from Stun and Death. */
 	}
 
 	/// <summary>

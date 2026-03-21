@@ -26,12 +26,12 @@ public class WebOrb : SpellOrb, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200279)); /* [You are looking at] [a glass ball filled with a milky fluid.] */
+		yield return LocalizationEntry.Get(6200279); /* [a glass ball filled with a milky fluid.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250126)); /* The ball contains the spell of create web. */
+			yield return LocalizationEntry.Get(6250126); /* The ball contains the spell of create web. */
 	}
 
 	/// <inheritdoc />

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -36,9 +37,9 @@ public class PlatemailGauntlets : Gauntlets, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200169)); /* [You are looking at] [a pair of platemail gauntlets.] */
+		yield return LocalizationEntry.Get(6200169); /* [a pair of platemail gauntlets.] */
 	}
 
 	/// <inheritdoc />

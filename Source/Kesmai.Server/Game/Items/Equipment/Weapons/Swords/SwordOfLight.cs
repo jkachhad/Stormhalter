@@ -57,11 +57,12 @@ public class SwordOfLight : Sword, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200379)); /* [You are looking at] [a sword that shines as bright as the sun.] */
+		yield return LocalizationEntry.Get(6200379); /* [a sword that shines as bright as the sun.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6300426)); /* The combat adds for this weapon are +6. */
+			yield return LocalizationEntry.Get(6300426); /* The combat adds for this weapon are +6. */
 	}
+
 }

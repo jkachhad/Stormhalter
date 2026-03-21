@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
+using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
 using Kesmai.Server.Targeting;
 
@@ -89,7 +91,16 @@ public abstract class Wand : MeleeWeapon, IEmpowered, ICharged
 	public int ChargesCurrent
 	{
 		get => _chargesCurrent;
-		set => _chargesCurrent = value.Clamp(0, _chargesMax);
+		set
+		{
+			var newValue = value.Clamp(0, _chargesMax);
+
+			if (_chargesCurrent != newValue)
+			{
+				_chargesCurrent = newValue;
+				InvalidateTooltip();
+			}
+		}
 	}
 
 	/// <summary>
@@ -99,7 +110,14 @@ public abstract class Wand : MeleeWeapon, IEmpowered, ICharged
 	public int ChargesMax
 	{
 		get => _chargesMax;
-		set => _chargesMax = value;
+		set
+		{
+			if (_chargesMax != value)
+			{
+				_chargesMax = value;
+				InvalidateTooltip();
+			}
+		}
 	}
 		
 	#endregion

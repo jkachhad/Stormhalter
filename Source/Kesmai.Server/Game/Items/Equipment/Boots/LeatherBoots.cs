@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -30,14 +31,14 @@ public class LeatherBoots : Boots
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200206)); /* [You are looking at] [a pair of soft leather boots.] */
+		yield return LocalizationEntry.Get(6200206); /* [a pair of soft leather boots.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250102)); /* The boots appear quite ordinary. */
+			yield return LocalizationEntry.Get(6250102); /* The boots appear quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

@@ -102,12 +102,10 @@ public class RecallRing : Ring
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200030)); /* [You are looking at] [a small gold ring emitting a faint blue glow.] */
+		yield return LocalizationEntry.Get(6200030); /* [a small gold ring emitting a faint blue glow.] */
 	}
 
 	/// <summary>

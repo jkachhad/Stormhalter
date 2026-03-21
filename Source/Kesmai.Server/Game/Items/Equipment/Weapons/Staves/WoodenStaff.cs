@@ -40,12 +40,12 @@ public class WoodenStaff : Staff
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200135)); /* [You are looking at] [a wooden staff.] */
+		yield return LocalizationEntry.Get(6200135); /* [a wooden staff.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250084)); /* The staff appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250084); /* The staff appears quite ordinary. */
 	}
 
 	/// <inheritdoc />

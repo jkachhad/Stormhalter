@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -30,14 +31,14 @@ public class FineCrossbow : Crossbow
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200282)); /* [You are looking at] [a fine crossbow.] */
+		yield return LocalizationEntry.Get(6200282); /* [a fine crossbow.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
+			yield return LocalizationEntry.Get(6250080); /* The combat adds for this weapon are +2. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

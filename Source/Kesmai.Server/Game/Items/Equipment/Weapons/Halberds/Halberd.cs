@@ -59,14 +59,14 @@ public class Halberd : MeleeWeapon
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200017)); /* [You are looking at] [a halberd with a steel head.] */
+		yield return LocalizationEntry.Get(6200017); /* [a halberd with a steel head.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250016)); /* The halberd appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250016); /* The halberd appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

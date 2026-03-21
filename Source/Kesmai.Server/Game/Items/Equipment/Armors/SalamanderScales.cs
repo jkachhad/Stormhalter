@@ -73,14 +73,14 @@ public class SalamanderScales : Armor, ITreasure
 	}
 	
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200176)); /* [You are looking at] [a vest made from the scales of a salamander.] */
+		yield return LocalizationEntry.Get(6200176); /* [a vest made from the scales of a salamander.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250098)); /* The vest appears to have some magical properties. */
+			yield return LocalizationEntry.Get(6250098); /* The vest appears to have some magical properties. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

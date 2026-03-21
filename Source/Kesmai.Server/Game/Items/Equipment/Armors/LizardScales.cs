@@ -73,14 +73,14 @@ public class LizardScales : Armor
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200174)); /* [You are looking at] [a vest made from the scales of a lizard.] */
+		yield return LocalizationEntry.Get(6200174); /* [a vest made from the scales of a lizard.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250097)); /* The vest appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250097); /* The vest appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

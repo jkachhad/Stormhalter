@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -34,15 +35,13 @@ public class WeakStrengthRing : StrengthRing
 	{
 	}
 
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200010)); /* [You are looking at] [a gold ring with a small red gem set into it.] */
+		yield return LocalizationEntry.Get(6200010); /* [a gold ring with a small red gem set into it.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250009)); /* The ring contains a weak spell of Strength. */
+			yield return LocalizationEntry.Get(6250009); /* The ring contains a weak spell of Strength. */
 	}
 
 	/// <summary>

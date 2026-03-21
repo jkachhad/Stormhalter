@@ -30,9 +30,9 @@ public class ScorpionBracelet : Bracelet, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200079)); /* [You are looking at] [a heavy golden bracelet patterned with a scorpion.] */
+		yield return LocalizationEntry.Get(6200079); /* [a heavy golden bracelet patterned with a scorpion.] */
 	}
 
 	/// <inheritdoc />

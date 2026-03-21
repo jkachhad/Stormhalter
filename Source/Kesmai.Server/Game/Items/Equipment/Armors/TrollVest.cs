@@ -70,14 +70,14 @@ public class TrollVest : Armor, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200025)); /* [You are looking at] [a vest made from a peculiar stone colored leather.] */
+		yield return LocalizationEntry.Get(6200025); /* [a vest made from a peculiar stone colored leather.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250021)); /* The vest appears quite thick. */
+			yield return LocalizationEntry.Get(6250021); /* The vest appears quite thick. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

@@ -26,12 +26,12 @@ public class DarknessOrb : SpellOrb, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200275)); /* [You are looking at] [a black glass ball.] */
+		yield return LocalizationEntry.Get(6200275); /* [a black glass ball.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250122)); /* The ball contains the spell of darkness. */
+			yield return LocalizationEntry.Get(6250122); /* The ball contains the spell of darkness. */
 	}
 
 	/// <inheritdoc />

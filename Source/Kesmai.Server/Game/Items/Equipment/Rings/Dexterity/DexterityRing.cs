@@ -43,14 +43,14 @@ public class DexterityRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200056)); /* [You are looking at] [a wide platinum band engraved with many tiny runes.] */
+		yield return LocalizationEntry.Get(6200056); /* [a wide platinum band engraved with many tiny runes.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250044)); /* The ring greatly increases dexterity. */
+			yield return LocalizationEntry.Get(6250044); /* The ring greatly increases dexterity. */
 	}
-		
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>

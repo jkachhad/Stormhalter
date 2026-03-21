@@ -37,14 +37,16 @@ public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 	{
 	}
 
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		base.GetDescription(entries);
-			
+		foreach (var entry in base.AddDescriptionProperty(tooltip, beholder))
+			yield return entry;
+
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250110)); /* The staff contains the spell of Heal. */
+			yield return LocalizationEntry.Get(6250110); /* The staff contains the spell of Heal. */
 	}
-		
+
 	#region ICharged
 
 	private int _chargesMax;
@@ -54,14 +56,28 @@ public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 	public int ChargesCurrent
 	{
 		get => _chargesCurrent;
-		set => _chargesCurrent = value;
+		set
+		{
+			if (_chargesCurrent != value)
+			{
+				_chargesCurrent = value;
+				InvalidateTooltip();
+			}
+		}
 	}
 
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{
 		get => _chargesMax;
-		set => _chargesMax = value;
+		set
+		{
+			if (_chargesMax != value)
+			{
+				_chargesMax = value;
+				InvalidateTooltip();
+			}
+		}
 	}
 		
 	#endregion

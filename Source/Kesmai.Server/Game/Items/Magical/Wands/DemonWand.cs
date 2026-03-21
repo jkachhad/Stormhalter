@@ -37,12 +37,12 @@ public class DemonWand : Wand, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200226)); /* [You are looking at] [a stick carved with minute leering demon faces.] */
+		yield return LocalizationEntry.Get(6200226); /* [a stick carved with minute leering demon faces.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250115)); /* The wand contains the spell of Fear. */
+			yield return LocalizationEntry.Get(6250115); /* The wand contains the spell of Fear. */
 	}
 
 	public override Spell GetSpell()

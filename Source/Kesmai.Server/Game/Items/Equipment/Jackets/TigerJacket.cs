@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -27,14 +28,14 @@ public class TigerJacket : Jacket
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200191)); /* [You are looking at] [a coat made from the fur of a tiger.] */
+		yield return LocalizationEntry.Get(6200191); /* [a coat made from the fur of a tiger.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250099); /* The jacket appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

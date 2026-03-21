@@ -83,19 +83,20 @@ public class Corpse : ItemEntity
 			owner.Teleport(newLocation);
 	}
 
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
 		var description = String.Empty;
 
 		var owner = Owner;
-			
+
 		if (owner is CreatureEntity creature)
 			description = $"the body of {creature.Name.WithArticle()}.";
 		else if (owner is PlayerEntity player)
 			description = $"the body of a {player.Profession.Info.Name}.";
 
 		if (!String.IsNullOrEmpty(description))
-			entries.Add(new LocalizationEntry(6200000, description)); /* [You are looking at] [the body of ..] */
+			yield return LocalizationEntry.Get(description); /* [the body of ..] */
 	}
 
 	/// <inheritdoc />

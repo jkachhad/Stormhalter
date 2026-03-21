@@ -33,15 +33,13 @@ public class FireProtectionAmulet : Amulet, ITreasure
 	{
 	}
 		
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200065)); /* [You are looking at] [a diamond necklace with a glistening ruby.] */
+		yield return LocalizationEntry.Get(6200065); /* [a diamond necklace with a glistening ruby.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250049)); /* The amulet contains the spell of Protection from Fire. */
+			yield return LocalizationEntry.Get(6250049); /* The amulet contains the spell of Protection from Fire. */
 	}
 
 	/// <summary>

@@ -43,14 +43,14 @@ public class Spear : Staff
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200020)); /* [You are looking at] [a wooden spear with an iron tip.] */
+		yield return LocalizationEntry.Get(6200020); /* [a wooden spear with an iron tip.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250019)); /* The spear appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250019); /* The spear appears quite ordinary. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

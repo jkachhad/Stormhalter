@@ -46,14 +46,14 @@ public class CopperHalberd : Halberd, ITreasure
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200160)); /* [You are looking at] [a heavy halberd.  The pole is perfect ash and the blade is forged from a golden copper colored alloy.] */
+		yield return LocalizationEntry.Get(6200160); /* [a heavy halberd.  The pole is perfect ash and the blade is forged from a golden copper colored alloy.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250002)); /* The combat adds for this weapon are +5. */
+			yield return LocalizationEntry.Get(6250002); /* The combat adds for this weapon are +5. */
 	}
-	
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

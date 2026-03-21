@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -30,17 +31,15 @@ public class StrongShieldRing : ShieldRing
 	{
 	}
 		
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200046)); /* [You are looking at] [a small iron ring with a large black stone.] */
+		yield return LocalizationEntry.Get(6200046); /* [a small iron ring with a large black stone.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250037)); /* The ring contains a strong spell of Shield. */
+			yield return LocalizationEntry.Get(6250037); /* The ring contains a strong spell of Shield. */
 	}
-	
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

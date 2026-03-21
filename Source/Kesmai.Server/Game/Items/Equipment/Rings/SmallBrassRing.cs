@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -25,17 +26,15 @@ public class SmallBrassRing : Ring
 	{
 	}
 		
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200051)); /* [You are looking at] [a small brass ring.] */
+		yield return LocalizationEntry.Get(6200051); /* [a small brass ring.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250042)); /* The ring appears quite ordinary. */
+			yield return LocalizationEntry.Get(6250042); /* The ring appears quite ordinary. */
 	}
-	
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

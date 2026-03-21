@@ -30,12 +30,12 @@ public class LightningResistanceRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200058)); /* [You are looking at] [a steel ring of a sinuous dragon biting its own tail.] */
+		yield return LocalizationEntry.Get(6200058); /* [a steel ring of a sinuous dragon biting its own tail.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250046)); /* The ring contains the spell of Lightning Resist. */
+			yield return LocalizationEntry.Get(6250046); /* The ring contains the spell of Lightning Resist. */
 	}
 
 	/// <summary>

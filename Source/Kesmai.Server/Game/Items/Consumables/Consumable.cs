@@ -263,13 +263,6 @@ public abstract class Consumable : ItemEntity
 	}
 		
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
-	{
-		if (_content is not null)
-			_content.GetDescription(this, entries);
-	}
-
-	/// <inheritdoc />
 	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
 		if (_content is null)

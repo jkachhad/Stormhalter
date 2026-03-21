@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Network;
+using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
@@ -39,15 +40,13 @@ public class IvoryBrooch : StunDeathProtectionAmulet
 	{
 	}
 		
-	/// <summary>
-	/// Gets the description for this instance.
-	/// </summary>
-	public override void GetDescription(List<LocalizationEntry> entries)
+	/// <inheritdoc />
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200071)); /* [You are looking at] [an ivory brooch of seven intertwined dragons.] */
+		yield return LocalizationEntry.Get(6200071); /* [an ivory brooch of seven intertwined dragons.] */
 
 		if (Identified)
-			entries.Add(new LocalizationEntry(6250052)); /* The amulet contains the spell of Protection from Stun and Death. */
+			yield return LocalizationEntry.Get(6250052); /* The amulet contains the spell of Protection from Stun and Death. */
 	}
 	
 	/// <summary>

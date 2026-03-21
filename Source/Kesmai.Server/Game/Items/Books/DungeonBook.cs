@@ -55,8 +55,8 @@ public class DungeonBook : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetDescription(List<LocalizationEntry> entries)
+	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		entries.Add(new LocalizationEntry(6200000, 6200312)); /* [You are looking at] [a small paper book entitled 'The Dungeon'.] */
+		yield return LocalizationEntry.Get(6200312); /* [a small paper book entitled 'The Dungeon'.] */
 	}
 }
