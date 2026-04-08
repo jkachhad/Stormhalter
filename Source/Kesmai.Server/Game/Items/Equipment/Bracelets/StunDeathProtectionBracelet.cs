@@ -31,6 +31,14 @@ public class StunDeathProtectionBracelet : Bracelet, ITreasure
 	}
 	
 	/// <inheritdoc />
+	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		tooltip.AddProtections(0, 0, 0, 1);
+		
+		base.AddProperties(tooltip, beholder);
+	}
+
+	/// <inheritdoc />
 	public override IEnumerable<LocalizationEntry> AddDescriptionProperty(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
 		yield return LocalizationEntry.Get(6200081); /* [a heavy golden bracelet patterned with maple leaves.] */

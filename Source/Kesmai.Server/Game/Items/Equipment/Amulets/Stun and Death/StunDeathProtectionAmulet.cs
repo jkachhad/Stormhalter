@@ -96,6 +96,15 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 		if (entity.GetStatus(typeof(StunDeathProtectionStatus), out var status))
 			status.RemoveSource(this);
 	}
+
+	/// <inheritdoc />
+	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		if (_chargesCurrent > 0)
+			tooltip.AddProtections(0, 0, 0, 1);
+		
+		base.AddProperties(tooltip, beholder);
+	}
 		
 	public override void OnStrip(Corpse corpse)
 	{
