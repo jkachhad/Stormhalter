@@ -101,7 +101,7 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
 		if (_chargesCurrent > 0)
-			tooltip.AddProtections(0, 0, 0, 1);
+			tooltip.AddProtections(0, 0, 0, 1, 1);
 		
 		base.AddProperties(tooltip, beholder);
 	}

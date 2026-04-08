@@ -33,7 +33,7 @@ public class StunDeathProtectionBracelet : Bracelet, ITreasure
 	/// <inheritdoc />
 	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		tooltip.AddProtections(0, 0, 0, 1);
+		tooltip.AddProtections(0, 0, 0, 1, 1);
 		
 		base.AddProperties(tooltip, beholder);
 	}
