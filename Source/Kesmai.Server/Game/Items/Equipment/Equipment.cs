@@ -164,7 +164,7 @@ public abstract class Equipment : ItemEntity
 	/// <inheritdoc />
 	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		tooltip.AddProtections(ProtectionFromFire, ProtectionFromIce, ProtectionFromDaze);
+		tooltip.AddReductions(ProtectionFromFire, ProtectionFromIce, ProtectionFromDaze);
 		
 		base.AddProperties(tooltip, beholder);
 	}
