@@ -84,9 +84,11 @@ public class IceDragonScaleArmor : Armor, ITreasure
 	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
 		tooltip.AddMitigations(5, 5, 5);
-		tooltip.AddTextBlock("+3 Critical Strike Chance");
-		tooltip.AddTextBlock("+1 to Dagger Skill");
-		tooltip.AddTextBlock("Equip: Create [Green Recall Ring]", Color.Lime);
+		
+		tooltip.AddTextProperty("+3% Critical Strike Chance", TooltipTextStyle.Disabled);
+		tooltip.AddTextProperty("+1 to Dagger Skill");
+		tooltip.AddTextProperty("Use: Create [Green Recall Ring]", TooltipTextStyle.Active);
+		tooltip.AddTextProperty("Equip: Chance on block to summon Exodia riding a Blue Eyes White Dragon.", TooltipTextStyle.Passive);
 
 		base.AddProperties(tooltip, beholder);
 	}
