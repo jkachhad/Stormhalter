@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
@@ -83,6 +84,9 @@ public class IceDragonScaleArmor : Armor, ITreasure
 	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
 		tooltip.AddMitigations(5, 5, 5);
+		tooltip.AddTextBlock("+3 Critical Strike Chance");
+		tooltip.AddTextBlock("+1 to Dagger Skill");
+		tooltip.AddTextBlock("Equip: Create [Green Recall Ring]", Color.Lime);
 
 		base.AddProperties(tooltip, beholder);
 	}
