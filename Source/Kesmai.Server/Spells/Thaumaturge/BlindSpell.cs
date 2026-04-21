@@ -19,7 +19,7 @@ public class BlindSpell : DelayedSpell
 		var blinded = true;
 		
 		/* Resistance */
-		if (!target.HasStatus(typeof(BlindFearProtectionStatus)))
+		if (target.Stats[EntityStat.BlindProtection].Value is 0)
 		{
 			var resistance = target.Stats[EntityStat.BlindResistance].Value;
 			var resistanceSave = resistance - skillLevel;
