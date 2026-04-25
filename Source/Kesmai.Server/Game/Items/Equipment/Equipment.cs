@@ -169,6 +169,24 @@ public abstract class Equipment : ItemEntity
 		if (Hindrance > 0)
 			tooltip.AddTextProperty($"+{Hindrance} Hindrance", TooltipTextStyle.Harmful);
 		
+		if (HealthRegeneration > 0)
+			tooltip.AddTextProperty($"+{HealthRegeneration} Health Regeneration", TooltipTextStyle.Normal);
+		else if (HealthRegeneration < 0)
+			tooltip.AddTextProperty($"{HealthRegeneration} Health Regeneration", TooltipTextStyle.Harmful);
+		
+		if  (StaminaRegeneration > 0)
+			tooltip.AddTextProperty($"+{StaminaRegeneration} Stamina Regeneration", TooltipTextStyle.Normal);
+		else if (StaminaRegeneration < 0)
+			tooltip.AddTextProperty($"{StaminaRegeneration} Stamina Regeneration", TooltipTextStyle.Harmful);
+		
+		if (ManaRegeneration > 0)
+			tooltip.AddTextProperty($"+{ManaRegeneration} Mana Regeneration", TooltipTextStyle.Normal);
+		else if (ManaRegeneration < 0)
+			tooltip.AddTextProperty($"{ManaRegeneration} Mana Regeneration", TooltipTextStyle.Harmful);
+		
+		if (RestrictSpellcast)
+			tooltip.AddTextProperty("Restricts Spellcasting", TooltipTextStyle.Harmful);
+		
 		base.AddProperties(tooltip, beholder);
 	}
 	
