@@ -92,6 +92,14 @@ public abstract class Armor : Equipment, IArmored
 		if (item is IWeapon weapon)
 			flags = weapon.Flags;
 
+		return GetArmorBonus(flags);
+	}
+
+	/// <summary>
+	/// Gets the armor bonus against a specified weapon flag combination.
+	/// </summary>
+	public virtual int GetArmorBonus(WeaponFlags flags)
+	{
 		var armorBonus = 0;
 
 		if ((flags & WeaponFlags.Projectile) != 0)
@@ -116,6 +124,18 @@ public abstract class Armor : Equipment, IArmored
 		}
 
 		return armorBonus + BaseArmorBonus;
+	}
+
+	/// <inheritdoc />
+	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		tooltip.AddArmor(
+			GetArmorBonus(WeaponFlags.Projectile),
+			GetArmorBonus(WeaponFlags.Piercing),
+			GetArmorBonus(WeaponFlags.Slashing),
+			GetArmorBonus(WeaponFlags.Bashing));
+
+		base.AddProperties(tooltip, beholder);
 	}
 
 	/// <inheritdoc />
