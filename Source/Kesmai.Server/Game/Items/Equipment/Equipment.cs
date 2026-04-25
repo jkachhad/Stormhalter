@@ -166,6 +166,9 @@ public abstract class Equipment : ItemEntity
 	{
 		tooltip.AddReductions(ProtectionFromFire, ProtectionFromIce, ProtectionFromDaze);
 		
+		if (Hindrance > 0)
+			tooltip.AddTextProperty($"+{Hindrance} Hindrance", TooltipTextStyle.Harmful);
+		
 		base.AddProperties(tooltip, beholder);
 	}
 	
