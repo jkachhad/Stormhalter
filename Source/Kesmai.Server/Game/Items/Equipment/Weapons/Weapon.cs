@@ -137,6 +137,14 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 	}
 
+	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		if (MinimumDamage > 0 || MaximumDamage > 0)
+			tooltip.AddWeaponDamage(MinimumDamage, MaximumDamage);
+
+		base.AddProperties(tooltip, beholder);
+	}
+
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		if (Container is Hands || Container is Belt || (Container is Backpack && Container.GetSlot(this) < 5))
