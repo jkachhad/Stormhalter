@@ -139,8 +139,11 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
 	{
-		if (MinimumDamage > 0 || MaximumDamage > 0)
-			tooltip.AddWeaponDamage(MinimumDamage, MaximumDamage);
+		var swingDelay = (float)((beholder != null) ? GetSwingDelay(beholder).TotalSeconds : 0.0);
+		var range = MaxRange;
+
+		if (MinimumDamage > 0 || MaximumDamage > 0 || swingDelay > 0.0f || range > 0)
+			tooltip.AddWeaponDamage(MinimumDamage, MaximumDamage, swingDelay, range);
 
 		base.AddProperties(tooltip, beholder);
 	}

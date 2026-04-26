@@ -59,7 +59,7 @@ public abstract class Dagger : MeleeWeapon
 			Poison.Potency = (int)newPotency;
 		}
 
-  	        base.OnHit(attacker,defender);
+		base.OnHit(attacker,defender);
 	}
 		
 	public override double GetSkillMultiplier()
