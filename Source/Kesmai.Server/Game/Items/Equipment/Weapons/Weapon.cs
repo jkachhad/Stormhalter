@@ -146,6 +146,9 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 			tooltip.AddWeaponDamage(MinimumDamage, MaximumDamage, swingDelay, range);
 
 		base.AddProperties(tooltip, beholder);
+
+		if (IsPoisoned)
+			tooltip.AddTextProperty(-10000, "(Poisoned)", Color.LimeGreen);
 	}
 
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
