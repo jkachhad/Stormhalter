@@ -136,14 +136,6 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 	}
 
-	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
-	{
-		base.AddProperties(tooltip, beholder);
-
-		if (IsPoisoned)
-			tooltip.AddTextProperty(-10000, "(Poisoned)", Color.LimeGreen);
-	}
-
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		if (Container is Hands || Container is Belt || (Container is Backpack && Container.GetSlot(this) < 5))
