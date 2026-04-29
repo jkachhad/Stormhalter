@@ -156,6 +156,9 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		if (Flags.HasFlag(WeaponFlags.Silver))
 			tooltip.AddTextProperty(-10000, "(Silver)", Color.LightGray);
 
+		if (Flags.HasFlag(WeaponFlags.Returning))
+			tooltip.AddTextProperty(-10000, "(Returning)", Color.LightSalmon);
+
 		if (IsPoisoned)
 			tooltip.AddTextProperty(-10000, "(Poisoned)", Color.LimeGreen);
 	}
