@@ -141,9 +141,22 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 		var swingDelay = (float)((beholder != null) ? GetSwingDelay(beholder).TotalSeconds : 0.0);
 		var range = MaxRange;
+		var weaponTooltipFlags = WeaponTooltipFlags.None;
+
+		if (Flags.HasFlag(WeaponFlags.Projectile))
+			weaponTooltipFlags |= WeaponTooltipFlags.Projectile;
+
+		if (Flags.HasFlag(WeaponFlags.Piercing))
+			weaponTooltipFlags |= WeaponTooltipFlags.Piercing;
+
+		if (Flags.HasFlag(WeaponFlags.Slashing))
+			weaponTooltipFlags |= WeaponTooltipFlags.Slashing;
+
+		if (Flags.HasFlag(WeaponFlags.Bashing))
+			weaponTooltipFlags |= WeaponTooltipFlags.Bashing;
 
 		if (MinimumDamage > 0 || MaximumDamage > 0 || swingDelay > 0.0f || range > 0)
-			tooltip.AddWeaponDamage(MinimumDamage, MaximumDamage, swingDelay, range);
+			tooltip.AddWeaponDamage(MinimumDamage, MaximumDamage, swingDelay, range, weaponTooltipFlags);
 
 		base.AddProperties(tooltip, beholder);
 
