@@ -147,6 +147,15 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 		base.AddProperties(tooltip, beholder);
 
+		if (IsEnchanted)
+			tooltip.AddTextProperty(-10000, "(Enchanted)", Color.Plum);
+
+		if (Flags.HasFlag(WeaponFlags.BlueGlowing))
+			tooltip.AddTextProperty(-10000, "(Blue Glowing)", Color.LightBlue);
+
+		if (Flags.HasFlag(WeaponFlags.Silver))
+			tooltip.AddTextProperty(-10000, "(Silver)", Color.LightGray);
+
 		if (IsPoisoned)
 			tooltip.AddTextProperty(-10000, "(Poisoned)", Color.LimeGreen);
 	}
