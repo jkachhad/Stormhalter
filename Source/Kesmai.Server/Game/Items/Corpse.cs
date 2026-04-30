@@ -111,7 +111,7 @@ public class Corpse : ItemEntity
 		var itemCount = owner.GetItems().Count();
 
 		if (itemCount > 0)
-			tooltip.AddTextProperty($"{itemCount} {(itemCount == 1 ? "Item" : "Items")}");
+			tooltip.AddTextProperty(itemCount == 1 ? 6500017 : 6500018, itemCount.ToString());
 	}
 
 	/// <inheritdoc />
