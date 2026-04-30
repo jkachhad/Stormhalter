@@ -99,6 +99,21 @@ public class Corpse : ItemEntity
 			yield return LocalizationEntry.Get(description); /* [the body of ..] */
 	}
 
+	public override void AddProperties(EntityTooltipPacket tooltip, PlayerEntity beholder)
+	{
+		base.AddProperties(tooltip, beholder);
+
+		var owner = Owner;
+
+		if (owner == null)
+			return;
+
+		var itemCount = owner.GetItems().Count();
+
+		if (itemCount > 0)
+			tooltip.AddTextProperty($"{itemCount} {(itemCount == 1 ? "Item" : "Items")}");
+	}
+
 	/// <inheritdoc />
 	public override ActionType GetAction()
 	{
