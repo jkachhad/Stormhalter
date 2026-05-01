@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using Kesmai.Server.Miscellaneous;
@@ -18,7 +17,7 @@ public interface IConsumableContent
 		var entry = GetConsumeProperty(consumable);
 
 		if (entry != null)
-			tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(entry.Number, entry.Arguments));
+			tooltip.AddTextProperty(6500019, TooltipTextStyle.Consume, Localization.Enu.Format(entry.Number, entry.Arguments));
 	}
 
 	/// <summary>
@@ -1161,9 +1160,9 @@ public class ConsumableConstitutionStat : IConsumableContent
 		if (!consumable.Identified)
 			return;
 
-		tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(6500038, 2));
-		tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(6500043));
-		tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(6500044, 4));
+		tooltip.AddTextProperty(6500019, TooltipTextStyle.Consume, Localization.Enu.Format(6500038, 2));
+		tooltip.AddTextProperty(6500019, TooltipTextStyle.Consume, Localization.Enu.Format(6500043));
+		tooltip.AddTextProperty(6500019, TooltipTextStyle.Consume, Localization.Enu.Format(6500044, 4));
 	}
 
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
