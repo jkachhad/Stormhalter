@@ -10,6 +10,8 @@ namespace Kesmai.Server.Game;
 
 public interface IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable);
+
 	/// <summary>
 	/// Gets the description for the content.
 	/// </summary>
@@ -57,6 +59,8 @@ public class ConsumableHeal : IConsumableContent
 	{
 		_amount = amount;
 	}
+
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => new LocalizationEntry(6500022, _amount);
 
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
@@ -106,6 +110,8 @@ public class ConsumableDamage : IConsumableContent
 	{
 		_amount = amount;
 	}
+
+	public virtual LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500023, _amount) : null;
 
 	public virtual void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
@@ -158,6 +164,8 @@ public class ConsumablePoison : IConsumableContent
 	{
 		_potency = potency;
 	}
+
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500024, _potency) : null;
 		
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
@@ -212,6 +220,14 @@ public class ConsumablePoisonAntidote : IConsumableContent
 	{
 		_relative = relative;
 		_potency = potency;
+	}
+
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable)
+	{
+		if (!consumable.Identified)
+			return null;
+
+		return _relative ? new LocalizationEntry(6500025, _potency) : LocalizationEntry.Get(6500040);
 	}
 
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -278,6 +294,8 @@ public class ConsumablePoisonAntidote : IConsumableContent
 
 public class ConsumableBlindnessAntidote : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? LocalizationEntry.Get(6500026) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -341,6 +359,14 @@ public class ConsumableRestoreMana : IConsumableContent
 		_amount = amount;
 	}
 
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable)
+	{
+		if (!consumable.Identified)
+			return null;
+
+		return _amount.HasValue ? new LocalizationEntry(6500027, _amount.Value) : LocalizationEntry.Get(6500041);
+	}
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -400,6 +426,8 @@ public class ConsumableIncreaseMana : IConsumableContent
 	{
 		_amount = amount;
 	}
+
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500028, _amount) : null;
 
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
@@ -476,6 +504,14 @@ public class ConsumableRestoreStamina : IConsumableContent
 		_amount = amount;
 	}
 
+	public virtual LocalizationEntry GetConsumeProperty(ItemEntity consumable)
+	{
+		if (!consumable.Identified)
+			return null;
+
+		return _amount.HasValue ? new LocalizationEntry(6500029, _amount.Value) : LocalizationEntry.Get(6500042);
+	}
+
 	public virtual void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -528,6 +564,8 @@ public class ConsumableWater : ConsumableRestoreStamina
 	public ConsumableWater() : base(10)
 	{
 	}
+
+	public override LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500029, 10) : null;
 		
 	public override void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
@@ -576,6 +614,8 @@ public class ConsumableUrine : ConsumableDamage
 	{
 		_owner = owner;
 	}
+
+	public override LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500023, 10) : null;
 		
 	public override void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
@@ -620,6 +660,8 @@ public class ConsumableUrine : ConsumableDamage
 
 public class ConsumableAmbrosia : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? LocalizationEntry.Get(6500030) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -670,6 +712,8 @@ public class ConsumableAmbrosia : IConsumableContent
 
 public class ConsumableNaphtha : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500031, 10) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -730,6 +774,8 @@ public class ConsumableNaphtha : IConsumableContent
 
 public class ConsumableNitro : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500031, 10) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6250132)); /* Inside you see a clear liquid. */
@@ -795,6 +841,8 @@ public class ConsumableNitro : IConsumableContent
 
 public class ConsumableStrengthSpell : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? LocalizationEntry.Get(6500032) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6250131)); /* Inside you see a red liquid. */
@@ -847,6 +895,8 @@ public class ConsumableStrengthSpell : IConsumableContent
 
 public class ConsumableStrengthStat : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500033, 1) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -898,6 +948,8 @@ public class ConsumableStrengthStat : IConsumableContent
 
 public class ConsumableDexterityStat : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500034, 1) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -949,6 +1001,8 @@ public class ConsumableDexterityStat : IConsumableContent
 
 public class ConsumableIntelligenceStat : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500035, 1) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -995,6 +1049,8 @@ public class ConsumableIntelligenceStat : IConsumableContent
 
 public class ConsumableWillpowerStat : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500036, 1) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -1041,6 +1097,8 @@ public class ConsumableWillpowerStat : IConsumableContent
 
 public class ConsumableWisdomStat : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500037, 1) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -1087,6 +1145,8 @@ public class ConsumableWisdomStat : IConsumableContent
 
 public class ConsumableConstitutionStat : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500038, 2) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		if (consumable.Identified)
@@ -1151,6 +1211,8 @@ public class ConsumableConstitutionStat : IConsumableContent
 
 public class ConsumableBalm : IConsumableContent
 {
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? LocalizationEntry.Get(6500039) : null;
+
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6250130)); /* Inside you see a cloudy white liquid. */

@@ -138,7 +138,7 @@ public abstract class Consumable : ItemEntity
 	{
 		base.AddProperties(tooltip, beholder);
 
-		var entry = GetConsumeEntry();
+		var entry = _content != null ? _content.GetConsumeProperty(this) : null;
 
 		if (entry != null)
 			tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(entry.Number, entry.Arguments));
@@ -290,58 +290,6 @@ public abstract class Consumable : ItemEntity
 			if (entry != null)
 				yield return entry;
 		}
-	}
-
-	private LocalizationEntry GetConsumeEntry()
-	{
-		if (_content is null)
-			return null;
-
-		switch (_content)
-		{
-			case ConsumableHeal:
-				return LocalizationEntry.Get(6500022);
-			case ConsumablePoison:
-				return Identified ? LocalizationEntry.Get(6500024) : null;
-			case ConsumablePoisonAntidote:
-				return Identified ? LocalizationEntry.Get(6500025) : null;
-			case ConsumableBlindnessAntidote:
-				return Identified ? LocalizationEntry.Get(6500026) : null;
-			case ConsumableRestoreMana:
-				return Identified ? LocalizationEntry.Get(6500027) : null;
-			case ConsumableIncreaseMana:
-				return Identified ? LocalizationEntry.Get(6500028) : null;
-			case ConsumableWater:
-				return Identified ? LocalizationEntry.Get(6500029) : null;
-			case ConsumableUrine:
-			case ConsumableDamage:
-				return Identified ? LocalizationEntry.Get(6500023) : null;
-			case ConsumableAmbrosia:
-				return Identified ? LocalizationEntry.Get(6500030) : null;
-			case ConsumableNaphtha:
-			case ConsumableNitro:
-				return Identified ? LocalizationEntry.Get(6500031) : null;
-			case ConsumableStrengthSpell:
-				return Identified ? LocalizationEntry.Get(6500032) : null;
-			case ConsumableStrengthStat:
-				return Identified ? LocalizationEntry.Get(6500033) : null;
-			case ConsumableDexterityStat:
-				return Identified ? LocalizationEntry.Get(6500034) : null;
-			case ConsumableIntelligenceStat:
-				return Identified ? LocalizationEntry.Get(6500035) : null;
-			case ConsumableWillpowerStat:
-				return Identified ? LocalizationEntry.Get(6500036) : null;
-			case ConsumableWisdomStat:
-				return Identified ? LocalizationEntry.Get(6500037) : null;
-			case ConsumableConstitutionStat:
-				return Identified ? LocalizationEntry.Get(6500038) : null;
-			case ConsumableBalm:
-				return Identified ? LocalizationEntry.Get(6500039) : null;
-			case ConsumableRestoreStamina:
-				return Identified ? LocalizationEntry.Get(6500029) : null;
-		}
-
-		return null;
 	}
 
 	/// <summary>
