@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using Kesmai.Server.Miscellaneous;
@@ -11,6 +12,14 @@ namespace Kesmai.Server.Game;
 public interface IConsumableContent
 {
 	public LocalizationEntry GetConsumeProperty(ItemEntity consumable);
+
+	public void AddConsumeProperties(ItemEntity consumable, EntityTooltipPacket tooltip)
+	{
+		var entry = GetConsumeProperty(consumable);
+
+		if (entry != null)
+			tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(entry.Number, entry.Arguments));
+	}
 
 	/// <summary>
 	/// Gets the description for the content.
@@ -1146,6 +1155,16 @@ public class ConsumableWisdomStat : IConsumableContent
 public class ConsumableConstitutionStat : IConsumableContent
 {
 	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500038, 2) : null;
+
+	public void AddConsumeProperties(ItemEntity consumable, EntityTooltipPacket tooltip)
+	{
+		if (!consumable.Identified)
+			return;
+
+		tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(6500038, 2));
+		tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(6500043));
+		tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(6500044, 4));
+	}
 
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{

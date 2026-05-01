@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using Kesmai.Server.Miscellaneous;
 using Kesmai.Server.Network;
@@ -138,10 +137,8 @@ public abstract class Consumable : ItemEntity
 	{
 		base.AddProperties(tooltip, beholder);
 
-		var entry = _content != null ? _content.GetConsumeProperty(this) : null;
-
-		if (entry != null)
-			tooltip.AddTextProperty(6500019, Color.White, Localization.Enu.Format(entry.Number, entry.Arguments));
+		if (_content != null)
+			_content.AddConsumeProperties(this, tooltip);
 	}
 		
 	/// <summary>
