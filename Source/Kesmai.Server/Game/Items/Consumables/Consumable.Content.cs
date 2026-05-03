@@ -849,7 +849,7 @@ public class ConsumableNitro : IConsumableContent
 
 public class ConsumableStrengthSpell : IConsumableContent
 {
-	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? LocalizationEntry.Get(6500032) : null;
+	public LocalizationEntry GetConsumeProperty(ItemEntity consumable) => consumable.Identified ? new LocalizationEntry(6500032, 6, 65) : null;
 
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
