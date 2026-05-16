@@ -33,14 +33,20 @@ public class RaiseDeadSpell : DelayedSpell
 		{
 			if (corpse != null && corpse.Owner is PlayerEntity dead && !dead.IsAlive)
 			{
+				var resurrectType = (_item != null) ? ResurrectType.Item : ResurrectType.Spell;
+
 				base.OnCast();
 					
 				dead.Teleport(corpse.Location);
-				dead.Resurrect(ResurrectType.Spell);
-				dead.SendLocalizedMessage(6100035); /* You have been resurrected. */
+				dead.Resurrect(resurrectType);
 
-				if (_caster is PlayerEntity player && _item == null)
-					player.AwardMagicSkill(this);
+				if (dead.IsAlive)
+				{
+					dead.SendLocalizedMessage(6100035); /* You have been resurrected. */
+
+					if (_caster is PlayerEntity player && _item == null)
+						player.AwardMagicSkill(this);
+				}
 			}
 			else
 			{
