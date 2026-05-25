@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Kesmai.Server.Items;
 
@@ -21,14 +22,14 @@ public partial class SummonedSnake : Snake
 	private (int health, int defense, double poisonStrength, int attackLevel) GetSnakeStats()
 	{
 		var player = Director;
-        attackLevel = Math.Max(8,player.Level - 10);
+		var attackLevel = Math.Max(8,player.Level - 10);
         // Focus level is a multiplier for the stats of the pet. 
         double focusLevel = 1;
         var magicSkill = player.GetSkillLevel(Skill.Magic);
         var focusItems = player.Paperdoll.OfType<IPetFocus>().ToList();
 		var focusItems2 = player.Rings.OfType<IPetFocus>().ToList();
 		var allFocusItems = focusItems.Concat(focusItems2).ToList();
-		poisonStrength = Math.Max(1, magicSkill - 10);
+		var poisonStrength = Math.Max(1, magicSkill - 10);
         
 		// Search for and get the highest focus level from the items.
 		if (allFocusItems.Count > 0)
@@ -38,8 +39,8 @@ public partial class SummonedSnake : Snake
 		if (_focusLevelModifier != 0)
 			focusLevel += _focusLevelModifier;
 
-		var health = (player.level + (int)magicSkill)* 5 * focusLevel;
-		var defense = player.level * focusLevel;
+		var health = (player.Level + (int)magicSkill)* 5 * focusLevel;
+		var defense = player.Level * focusLevel;
 		poisonStrength *= focusLevel;
 
 		return ((int)health,(int)defense,poisonStrength,attackLevel);
