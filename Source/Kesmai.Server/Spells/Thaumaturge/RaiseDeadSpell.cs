@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Kesmai.Server.Engines.Permadeath;
 using Kesmai.Server.Game;
 using Kesmai.Server.Items;
 using Kesmai.Server.Targeting;
@@ -33,14 +34,27 @@ public class RaiseDeadSpell : DelayedSpell
 		{
 			if (corpse != null && corpse.Owner is PlayerEntity dead && !dead.IsAlive)
 			{
-				base.OnCast();
-					
-				dead.Teleport(corpse.Location);
-				dead.Resurrect(ResurrectType.Spell);
-				dead.SendLocalizedMessage(6100035); /* You have been resurrected. */
+				var resurrectType = (_item != null) ? ResurrectType.Item : ResurrectType.Spell;
 
-				if (_caster is PlayerEntity player && _item == null)
-					player.AwardMagicSkill(this);
+				if (Permadeath.CanResurrect(dead, resurrectType))
+				{
+					base.OnCast();
+					
+					dead.Teleport(corpse.Location);
+					dead.Resurrect(resurrectType);
+
+					if (dead.IsAlive)
+					{
+						dead.SendLocalizedMessage(6100035); /* You have been resurrected. */
+
+						if (_caster is PlayerEntity player && _item == null)
+							player.AwardMagicSkill(this);
+					}
+				}
+				else
+				{
+					Fizzle();
+				}
 			}
 			else
 			{
