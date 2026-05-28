@@ -62,29 +62,30 @@ public class YasnakiDagger : Dagger, IReturningWeapon, ITreasure
     public override bool CanEquip(MobileEntity entity)
     {
 
-        if (entity is PlayerEntity player)
+        if (entity is PlayerEntity player && player.Profession == Profession.Thief)
         {
-            if (player.Profession == Profession.Thief)
-            {
-                return true;
-            }
-
+            return true;
         }
+        else if (entity is CreatureEntity npc)
+        {
+            return true;
+        }
+
         return false;
     }
 
     public override double CalculateFumbleChance(MobileEntity entity)
     {
-        if (entity is PlayerEntity player)
+        if (entity is PlayerEntity player && player.Profession == Profession.Thief)
         {
-            if (player.Profession == Profession.Thief)
-            {
-                return base.CalculateFumbleChance(entity);
-            }
-
+            return base.CalculateFumbleChance(player);
+        }
+        else if (entity is CreatureEntity entity)
+        {
+            return base.CalculateFumbleChance(entity);
         }
 
-		return 0.1; // Default fumble chance for non-thieves
+        return 100.00;
 
     }
 

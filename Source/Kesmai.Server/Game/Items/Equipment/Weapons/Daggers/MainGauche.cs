@@ -70,26 +70,27 @@ public class MainGauche : Dagger, ITreasure
     public override bool CanEquip(MobileEntity entity)
     {
 
-        if (entity is PlayerEntity player)
+        if (entity is PlayerEntity player && player.Profession == Profession.Thief)
         {
-            if (player.Profession == Profession.Thief )
-            {
-				return true;
-            }
-
+            return true;
         }
+        else if (entity is CreatureEntity npc)
+        {
+            return true;
+        }
+
         return false;
     }
 
     public override double CalculateFumbleChance(MobileEntity entity)
     {
-        if (entity is PlayerEntity player)
-        {
-            if (player.Profession == Profession.Thief)
-            {
-                return base.CalculateFumbleChance(entity);
-            }
-
+		if (entity is PlayerEntity player && player.Profession == Profession.Thief)
+		{
+			return base.CalculateFumbleChance(player);
+		}
+		else if (entity is CreatureEntity npc)
+		{
+            return base.CalculateFumbleChance(npc);
         }
 
         return 100.00;
