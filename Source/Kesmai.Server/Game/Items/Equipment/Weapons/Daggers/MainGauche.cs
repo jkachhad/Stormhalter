@@ -67,8 +67,22 @@ public class MainGauche : Dagger, ITreasure
 		writer.Write((short)1); /* version */
 	}
 
-	/// <inheritdoc />
-	public override void Deserialize(ref SpanReader reader)
+    public override bool CanEquip(MobileEntity entity)
+    {
+
+        if (entity is PlayerEntity player)
+        {
+            if (player.Profession == Profession.Thief )
+            {
+				return true;
+            }
+
+        }
+        return false;
+    }
+
+    /// <inheritdoc />
+    public override void Deserialize(ref SpanReader reader)
 	{
 		base.Deserialize(ref reader);
 
