@@ -74,7 +74,7 @@ public class MainGauche : Dagger, ITreasure
         {
             return true;
         }
-        else if (entity is CreatureEntity npc)
+        else if (entity is CreatureEntity)
         {
             return true;
         }
