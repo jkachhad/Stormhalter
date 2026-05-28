@@ -73,6 +73,21 @@ public class YasnakiDagger : Dagger, IReturningWeapon, ITreasure
         return false;
     }
 
+    public override double CalculateFumbleChance(MobileEntity entity)
+    {
+        if (entity is PlayerEntity player)
+        {
+            if (player.Profession == Profession.Thief)
+            {
+                return base.CalculateFumbleChance(entity);
+            }
+
+        }
+
+		return 0.1; // Default fumble chance for non-thieves
+
+    }
+
     /// <inheritdoc />
     public override void Deserialize(ref SpanReader reader)
 	{

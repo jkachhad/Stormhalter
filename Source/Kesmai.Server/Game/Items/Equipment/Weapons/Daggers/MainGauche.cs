@@ -81,6 +81,21 @@ public class MainGauche : Dagger, ITreasure
         return false;
     }
 
+    public override double CalculateFumbleChance(MobileEntity entity)
+    {
+        if (entity is PlayerEntity player)
+        {
+            if (player.Profession == Profession.Thief)
+            {
+                return base.CalculateFumbleChance(entity);
+            }
+
+        }
+
+        return 100.00;
+
+    }
+
     /// <inheritdoc />
     public override void Deserialize(ref SpanReader reader)
 	{
