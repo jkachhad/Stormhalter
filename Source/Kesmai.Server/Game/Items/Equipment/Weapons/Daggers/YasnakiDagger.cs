@@ -66,7 +66,7 @@ public class YasnakiDagger : Dagger, IReturningWeapon, ITreasure
         {
             return true;
         }
-        else if (entity is CreatureEntity npc)
+        else if (entity is CreatureEntity)
         {
             return true;
         }
@@ -78,9 +78,9 @@ public class YasnakiDagger : Dagger, IReturningWeapon, ITreasure
     {
         if (entity is PlayerEntity player && player.Profession == Profession.Thief)
         {
-            return base.CalculateFumbleChance(player);
+            return base.CalculateFumbleChance(entity);
         }
-        else if (entity is CreatureEntity entity)
+        else if (entity is CreatureEntity)
         {
             return base.CalculateFumbleChance(entity);
         }

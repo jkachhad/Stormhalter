@@ -84,13 +84,13 @@ public class MainGauche : Dagger, ITreasure
 
     public override double CalculateFumbleChance(MobileEntity entity)
     {
-		if (entity is PlayerEntity player && player.Profession == Profession.Thief)
-		{
-			return base.CalculateFumbleChance(player);
-		}
-		else if (entity is CreatureEntity npc)
-		{
-            return base.CalculateFumbleChance(npc);
+        if (entity is PlayerEntity player && player.Profession == Profession.Thief)
+        {
+            return base.CalculateFumbleChance(entity);
+        }
+        else if (entity is CreatureEntity)
+        {
+            return base.CalculateFumbleChance(entity);
         }
 
         return 100.00;
