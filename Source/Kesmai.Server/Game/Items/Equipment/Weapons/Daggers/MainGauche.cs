@@ -67,8 +67,38 @@ public class MainGauche : Dagger, ITreasure
 		writer.Write((short)1); /* version */
 	}
 
-	/// <inheritdoc />
-	public override void Deserialize(ref SpanReader reader)
+    public override bool CanEquip(MobileEntity entity)
+    {
+
+        if (entity is PlayerEntity player && player.Profession == Profession.Thief)
+        {
+            return true;
+        }
+        else if (entity is CreatureEntity)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public override double CalculateFumbleChance(MobileEntity entity)
+    {
+        if (entity is PlayerEntity player && player.Profession == Profession.Thief)
+        {
+            return base.CalculateFumbleChance(entity);
+        }
+        else if (entity is CreatureEntity)
+        {
+            return base.CalculateFumbleChance(entity);
+        }
+
+        return 100.00;
+
+    }
+
+    /// <inheritdoc />
+    public override void Deserialize(ref SpanReader reader)
 	{
 		base.Deserialize(ref reader);
 
