@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using Humanizer;
@@ -111,7 +112,7 @@ public class Corpse : ItemEntity
 		var itemCount = owner.GetItems().Count();
 
 		if (itemCount > 0)
-			tooltip.AddTextProperty(itemCount == 1 ? 6500017 : 6500018, itemCount.ToString());
+			tooltip.AddTextProperty(itemCount == 1 ? 6500017 : 6500018, Color.White, itemCount.ToString());
 	}
 
 	/// <inheritdoc />
@@ -181,9 +182,9 @@ public class Corpse : ItemEntity
 		Strip();
 		Delete();
 
-		if (owner is PlayerEntity && !owner.IsAlive)
+		if (owner is PlayerEntity player && !owner.IsAlive)
 		{
-			var resurrectionLocation = segment.GetResurrectionLocation();
+			var resurrectionLocation = segment.GetResurrectionLocation(player);
 
 			if (Location != resurrectionLocation)
 				owner.Teleport(resurrectionLocation);
