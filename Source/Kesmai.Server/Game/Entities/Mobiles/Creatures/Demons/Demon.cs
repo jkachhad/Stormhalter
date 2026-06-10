@@ -22,11 +22,6 @@ public partial class Demon : CreatureEntity, IDemon
 		Health = MaxHealth = 5;
 	}
 
-	protected override void OnLoad()
-	{
-		base.OnLoad();
-	}
-
 	public override int GetNearbySound() => 117;
 	public override int GetAttackSound() => 124;
 	public override int GetDeathSound() => 7;

@@ -18,11 +18,6 @@ public partial class AirElemental : CreatureEntity
 		CanLoot = false;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	public override int GetNearbySound() => 115;
 	public override int GetAttackSound() => 72;

@@ -15,12 +15,6 @@ public partial class Giant : CreatureEntity
 
 		Alignment = Alignment.Chaotic;
 	}
-		
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -28,7 +22,7 @@ public partial class Giant : CreatureEntity
 	public override int GetDeathSound() => 79;
 	public override int GetNearbySound() => 197;
 	public override int GetAttackSound() => 0; // TODO
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new LeatherJacket();

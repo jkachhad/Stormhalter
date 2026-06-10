@@ -46,11 +46,6 @@ public partial class Djinn : CreatureEntity, IPhantasm
 		Health = MaxHealth = 5;
 	}
 
-	protected override void OnLoad()
-	{
-		base.OnLoad();
-	}
-		
 	public override int GetNearbySound() => 129;
 	public override int GetAttackSound() => 148;
 	public override int GetDeathSound() => 167;

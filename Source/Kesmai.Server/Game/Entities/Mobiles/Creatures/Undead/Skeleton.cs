@@ -11,7 +11,7 @@ public partial class Skeleton : CreatureEntity, IUndead
 {
 	public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Piercing;
 	public override CreatureWeakness Weakness { get; set; } = CreatureWeakness.Silver;
-		
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Skeleton"/> class.
 	/// </summary>
@@ -23,10 +23,6 @@ public partial class Skeleton : CreatureEntity, IUndead
 		Alignment = Alignment.Chaotic;
 	}
 
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.

@@ -13,13 +13,13 @@ public partial class SummonedDemon : Demon
 	public SummonedDemon(ICreatureSpell spell)
 	{
 		Summoned = true;
-			
+
 		Health = MaxHealth = 300;
 		BaseDodge = 25;
 		Mana = MaxMana = 24;
 
 		Movement = 3;
-			
+
 		Attacks = new CreatureAttackCollection
 		{
 			{ new CreatureBasicAttack(14) },
@@ -29,27 +29,22 @@ public partial class SummonedDemon : Demon
 		{
 			new CreatureBlock(12, "a hand"),
 		};
-			
+
 		Spells = new CreatureSpellCollection()
 		{
 			{ new CreatureSpellEntry(spell, 50, TimeSpan.Zero ) }
 		};
-			
+
 		AddStatus(new NightVisionStatus(this));
 
 		CanFly = true;
 	}
-		
+
 	protected override void OnCreate()
 	{
 		base.OnCreate();
 
 		_stats[EntityStat.MagicDamageTakenReduction].Base = 15;
-	}
-		
-	protected override void OnLoad()
-	{
-		base.OnLoad();
 	}
 
 	public override bool AllowDamageFrom(Spell spell)

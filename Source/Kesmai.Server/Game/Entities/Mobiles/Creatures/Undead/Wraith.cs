@@ -16,10 +16,6 @@ public partial class Wraith : CreatureEntity, IUndead
 		Alignment = Alignment.Chaotic;
 	}
 
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.

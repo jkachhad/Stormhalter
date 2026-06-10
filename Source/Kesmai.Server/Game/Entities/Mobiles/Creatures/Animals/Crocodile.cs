@@ -22,13 +22,7 @@ public partial class Crocodile : AnimalEntity
 	}
 
 	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-
-		base.OnLoad();
-	}
-
-	/// <summary>
+/// <summary>
 	/// Gets the death sound.
 	/// </summary>
 	public override int GetNearbySound() => 8;

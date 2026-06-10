@@ -23,12 +23,7 @@ public partial class Dragon : CreatureEntity
 		CanLoot = false;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
-		
+
 	public override int GetNearbySound() => 19;
 	public override int GetAttackSound() => 31;
 	public override int GetDeathSound() => 43;

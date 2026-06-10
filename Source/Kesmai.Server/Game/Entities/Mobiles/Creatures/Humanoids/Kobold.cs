@@ -21,19 +21,13 @@ public partial class Kobold : CreatureEntity
 	}
 
 	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-
-		base.OnLoad();
-	}
-
-	/// <summary>
+/// <summary>
 	/// Gets the death sound.
 	/// </summary>
 	public override int GetDeathSound() => 106;
 	public override int GetNearbySound() => 92;
 	public override int GetAttackSound() => 99;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new LeatherArmor();

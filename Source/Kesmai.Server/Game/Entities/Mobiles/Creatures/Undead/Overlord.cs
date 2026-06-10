@@ -16,10 +16,6 @@ public partial class Overlord : CreatureEntity, IUndead
 		Alignment = Alignment.Evil;
 	}
 
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.

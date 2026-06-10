@@ -15,10 +15,10 @@ public partial class SummonedSalamander : Salamander
 	public SummonedSalamander(ICreatureSpell spell)
 	{
 		Summoned = true;
-			
+
 		Health = MaxHealth = 71;
 		BaseDodge = 15;
-			
+
 		Movement = 2;
 
 		Alignment = Alignment.Lawful;
@@ -35,7 +35,7 @@ public partial class SummonedSalamander : Salamander
 			{ new CreatureBlock(3, "a claw") },
 			{ new CreatureBlock(1, "a tail") },
 		};
-			
+
 		Spells = new CreatureSpellCollection()
 		{
 			{ new CreatureSpellEntry(spell, 100, TimeSpan.FromSeconds(3) )}
@@ -45,14 +45,8 @@ public partial class SummonedSalamander : Salamander
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-			
-		_stats[EntityStat.FireProtection].Base = 100;
-	}
 
-	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-		base.OnLoad();
+		_stats[EntityStat.FireProtection].Base = 100;
 	}
 
 	public override Corpse GetCorpse() => default(Corpse);

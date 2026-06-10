@@ -19,11 +19,6 @@ public partial class Gargoyle : CreatureEntity
 		CanFly = true;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.

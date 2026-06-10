@@ -17,13 +17,7 @@ public partial class Dog : AnimalEntity
 	}
 
 	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-
-		base.OnLoad();
-	}
-
-	/// <summary>
+/// <summary>
 	/// Gets the death sound.
 	/// </summary>
 	public override int GetDeathSound() => 37;

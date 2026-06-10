@@ -18,19 +18,13 @@ public partial class Wyvern : CreatureEntity
 	}
 
 	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-
-		base.OnLoad();
-	}
-
-	/// <summary>
+/// <summary>
 	/// Gets the death sound.
 	/// </summary>
 	public override int GetDeathSound() => 34;
 	public override int GetNearbySound() => 10;
 	public override int GetAttackSound() => 22;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new WyvernScales();

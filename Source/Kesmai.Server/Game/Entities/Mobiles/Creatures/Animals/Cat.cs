@@ -16,13 +16,6 @@ public partial class Cat : AnimalEntity
 		Alignment = Alignment.Lawful;
 	}
 
-	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-
-		base.OnLoad();
-	}
-
 	public override int GetNearbySound() => 140;
 	public override int GetAttackSound() => 159;
 	public override int GetDeathSound() => 178;

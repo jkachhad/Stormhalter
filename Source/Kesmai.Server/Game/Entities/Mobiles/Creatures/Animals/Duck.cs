@@ -17,13 +17,6 @@ public partial class Duck : AnimalEntity
 		CanFly = true;
 	}
 
-	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-
-		base.OnLoad();
-	}
-
 	public override int GetNearbySound() => 16;
 	public override int GetAttackSound() => 28;
 	public override int GetDeathSound() => 40;

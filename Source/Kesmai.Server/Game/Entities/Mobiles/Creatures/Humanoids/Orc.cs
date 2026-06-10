@@ -20,18 +20,14 @@ public partial class Orc : CreatureEntity
 		Alignment = Alignment.Chaotic;
 	}
 
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
-		
+
 	/// <summary>
 	/// Gets the death sound.
 	/// </summary>
 	public override int GetDeathSound() => 105;
 	public override int GetNearbySound() => 91;
 	public override int GetAttackSound() => 98;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new LeatherArmor();

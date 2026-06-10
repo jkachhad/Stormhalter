@@ -14,24 +14,19 @@ public partial class Statue : CreatureEntity
 		Body = 99;
 
 		Alignment = Alignment.Chaotic;
-			
+
 		CanLoot = false;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
-		
+
 	public override int GetAttackSound() => 0;
 	public override int GetNearbySound() => 0;
 	public override int GetDeathSound() => 172;
-		
+
 	public override Corpse GetCorpse()
 	{
 		var corpse = base.GetCorpse();
-			
+
 		if (corpse != null)
 			corpse.CanBurn = false;
 

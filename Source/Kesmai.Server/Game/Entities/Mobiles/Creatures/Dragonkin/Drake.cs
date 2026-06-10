@@ -21,11 +21,6 @@ public partial class Drake : CreatureEntity
 		CanLoot = false;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.

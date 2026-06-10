@@ -13,16 +13,11 @@ public partial class FireElemental : CreatureEntity
 		Body = 223;
 
 		Alignment = Alignment.Chaotic;
-			
+
 		CanFly = true;
 		CanLoot = false;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	//TODO: check if there's a better sound for this guy: Using Water Elemental stats for now.
 	public override int GetNearbySound() => 69;

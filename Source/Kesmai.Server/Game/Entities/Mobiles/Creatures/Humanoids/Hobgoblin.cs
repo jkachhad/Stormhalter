@@ -17,11 +17,6 @@ public partial class Hobgoblin : CreatureEntity
 		Alignment = Alignment.Chaotic;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -29,7 +24,7 @@ public partial class Hobgoblin : CreatureEntity
 	public override int GetDeathSound() => 108;
 	public override int GetNearbySound() => 94;
 	public override int GetAttackSound() => 101;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new LeatherArmor();

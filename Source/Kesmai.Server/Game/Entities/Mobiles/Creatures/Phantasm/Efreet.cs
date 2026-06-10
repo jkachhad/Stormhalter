@@ -18,12 +18,6 @@ public partial class Efreet : CreatureEntity, IPhantasm
 		Health = MaxHealth = 5;
 	}
 
-	protected override void OnLoad()
-	{
-
-		base.OnLoad();
-	}
-		
 	public override int GetNearbySound() => 130;
 	public override int GetAttackSound() => 149;
 	public override int GetDeathSound() => 168;

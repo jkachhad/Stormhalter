@@ -16,11 +16,6 @@ public partial class Yeti : CreatureEntity
 		Alignment = Alignment.Evil;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -28,7 +23,7 @@ public partial class Yeti : CreatureEntity
 	public override int GetDeathSound() => 175;
 	public override int GetNearbySound() => 137;
 	public override int GetAttackSound() => 156;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new PolarBearJacket();

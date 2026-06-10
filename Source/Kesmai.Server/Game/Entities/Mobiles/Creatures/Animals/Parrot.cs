@@ -13,15 +13,8 @@ public partial class Parrot : AnimalEntity
 		Body = 73;
 
 		Alignment = Alignment.Lawful;
-			
+
 		CanFly = true;
-	}
-
-	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-
-		base.OnLoad();
 	}
 
 	public override int GetNearbySound() => 283;

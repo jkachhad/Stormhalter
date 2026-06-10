@@ -16,11 +16,6 @@ public partial class Ogre : CreatureEntity
 		Alignment = Alignment.Chaotic;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -28,7 +23,7 @@ public partial class Ogre : CreatureEntity
 	public override int GetDeathSound() => 163;
 	public override int GetNearbySound() => 125;
 	public override int GetAttackSound() => 144;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new LeatherArmor();

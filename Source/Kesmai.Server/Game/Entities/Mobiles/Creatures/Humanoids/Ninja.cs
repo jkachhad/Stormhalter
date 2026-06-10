@@ -16,11 +16,6 @@ public partial class Ninja : CreatureEntity
 		Alignment = Alignment.Chaotic;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.

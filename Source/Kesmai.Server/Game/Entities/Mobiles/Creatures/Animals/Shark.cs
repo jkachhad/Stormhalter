@@ -18,20 +18,13 @@ public partial class Shark : AnimalEntity
 
 		CanSwim = true;
 		CanWalk = false;
-			
+
 		AddStatus(new BreatheWaterStatus(this));
-	}
-
-	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-
-		base.OnLoad();
 	}
 
 	public override int GetNearbySound() => 2001;
 	public override int GetDeathSound() => 171;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new SharkJacket();

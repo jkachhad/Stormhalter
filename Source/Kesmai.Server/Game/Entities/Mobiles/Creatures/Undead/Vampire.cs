@@ -16,11 +16,6 @@ public partial class Vampire : CreatureEntity, IUndead
 		Alignment = Alignment.Chaotic;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-	}
 
 	/// <summary>
 	/// Gets the death sound.
