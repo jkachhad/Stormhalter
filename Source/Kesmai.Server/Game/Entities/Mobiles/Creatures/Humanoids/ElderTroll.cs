@@ -20,11 +20,6 @@ public partial class ElderTroll : CreatureEntity
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
 	}
 
 	/// <summary>
@@ -38,4 +33,7 @@ public partial class ElderTroll : CreatureEntity
 	{
 		return new TrollVest();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

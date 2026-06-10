@@ -20,7 +20,6 @@ public partial class Efreet : CreatureEntity, IPhantasm
 
 	protected override void OnLoad()
 	{
-		_brain = new CombatAI(this);
 
 		base.OnLoad();
 	}
@@ -30,4 +29,7 @@ public partial class Efreet : CreatureEntity, IPhantasm
 	public override int GetDeathSound() => 168;
 
 	public override Corpse GetCorpse() => default(Corpse);
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

@@ -18,8 +18,6 @@ public partial class Griffin : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-
-		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 9;
@@ -30,4 +28,7 @@ public partial class Griffin : AnimalEntity
 	{
 		return new GriffinJacket();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

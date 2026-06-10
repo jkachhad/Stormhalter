@@ -16,14 +16,12 @@ public partial class Rockwyrm : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-
-		if (_brain != null)
-			return;
-
-		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 126;
 	public override int GetAttackSound() => 145;
 	public override int GetDeathSound() => 164;
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

@@ -23,11 +23,6 @@ public partial class Salamander : AnimalEntity
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-			
-		if (_brain != null)
-			return;
-			
-		_brain = new CombatAI(this);
 	}
 		
 	public override int GetNearbySound() => 17;
@@ -58,4 +53,7 @@ public partial class Salamander : AnimalEntity
 
 		base.OnSpellTarget(target, combatant);
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

@@ -20,7 +20,6 @@ public partial class Wyvern : CreatureEntity
 	/// <inheritdoc/>
 	protected override void OnLoad()
 	{
-		_brain = new CombatAI(this);
 
 		base.OnLoad();
 	}
@@ -36,4 +35,7 @@ public partial class Wyvern : CreatureEntity
 	{
 		return new WyvernScales();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

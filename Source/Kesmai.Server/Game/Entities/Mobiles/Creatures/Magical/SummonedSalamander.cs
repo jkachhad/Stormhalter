@@ -53,12 +53,10 @@ public partial class SummonedSalamander : Salamander
 	protected override void OnLoad()
 	{
 		base.OnLoad();
-
-		if (_brain != null)
-			return;
-			
-		_brain = new CombatAI(this);
 	}
 
 	public override Corpse GetCorpse() => default(Corpse);
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

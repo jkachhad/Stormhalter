@@ -20,11 +20,6 @@ public partial class Serpent : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-
-		if (_brain != null)
-			return;
-
-		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 17;
@@ -35,4 +30,7 @@ public partial class Serpent : AnimalEntity
 	{
 		return new DragonScaleArmor();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

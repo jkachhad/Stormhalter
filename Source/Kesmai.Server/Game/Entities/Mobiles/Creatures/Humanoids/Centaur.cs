@@ -16,11 +16,6 @@ public partial class Centaur : CreatureEntity
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 136;
@@ -31,4 +26,7 @@ public partial class Centaur : CreatureEntity
 	{
 		return new LeatherArmor();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

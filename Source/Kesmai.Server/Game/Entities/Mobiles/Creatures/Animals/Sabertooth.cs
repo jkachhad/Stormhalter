@@ -17,8 +17,6 @@ public partial class Sabertooth : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-
-		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 347;
@@ -29,4 +27,7 @@ public partial class Sabertooth : AnimalEntity
 	{
 		return new TigerJacket();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

@@ -13,11 +13,6 @@ public abstract partial class Rat : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-
-		if (_brain != null)
-			return;
-
-		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 142;

@@ -25,8 +25,6 @@ public partial class Demon : CreatureEntity, IDemon
 	protected override void OnLoad()
 	{
 		base.OnLoad();
-
-		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 117;
@@ -34,4 +32,7 @@ public partial class Demon : CreatureEntity, IDemon
 	public override int GetDeathSound() => 7;
 
 	public override Corpse GetCorpse() => default(Corpse);
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

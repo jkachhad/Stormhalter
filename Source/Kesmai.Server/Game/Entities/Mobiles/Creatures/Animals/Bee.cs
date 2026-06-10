@@ -20,11 +20,12 @@ public partial class Bee : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-
-		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 139;
 	public override int GetAttackSound() => 158;
 	public override int GetDeathSound() => 177;
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

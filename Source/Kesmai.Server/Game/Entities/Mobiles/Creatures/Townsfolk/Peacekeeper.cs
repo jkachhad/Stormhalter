@@ -16,13 +16,8 @@ public partial class Peacekeeper : Humanoid
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-
-		if (_brain != null)
-			return;
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

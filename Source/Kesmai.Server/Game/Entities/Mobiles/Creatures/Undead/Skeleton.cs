@@ -26,11 +26,6 @@ public partial class Skeleton : CreatureEntity, IUndead
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
 	}
 
 	/// <summary>
@@ -41,4 +36,7 @@ public partial class Skeleton : CreatureEntity, IUndead
 	public override int GetAttackSound() => 118;
 
 	public override Corpse GetCorpse() => default(Corpse);
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

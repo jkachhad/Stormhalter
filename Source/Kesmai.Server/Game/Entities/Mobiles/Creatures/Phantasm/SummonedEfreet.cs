@@ -69,8 +69,6 @@ public partial class SummonedEfreet : Efreet
 	protected override void OnLoad()
 	{
 		base.OnLoad();
-			
-		_brain = new CombatAI(this);
 	}
 	
 	public override void OnEnterWorld()
@@ -121,4 +119,7 @@ public partial class SummonedEfreet : Efreet
 			base.OnSpellTarget(target, combatant);
 		}
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

@@ -19,7 +19,6 @@ public partial class Panda : AnimalEntity
 	/// <inheritdoc/>
 	protected override void OnLoad()
 	{
-		_brain = new CombatAI(this);
 
 		base.OnLoad();
 	}
@@ -32,4 +31,7 @@ public partial class Panda : AnimalEntity
 	{
 		return new BearJacket();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

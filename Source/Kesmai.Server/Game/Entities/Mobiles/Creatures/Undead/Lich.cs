@@ -24,14 +24,6 @@ public partial class Lich : CreatureEntity, IUndead
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-			
-		if (_brain != null)
-			return;
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
 	}
 
 	/// <summary>
@@ -42,6 +34,9 @@ public partial class Lich : CreatureEntity, IUndead
 	public override int GetDeathSound() => 169;
 
 	public override Corpse GetCorpse() => default(Corpse);
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }
 
 public partial class AncientLich : Lich

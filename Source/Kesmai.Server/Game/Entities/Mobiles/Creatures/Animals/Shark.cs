@@ -25,7 +25,6 @@ public partial class Shark : AnimalEntity
 	/// <inheritdoc/>
 	protected override void OnLoad()
 	{
-		_brain = new CombatAI(this);
 
 		base.OnLoad();
 	}
@@ -37,4 +36,7 @@ public partial class Shark : AnimalEntity
 	{
 		return new SharkJacket();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

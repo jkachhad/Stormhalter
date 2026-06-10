@@ -22,11 +22,6 @@ public partial class Statue : CreatureEntity
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-			
-		if (_brain != null)
-			return;
-			
-		_brain = new CombatAI(this);
 	}
 		
 	public override int GetAttackSound() => 0;
@@ -42,4 +37,7 @@ public partial class Statue : CreatureEntity
 
 		return corpse;
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

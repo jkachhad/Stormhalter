@@ -25,11 +25,6 @@ public partial class Drake : CreatureEntity
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-
-		if (_brain != null)
-			return;
-
-		_brain = new CombatAI(this);
 	}
 
 	/// <summary>
@@ -54,4 +49,7 @@ public partial class Drake : CreatureEntity
 	{
 		return new DrakeScaleArmor();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

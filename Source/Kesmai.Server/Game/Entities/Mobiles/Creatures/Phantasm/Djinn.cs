@@ -49,8 +49,6 @@ public partial class Djinn : CreatureEntity, IPhantasm
 	protected override void OnLoad()
 	{
 		base.OnLoad();
-			
-		_brain = new CombatAI(this);
 	}
 		
 	public override int GetNearbySound() => 129;
@@ -58,4 +56,7 @@ public partial class Djinn : CreatureEntity, IPhantasm
 	public override int GetDeathSound() => 167;
 		
 	public override Corpse GetCorpse() => default(Corpse);
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

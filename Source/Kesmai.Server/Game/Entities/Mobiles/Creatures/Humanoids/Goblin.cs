@@ -24,11 +24,6 @@ public partial class Goblin : CreatureEntity
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
 	}
 
 	/// <summary>
@@ -42,4 +37,7 @@ public partial class Goblin : CreatureEntity
 	{
 		return new LeatherArmor();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

@@ -21,14 +21,6 @@ public partial class Hobgoblin : CreatureEntity
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-			
-		if (_brain != null)
-			return;
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
 	}
 
 	/// <summary>
@@ -42,4 +34,7 @@ public partial class Hobgoblin : CreatureEntity
 	{
 		return new LeatherArmor();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

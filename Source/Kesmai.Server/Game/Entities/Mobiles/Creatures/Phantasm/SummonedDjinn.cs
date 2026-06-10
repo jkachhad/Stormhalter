@@ -69,8 +69,6 @@ public partial class SummonedDjinn : Djinn
 	protected override void OnLoad()
 	{
 		base.OnLoad();
-			
-		_brain = new CombatAI(this);
 	}
 	
 	public override void OnEnterWorld()
@@ -98,4 +96,7 @@ public partial class SummonedDjinn : Djinn
 
 		return true;
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

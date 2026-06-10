@@ -23,7 +23,6 @@ public partial class Kobold : CreatureEntity
 	/// <inheritdoc/>
 	protected override void OnLoad()
 	{
-		_brain = new CombatAI(this);
 
 		base.OnLoad();
 	}
@@ -39,4 +38,7 @@ public partial class Kobold : CreatureEntity
 	{
 		return new LeatherArmor();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

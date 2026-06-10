@@ -20,11 +20,6 @@ public partial class Wight : CreatureEntity, IUndead
 	public override void OnSpawn()
 	{
 		base.OnSpawn();
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
 	}
 
 	/// <summary>
@@ -35,4 +30,7 @@ public partial class Wight : CreatureEntity, IUndead
 	public override int GetAttackSound() => 120;
 
 	public override Corpse GetCorpse() => default(Corpse);
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

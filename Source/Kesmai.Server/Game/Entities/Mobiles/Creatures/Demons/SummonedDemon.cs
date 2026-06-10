@@ -50,8 +50,6 @@ public partial class SummonedDemon : Demon
 	protected override void OnLoad()
 	{
 		base.OnLoad();
-			
-		_brain = new CombatAI(this);
 	}
 
 	public override bool AllowDamageFrom(Spell spell)
@@ -61,4 +59,7 @@ public partial class SummonedDemon : Demon
 
 		return true;
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

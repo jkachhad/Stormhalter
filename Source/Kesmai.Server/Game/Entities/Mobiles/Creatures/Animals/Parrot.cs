@@ -20,7 +20,6 @@ public partial class Parrot : AnimalEntity
 	/// <inheritdoc/>
 	protected override void OnLoad()
 	{
-		_brain = new CombatAI(this);
 
 		base.OnLoad();
 	}
@@ -28,4 +27,7 @@ public partial class Parrot : AnimalEntity
 	public override int GetNearbySound() => 283;
 	public override int GetAttackSound() => 284;
 	public override int GetDeathSound() => 285;
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }
