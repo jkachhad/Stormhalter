@@ -22,14 +22,7 @@ public partial class Crocodile : AnimalEntity
 	}
 
 	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-		_brain = new CombatAI(this);
-
-		base.OnLoad();
-	}
-
-	/// <summary>
+/// <summary>
 	/// Gets the death sound.
 	/// </summary>
 	public override int GetNearbySound() => 8;
@@ -40,4 +33,7 @@ public partial class Crocodile : AnimalEntity
 	{
 		return new CrocodileBoots();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

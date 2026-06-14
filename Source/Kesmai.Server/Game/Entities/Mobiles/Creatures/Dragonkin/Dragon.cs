@@ -23,17 +23,7 @@ public partial class Dragon : CreatureEntity
 		CanLoot = false;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-			
-		if (_brain != null)
-			return;
 
-		_brain = new CombatAI(this);
-	}
-		
 	public override int GetNearbySound() => 19;
 	public override int GetAttackSound() => 31;
 	public override int GetDeathSound() => 43;
@@ -77,4 +67,7 @@ public partial class Dragon : CreatureEntity
 		}
 			
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

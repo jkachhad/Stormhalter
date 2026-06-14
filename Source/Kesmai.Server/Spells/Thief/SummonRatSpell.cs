@@ -36,10 +36,9 @@ public class SummonRatSpell : DelayedSpell
 					
 				CanSwim = true,
 			};
-			rat.Brain = new IdleAI(rat);
 			rat.Summoned = true;
 
-			CreatureGroup.Instantiate(rat, facet, segment, location);
+			CreatureGroup.Instantiate(rat, facet, segment, location, new IdleAI(rat));
 				
 			if (_caster is PlayerEntity player)
 			{

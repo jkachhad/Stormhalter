@@ -17,14 +17,7 @@ public partial class Dog : AnimalEntity
 	}
 
 	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-		_brain = new CombatAI(this);
-
-		base.OnLoad();
-	}
-
-	/// <summary>
+/// <summary>
 	/// Gets the death sound.
 	/// </summary>
 	public override int GetDeathSound() => 37;
@@ -35,4 +28,7 @@ public partial class Dog : AnimalEntity
 	{
 		return new DogJacket();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

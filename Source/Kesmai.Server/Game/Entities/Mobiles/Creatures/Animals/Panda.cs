@@ -16,20 +16,15 @@ public partial class Panda : AnimalEntity
 		Alignment = Alignment.Lawful;
 	}
 
-	/// <inheritdoc/>
-	protected override void OnLoad()
-	{
-		_brain = new CombatAI(this);
-
-		base.OnLoad();
-	}
-
 	public override int GetNearbySound() => 18;
 	public override int GetAttackSound() => 30;
 	public override int GetDeathSound() => 42;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new BearJacket();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

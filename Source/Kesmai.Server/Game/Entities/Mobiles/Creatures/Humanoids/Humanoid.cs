@@ -41,7 +41,7 @@ public partial class Humanoid : CreatureEntity
 
 		AddStatus(new BreatheWaterStatus(this));
 	}
-		
+
 	public override int GetDeathSound() => (IsFemale ? 83 : 79);
 	public override int GetWarmSound() => (IsFemale ? 84 : 80);
 
@@ -50,18 +50,6 @@ public partial class Humanoid : CreatureEntity
 		return new LeatherJacket();
 	}
 
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-
-		if (_brain != null)
-			return;
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
-	}
 	
 	/// <inheritdoc/>
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
@@ -71,7 +59,7 @@ public partial class Humanoid : CreatureEntity
 			entries.AddRange(Gossips);
 			entries.Add(InteractionSeparator.Instance);
 		}
-		
+
 		base.GetInteractions(source, entries);
 	}
 	
@@ -80,7 +68,7 @@ public partial class Humanoid : CreatureEntity
 		// Check if there is an existing gossip conversation state for this player.
 		if (_gossips.TryGetValue(source, out var gossip))
 			return gossip.IsAvailable;
-		
+
 		// By default, all players can gossip with humanoids that have gossip interactions.
 		return true;
 	}
@@ -101,9 +89,12 @@ public partial class Humanoid : CreatureEntity
 
 		// Reset the gossip state and allow the gossip interaction to proceed.
 		gossip.NextGossipTime = Server.Now + GossipCooldown;
-			
+
 		return true;
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }
 
 public class GossipInteraction : InteractionEntry

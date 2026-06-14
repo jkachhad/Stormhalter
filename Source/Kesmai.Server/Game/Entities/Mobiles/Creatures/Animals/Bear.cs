@@ -20,8 +20,6 @@ public partial class Bear : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-
-		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 18;
@@ -32,4 +30,7 @@ public partial class Bear : AnimalEntity
 	{
 		return new BearJacket();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

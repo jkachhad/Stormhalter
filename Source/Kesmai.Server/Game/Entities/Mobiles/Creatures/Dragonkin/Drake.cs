@@ -21,16 +21,6 @@ public partial class Drake : CreatureEntity
 		CanLoot = false;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-
-		if (_brain != null)
-			return;
-
-		_brain = new CombatAI(this);
-	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -54,4 +44,7 @@ public partial class Drake : CreatureEntity
 	{
 		return new DrakeScaleArmor();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

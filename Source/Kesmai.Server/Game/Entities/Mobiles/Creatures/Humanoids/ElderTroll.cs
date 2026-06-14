@@ -16,16 +16,6 @@ public partial class ElderTroll : CreatureEntity
 		Alignment = Alignment.Chaotic;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
-	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -33,9 +23,12 @@ public partial class ElderTroll : CreatureEntity
 	public override int GetDeathSound() => 109;
 	public override int GetNearbySound() => 95;
 	public override int GetAttackSound() => 102;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new TrollVest();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

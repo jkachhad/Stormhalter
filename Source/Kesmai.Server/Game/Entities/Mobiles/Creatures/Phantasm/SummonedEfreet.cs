@@ -13,17 +13,17 @@ public partial class SummonedEfreet : Efreet
 	public override bool CanOrderAttack => true;
 	public override bool CanOrderCarry => true;
 	private double _focusLevelModifier = 0.0;
-		
+
 	public SummonedEfreet(ICreatureSpell spell, double focusLevelModifier = 0.0)
 	{
 		_focusLevelModifier = focusLevelModifier;
 		Summoned = true;
-			
+
 		Health = MaxHealth = 1;
 		BaseDodge = 1;
 		Mana = MaxMana = 40;
 		Movement = 3;
-		
+
 		Blocks = new CreatureBlockCollection
 		{
 			new CreatureBlock(17, "a hand"),
@@ -33,10 +33,10 @@ public partial class SummonedEfreet : Efreet
 		{
 			{ new CreatureSpellEntry(spell, 100, TimeSpan.FromSeconds(3) )}
 		};
-			
+
 		AddStatus(new NightVisionStatus(this));
 		AddStatus(new PoisonProtectionStatus(this));
-			
+
 		CanFly = true;
 	}
 	private (int health, int defense, int attack, int magicResist) PowerCurve()
@@ -53,7 +53,7 @@ public partial class SummonedEfreet : Efreet
 		// Search for and get the highest focus level from the items.
 		if (allFocusItems.Count > 0)
 			focusLevel += (allFocusItems.Max(e => e.FocusLevel) * 0.01);
-		
+
 		// Allow for tuning strength without recompiling.
 		if (_focusLevelModifier != 0)
 			focusLevel += _focusLevelModifier;
@@ -66,25 +66,18 @@ public partial class SummonedEfreet : Efreet
         return ((int)health,(int)defense, (int)attack, (int)magicResist);
     }		
 
-	protected override void OnLoad()
-	{
-		base.OnLoad();
-			
-		_brain = new CombatAI(this);
-	}
-	
 	public override void OnEnterWorld()
 	{
 		base.OnEnterWorld();
-		
+
 		var (health, defense, attack, magicResist) = PowerCurve();
-		
+
 		Health = MaxHealth = health;
 		BaseDodge = defense;
-		
+
 		_stats[EntityStat.FireProtection].Base = 100;
 		_stats[EntityStat.MagicDamageTakenReduction].Base = magicResist;
-		
+
 		Attacks = new CreatureAttackCollection
 		{
 			{ new CreatureBasicAttack(attack) },
@@ -121,4 +114,7 @@ public partial class SummonedEfreet : Efreet
 			base.OnSpellTarget(target, combatant);
 		}
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

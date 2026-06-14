@@ -18,19 +18,6 @@ public partial class Minotaur : CreatureEntity
 		CanCharge = true;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-			
-		if (_brain != null)
-			return;
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
-	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -38,9 +25,12 @@ public partial class Minotaur : CreatureEntity
 	public override int GetDeathSound() => 110;
 	public override int GetNearbySound() => 96;
 	public override int GetAttackSound() => 103;
-		
+
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new LeatherArmor();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

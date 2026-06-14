@@ -16,16 +16,6 @@ public partial class Ninja : CreatureEntity
 		Alignment = Alignment.Chaotic;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-			
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
-	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -33,4 +23,7 @@ public partial class Ninja : CreatureEntity
 	public override int GetDeathSound() => 79;
 	public override int GetNearbySound() => 0;
 	public override int GetAttackSound() => 0;
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

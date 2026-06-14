@@ -17,8 +17,6 @@ public partial class Manticora : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-
-		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 127;
@@ -29,4 +27,7 @@ public partial class Manticora : AnimalEntity
 	{
 		return new ManticoraJacket();
 	}
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => new CombatAI(this);
 }

@@ -16,19 +16,6 @@ public partial class Vampire : CreatureEntity, IUndead
 		Alignment = Alignment.Chaotic;
 	}
 
-	/// <inheritdoc/>
-	public override void OnSpawn()
-	{
-		base.OnSpawn();
-
-		if (_brain != null)
-			return;
-
-		if (RightHand is ProjectileWeapon)
-			_brain = new RangedAI(this);
-		else
-			_brain = new CombatAI(this);
-	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -38,4 +25,7 @@ public partial class Vampire : CreatureEntity, IUndead
 	public override int GetDeathSound() => 170;
 
 	public override Corpse GetCorpse() => default(Corpse);
+
+	/// <inheritdoc/>
+	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }
