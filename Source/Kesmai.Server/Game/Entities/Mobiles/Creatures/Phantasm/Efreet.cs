@@ -18,12 +18,16 @@ public partial class Efreet : CreatureEntity, IPhantasm
 		Health = MaxHealth = 5;
 	}
 
+	protected override void OnLoad()
+	{
+		_brain = new CombatAI(this);
+
+		base.OnLoad();
+	}
+		
 	public override int GetNearbySound() => 130;
 	public override int GetAttackSound() => 149;
 	public override int GetDeathSound() => 168;
 
 	public override Corpse GetCorpse() => default(Corpse);
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

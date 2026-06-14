@@ -19,6 +19,17 @@ public partial class Goblin : CreatureEntity
 
 		Alignment = Alignment.Chaotic;
 	}
+		
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+			
+		if (RightHand is ProjectileWeapon)
+			_brain = new RangedAI(this);
+		else
+			_brain = new CombatAI(this);
+	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -26,12 +37,9 @@ public partial class Goblin : CreatureEntity
 	public override int GetDeathSound() => 104;
 	public override int GetNearbySound() => 90;
 	public override int GetAttackSound() => 97;
-
+		
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new LeatherArmor();
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

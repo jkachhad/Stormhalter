@@ -19,6 +19,19 @@ public partial class Gargoyle : CreatureEntity
 		CanFly = true;
 	}
 
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+			
+		if (_brain != null)
+			return;
+			
+		if (RightHand is ProjectileWeapon)
+			_brain = new RangedAI(this);
+		else
+			_brain = new CombatAI(this);
+	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -31,7 +44,4 @@ public partial class Gargoyle : CreatureEntity
 	{
 		return new LeatherArmor();
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

@@ -13,17 +13,24 @@ public partial class FireElemental : CreatureEntity
 		Body = 223;
 
 		Alignment = Alignment.Chaotic;
-
+			
 		CanFly = true;
 		CanLoot = false;
 	}
 
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+
+		if (_brain != null)
+			return;
+
+		_brain = new CombatAI(this);
+	}
 
 	//TODO: check if there's a better sound for this guy: Using Water Elemental stats for now.
 	public override int GetNearbySound() => 69;
 	public override int GetAttackSound() => 69;
 	public override int GetDeathSound() => 226;
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

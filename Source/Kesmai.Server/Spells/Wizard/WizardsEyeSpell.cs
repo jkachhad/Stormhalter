@@ -37,11 +37,12 @@ public class WizardsEyeSpell : DelayedSpell
 					
 				CanSwim = true,
 			};
-			
+			frog.Brain = new IdleAI(frog);
+
 			frog.Summoned = true;
 			frog.Alignment = _caster.Alignment;
 
-			CreatureGroup.Instantiate(frog, facet, segment, location, new IdleAI(frog));
+			CreatureGroup.Instantiate(frog, facet, segment, location);
 
 			if (_caster is PlayerEntity player)
 			{

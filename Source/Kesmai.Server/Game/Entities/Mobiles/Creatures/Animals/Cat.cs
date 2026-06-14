@@ -16,10 +16,15 @@ public partial class Cat : AnimalEntity
 		Alignment = Alignment.Lawful;
 	}
 
+	/// <inheritdoc/>
+	protected override void OnLoad()
+	{
+		_brain = new CombatAI(this);
+
+		base.OnLoad();
+	}
+
 	public override int GetNearbySound() => 140;
 	public override int GetAttackSound() => 159;
 	public override int GetDeathSound() => 178;
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

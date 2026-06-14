@@ -19,26 +19,36 @@ public partial class Salamander : AnimalEntity
 		Alignment = Alignment.Chaotic;
 	}
 
-
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+			
+		if (_brain != null)
+			return;
+			
+		_brain = new CombatAI(this);
+	}
+		
 	public override int GetNearbySound() => 17;
 	public override int GetAttackSound() => 29;
 	public override int GetDeathSound() => 41;
-
+		
 	public override Corpse GetCorpse()
 	{
 		var corpse = base.GetCorpse();
-
+			
 		if (corpse != null)
 			corpse.CanBurn = false;
 
 		return corpse;
 	}
-
+		
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new SalamanderScales();
 	}
-
+		
 	public override void OnSpellTarget(Target target, MobileEntity combatant)
 	{
 		var spell = Spell;
@@ -48,7 +58,4 @@ public partial class Salamander : AnimalEntity
 
 		base.OnSpellTarget(target, combatant);
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

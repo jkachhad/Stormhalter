@@ -35,6 +35,7 @@ public partial class VendorEntity : Humanoid
 		
 	public override void OnSpawn()
 	{
+		_brain = new IdleAI(this);
 			
 		base.OnSpawn();
 	}
@@ -89,7 +90,4 @@ public partial class VendorEntity : Humanoid
 
 		return (counter != default(Point2D));
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new IdleAI(this);
 }

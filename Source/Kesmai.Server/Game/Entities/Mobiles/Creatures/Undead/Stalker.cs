@@ -17,6 +17,16 @@ public partial class Stalker : CreatureEntity, IUndead
 		Alignment = Alignment.Chaotic;
 	}
 
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+			
+		if (_brain != null)
+			return;
+			
+		_brain = new CombatAI(this);
+	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -27,7 +37,4 @@ public partial class Stalker : CreatureEntity, IUndead
 	public override int GetDeathSound() => 182;
 
 	public override Corpse GetCorpse() => default(Corpse);
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

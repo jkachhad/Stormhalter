@@ -16,6 +16,8 @@ public partial class Hyena : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
+
+		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 143;
@@ -26,7 +28,4 @@ public partial class Hyena : AnimalEntity
 	{
 		return new HyenaJacket();
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

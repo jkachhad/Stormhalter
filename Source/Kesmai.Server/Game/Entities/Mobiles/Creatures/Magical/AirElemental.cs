@@ -18,11 +18,18 @@ public partial class AirElemental : CreatureEntity
 		CanLoot = false;
 	}
 
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+
+		if (_brain != null)
+			return;
+
+		_brain = new CombatAI(this);
+	}
 
 	public override int GetNearbySound() => 115;
 	public override int GetAttackSound() => 72;
 	public override int GetDeathSound() => 72;
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

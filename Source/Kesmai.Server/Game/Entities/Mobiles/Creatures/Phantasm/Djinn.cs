@@ -46,12 +46,16 @@ public partial class Djinn : CreatureEntity, IPhantasm
 		Health = MaxHealth = 5;
 	}
 
+	protected override void OnLoad()
+	{
+		base.OnLoad();
+			
+		_brain = new CombatAI(this);
+	}
+		
 	public override int GetNearbySound() => 129;
 	public override int GetAttackSound() => 148;
 	public override int GetDeathSound() => 167;
 		
 	public override Corpse GetCorpse() => default(Corpse);
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

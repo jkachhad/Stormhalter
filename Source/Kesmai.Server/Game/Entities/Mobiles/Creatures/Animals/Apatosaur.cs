@@ -17,6 +17,11 @@ public partial class Apatosaur : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
+
+		if (_brain != null)
+			return;
+
+		_brain = new CombatAI(this);
 	}
 		
 	//TODO: right sounds with files
@@ -28,7 +33,4 @@ public partial class Apatosaur : AnimalEntity
 	{
 		return new LeatherArmor();
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

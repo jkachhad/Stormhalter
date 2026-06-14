@@ -18,18 +18,22 @@ public partial class Wyvern : CreatureEntity
 	}
 
 	/// <inheritdoc/>
-/// <summary>
+	protected override void OnLoad()
+	{
+		_brain = new CombatAI(this);
+
+		base.OnLoad();
+	}
+
+	/// <summary>
 	/// Gets the death sound.
 	/// </summary>
 	public override int GetDeathSound() => 34;
 	public override int GetNearbySound() => 10;
 	public override int GetAttackSound() => 22;
-
+		
 	public override ItemEntity OnCorpseTanned()
 	{
 		return new WyvernScales();
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

@@ -17,23 +17,23 @@ public partial class SummonedDjinn : Djinn
 	{
 		_focusLevelModifier = focusLevelModifier;
 		Summoned = true;
-
+			
 		Health = MaxHealth = 1;
 		BaseDodge = 1;
 		Mana = MaxMana = 24;
 
 		Movement = 3;
-
+		
 		Blocks = new CreatureBlockCollection
 		{
 			new CreatureBlock(12, "a hand"),
 		};
-
+			
 		Spells = new CreatureSpellCollection()
 		{
 			{ new CreatureSpellEntry(spell, 100, TimeSpan.FromSeconds(3) ) }	
 		};
-
+			
 		AddStatus(new NightVisionStatus(this));
 
 		CanFly = true;
@@ -53,7 +53,7 @@ public partial class SummonedDjinn : Djinn
 		// Search for and get the highest focus level from the items.
 		if (allFocusItems.Count > 0)
 			focusLevel += (allFocusItems.Max(e => e.FocusLevel) * 0.01);
-
+		
 		// Allow for tuning strength without recompiling.
 		if (_focusLevelModifier != 0)
 			focusLevel += _focusLevelModifier;
@@ -66,18 +66,25 @@ public partial class SummonedDjinn : Djinn
 		return ((int)health,(int)defense, (int)attack, (int)magicResist);
     }
 
+	protected override void OnLoad()
+	{
+		base.OnLoad();
+			
+		_brain = new CombatAI(this);
+	}
+	
 	public override void OnEnterWorld()
 	{
 		base.OnEnterWorld();
-
+		
 		var (health, defense, attack, magicResist) = PowerCurve();
-
+		
 		Health = MaxHealth = health;
 		BaseDodge = defense;
-
+		
 		_stats[EntityStat.IceProtection].Base = 90;
 		_stats[EntityStat.MagicDamageTakenReduction].Base = magicResist;
-
+		
 		Attacks = new CreatureAttackCollection
 		{
 			{ new CreatureBasicAttack(attack) },
@@ -91,7 +98,4 @@ public partial class SummonedDjinn : Djinn
 
 		return true;
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

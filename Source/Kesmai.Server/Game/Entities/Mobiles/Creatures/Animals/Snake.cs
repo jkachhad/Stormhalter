@@ -30,6 +30,8 @@ public partial class Snake : AnimalEntity
 		{
 			new CreatureBlock(10, "the armor"),
 		};
+			
+		_brain = new CombatAI(this);
 
 		base.OnLoad();
 	}
@@ -42,7 +44,4 @@ public partial class Snake : AnimalEntity
 	{
 		return new LeatherArmor();
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

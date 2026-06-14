@@ -19,12 +19,11 @@ public partial class Raven : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
+
+		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 141;
 	public override int GetAttackSound() => 160;
 	public override int GetDeathSound() => 179;
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

@@ -20,12 +20,11 @@ public partial class Fish : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
+
+		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 0;
 	public override int GetAttackSound() => 0;
 	public override int GetDeathSound() => 182;
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

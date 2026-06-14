@@ -26,6 +26,7 @@ public partial class Phantom : CreatureEntity, IPhantasm
 
 	protected override void OnLoad()
 	{
+		_brain = new CombatAI(this);
 
 		if (_dispelTimer is null)
 			_dispelTimer = Timer.DelayCall(TimeSpan.FromMinutes(10.0), Kill); // TODO: Scale to facet time?
@@ -38,7 +39,4 @@ public partial class Phantom : CreatureEntity, IPhantasm
 	public override int GetDeathSound() => 167;
 		
 	public override Corpse GetCorpse() => default(Corpse);
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

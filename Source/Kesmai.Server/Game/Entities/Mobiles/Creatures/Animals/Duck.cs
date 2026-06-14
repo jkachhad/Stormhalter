@@ -17,10 +17,15 @@ public partial class Duck : AnimalEntity
 		CanFly = true;
 	}
 
+	/// <inheritdoc/>
+	protected override void OnLoad()
+	{
+		_brain = new CombatAI(this);
+
+		base.OnLoad();
+	}
+
 	public override int GetNearbySound() => 16;
 	public override int GetAttackSound() => 28;
 	public override int GetDeathSound() => 40;
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

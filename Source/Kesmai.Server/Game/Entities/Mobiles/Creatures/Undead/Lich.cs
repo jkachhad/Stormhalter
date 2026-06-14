@@ -20,6 +20,19 @@ public partial class Lich : CreatureEntity, IUndead
 		Alignment = Alignment.Chaotic;
 	}
 
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+			
+		if (_brain != null)
+			return;
+			
+		if (RightHand is ProjectileWeapon)
+			_brain = new RangedAI(this);
+		else
+			_brain = new CombatAI(this);
+	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -29,24 +42,21 @@ public partial class Lich : CreatureEntity, IUndead
 	public override int GetDeathSound() => 169;
 
 	public override Corpse GetCorpse() => default(Corpse);
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }
 
 public partial class AncientLich : Lich
 {
 	public int Enrage { get; set; }
-
+		
 	public bool IsEnraged => (Enrage > 0);
 
 	public override void OnDeath()
 	{
 		var liches = GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<AncientLich>();
-
+			
 		foreach (var lich in liches.Where(l => l.IsAlive))
 			lich.DoEnrage(this);
-
+			
 		base.OnDeath();
 	}
 
@@ -58,7 +68,7 @@ public partial class AncientLich : Lich
 			player.SendLocalizedMessage(Color.Orange, 6300364, Name, deadLich.Name);
 
 		Enrage++;
-
+			
 		Body = 83;
 		Hue = Color.Red;
 	}
@@ -69,7 +79,7 @@ public partial class AncientLich : Lich
 
 		if (IsEnraged)
 			damage *= 1.5;
-
+			
 		return (int)damage;
 	}
 
@@ -77,7 +87,7 @@ public partial class AncientLich : Lich
 	{
 		var beholder = Group;
 		var liches = GetBeheldInVisibility().SelectMany(g => g.Members).OfType<AncientLich>();
-
+			
 		foreach (var lich in liches.Where(l => l.IsAlive))
 		{
 			if (lich.Spells.Any(sp => sp.Next > Server.Now && 

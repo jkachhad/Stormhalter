@@ -18,11 +18,18 @@ public partial class WaterElemental : CreatureEntity
 		AddStatus(new BreatheWaterStatus(this));
 	}
 
-
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+			
+		if (_brain != null)
+			return;
+			
+		_brain = new CombatAI(this);
+	}
+		
 	public override int GetNearbySound() => 133;
 	public override int GetAttackSound() => 152;
 	public override int GetDeathSound() => 171;
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

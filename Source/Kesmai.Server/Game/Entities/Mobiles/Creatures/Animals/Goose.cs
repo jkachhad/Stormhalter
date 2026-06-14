@@ -19,12 +19,11 @@ public partial class Goose : AnimalEntity
 	protected override void OnCreate()
 	{
 		base.OnCreate();
+
+		_brain = new CombatAI(this);
 	}
 
 	public override int GetNearbySound() => 16;
 	public override int GetAttackSound() => 28;
 	public override int GetDeathSound() => 40;
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }

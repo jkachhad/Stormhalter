@@ -16,6 +16,19 @@ public partial class TrollGuard : CreatureEntity
 		Alignment = Alignment.Chaotic;
 	}
 
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+
+		if (_brain != null)
+			return;
+
+		if (RightHand is ProjectileWeapon)
+			_brain = new RangedAI(this);
+		else
+			_brain = new CombatAI(this);
+	}
 
 	/// <summary>
 	/// Gets the death sound.
@@ -28,7 +41,4 @@ public partial class TrollGuard : CreatureEntity
 	{
 		return new LeatherArmor();
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => AIBrain.FromWeapon(this, RightHand);
 }

@@ -21,7 +21,14 @@ public partial class Hippopotamus : AnimalEntity
 	}
 
 	/// <inheritdoc/>
-/// <summary>
+	protected override void OnLoad()
+	{
+		_brain = new CombatAI(this);
+
+		base.OnLoad();
+	}
+
+	/// <summary>
 	/// Gets the death sound.
 	/// </summary>
 	public override int GetNearbySound() => 0;
@@ -32,7 +39,4 @@ public partial class Hippopotamus : AnimalEntity
 	{
 		return new LeatherArmor();
 	}
-
-	/// <inheritdoc/>
-	public override AIBrain GetBrain() => new CombatAI(this);
 }
