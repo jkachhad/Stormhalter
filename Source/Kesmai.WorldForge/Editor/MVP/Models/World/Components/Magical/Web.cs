@@ -20,12 +20,22 @@ public class Web : StaticComponent
 		_allowDispel = allowDispel;
 	}
 
-	public Web(XElement element) : base(element)
+	public Web(XElement element) : base(EnsureStaticElement(element))
 	{
 		var allowDispel = element.Element("allowDispel");
 
 		if (allowDispel != null)
 			_allowDispel = (bool)allowDispel;
+	}
+
+	private static XElement EnsureStaticElement(XElement element)
+	{
+		if (element.Element("static") != null)
+			return element;
+
+		var copy = new XElement(element);
+		copy.Add(new XElement("static", 131));
+		return copy;
 	}
 		
 	public override XElement GetSerializingElement()
