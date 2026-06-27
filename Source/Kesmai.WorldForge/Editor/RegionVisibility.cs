@@ -15,6 +15,7 @@ public class RegionVisibility : ObservableRecipient
     private bool _showTeleporters;
     private bool _showSpawns;
     private bool _showComments;
+    private bool _showHidden;
 
     public bool BreakWalls
     {
@@ -50,6 +51,12 @@ public class RegionVisibility : ObservableRecipient
     {
         get => _showComments;
         set => SetProperty(ref _showComments, value);
+    }
+
+    public bool ShowHidden
+    {
+        get => _showHidden;
+        set => SetProperty(ref _showHidden, value);
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)

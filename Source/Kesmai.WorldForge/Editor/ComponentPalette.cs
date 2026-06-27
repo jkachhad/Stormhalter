@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -94,10 +95,18 @@ public class ComponentPalette : ObservableRecipient
 		// load editor components
 		Task.Run(async () =>
 		{
+			var componentsPath = Path.Combine(Core.CustomArtPath, "WorldForge", "Components.xml");
+			if (File.Exists(componentsPath))
+			{
+				Load("EDITOR", XDocument.Load(componentsPath));
+				return;
+			}
+
 			var packageReader = await NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0");
 			var documentStream = await NuGetResolver.ResolveStream(packageReader, "Components.xml");
 
-			Load("EDITOR", XDocument.Load(documentStream));
+			using (documentStream)
+				Load("EDITOR", XDocument.Load(documentStream));
 		});
 
 		// create segment category

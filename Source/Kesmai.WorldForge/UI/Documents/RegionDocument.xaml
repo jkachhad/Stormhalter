@@ -95,6 +95,12 @@
                     </ToggleButton.ToolTip>
                     <Image Source="../../Resources/Comment.png" VerticalAlignment="Center" Height="26" Width="26" />
                 </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding ShowHidden, Source={StaticResource regionVisibility}}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Show hidden component markers" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../../Resources/FilterTeleport.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
             </ToolBar>
         </ToolBarTray>
     

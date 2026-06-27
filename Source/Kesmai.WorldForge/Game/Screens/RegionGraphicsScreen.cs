@@ -824,6 +824,11 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			labels.Add(label);
 	}
 
+	private static bool IsHiddenMarkerComponent(TerrainComponent component)
+	{
+		return component is ItemActionComponent or HiddenTeleporterComponent;
+	}
+
 	protected override void OnAfterRender(SpriteBatch spriteBatch)
 	{
 		base.OnAfterRender(spriteBatch);
@@ -835,7 +840,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		var segment = applicationPresenter.Segment;
 		var viewRectangle = GetViewRectangle();
 
-		if (_visibility.ShowComments || _visibility.ShowTeleporters || _visibility.ShowSpawns)
+		if (_visibility.ShowComments || _visibility.ShowTeleporters || _visibility.ShowSpawns || _visibility.ShowHidden)
 			spriteBatch.FillRectangle(GetRenderRectangle(viewRectangle, viewRectangle),
 				Color.FromNonPremultiplied(0, 0, 0, 128));
 
@@ -964,6 +969,39 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			}
 
 			RenderTeleporterMarks();
+		}
+
+		if (_visibility.ShowHidden)
+		{
+			foreach (var segmentTile in region.GetTiles(tile => viewRectangle.Contains(tile.X, tile.Y)))
+			{
+				var tileBounds = GetRenderRectangle(viewRectangle, segmentTile.X, segmentTile.Y);
+				var renderBounds = new Rectangle(
+					(int)Math.Floor(tileBounds.X - (45 * _zoomFactor)),
+					(int)Math.Floor(tileBounds.Y - (45 * _zoomFactor)),
+					(int)Math.Floor(100 * _zoomFactor),
+					(int)Math.Floor(100 * _zoomFactor));
+
+				foreach (var component in segmentTile.Providers
+					.SelectMany(provider => provider.GetComponents())
+					.OfType<TerrainComponent>()
+					.Where(IsHiddenMarkerComponent))
+				{
+					foreach (var render in component.GetRenders())
+					foreach (var layer in render.Terrain.OrderBy(layer => layer.Order))
+					{
+						var sprite = layer.Sprite;
+						if (sprite == null)
+							continue;
+
+						var spriteBounds = renderBounds;
+						if (sprite.Offset != Vector2F.Zero)
+							spriteBounds.Offset((int)Math.Floor(sprite.Offset.X * _zoomFactor), (int)Math.Floor(sprite.Offset.Y * _zoomFactor));
+
+						spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, render.Color, 0, Vector2.Zero, _zoomFactor / sprite.Resolution, SpriteEffects.None, 0f);
+					}
+				}
+			}
 		}
 
 		if (_visibility.ShowSpawns)
