@@ -806,6 +806,24 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 	}
 
+	private static void AddTeleporterMark(
+		Dictionary<(int X, int Y), List<string>> marks,
+		int x,
+		int y,
+		string label)
+	{
+		var key = (x, y);
+
+		if (!marks.TryGetValue(key, out var labels))
+		{
+			labels = new List<string>(2);
+			marks[key] = labels;
+		}
+
+		if (!labels.Contains(label))
+			labels.Add(label);
+	}
+
 	protected override void OnAfterRender(SpriteBatch spriteBatch)
 	{
 		base.OnAfterRender(spriteBatch);
@@ -828,60 +846,124 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			var globalFillColor = Color.FromNonPremultiplied(0, 255, 91, 50);
 			var globalBorderColor = Color.FromNonPremultiplied(0, 255, 91, 255);
 
-			var global = new List<(int X, int Y)>();
-			var local = new List<(int X, int Y)>();
+			var globalMarks = new Dictionary<(int X, int Y), List<string>>();
+			var localMarks = new Dictionary<(int X, int Y), List<string>>();
 
 			foreach (var searchRegion in segment.Regions)
 			{
 				var regionTeleporters = searchRegion.GetTiles()
 					.Where(tile => tile.Providers.OfType<TeleportComponent>().Any())
-					.ToDictionary((tile => tile), tile => tile.Providers.OfType<TeleportComponent>().FirstOrDefault());
+					.ToDictionary(tile => tile, tile => tile.Providers.OfType<TeleportComponent>().FirstOrDefault());
 
 				foreach (var (segmentTile, teleporter) in regionTeleporters)
 				{
+					if (teleporter == null)
+						continue;
+
 					if (searchRegion != region)
 					{
-						// not in this region, skip unless it's a destination here.
+						// Not in this region: show only if destination lands in this region.
 						if (teleporter.DestinationRegion != region.ID)
 							continue;
 
-						global.Add(new(teleporter.DestinationX, teleporter.DestinationY));
+						AddTeleporterMark(
+							globalMarks,
+							teleporter.DestinationX,
+							teleporter.DestinationY,
+							$"IN [{segmentTile.X},{segmentTile.Y}, {searchRegion.ID}]");
 					}
 					else
 					{
-						// in this region, skip unless it's a source here.
 						if (teleporter.DestinationRegion != region.ID)
 						{
-							global.Add((teleporter.DestinationX, teleporter.DestinationY));
+							AddTeleporterMark(
+								globalMarks,
+								segmentTile.X,
+								segmentTile.Y,
+								$"OUT [{teleporter.DestinationX},{teleporter.DestinationY}, {teleporter.DestinationRegion}]");
 						}
 						else
 						{
-							local.Add((segmentTile.X, segmentTile.Y));
-							local.Add((teleporter.DestinationX, teleporter.DestinationY));
+							AddTeleporterMark(
+								localMarks,
+								teleporter.DestinationX,
+								teleporter.DestinationY,
+								$"IN [{segmentTile.X},{segmentTile.Y}]");
+
+							AddTeleporterMark(
+								localMarks,
+								segmentTile.X,
+								segmentTile.Y,
+								$"OUT [{teleporter.DestinationX},{teleporter.DestinationY}]");
 						}
 					}
 				}
 			}
 
-			void renderTeleporters(List<(int X, int Y)> teleporters, Color fillColor, Color borderColor)
+			void RenderTeleporterMarks()
 			{
-				foreach (var teleporter in teleporters.Distinct()
-					         .Where((entry, _) => viewRectangle.Contains(entry.X, entry.Y)))
+				const float lineHeight = 12f;
+				const int maxLines = 4;
+
+				var keys = new HashSet<(int X, int Y)>(globalMarks.Count + localMarks.Count);
+				foreach (var key in globalMarks.Keys)
+					keys.Add(key);
+				foreach (var key in localMarks.Keys)
+					keys.Add(key);
+
+				foreach (var key in keys)
 				{
-					var bounds = GetRenderRectangle(viewRectangle, teleporter.X, teleporter.Y);
+					if (!viewRectangle.Contains(key.X, key.Y))
+						continue;
 
-					spriteBatch.FillRectangle(bounds, fillColor);
-					spriteBatch.DrawRectangle(bounds, borderColor);
+					var bounds = GetRenderRectangle(viewRectangle, key.X, key.Y);
 
-					/*_font.Style = MSDFStyle.BoldOutline;
+					globalMarks.TryGetValue(key, out var globalLabels);
+					localMarks.TryGetValue(key, out var localLabels);
+
+					if (globalLabels is { Count: > 0 })
+					{
+						spriteBatch.FillRectangle(bounds, globalFillColor);
+						spriteBatch.DrawRectangle(bounds, globalBorderColor);
+					}
+
+					if (localLabels is { Count: > 0 })
+					{
+						spriteBatch.FillRectangle(bounds, localFillColor);
+						spriteBatch.DrawRectangle(bounds, localBorderColor);
+					}
+
+					var position = new Vector2(bounds.Left + 2, bounds.Top);
+					var drawn = 0;
+					var totalCount = (globalLabels?.Count ?? 0) + (localLabels?.Count ?? 0);
+
+					_font.Style = MSDFStyle.BoldOutline;
 					_font.Stroke = Color.Black;
-					_font.DrawString(spriteBatch, RenderTransform.Identity, $"[{teleporter.X},{teleporter.Y}]",
-						new Vector2(bounds.Left + 2, bounds.Top + 2), borderColor);*/
+
+					void DrawLabels(List<string> labels, Color textColor)
+					{
+						for (var i = 0; i < labels.Count && drawn < maxLines; i++)
+						{
+							var labelPosition = position + new Vector2(0, drawn * lineHeight + (drawn > 0 ? 5 : 0));
+							_font.DrawString(spriteBatch, RenderTransform.Identity, labels[i], labelPosition, textColor);
+							drawn++;
+						}
+					}
+
+					if (globalLabels is { Count: > 0 })
+						DrawLabels(globalLabels, globalBorderColor);
+					if (localLabels is { Count: > 0 })
+						DrawLabels(localLabels, Color.FromNonPremultiplied(255, 40, 40, 255));
+
+					if (totalCount > maxLines)
+					{
+						var labelPosition = position + new Vector2(0, drawn * lineHeight);
+						_font.DrawString(spriteBatch, RenderTransform.Identity, $"+{totalCount - maxLines} more", labelPosition, Color.White);
+					}
 				}
 			}
 
-			renderTeleporters(global, globalFillColor, globalBorderColor);
-			renderTeleporters(local, localFillColor, localBorderColor);
+			RenderTeleporterMarks();
 		}
 
 		if (_visibility.ShowSpawns)
