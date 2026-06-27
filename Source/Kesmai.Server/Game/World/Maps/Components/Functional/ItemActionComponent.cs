@@ -1,8 +1,10 @@
 using System;
 using System.Xml.Linq;
+using Kesmai.Server.Miscellaneous.WorldForge;
 
 namespace Kesmai.Server.Game;
 
+[WorldForgeComponent("ItemActionComponent")]
 public class ItemActionComponent : TerrainComponent, IHandleItems
 {
 	private readonly string _tag;
@@ -15,7 +17,7 @@ public class ItemActionComponent : TerrainComponent, IHandleItems
 	private Action<SegmentTile, ItemEntity, string> _itemAdded;
 	private Action<SegmentTile, ItemEntity, string> _itemRemoved;
 	
-	protected ItemActionComponent(XElement element) : base(element)
+	public ItemActionComponent(XElement element) : base(element)
 	{
 		if (element.TryGetElement("tag", out var tagElement))
 			_tag = (string)tagElement;
