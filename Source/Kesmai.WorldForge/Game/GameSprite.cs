@@ -32,6 +32,7 @@ public class GameSprite
 	public GameSprite(Texture2D texture)
 	{
 		Texture = texture;
+		Resolution = 1;
 	}
 
 	public GameSprite(XElement element)

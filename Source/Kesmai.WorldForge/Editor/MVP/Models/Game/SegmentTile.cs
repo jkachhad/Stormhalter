@@ -81,12 +81,20 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
     {
         foreach ( var provider in Providers.SelectMany(c => c.GetComponents()) )
         {
+            if ( IsHiddenMarkerComponent(provider) )
+                continue;
+
             if ( selector.IsValid ( provider ) )
             {
                 foreach ( var render in provider.GetRenders() )
                     yield return selector.TransformRender ( this, provider, render );
             }
         }
+    }
+
+    private static bool IsHiddenMarkerComponent(IComponentProvider provider)
+    {
+        return provider is ItemActionComponent or HiddenTeleporterComponent or TrapComponent;
     }
 
     public void AddComponent ( IComponentProvider provider )

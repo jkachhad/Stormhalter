@@ -826,7 +826,24 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	private static bool IsHiddenMarkerComponent(TerrainComponent component)
 	{
-		return component is ItemActionComponent or HiddenTeleporterComponent;
+		return component is ItemActionComponent or HiddenTeleporterComponent or TrapComponent;
+	}
+
+	private void RenderComponentMarker(SpriteBatch spriteBatch, Rectangle renderBounds, TerrainComponent component)
+	{
+		foreach (var render in component.GetRenders())
+		foreach (var layer in render.Terrain.OrderBy(layer => layer.Order))
+		{
+			var sprite = layer.Sprite;
+			if (sprite == null)
+				continue;
+
+			var spriteBounds = renderBounds;
+			if (sprite.Offset != Vector2F.Zero)
+				spriteBounds.Offset((int)Math.Floor(sprite.Offset.X * _zoomFactor), (int)Math.Floor(sprite.Offset.Y * _zoomFactor));
+
+			spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, render.Color, 0, Vector2.Zero, _zoomFactor / sprite.Resolution, SpriteEffects.None, 0f);
+		}
 	}
 
 	protected override void OnAfterRender(SpriteBatch spriteBatch)
@@ -986,21 +1003,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 					.SelectMany(provider => provider.GetComponents())
 					.OfType<TerrainComponent>()
 					.Where(IsHiddenMarkerComponent))
-				{
-					foreach (var render in component.GetRenders())
-					foreach (var layer in render.Terrain.OrderBy(layer => layer.Order))
-					{
-						var sprite = layer.Sprite;
-						if (sprite == null)
-							continue;
-
-						var spriteBounds = renderBounds;
-						if (sprite.Offset != Vector2F.Zero)
-							spriteBounds.Offset((int)Math.Floor(sprite.Offset.X * _zoomFactor), (int)Math.Floor(sprite.Offset.Y * _zoomFactor));
-
-						spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, render.Color, 0, Vector2.Zero, _zoomFactor / sprite.Resolution, SpriteEffects.None, 0f);
-					}
-				}
+					RenderComponentMarker(spriteBatch, renderBounds, component);
 			}
 		}
 
