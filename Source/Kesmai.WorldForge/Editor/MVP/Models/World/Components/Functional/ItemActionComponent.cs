@@ -89,16 +89,16 @@ public class ItemActionComponent : TerrainComponent
 		var element = base.GetSerializingElement();
 
 		if (!String.IsNullOrEmpty(_tag))
-			element.Add(new XAttribute("tag", _tag));
+			element.Add(new XElement("tag", _tag));
 		
 		if (!String.IsNullOrEmpty(_itemAddedAction))
-			element.Add(new XAttribute("itemAdded", _itemAddedAction));
+			element.Add(new XElement("itemAdded", _itemAddedAction));
 		
 		if (!String.IsNullOrEmpty(_itemRemovedAction))
-			element.Add(new XAttribute("itemRemoved", _itemRemovedAction));
+			element.Add(new XElement("itemRemoved", _itemRemovedAction));
 		
 		if (_ignoreTeleports)
-			element.Add(new XAttribute("ignoreTeleports", _ignoreTeleports));
+			element.Add(new XElement("ignoreTeleports", _ignoreTeleports));
 		
 		return element;
 	}
