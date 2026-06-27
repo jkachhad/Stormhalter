@@ -4765,6 +4765,12 @@
     <component type="StaticComponent" name="Animated campfire" category="Misc.">
         <static>766</static>
     </component>
+    <component type="ItemActionComponent" name="Item Action" category="Misc.">
+      <Tag></Tag>
+      <IgnoreTeleports></IgnoreTeleports>
+      <ItemAdded></ItemAdded>
+      <ItemRemoved></ItemRemoved>
+    </component>
     <component type="FloorComponent" category="Grove">
         <color r="0" g="255" b="0" a="255" />
         <ground>23</ground>
@@ -4956,6 +4962,20 @@
     <component type="StaticComponent" name="green wall carving (v)" category="Wall Doodads (H)">
         <static>1327</static>
     </component>
+    <component type="Darkness" name="Darkness" category="Magical">
+      <allowDispel>false</allowDispel>
+    </component>
+    <component type="Web" name="Web" category="Magical">
+      <allowDispel>false</allowDispel>
+    </component>
+    <component type="Fire" name="Fire" category="Magical">
+      <damage>30</damage>
+      <allowDispel>false</allowDispel>
+    </component>
+    <component type="Whirlwind" name="Whirlwind" category="Magical">
+      <damage>30</damage>
+      <allowDispel>false</allowDispel>
+    </component>
     <component type="WhirlwindTrap" name="Whirlwind" category="Traps">
         <direction>5</direction>
         <skill>3</skill>
@@ -4989,4 +5009,6 @@
         <damage>3</damage>
     </component>
     <component type="ActionTrap" name="Action" category="Traps" />
+
+
 </data>
