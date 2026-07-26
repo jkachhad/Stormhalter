@@ -151,12 +151,14 @@ public class JewelerRing : Ring, ITreasure
 			if (!slot.HasValue)
 				slot = backpack.CheckHold(gold);
 
-			if (slot.HasValue)
+			var placedInBackpack = slot.HasValue &&
+				source.CanCarry(gold, gold.Amount) &&
 				gold.DropToContainer(backpack, slot.Value);
-			else
+
+			if (!placedInBackpack)
 				gold.Move(source.Location, true, source.Segment);
 
-			source.SendLocalizedMessage(slot.HasValue ? 
+			source.SendLocalizedMessage(placedInBackpack ?
 				6200351 : 6200352); /* The gem turns to gold in your backpack. */ /* The gem turns to gold at your feet. */
 			source.QueueRoundTimer();
 				
