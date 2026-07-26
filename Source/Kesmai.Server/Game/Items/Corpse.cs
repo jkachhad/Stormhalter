@@ -165,9 +165,9 @@ public class Corpse : ItemEntity
 		Strip();
 		Delete();
 
-		if (owner is PlayerEntity && !owner.IsAlive)
+		if (owner is PlayerEntity player && !owner.IsAlive)
 		{
-			var resurrectionLocation = segment.GetResurrectionLocation();
+			var resurrectionLocation = segment.GetResurrectionLocation(player);
 
 			if (Location != resurrectionLocation)
 				owner.Teleport(resurrectionLocation);

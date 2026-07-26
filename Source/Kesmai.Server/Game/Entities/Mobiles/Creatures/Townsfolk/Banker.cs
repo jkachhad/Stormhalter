@@ -57,7 +57,7 @@ public partial class Banker : VendorEntity
 
 					source.Gold += depositAmount;
 
-					SayTo(source, 6300256, source.Gold.ToString()); /* Thank you. Your balance is now {0} coins. */
+					SayTo(source, 6300256, source.Gold.ToString("#,##0")); /* Thank you. Your balance is now {0} coins. */
 				}
 				else
 				{
@@ -130,7 +130,7 @@ public partial class Banker : VendorEntity
 			var balance = source.Gold;
 
 			if (balance > 0)
-				SayTo(source, 6300260, balance.ToString()); /* Your account balance is {0} coins. */
+				SayTo(source, 6300260, balance.ToString("#,##0")); /* Your account balance is {0} coins. */
 			else
 				SayTo(source, 6300259); /* Your account is empty. */
 

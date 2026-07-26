@@ -20,7 +20,7 @@ public class FearSpell : DelayedSpell
 		var feared = true;
 		
 		/* Resistance */
-		if (!target.HasStatus(typeof(BlindFearProtectionStatus)))
+		if (target.Stats[EntityStat.FearProtection].Value is 0)
 		{
 			var resistance = target.Stats[EntityStat.FearResistance].Value;
 			var resistanceSave = resistance - skillLevel;

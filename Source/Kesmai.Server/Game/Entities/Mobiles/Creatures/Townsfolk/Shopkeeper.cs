@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Humanizer;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
 using Kesmai.Server.Network;
+using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Game;
 
@@ -84,6 +86,20 @@ public partial class Shopkeeper : VendorEntity
 
 		_restockTimer = null;
 	}
+	
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		entries.Add(BuyItemInteraction.Instance);
+		entries.Add(BuyAllInteraction.Instance);
+		entries.Add(AppraiseInteraction.Instance);
+
+		if (_stock.Any(s => !s.IsEmpty))
+			entries.Add(ShowPricesInteraction.Instance);
+
+		entries.Add(InteractionSeparator.Instance);
+		
+		base.GetInteractions(source, entries);
+	}
 
 	public override void HandleOrder(OrderEventArgs args)
 	{
@@ -112,6 +128,8 @@ public partial class Shopkeeper : VendorEntity
 				{
 					foreach (var item in items)
 						item.Delete();
+
+					source.PlaySound(10007);
 
 					var gold = new Gold()
 					{
@@ -246,6 +264,8 @@ public partial class Shopkeeper : VendorEntity
 
 							if (item != null)
 							{
+								source.PlaySound(10008);
+
 								if (!item.Deleted)
 									item.Move(counter, true, Segment);
 									
@@ -360,5 +380,263 @@ public partial class Shopkeeper : VendorEntity
 			stock.CurrentQuantity++;
 			
 		QueueRestockTimer();
+	}
+
+	private sealed class ShowPricesInteraction : InteractionEntry
+	{
+		public static readonly ShowPricesInteraction Instance = new ShowPricesInteraction();
+		
+		private ShowPricesInteraction() : base("Show prices", range: 2)
+		{
+		}
+
+		public override void OnClick(PlayerEntity source, WorldEntity target)
+		{
+			if (source is null || !(target is Shopkeeper shopkeeper))
+				return;
+
+			if (shopkeeper.AtCounter(source, out var _))
+			{
+				/* We Iterate all the items in the stock to keep index values consistent with list. */
+				if (shopkeeper._stock.Any(s => !s.IsEmpty))
+				{
+					shopkeeper.SayTo(source, 6300382); /* I will sell to you .. */
+						
+					for (int i = 0; i < shopkeeper._stock.Count; i++)
+					{
+						var stock = shopkeeper._stock[i];
+
+						/* Do not list empty entries. */
+						if (!stock.IsEmpty)
+							shopkeeper.SayTo(source, 6300384, stock.Name.WithArticle(), stock.Cost.ToString(), (i + 1).ToString());
+					}
+				}
+				else
+				{
+					shopkeeper.SayTo(source, 6300381); /* I don't have anything of interest. */
+
+					if (shopkeeper._stock.Any(s => !s.IsFull) && (shopkeeper._restockTimer is null || !shopkeeper._restockTimer.Running))
+						Log.Warn($"[{shopkeeper.Segment.Name}] Shopkeeper '{shopkeeper.Name}' at {shopkeeper.Location} not restocking.");
+				}
+			}
+			else
+			{
+				if (shopkeeper._counters.Any())
+					shopkeeper.SayTo(source, 6300236); /* Please step up to a counter. */
+				else
+					shopkeeper.SayTo(source, 6300237); /* Please stand closer to me. */
+			}
+		}
+	}
+
+	private sealed class AppraiseInteraction : InteractionEntry
+	{
+		public static readonly AppraiseInteraction Instance = new AppraiseInteraction();
+		
+		private AppraiseInteraction() : base("Appraise", range: 2)
+		{
+		}
+
+		public override void OnClick(PlayerEntity source, WorldEntity target)
+		{
+			if (source is null || (target is not Shopkeeper shopkeeper))
+				return;
+
+			source.SendMessage(Color.LimeGreen, "Target the item you want appraised.");
+			source.Target = new AppraiseItemTarget(shopkeeper);
+		}
+	}
+
+	private sealed class BuyItemInteraction : InteractionEntry
+	{
+		public static readonly BuyItemInteraction Instance = new BuyItemInteraction();
+		
+		private BuyItemInteraction() : base("Buy", range: 2)
+		{
+		}
+
+		public override void OnClick(PlayerEntity source, WorldEntity target)
+		{
+			if (source is null || (target is not Shopkeeper shopkeeper))
+				return;
+
+			source.SendMessage(Color.LimeGreen, "Target the item you want to sell.");
+			source.Target = new BuyItemTarget(shopkeeper);
+		}
+	}
+
+	private sealed class BuyAllInteraction : InteractionEntry
+	{
+		public static readonly BuyAllInteraction Instance = new BuyAllInteraction();
+		
+		private BuyAllInteraction() : base("Buy All", range: 2)
+		{
+		}
+
+		public override void OnClick(PlayerEntity source, WorldEntity target)
+		{
+			if (source is null || !(target is Shopkeeper shopkeeper))
+				return;
+
+			if (!shopkeeper.AtCounter(source, out var counter))
+			{
+				if (shopkeeper._counters.Any())
+					shopkeeper.SayTo(source, 6300236); /* Please step up to a counter. */
+				else
+					shopkeeper.SayTo(source, 6300237); /* Please stand closer to me. */
+
+				return;
+			}
+
+			var segment = shopkeeper.Segment;
+
+			if (segment is null)
+				return;
+
+			var items = segment.GetItemsAt(counter, "all", (i) => i is Gold).ToList();
+			var totalValue = (uint)items.Sum(i => i.ActualPrice * i.Amount);
+
+			if (totalValue > 0)
+			{
+				foreach (var item in items)
+					item.Delete();
+
+				source.PlaySound(10007);
+
+				var gold = new Gold
+				{
+					Amount = totalValue,
+				};
+
+				gold.Move(counter, true, segment);
+				
+				shopkeeper.SayTo(source, 6300350); /* Thank you for your business. */
+			}
+			else
+			{
+				shopkeeper.SayTo(source, 6300264); /* There is nothing of value here. */
+			}
+		}
+	}
+
+	private sealed class BuyItemTarget : ItemTarget
+	{
+		private static bool IsEligibleTarget(PlayerEntity player, Point2D counter, ItemEntity target)
+		{
+			if (target is Gold)
+				return false;
+
+			if (target.Parent is null)
+				return target.Location == counter;
+
+			if (target.Parent is not PlayerEntity owner || owner != player)
+				return false;
+
+			return target.Container is Backpack;
+		}
+		
+		private readonly Shopkeeper _shopkeeper;
+
+		public BuyItemTarget(Shopkeeper shopkeeper)
+		{
+			_shopkeeper = shopkeeper;
+		}
+
+		protected override void OnTarget(MobileEntity source, ItemEntity target)
+		{
+			if (source is null || (source is not PlayerEntity player))
+				return;
+
+			if (_shopkeeper is null || _shopkeeper.Deleted)
+				return;
+
+			if (!_shopkeeper.AtCounter(source, out var counter))
+			{
+				if (_shopkeeper._counters.Any())
+					_shopkeeper.SayTo(player, 6300236); /* Please step up to a counter. */
+				else
+					_shopkeeper.SayTo(player, 6300237); /* Please stand closer to me. */
+
+				return;
+			}
+
+			if (!IsEligibleTarget(player, counter, target))
+			{
+				_shopkeeper.SayTo(player, 6300264); /* There is nothing of value here. */
+				return;
+			}
+
+			var totalValue = target.ActualPrice * target.Amount;
+
+			if (totalValue > 0)
+			{
+				target.Delete();
+				
+				player.PlaySound(10007);
+
+				var gold = new Gold
+				{
+					Amount = totalValue,
+				};
+
+				gold.Move(counter, true, _shopkeeper.Segment);
+				
+				_shopkeeper.SayTo(player, 6300350); /* Thank you for your business. */
+
+				player.SendMessage(Color.LimeGreen, "Target the item you want to sell.");
+				player.Target = new BuyItemTarget(_shopkeeper);
+			}
+			else
+			{
+				_shopkeeper.SayTo(player, 6300264); /* There is nothing of value here. */
+			}
+		}
+	}
+
+	private sealed class AppraiseItemTarget : ItemTarget
+	{
+		private readonly Shopkeeper _shopkeeper;
+
+		public AppraiseItemTarget(Shopkeeper shopkeeper)
+		{
+			_shopkeeper = shopkeeper;
+		}
+
+		protected override void OnTarget(MobileEntity source, ItemEntity target)
+		{
+			if (source is null || !(source is PlayerEntity player))
+				return;
+
+			if (_shopkeeper is null || _shopkeeper.Deleted)
+				return;
+
+			if (!_shopkeeper.AtCounter(source, out var counter))
+			{
+				if (_shopkeeper._counters.Any())
+					_shopkeeper.SayTo(player, 6300236); /* Please step up to a counter. */
+				else
+					_shopkeeper.SayTo(player, 6300237); /* Please stand closer to me. */
+
+				return;
+			}
+
+			target.Identified = true;
+
+			var entries = new List<LocalizationEntry>();
+
+			target.GetDescriptionPrefix(entries);
+			target.GetDescription(entries);
+			target.GetDescriptionSuffix(entries);
+
+			var grammar = _shopkeeper.Name.IsPlural() ? "are" : "is";
+			var actualPrice = target.ActualPrice;
+
+			if (actualPrice > 0)
+				entries.Add(new LocalizationEntry(6300261, target.Name, grammar, actualPrice.ToString()));
+			else
+				entries.Add(new LocalizationEntry(6300262, target.Name, grammar));
+
+			_shopkeeper.SayTo(player, entries.ToArray());
+		}
 	}
 }

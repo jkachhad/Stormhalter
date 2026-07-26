@@ -85,7 +85,7 @@ public partial class PoisonStatus : SpellStatus
 			/* Calculate damage. */
 			var damage = potency;
 
-			if (_entity.HasStatus(typeof(PoisonProtectionStatus)))
+			if (_entity.Stats[EntityStat.PoisonProtection].Value is not 0)
 				damage /= 2;
 
 			if (_entity is PlayerEntity)

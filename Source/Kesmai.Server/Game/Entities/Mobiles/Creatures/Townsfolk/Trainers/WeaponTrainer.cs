@@ -22,9 +22,14 @@ public partial class WeaponTrainer : TrainerEntity
 		foreach (var skill in Skill.All)
 		{
 			var skillLevel = source.GetSkillLevel(skill);
-			
-			if (CanTrain(skill, out var entry) && skillLevel >= entry.Minimum && skillLevel < entry.Maximum)
-				entries.Add(new TrainSkillInteraction(skill));
+
+			if (CanTrain(skill, out var entry))
+			{
+				entries.Add(new TrainSkillInteraction(skill)
+				{
+					Enabled = (skillLevel >= entry.Minimum && skillLevel < entry.Maximum)
+				});
+			}
 		}
 		
 		base.GetInteractions(source, entries);

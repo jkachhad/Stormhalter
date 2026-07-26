@@ -11,6 +11,20 @@ public class PoisonProtectionStatus : SpellStatus
 	public PoisonProtectionStatus(MobileEntity entity) : base(entity)
 	{
 	}
+
+	public override void OnAcquire()
+	{
+		base.OnAcquire();
+
+		_entity.Stats[EntityStat.PoisonProtection].Add(+1, ModifierType.Constant);
+	}
+
+	public override void OnRemoved()
+	{
+		_entity.Stats[EntityStat.PoisonProtection].Remove(+1, ModifierType.Constant);
+
+		base.OnRemoved();
+	}
 		
 	protected override void OnSourceRemoved(SpellStatusSource source)
 	{
