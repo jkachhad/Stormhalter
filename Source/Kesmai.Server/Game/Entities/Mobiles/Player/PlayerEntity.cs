@@ -111,6 +111,14 @@ public partial class PlayerEntity : MobileEntity
 		return Utility.RandomBetween(Math.Max(1, minimumDamage), Math.Max(1, maximumDamage));
 	}
 
+	public override int CalculateKickDamage(ItemEntity item, MobileEntity defender)
+	{
+		if (item is Boots)
+			item = null;
+
+		return CalculateMeleeDamage(item, defender);
+	}
+
 	public override int CalculateProjectileDamage(ItemEntity item, MobileEntity defender)
 	{
 		if (item is ProjectileWeapon weapon)
