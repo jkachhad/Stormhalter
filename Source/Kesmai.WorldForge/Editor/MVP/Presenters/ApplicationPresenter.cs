@@ -68,6 +68,7 @@ public class ApplicationPresenter : ObservableRecipient
 	public RelayCommand CloseSegmentCommand { get; set; }
 	public RelayCommand OpenSegmentCommand { get; set; }
 	public RelayCommand<bool> SaveSegmentCommand { get; set; }
+	public AsyncRelayCommand ExportToPdfCommand { get; }
 
 	public RelayCommand CreateRegionCommand { get; set; }
 	public RelayCommand<object> DeleteRegionCommand { get; set; }
@@ -84,7 +85,11 @@ public class ApplicationPresenter : ObservableRecipient
 	public object ActiveDocument
 	{
 		get => _activeDocument;
-		set => SetProperty(ref _activeDocument, value, true);
+		set
+		{
+			if (SetProperty(ref _activeDocument, value, true))
+				ExportToPdfCommand?.NotifyCanExecuteChanged();
+		}
 	}
 
 	public ISegmentObject ActiveContent
@@ -121,6 +126,9 @@ public class ApplicationPresenter : ObservableRecipient
 			
 		SaveSegmentCommand = new RelayCommand<bool>(SaveSegment, (queryPath) => (Segment != null));
 		SaveSegmentCommand.DependsOn(() => Segment);
+
+		ExportToPdfCommand = new AsyncRelayCommand(ExportToPdfAsync,
+			() => ActiveDocument is SegmentRegion);
 		
 		ConvertSegmentCommand = new RelayCommand(ConvertSegment, () => (Segment is null));
 		ConvertSegmentCommand.DependsOn(() => Segment);
@@ -207,6 +215,7 @@ public class ApplicationPresenter : ObservableRecipient
 		var dialog = new Microsoft.Win32.OpenFolderDialog()
 		{
 			Multiselect = false,
+			InitialDirectory = GetProjectInitialDirectory(),
 		};
 
 		var openResult = dialog.ShowDialog();
@@ -215,6 +224,7 @@ public class ApplicationPresenter : ObservableRecipient
 			return;
 
 		var targetDirectory = new DirectoryInfo(dialog.FolderName);
+		RememberProjectDirectory(targetDirectory.FullName);
 
 		if (!targetDirectory.Exists)
 			targetDirectory.Create();
@@ -257,6 +267,7 @@ public class ApplicationPresenter : ObservableRecipient
 		var dialog = new Microsoft.Win32.OpenFolderDialog()
 		{
 			Multiselect = false,
+			InitialDirectory = GetProjectInitialDirectory(),
 		};
 		
 		var openResult = dialog.ShowDialog();
@@ -265,6 +276,7 @@ public class ApplicationPresenter : ObservableRecipient
 			return;
 		
 		var targetDirectory = new DirectoryInfo(dialog.FolderName);
+		RememberProjectDirectory(targetDirectory.FullName);
 		var segment = new Segment()
 		{
 			Name = targetDirectory.Name,
@@ -355,6 +367,7 @@ public class ApplicationPresenter : ObservableRecipient
 			var dialog = new Microsoft.Win32.OpenFolderDialog()
 			{
 				Multiselect = false,
+				InitialDirectory = GetProjectInitialDirectory(),
 			};
 
 			var saveResult = dialog.ShowDialog();
@@ -363,6 +376,7 @@ public class ApplicationPresenter : ObservableRecipient
 				return;
 
 			targetPath = dialog.FolderName;
+			RememberProjectDirectory(targetPath);
 		}
 		else
 		{
@@ -520,6 +534,91 @@ public class ApplicationPresenter : ObservableRecipient
 
 		if (graphicsScreen != null)
 			graphicsScreen.InvalidateRender();
+	}
+
+	private async Task ExportToPdfAsync()
+	{
+		if (ActiveDocument is not SegmentRegion region)
+			return;
+
+		// Save dialogs update Windows' shared recent-directory state. Preserve the
+		// project location separately before opening the PDF dialog.
+		if (!String.IsNullOrWhiteSpace(Segment?.Directory))
+			RememberProjectDirectory(Segment.Directory);
+
+		var dialog = new Microsoft.Win32.SaveFileDialog
+		{
+			AddExtension = true,
+			DefaultExt = ".pdf",
+			FileName = $"{region.Name}.pdf",
+			Filter = "PDF files (*.pdf)|*.pdf",
+			InitialDirectory = GetPdfInitialDirectory(),
+			Title = "Export region map to PDF"
+		};
+
+		if (dialog.ShowDialog() != true)
+			return;
+
+		RememberPdfDirectory(Path.GetDirectoryName(dialog.FileName));
+
+		var progressWindow = new ProgressBarWindow
+		{
+			Owner = Application.Current.MainWindow,
+			Title = "Exporting region map"
+		};
+		var progress = new Progress<int>(progressWindow.UpdateProgress);
+		progressWindow.Show();
+
+		try
+		{
+			await PdfExportService.ExportAsync(region, dialog.FileName, progress);
+			MessageBox.Show("The region map was exported successfully.", "Export complete",
+				MessageBoxButton.OK, MessageBoxImage.Information);
+		}
+		catch (Exception ex)
+		{
+			MessageBox.Show($"The PDF could not be created.\n\n{ex.Message}", "Export failed",
+				MessageBoxButton.OK, MessageBoxImage.Error);
+		}
+		finally
+		{
+			progressWindow.Close();
+		}
+	}
+
+	private static string GetProjectInitialDirectory()
+	{
+		var directory = Properties.Settings.Default.LastProjectDirectory;
+		return !String.IsNullOrWhiteSpace(directory) && Directory.Exists(directory)
+			? directory
+			: Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+	}
+
+	private static void RememberProjectDirectory(string directory)
+	{
+		if (String.IsNullOrWhiteSpace(directory))
+			return;
+
+		Properties.Settings.Default.LastProjectDirectory = Path.GetFullPath(directory);
+		Properties.Settings.Default.Save();
+	}
+
+	private static string GetPdfInitialDirectory()
+	{
+		var directory = Properties.Settings.Default.LastPdfDirectory;
+		if (!String.IsNullOrWhiteSpace(directory) && Directory.Exists(directory))
+			return directory;
+
+		return GetProjectInitialDirectory();
+	}
+
+	private static void RememberPdfDirectory(string directory)
+	{
+		if (String.IsNullOrWhiteSpace(directory))
+			return;
+
+		Properties.Settings.Default.LastPdfDirectory = Path.GetFullPath(directory);
+		Properties.Settings.Default.Save();
 	}
 
     private void ConvertSegment()

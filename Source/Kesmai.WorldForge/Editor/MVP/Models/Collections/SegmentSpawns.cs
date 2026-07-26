@@ -113,7 +113,7 @@ public class SegmentSpawns : ObservableObject
 		{
 			if (locationSpawner.Entries.Count < 1)
 			{
-				MessageBox.Show($"Location Spawner:{locationSpawner.Name} {messageForBlankEntities}", 
+				MessageBox.Show($"Location Spawner:{locationSpawner.Name} {messageForBlankEntities}",
 					"Location Spawner Save Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 			}
 

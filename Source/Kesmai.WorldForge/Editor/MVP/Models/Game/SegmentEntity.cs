@@ -29,6 +29,7 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 	private string _name;
 	private string _notes;
 	private string _group;
+	private int? _sortId;
 		
 	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
 	
@@ -68,6 +69,17 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 				WeakReferenceMessenger.Default.Send(new SegmentEntityChanged(this));
 		}
 	}
+
+	[Browsable(false)]
+	public int? SortId
+	{
+		get => _sortId;
+		set
+		{
+			if (SetProperty(ref _sortId, value))
+				WeakReferenceMessenger.Default.Send(new SegmentEntityChanged(this));
+		}
+	}
 	
 	[Browsable(false)]
 	public ObservableCollection<Script> Scripts
@@ -90,6 +102,9 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 		
 		if (element.TryGetElement("group", out var groupElement))
 			_group = (string)groupElement;
+
+		if (Int32.TryParse((string)element.Element("sortid"), out var sortId))
+			_sortId = sortId;
 		
 		ValidateScripts(element);
 	}
@@ -167,6 +182,9 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 		
 		if (!String.IsNullOrEmpty(_group))
 			element.Add(new XElement("group", _group));
+
+		if (_sortId.HasValue)
+			element.Add(new XElement("sortid", _sortId.Value));
 			
 		return element;
 	}
@@ -185,7 +203,8 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 		{
 			Name = $"Copy of {_name}",
 			Notes = _notes,
-			Group = _group
+			Group = _group,
+			SortId = _sortId
 		};
 			
 		clone.Scripts.Clear();

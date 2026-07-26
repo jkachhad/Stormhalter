@@ -22,5 +22,30 @@ namespace Kesmai.WorldForge.Properties {
                 return defaultInstance;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastProjectDirectory {
+            get {
+                return ((string)(this["LastProjectDirectory"]));
+            }
+            set {
+                this["LastProjectDirectory"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastPdfDirectory {
+            get {
+                return ((string)(this["LastPdfDirectory"]));
+            }
+            set {
+                this["LastPdfDirectory"] = value;
+            }
+        }
+
     }
 }

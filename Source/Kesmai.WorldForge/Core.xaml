@@ -9,6 +9,17 @@
 			 
              StartupUri="UI\ApplicationWindow.xaml">
     <Application.Resources>
+        <!--
+        The Windows TreeViewItem theme inherits these alignments through
+        FindAncestor bindings. Segment tree nodes are created before they are
+        attached to an ItemsControl, so those bindings produce false-positive
+        errors while a map is loading. Use literal values for our custom node.
+        -->
+        <Style TargetType="{x:Type ui:SegmentTreeViewItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
         <presenters:ApplicationPresenter x:Key="applicationPresenter" />
         
         <worldForge:RegionToolbar x:Key="regionToolbar" />
