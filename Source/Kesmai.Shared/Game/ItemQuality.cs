@@ -29,7 +29,7 @@ namespace Kesmai.Shared
 	    
 	    /* Do not ever change the index values, can cause items to deserialize into wrong quality. */
 	    public static ItemQuality Poor			= new (-1,	6301049,	"Poor",			FromArgb(0xFF, 0x9D, 0x9D, 0x9D));
-		public static ItemQuality Common		= new (0,	6301050,	"Common",		FromArgb(0xFF, 0xFF, 0xFF, 0x00));
+		public static ItemQuality Common		= new (0,	6301050,	"Common",		FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
 		public static ItemQuality Uncommon		= new (1,	6301051,	"Uncommon",		FromArgb(0xFF, 0x1E, 0xFF, 0x00));
 		public static ItemQuality Rare			= new (2,	6301052,	"Rare",			FromArgb(0xFF, 0x00, 0x70, 0xDD));
 		public static ItemQuality Epic			= new (3,	6301053,	"Epic",			FromArgb(0xFF, 0xA3, 0x35, 0xEE));
