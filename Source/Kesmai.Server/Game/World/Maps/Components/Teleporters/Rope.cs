@@ -63,7 +63,7 @@ public class Rope : ActiveTeleporter
 	protected override bool CheckTeleport(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		var descends = (_elevationDelta < 0);
-		var climbingDown = (action != ActionType.ClimbUp);
+		var climbingDown = (action != ActionType.ClimbUp && (action != ActionType.Up || _elevationDelta <= 0));
 
 		if ((descends && !climbingDown) || (!descends && climbingDown))
 		{
