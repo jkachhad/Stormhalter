@@ -32,6 +32,9 @@ public class Halberd : MeleeWeapon
 	public override int BaseArmorBonus => 2;
 
 	/// <inheritdoc />
+	public override int MaxRange => 1;
+
+	/// <inheritdoc />
 	public override Skill Skill => Skill.Halberd;
 
 	/// <inheritdoc />
