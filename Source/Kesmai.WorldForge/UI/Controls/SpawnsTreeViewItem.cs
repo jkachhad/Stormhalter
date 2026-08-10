@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Diagnostics;
 using Kesmai.WorldForge.UI.Controls;
 
 namespace Kesmai.WorldForge.UI;
@@ -80,13 +81,17 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
             Bind(message.Value, item);
         });
         
-        foreach (var locationSpawner in _segment.Spawns.Location)
-            Bind(locationSpawner, CreateSpawnItem(locationSpawner));
+        using (PerformanceTrace.Measure(
+                   "Build spawn tree", () => $"{_spawnItems.Count} spawns, {_regionNodes.Count} regions"))
+        {
+            foreach (var locationSpawner in _segment.Spawns.Location)
+                Bind(locationSpawner, CreateSpawnItem(locationSpawner));
 
-        foreach (var regionSpawner in _segment.Spawns.Region)
-            Bind(regionSpawner, CreateSpawnItem(regionSpawner));
+            foreach (var regionSpawner in _segment.Spawns.Region)
+                Bind(regionSpawner, CreateSpawnItem(regionSpawner));
 
-        ApplyXmlRegionOrder();
+            ApplyXmlRegionOrder();
+        }
     }
 
     public void Dispose()
@@ -119,7 +124,10 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
         Dispatcher.BeginInvoke(new Action(() =>
         {
             _orderApplyPending = false;
-            ApplyXmlRegionOrder();
+            using (PerformanceTrace.Measure(
+                       "Apply spawn XML order",
+                       () => $"{_spawnItems.Count} spawns, {_regionNodes.Count} regions"))
+                ApplyXmlRegionOrder();
         }), DispatcherPriority.Background);
     }
 

@@ -26,7 +26,7 @@ public partial class RegionDocument : UserControl
 		if (!_isRegistered)
 		{
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionFilterChanged>(this,
-				static (recipient, _) => recipient.Refresh());
+				static (recipient, _) => recipient.Refresh(true));
 
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionVisibilityChanged>(this,
 				static (recipient, _) => recipient.Refresh());
@@ -55,10 +55,15 @@ public partial class RegionDocument : UserControl
 		_isRegistered = false;
 	}
 	
-	private void Refresh()
+	private void Refresh(bool forceTileUpdate = false)
 	{
 		if (DataContext is SegmentRegion region)
-			region.UpdateTiles();
+		{
+			if (forceTileUpdate)
+				region.UpdateTiles();
+			else
+				region.EnsureTilesUpdated();
+		}
 
 		if (_presenter is not null && _presenter.WorldScreen is not null)
 			_presenter.WorldScreen.InvalidateRender();

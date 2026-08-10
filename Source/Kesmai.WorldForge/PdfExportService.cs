@@ -26,6 +26,8 @@ public static class PdfExportService
 		ArgumentNullException.ThrowIfNull(region);
 		ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
 
+		region.EnsureTilesUpdated();
+
 		var tiles = region.GetTiles().ToList();
 		if (tiles.Count == 0)
 			throw new InvalidOperationException("The selected region has no tiles to export.");

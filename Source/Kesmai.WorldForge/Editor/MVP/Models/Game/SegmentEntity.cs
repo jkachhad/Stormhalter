@@ -183,9 +183,6 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 		if (!String.IsNullOrEmpty(_group))
 			element.Add(new XElement("group", _group));
 
-		if (_sortId.HasValue)
-			element.Add(new XElement("sortid", _sortId.Value));
-			
 		return element;
 	}
 	

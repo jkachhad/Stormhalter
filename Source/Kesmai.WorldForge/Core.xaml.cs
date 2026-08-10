@@ -15,6 +15,7 @@ using DigitalRune.Collections;
 using DigitalRune.Game.Interop;
 using DigitalRune.Storages;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Game.UI.Content;
 using Kesmai.WorldForge.Scripting;
 
 namespace Kesmai.WorldForge;
@@ -98,6 +99,8 @@ public partial class Core : Application
 		_componentsFile = new FileInfo($@"{_storageDirectory.FullName}\{ComponentsName}");
 		_customArtConfig = new FileInfo($@"{_storageDirectory.FullName}\{CustomArtConfigName}");
 		
+		WorldForgeContentReaders.Register();
+
 		// Initialize the XNA Game to get access to the GraphicsDevice and ContentManager.
 		_game = new InteropGame();
 		

@@ -7,6 +7,7 @@ using DigitalRune.Collections;
 using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Models;
+using Kesmai.WorldForge.Diagnostics;
 using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
@@ -277,6 +278,8 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		var targetDirectory = new DirectoryInfo(dialog.FolderName);
 		RememberProjectDirectory(targetDirectory.FullName);
+		using var openTiming = PerformanceTrace.Measure(
+			"Open project", () => targetDirectory.Name);
 		var segment = new Segment()
 		{
 			Name = targetDirectory.Name,
@@ -287,6 +290,8 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		void process(string documentName, Action assignment, Action<XElement, Version> load)
 		{
+			using var documentTiming = PerformanceTrace.Measure(
+				$"Load project XML [{documentName}]");
 			var documentFile = new FileInfo(Path.Combine(targetDirectory.FullName, documentName));
 		
 			if (documentFile.Exists)
@@ -328,6 +333,9 @@ public class ApplicationPresenter : ObservableRecipient
 
 		if (regionsFolder.Exists)
 		{
+			using var regionsTiming = PerformanceTrace.Measure(
+				"Load region XML files",
+				() => $"{segment.Regions.Count} regions");
 			foreach (var file in regionsFolder.GetFiles("*.xml"))
 			{
 				var regionDocument = XDocument.Load(file.FullName);
@@ -348,11 +356,13 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		process("Spawns.xml", () => segment.Spawns = new SegmentSpawns(),
 			(root, version) => segment.Spawns.Load(segment.Entities, root, version));
+
+		process("WorldForge.xml", null,
+			(root, version) => segment.LoadWorldForgeLayout(root));
 		
 		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
 			(root, version) => segment.Treasures.Load(root, version));
 
-		Segment.UpdateTiles();
 	}
 
 	private void SaveSegment(bool queryPath)
@@ -424,6 +434,7 @@ public class ApplicationPresenter : ObservableRecipient
 			write(_segment.Brushes.Save, "brushes", "Brushes.xml");
 			write(_segment.Components.Save, "components", "Components.xml");
 			write(_segment.Templates.Save, "templates", "Templates.xml");
+			_segment.GetWorldForgeLayoutElement().Save(Path.Combine(targetPath, "WorldForge.xml"));
 			
 			// find the project file and save it
 			var segmentProject = new FileInfo(Path.Combine(targetPath, $"{_segment.Name}.csproj"));

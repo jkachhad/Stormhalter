@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Diagnostics;
 using Kesmai.WorldForge.UI.Controls;
 using Kesmai.WorldForge.UI.Documents;
 
@@ -81,10 +82,14 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
             Bind(message.Value, entityItem);
         });
 
-        foreach (var entity in _segment.Entities)
-            Bind(entity, CreateEntityItem(entity));
+        using (PerformanceTrace.Measure(
+                   "Build entity tree", () => $"{_entityItems.Count} entities, {_groupNodes.Count} groups"))
+        {
+            foreach (var entity in _segment.Entities)
+                Bind(entity, CreateEntityItem(entity));
 
-        ApplyXmlGroupOrder(this);
+            ApplyXmlGroupOrder(this);
+        }
     }
 
     public void Dispose()
@@ -117,7 +122,10 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
         Dispatcher.BeginInvoke(new Action(() =>
         {
             _orderApplyPending = false;
-            ApplyXmlGroupOrder(this);
+            using (PerformanceTrace.Measure(
+                       "Apply entity XML order",
+                       () => $"{_entityItems.Count} entities, {_groupNodes.Count} groups"))
+                ApplyXmlGroupOrder(this);
         }), DispatcherPriority.Background);
     }
 

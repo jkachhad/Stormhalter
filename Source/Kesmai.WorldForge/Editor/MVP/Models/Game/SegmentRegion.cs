@@ -33,6 +33,7 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 		
 	private int _chunkSize;
 	private Dictionary<ChunkCoordinate, SegmentTile[,]> _chunks;
+	private bool _tilesUpdated;
 
 	[Browsable(true)]
 	public int ID
@@ -196,6 +197,14 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 			
 		foreach (var tile in GetTiles((t) => true))
 			tile.UpdateTerrain(regionFilters.SelectedFilter);
+
+		_tilesUpdated = true;
+	}
+
+	public void EnsureTilesUpdated()
+	{
+		if (!_tilesUpdated)
+			UpdateTiles();
 	}
 
 	public IEnumerable<SegmentTile> GetTiles()
@@ -276,6 +285,7 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 		var chunkY = (y - coordinate.Y * _chunkSize);
 
 		tiles[chunkX, chunkY] = tile;
+		_tilesUpdated = false;
 
 		return tile;
 	}

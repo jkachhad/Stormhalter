@@ -181,9 +181,6 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		if (_maximum > 0)
 			element.Add(new XElement("maximum", _maximum));
 
-		if (_sortId.HasValue)
-			element.Add(new XElement("sortid", _sortId.Value));
-			
 		foreach (var script in _scripts.Where(s => !s.IsEmpty))
 			element.Add(script.GetSerializingElement());
 
