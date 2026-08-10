@@ -29,7 +29,7 @@ public partial class RegionDocument : UserControl
 				static (recipient, _) => recipient.Refresh(true));
 
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionVisibilityChanged>(this,
-				static (recipient, _) => recipient.Refresh());
+				static (recipient, _) => recipient.Refresh(true));
 
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionToolChanged>(this,
 				(recipient, message) => recipient.OnToolChanged(message.Value));
