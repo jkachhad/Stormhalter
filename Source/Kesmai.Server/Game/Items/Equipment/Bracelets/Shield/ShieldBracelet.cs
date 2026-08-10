@@ -51,6 +51,16 @@ public class ShieldBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250127)); /* The bracelet contains a medium spell of Shield. */
 	}
 
+	/// <inheritdoc />
+	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	{
+		var bonuses = base.CreatePassiveBonuses(wearer);
+
+		bonuses.Add(EntityStat.Barrier, Shield);
+
+		return bonuses;
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -72,8 +82,6 @@ public class ShieldBracelet : Bracelet, ITreasure
 		{
 			status.AddSource(new ItemSource(this));
 		}
-		
-		entity.Stats[EntityStat.Barrier].Add(+Shield, ModifierType.Constant);
 	}
 
 	/// <summary>
@@ -85,8 +93,6 @@ public class ShieldBracelet : Bracelet, ITreasure
 
 		if (entity.GetStatus(typeof(ShieldStatus), out var status))
 			status.RemoveSource(this);
-		
-		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
 	}
 	
 	/// <inheritdoc />

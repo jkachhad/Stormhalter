@@ -42,27 +42,18 @@ public class WyvernScales : Armor, ITreasure
 	{
 	}
 	
-	/// <summary>
-	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnActivateBonus(MobileEntity entity)
+	/// <inheritdoc />
+	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
 	{
-		base.OnActivateBonus(entity);
+		var bonuses = base.CreatePassiveBonuses(wearer);
 
-		entity.Stats[EntityStat.MeleeDamageMitigation].Add(+1, ModifierType.Constant);
-		entity.Stats[EntityStat.RangedDamageMitigation].Add(+1, ModifierType.Constant);
+		bonuses.Add(EntityStat.MeleeDamageMitigation, 1);
+		bonuses.Add(EntityStat.RangedDamageMitigation, 1);
+
+		return bonuses;
 	}
 
-	/// <summary>
-	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnInactivateBonus(MobileEntity entity)
-	{
-		base.OnInactivateBonus(entity);
-        
-		entity.Stats[EntityStat.MeleeDamageMitigation].Remove(+1, ModifierType.Constant);
-		entity.Stats[EntityStat.RangedDamageMitigation].Remove(+1, ModifierType.Constant);
-	}
+
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

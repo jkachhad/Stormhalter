@@ -69,36 +69,20 @@ public class PowerBracelet : Bracelet, ITreasure
 		return bonus;
 	}
 		
-	/// <summary>
-	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnActivateBonus(MobileEntity entity)
+	/// <inheritdoc />
+	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
 	{
-		base.OnActivateBonus(entity);
+		var bonuses = base.CreatePassiveBonuses(wearer);
 
-		if (CanUse(entity))
+		if (CanApplyPassiveBonuses(wearer))
 		{
 			var magicDamageDealtIncrease = GetMagicDamageDealtIncrease();
 
 			if (magicDamageDealtIncrease > 0)
-				entity.Stats[EntityStat.MagicDamageDealtIncrease].Add(+magicDamageDealtIncrease, ModifierType.Constant);
+				bonuses.Add(EntityStat.MagicDamageDealtIncrease, magicDamageDealtIncrease);
 		}
-	}
-		
-	/// <summary>
-	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnInactivateBonus(MobileEntity entity)
-	{
-		base.OnInactivateBonus(entity);
 
-		if (CanUse(entity))
-		{
-			var magicDamageDealtIncrease = GetMagicDamageDealtIncrease();
-
-			if (magicDamageDealtIncrease > 0)
-				entity.Stats[EntityStat.MagicDamageDealtIncrease].Remove(+magicDamageDealtIncrease, ModifierType.Constant);
-		}
+		return bonuses;
 	}
 	
 	/// <inheritdoc />

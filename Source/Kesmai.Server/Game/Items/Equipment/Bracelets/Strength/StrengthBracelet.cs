@@ -51,6 +51,16 @@ public class StrengthBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250058)); /* The bracelet contains a medium spell of Strength. */
 	}
 
+	/// <inheritdoc />
+	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	{
+		var bonuses = base.CreatePassiveBonuses(wearer);
+
+		bonuses.Add(EntityStat.Strength, StrengthBonus);
+
+		return bonuses;
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -72,8 +82,6 @@ public class StrengthBracelet : Bracelet, ITreasure
 		{
 			status.AddSource(new ItemSource(this));
 		}
-			
-		entity.Stats[EntityStat.Strength].Add(+StrengthBonus, ModifierType.Constant);
 	}
 
 	/// <summary>
@@ -83,8 +91,6 @@ public class StrengthBracelet : Bracelet, ITreasure
 	{
 		base.OnInactivateBonus(entity);
 
-		entity.Stats[EntityStat.Strength].Remove(+StrengthBonus, ModifierType.Constant);
-			
 		if (entity.GetStatus(typeof(StrengthSpellStatus), out var status))
 			status.RemoveSource(this);
 	}
