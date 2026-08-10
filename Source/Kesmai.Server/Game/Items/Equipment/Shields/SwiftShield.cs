@@ -56,13 +56,13 @@ public class SwiftShield : Shield, ITreasure
 	}
 
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		bonuses.Add(EntityStat.Barrier, Shield);
+		modifiers.Add(EntityStat.Barrier, Shield);
 
-		return bonuses;
+		return modifiers;
 	}
 
 	public override void OnWield(MobileEntity entity)

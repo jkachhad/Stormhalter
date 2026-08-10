@@ -43,14 +43,14 @@ public class WyvernScales : Armor, ITreasure
 	}
 	
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		bonuses.Add(EntityStat.MeleeDamageMitigation, 1);
-		bonuses.Add(EntityStat.RangedDamageMitigation, 1);
+		modifiers.Add(EntityStat.MeleeDamageMitigation, 1);
+		modifiers.Add(EntityStat.RangedDamageMitigation, 1);
 
-		return bonuses;
+		return modifiers;
 	}
 
 

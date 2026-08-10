@@ -306,11 +306,11 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// </summary>
 	public override bool CanUse(MobileEntity entity)
 	{
-		return CanApplyPassiveBonuses(entity);
+		return CanApplyStatModifiers(entity);
 	}
 
 	/// <inheritdoc />
-	protected override bool CanApplyPassiveBonuses(MobileEntity entity)
+	protected override bool CanApplyStatModifiers(MobileEntity entity)
 	{
 		if (!MeetsBaseUseRequirements(entity))
 			return false;

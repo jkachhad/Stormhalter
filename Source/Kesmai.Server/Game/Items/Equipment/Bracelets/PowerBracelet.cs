@@ -70,19 +70,19 @@ public class PowerBracelet : Bracelet, ITreasure
 	}
 		
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		if (CanApplyPassiveBonuses(wearer))
+		if (CanApplyStatModifiers(wearer))
 		{
 			var magicDamageDealtIncrease = GetMagicDamageDealtIncrease();
 
 			if (magicDamageDealtIncrease > 0)
-				bonuses.Add(EntityStat.MagicDamageDealtIncrease, magicDamageDealtIncrease);
+				modifiers.Add(EntityStat.MagicDamageDealtIncrease, magicDamageDealtIncrease);
 		}
 
-		return bonuses;
+		return modifiers;
 	}
 	
 	/// <inheritdoc />

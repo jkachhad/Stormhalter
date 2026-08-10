@@ -54,13 +54,13 @@ public class StrengthRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		bonuses.Add(EntityStat.Strength, StrengthBonus);
+		modifiers.Add(EntityStat.Strength, StrengthBonus);
 
-		return bonuses;
+		return modifiers;
 	}
 
 	/// <summary>

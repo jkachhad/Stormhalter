@@ -46,15 +46,15 @@ public class TrollVest : Armor, ITreasure
 	}
 	
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		bonuses.Add(EntityStat.MeleeDamageMitigation, 2);
-		bonuses.Add(EntityStat.RangedDamageMitigation, 2);
-		bonuses.Add(EntityStat.ProjectileDamageMitigation, 2);
+		modifiers.Add(EntityStat.MeleeDamageMitigation, 2);
+		modifiers.Add(EntityStat.RangedDamageMitigation, 2);
+		modifiers.Add(EntityStat.ProjectileDamageMitigation, 2);
 
-		return bonuses;
+		return modifiers;
 	}
 
 

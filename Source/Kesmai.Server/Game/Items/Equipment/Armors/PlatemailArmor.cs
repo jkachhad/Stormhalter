@@ -46,15 +46,15 @@ public class PlatemailArmor : Armor
 	}
 	
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		bonuses.Add(EntityStat.MeleeDamageMitigation, 2);
-		bonuses.Add(EntityStat.RangedDamageMitigation, 2);
-		bonuses.Add(EntityStat.ProjectileDamageMitigation, 1);
+		modifiers.Add(EntityStat.MeleeDamageMitigation, 2);
+		modifiers.Add(EntityStat.RangedDamageMitigation, 2);
+		modifiers.Add(EntityStat.ProjectileDamageMitigation, 1);
 
-		return bonuses;
+		return modifiers;
 	}
 
 

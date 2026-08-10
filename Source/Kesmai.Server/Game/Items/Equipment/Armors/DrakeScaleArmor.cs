@@ -52,15 +52,15 @@ public class DrakeScaleArmor : Armor, ITreasure
 	}
 	
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		bonuses.Add(EntityStat.MeleeDamageMitigation, 4);
-		bonuses.Add(EntityStat.RangedDamageMitigation, 4);
-		bonuses.Add(EntityStat.ProjectileDamageMitigation, 4);
+		modifiers.Add(EntityStat.MeleeDamageMitigation, 4);
+		modifiers.Add(EntityStat.RangedDamageMitigation, 4);
+		modifiers.Add(EntityStat.ProjectileDamageMitigation, 4);
 
-		return bonuses;
+		return modifiers;
 	}
 
 

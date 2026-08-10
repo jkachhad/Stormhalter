@@ -52,13 +52,13 @@ public class ShieldBracelet : Bracelet, ITreasure
 	}
 
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		bonuses.Add(EntityStat.Barrier, Shield);
+		modifiers.Add(EntityStat.Barrier, Shield);
 
-		return bonuses;
+		return modifiers;
 	}
 
 	/// <summary>

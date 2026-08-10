@@ -109,32 +109,32 @@ public abstract class Equipment : ItemEntity
 	}
 
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		if (CanApplyPassiveBonuses(wearer))
+		if (CanApplyStatModifiers(wearer))
 		{
 			if (ProtectionFromFire > 0)
-				bonuses.Add(EntityStat.FireProtection, ProtectionFromFire);
+				modifiers.Add(EntityStat.FireProtection, ProtectionFromFire);
 				
 			if (ProtectionFromIce > 0)
-				bonuses.Add(EntityStat.IceProtection, ProtectionFromIce);
+				modifiers.Add(EntityStat.IceProtection, ProtectionFromIce);
 				
 			if (ProtectionFromDaze > 0)
-				bonuses.Add(EntityStat.DazeProtection, ProtectionFromDaze);
+				modifiers.Add(EntityStat.DazeProtection, ProtectionFromDaze);
 
 			if (HealthRegeneration > 0)
-				bonuses.Add(EntityStat.HealthRegenerationRate, HealthRegeneration);
+				modifiers.Add(EntityStat.HealthRegenerationRate, HealthRegeneration);
 
 			if (StaminaRegeneration > 0)
-				bonuses.Add(EntityStat.StaminaRegenerationRate, StaminaRegeneration);
+				modifiers.Add(EntityStat.StaminaRegenerationRate, StaminaRegeneration);
 
 			if (ManaRegeneration > 0)
-				bonuses.Add(EntityStat.ManaRegenerationRate, ManaRegeneration);
+				modifiers.Add(EntityStat.ManaRegenerationRate, ManaRegeneration);
 		}
 
-		return bonuses;
+		return modifiers;
 	}
 	
 	/// <inheritdoc />

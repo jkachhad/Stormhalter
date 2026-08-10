@@ -56,15 +56,15 @@ public class IceDragonScaleArmor : Armor, ITreasure
 	}
 	
 	/// <inheritdoc />
-	protected override PassiveBonusSet CreatePassiveBonuses(MobileEntity wearer)
+	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
 	{
-		var bonuses = base.CreatePassiveBonuses(wearer);
+		var modifiers = base.ApplyStatModifiers(wearer);
 
-		bonuses.Add(EntityStat.MeleeDamageMitigation, 5);
-		bonuses.Add(EntityStat.RangedDamageMitigation, 5);
-		bonuses.Add(EntityStat.ProjectileDamageMitigation, 5);
+		modifiers.Add(EntityStat.MeleeDamageMitigation, 5);
+		modifiers.Add(EntityStat.RangedDamageMitigation, 5);
+		modifiers.Add(EntityStat.ProjectileDamageMitigation, 5);
 
-		return bonuses;
+		return modifiers;
 	}
 
 	/// <inheritdoc />
