@@ -222,6 +222,26 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	}
 
 	/// <inheritdoc />
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
+	{
+		var modifiers = base.GetStatModifiers(wearer);
+
+		if (CanApplyStatModifiers(wearer))
+		{
+			if (HealthRegeneration > 0)
+				modifiers.Add(EntityStat.HealthRegenerationRate, HealthRegeneration);
+
+			if (StaminaRegeneration > 0)
+				modifiers.Add(EntityStat.StaminaRegenerationRate, StaminaRegeneration);
+
+			if (ManaRegeneration > 0)
+				modifiers.Add(EntityStat.ManaRegenerationRate, ManaRegeneration);
+		}
+
+		return modifiers;
+	}
+
+	/// <inheritdoc />
 	public override bool BreaksHide(MobileEntity entity)
 	{
 		return Flags.HasFlag(WeaponFlags.TwoHanded);
