@@ -106,9 +106,9 @@ public abstract class Equipment : ItemEntity
 	}
 
 	/// <inheritdoc />
-	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
-		var modifiers = base.ApplyStatModifiers(wearer);
+		var modifiers = base.GetStatModifiers(wearer);
 
 		if (CanApplyStatModifiers(wearer))
 		{

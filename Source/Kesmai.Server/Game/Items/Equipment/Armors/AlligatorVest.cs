@@ -43,9 +43,9 @@ public class AlligatorVest : Armor
 	}
 	
 	/// <inheritdoc />
-	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
-		var modifiers = base.ApplyStatModifiers(wearer);
+		var modifiers = base.GetStatModifiers(wearer);
 
 		modifiers.Add(EntityStat.MeleeDamageMitigation, 1);
 		modifiers.Add(EntityStat.RangedDamageMitigation, 1);

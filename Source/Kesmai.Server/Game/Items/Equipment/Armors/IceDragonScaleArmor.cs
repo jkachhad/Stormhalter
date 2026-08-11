@@ -56,9 +56,9 @@ public class IceDragonScaleArmor : Armor, ITreasure
 	}
 	
 	/// <inheritdoc />
-	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
-		var modifiers = base.ApplyStatModifiers(wearer);
+		var modifiers = base.GetStatModifiers(wearer);
 
 		modifiers.Add(EntityStat.MeleeDamageMitigation, 5);
 		modifiers.Add(EntityStat.RangedDamageMitigation, 5);

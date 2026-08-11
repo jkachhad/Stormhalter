@@ -70,9 +70,9 @@ public class PowerBracelet : Bracelet, ITreasure
 	}
 		
 	/// <inheritdoc />
-	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
-		var modifiers = base.ApplyStatModifiers(wearer);
+		var modifiers = base.GetStatModifiers(wearer);
 
 		if (CanApplyStatModifiers(wearer))
 		{

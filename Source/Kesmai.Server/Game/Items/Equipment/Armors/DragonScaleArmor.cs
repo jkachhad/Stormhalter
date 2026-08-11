@@ -52,9 +52,9 @@ public class DragonScaleArmor : Armor, ITreasure
 	}
 	
 	/// <inheritdoc />
-	protected override StatModifierSet ApplyStatModifiers(MobileEntity wearer)
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
-		var modifiers = base.ApplyStatModifiers(wearer);
+		var modifiers = base.GetStatModifiers(wearer);
 
 		modifiers.Add(EntityStat.MeleeDamageMitigation, 3);
 		modifiers.Add(EntityStat.RangedDamageMitigation, 3);
