@@ -17,9 +17,6 @@ public abstract class Equipment : ItemEntity
 
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProtectionFromDaze => 0;
-
-	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int ProtectionFromConcussion => 0;
 		
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProtectionFromFire => 0;
