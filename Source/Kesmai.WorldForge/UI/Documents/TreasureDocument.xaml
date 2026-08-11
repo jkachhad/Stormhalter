@@ -10,31 +10,33 @@
              FontFamily="Tahoma" FontSize="14">
     <Border Margin="2" BorderBrush="Black" BorderThickness="1">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            
-            <ToolBarTray Grid.Row="0">
-                <ToolBar Band="0" BandIndex="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.05*" MinWidth="360" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="1.25*" MinWidth="420" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+                <ToolBarTray Grid.Row="0">
+                    <ToolBar Band="0" BandIndex="0">
                     <Button Click="OnAddEntryClick" ToolTip="Add entry">
                         <Image Source="../../Resources/Add.png" Width="24" Height="24" />
                     </Button>
                     <Button Click="OnRemoveEntryClick" ToolTip="Delete entry">
                         <Image Source="../../Resources/Delete.png" Width="24" Height="24" />
                     </Button>
-                </ToolBar>
-            </ToolBarTray>
+                    </ToolBar>
+                </ToolBarTray>
 
-            <DataGrid Grid.Row="1"
-                      ItemsSource="{Binding Treasure.Entries}"
+                <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding StructuredEntries}"
                       SelectionMode="Single" SelectionUnit="FullRow"
-                      SelectedItem="{Binding SelectedTreasureEntry}"
+                      SelectedItem="{Binding SelectedStructuredEntry, Mode=TwoWay}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"
                       CanUserResizeColumns="True" CanUserSortColumns="False"
                       HeadersVisibility="Column"
-                      RowDetailsVisibilityMode="Visible" AreRowDetailsFrozen="true"
                       Margin="5">
 
                 <DataGrid.Resources>
@@ -63,48 +65,63 @@
                     <DataGridTextColumn Width="25" IsReadOnly="true" FontWeight="Bold"
                                         Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow},
                                                           Converter={worldForge:DataGridRowToIndexConverter}}" />
+                    <DataGridCheckBoxColumn Header="On" Binding="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="42" />
+                    <DataGridTextColumn Header="Weight" Binding="{Binding Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="65" />
+                    <DataGridTextColumn Header="Chance" IsReadOnly="true" Width="75"
+                                        Binding="{Binding Chance, StringFormat={}({0:0.00%})}" />
+                    <DataGridTextColumn Header="Item expression" Binding="{Binding ItemExpression, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="*" MinWidth="140" />
+                </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="#DDD" />
+
+            <DataGrid Grid.Column="2" ItemsSource="{Binding Treasure.Entries}"
+                      SelectionMode="Single" SelectionUnit="FullRow"
+                      SelectedItem="{Binding SelectedTreasureEntry, Mode=TwoWay}"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                      CanUserResizeRows="False" CanUserResizeColumns="True" CanUserSortColumns="False"
+                      HeadersVisibility="Column" RowDetailsVisibilityMode="Visible"
+                      AreRowDetailsFrozen="true" Margin="5">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Triggers><Trigger Property="DataGridRow.IsSelected" Value="True">
+                            <Setter Property="Background" Value="LightYellow" /><Setter Property="BorderBrush" Value="Yellow" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger></Style.Triggers>
+                    </Style>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers><Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="LightGoldenrodYellow" /><Setter Property="BorderBrush" Value="Yellow" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger></Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="25" IsReadOnly="true" FontWeight="Bold"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={worldForge:DataGridRowToIndexConverter}}" />
                     <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" Width="100" />
                     <DataGridTextColumn Header="Chance" IsReadOnly="true" Width="100"
                                         Binding="{Binding Chance, StringFormat={}({0:0.00%})}" />
                 </DataGrid.Columns>
-
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <Border>
-                            <TabControl Grid.Column="0" Margin="10"
-                                        ItemsSource="{Binding Scripts}">
+                            <TabControl Margin="10" ItemsSource="{Binding Scripts}">
                                 <TabControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" Margin="2">
                                             <CheckBox IsChecked="{Binding IsEnabled}" Margin="5,2" />
                                             <Image Source="..\..\Resources/CSharp-Script.png" Width="16" Height="16" />
-                                            <TextBlock Text="{Binding Name}">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
-                                                                <Setter Property="FontWeight" Value="Bold"/>
-                                                            </DataTrigger>
-
-                                                            <DataTrigger Binding="{Binding IsEnabled}" Value="False">
-                                                                <Setter Property="Foreground" Value="Gray"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
+                                            <TextBlock Text="{Binding Name}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </TabControl.ItemTemplate>
-
                                 <TabControl.ContentTemplate>
                                     <DataTemplate>
-                                        <scripting:ScriptEditor Signature="{Binding Signature}"
-                                                                Header="{Binding Header}"
-                                                                Body="{Binding Body, Mode=TwoWay}"
-                                                                Footer="{Binding Footer}"
-                                                                IsEnabled="{Binding IsEnabled}"
-                                                                Height="100" MaxHeight="300" />
+                                        <scripting:ScriptEditor Signature="{Binding Signature}" Header="{Binding Header}"
+                                                                Body="{Binding Body, Mode=TwoWay}" Footer="{Binding Footer}"
+                                                                IsEnabled="{Binding IsEnabled}" Height="100" MaxHeight="300" />
                                     </DataTemplate>
                                 </TabControl.ContentTemplate>
                             </TabControl>

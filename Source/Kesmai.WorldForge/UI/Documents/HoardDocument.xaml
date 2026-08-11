@@ -10,7 +10,44 @@
              FontFamily="Tahoma" FontSize="14">
     <Border Margin="2" BorderBrush="Black" BorderThickness="1">
         <Grid>
-            <Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.05*" MinWidth="360" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="1.25*" MinWidth="420" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+                <Border Grid.Row="0" Margin="5,5,5,0" Padding="6" Background="#EEE" BorderBrush="#BBB" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Overall package chance: " FontWeight="Bold" />
+                        <TextBox Width="90" TextAlignment="Right"
+                                 Text="{Binding OverallPackageChance, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:0.####}}" />
+                        <TextBlock Text="%" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+            <DataGrid Grid.Row="1" ItemsSource="{Binding StructuredEntries}"
+                      SelectedItem="{Binding SelectedStructuredEntry, Mode=TwoWay}"
+                      SelectionMode="Single" SelectionUnit="FullRow" AutoGenerateColumns="False"
+                      CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" Margin="5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="25" IsReadOnly="true" FontWeight="Bold"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={worldForge:DataGridRowToIndexConverter}}" />
+                    <DataGridCheckBoxColumn Header="On" Binding="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="42" />
+                    <DataGridTextColumn Header="Weight" Binding="{Binding Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="65" />
+                    <DataGridTextColumn Header="Chance" IsReadOnly="true" Width="75"
+                                        Binding="{Binding Chance, StringFormat={}({0:0.00%})}" />
+                    <DataGridTextColumn Header="Overall chance" IsReadOnly="true" Width="95"
+                                        Binding="{Binding OverallChance, StringFormat={}({0:0.####%})}" />
+                    <DataGridTextColumn Header="Item expression" Binding="{Binding ItemExpression, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="*" MinWidth="140" />
+                </DataGrid.Columns>
+            </DataGrid>
+            </Grid>
+
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="#DDD" />
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="3"></RowDefinition>
@@ -175,6 +212,7 @@
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
             </DataGrid>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>
