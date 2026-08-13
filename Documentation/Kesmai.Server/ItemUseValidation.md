@@ -16,7 +16,7 @@ Keeping those questions separate allows tooltips, equipment bonuses, AI, and oth
 | `entity.TryUse(item)` | Performing a non-combat attempt and displaying its denial reason. |
 | `entity.TryUseForCombat(item)` | Performing a combat attempt; denial displays its reason and fumbles the item. |
 
-Override `ValidateUse`. `CanUse` is a convenience wrapper and cannot be overridden.
+Derived items with additional use requirements should override `ValidateUse`. Call `CanUse` when only a side-effect-free boolean result is needed; it automatically invokes the item's most-derived `ValidateUse` implementation. Derived items without additional requirements do not need to override either method.
 
 ## Defining Item Requirements
 
