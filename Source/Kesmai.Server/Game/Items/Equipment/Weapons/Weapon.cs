@@ -324,16 +324,12 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// <summary>
 	/// Overridable. Determines whether the specified instance can use this item.
 	/// </summary>
-	public override bool CanUse(MobileEntity entity)
+	public override ItemUseResult ValidateUse(MobileEntity entity)
 	{
-		return CanApplyStatModifiers(entity);
-	}
+		var result = base.ValidateUse(entity);
 
-	/// <inheritdoc />
-	protected override bool CanApplyStatModifiers(MobileEntity entity)
-	{
-		if (!MeetsBaseUseRequirements(entity))
-			return false;
+		if (!result.IsAllowed)
+			return result;
 
 		/* I thought I recalled information about being unable to swing two handed weapons with left hand. */
 /*			if (entity.LeftHand != null && flags.HasFlag(WeaponFlags.TwoHanded))
@@ -346,9 +342,9 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		if ((flags.HasFlag(WeaponFlags.Lawful) && alignment != Alignment.Lawful) ||
 		    (flags.HasFlag(WeaponFlags.Neutral) && alignment != Alignment.Neutral) ||
 		    (flags.HasFlag(WeaponFlags.Chaotic) && alignment != Alignment.Chaotic && alignment != Alignment.Evil))
-			return false;
+			return ItemUseResult.Denied();
 
-		return true;
+		return ItemUseResult.Allowed;
 	}
 
 	/// <summary>

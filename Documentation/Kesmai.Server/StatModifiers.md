@@ -23,7 +23,7 @@ When the item is removed, the stored snapshot is removed without recalculating i
 | `StatModifierSet.AddMaximumValue(...)` | Changes the maximum-value constraint of an `EntityStat`. |
 | `UpdateStatModifiers()` | Replaces this item's active snapshot after one of its dependencies changes. It does nothing while the item is inactive. |
 | `MobileEntity.UpdateStatModifiers()` | Refreshes every equipped and wielded item for the wearer. |
-| `CanApplyStatModifiers(MobileEntity wearer)` | Determines whether the item may currently provide its stat modifiers. Override it with a side-effect-free eligibility check when needed. |
+| `CanApplyStatModifiers(MobileEntity wearer)` | Determines whether the item may currently provide its stat modifiers. It uses side-effect-free item validation by default. Override it only when modifier eligibility differs from use eligibility. |
 | `ActivateBonus(...)` / `InactivateBonus(...)` | Lifecycle operations used by equipment containers. Normal item code should not call these to refresh a bonus. |
 
 The system resolves the wearer from the item's `Parent`. Items do not need to store their own wearer reference.
@@ -213,15 +213,19 @@ Paperdoll, ring, and hand transactions refresh equipped sources after the transa
 
 ## Eligibility Checks
 
-Use `CanApplyStatModifiers` when an item should remain equipped but temporarily stop providing stats:
+Use `ValidateUse` when the same eligibility rule controls both item use and stat modifiers. Return the reason instead of sending a message inside validation:
 
 ```csharp
-protected override bool CanApplyStatModifiers(MobileEntity wearer)
+public override ItemUseResult ValidateUse(MobileEntity entity)
 {
-    if (!MeetsBaseUseRequirements(wearer))
-        return false;
+    var result = base.ValidateUse(entity);
 
-    return wearer.Alignment == Alignment.Lawful;
+    if (!result.IsAllowed)
+        return result;
+
+    return entity.Alignment == Alignment.Lawful
+        ? ItemUseResult.Allowed
+        : ItemUseResult.Denied("Only lawful characters may use this item.");
 }
 
 protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
@@ -234,6 +238,8 @@ protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
     return modifiers;
 }
 ```
+
+`CanUse` is a side-effect-free boolean wrapper around `ValidateUse`; do not override it. Call `entity.TryUse(item)` at an interactive use site so a denial reason is reported. Combat paths call `entity.TryUseForCombat(item)`, which additionally fumbles a denied item. Override `CanApplyStatModifiers` only when an item may be used but its modifiers have a distinct eligibility rule.
 
 Keep this check free of messages, timers, random rolls, subscriptions, and other side effects because it may run often during refreshes.
 
