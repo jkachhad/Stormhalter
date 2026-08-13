@@ -213,6 +213,8 @@ Paperdoll, ring, and hand transactions refresh equipped sources after the transa
 
 ## Eligibility Checks
 
+See [Item Use Validation](ItemUseValidation.md) for the full public API, interaction examples, and pitfalls. This section focuses on how use eligibility affects continuous equipment stats.
+
 Use `ValidateUse` when the same eligibility rule controls both item use and stat modifiers. Return the reason instead of sending a message inside validation:
 
 ```csharp
@@ -239,7 +241,7 @@ protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 }
 ```
 
-`CanUse` is a side-effect-free boolean wrapper around `ValidateUse`; do not override it. Call `entity.TryUse(item)` at an interactive use site so a denial reason is reported. Combat paths call `entity.TryUseForCombat(item)`, which additionally fumbles a denied item. Override `CanApplyStatModifiers` only when an item may be used but its modifiers have a distinct eligibility rule.
+`CanUse` is a side-effect-free boolean wrapper around `ValidateUse`; do not override it. The default `CanApplyStatModifiers` uses this same validation, so shared profession, level, alignment, unlock, binding, and ownership requirements belong in `ValidateUse`. Override `CanApplyStatModifiers` only when modifier eligibility is intentionally different.
 
 Keep this check free of messages, timers, random rolls, subscriptions, and other side effects because it may run often during refreshes.
 
