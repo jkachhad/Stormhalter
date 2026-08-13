@@ -1,4 +1,4 @@
-# Bonus Refactor API: Equipment Stat Modifiers
+# Equipment Stat Modifiers
 
 This guide explains how to give equipped and wielded items continuous stat bonuses using the source-aware stat modifier API.
 
@@ -336,24 +336,3 @@ The system cannot detect arbitrary custom dependencies. A custom item property m
 ### Recalculating during removal
 
 Do not compute what should be subtracted during unequip. The collection already retains and removes the exact registered snapshot.
-
-## Testing Checklist
-
-For an item with stat modifiers, verify:
-
-- equipping or wielding applies the expected values once;
-- calling `UpdateStatModifiers` replaces rather than stacks the snapshot;
-- quality and custom property changes replace the active values;
-- relevant wearer changes refresh the values;
-- set bonuses update after both equipping and removing another piece;
-- unequipping or unwielding restores the original values;
-- lifecycle hooks are not replayed during a refresh;
-- ineligible wearers receive no modifiers.
-
-## Related Source
-
-- `Kesmai.Server.Game.StatModifier`
-- `Kesmai.Server.Game.StatModifierSet`
-- `Kesmai.Server.Game.StatModifierCollection`
-- `Kesmai.Server.Items.ItemEntity`
-- `Kesmai.Server.Game.MobileEntity`
