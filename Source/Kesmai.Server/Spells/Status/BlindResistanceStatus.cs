@@ -12,25 +12,18 @@ public class BlindResistanceStatus : SpellStatus
 	{
 	}
 		
-	public override void OnAcquire()
+	protected override StatModifierSet GetStatModifiers(MobileEntity target)
 	{
-		base.OnAcquire();
-			
-		_entity.Stats[EntityStat.BlindResistance].Add(+6, ModifierType.Constant);
-	}
-
-	public override void OnRemoved()
-	{
-		_entity.Stats[EntityStat.BlindResistance].Remove(+6, ModifierType.Constant);
-
-		base.OnRemoved();
+		var modifiers = base.GetStatModifiers(target);
+		modifiers.Add(EntityStat.BlindResistance, 6);
+		return modifiers;
 	}
 		
 	protected override void OnSourceRemoved(SpellStatusSource source)
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource spellSource && _spellSources.Count is 0)
+		if (source is SpellSource && _spellSources.Count is 0)
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 547); /* The spell of [Blind Resistance] has worn off. */

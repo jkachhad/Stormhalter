@@ -1,18 +1,18 @@
 # Equipment Stat Modifiers
 
-This guide explains how to give equipped and wielded items continuous stat bonuses using the source-aware stat modifier API.
+This guide explains how to give equipment, buffs, and debuffs continuous stat modifiers using the source-aware API.
 
 ## Overview
 
-Each active item supplies a complete snapshot of its stat modifiers. The wearer stores that snapshot under the item that supplied it.
+Each active modifier source—such as an item, buff, or debuff—supplies a complete snapshot of its stat modifiers. The wearer stores that snapshot under the instance that supplied it.
 
-When an item changes, the system:
+When a source changes, the system:
 
-1. removes the exact snapshot previously registered by that item;
+1. removes the exact snapshot previously registered by that source;
 2. calculates a new snapshot;
 3. applies the new values.
 
-When the item is removed, the stored snapshot is removed without recalculating it. This prevents stale bonuses and arithmetic drift when a bonus depends on quality, level, profession, skills, alignment, segment, or other equipment.
+When the source is removed, the stored snapshot is removed without recalculating it. This prevents stale modifiers and arithmetic drift when a value depends on quality, level, profession, skills, alignment, segment, equipment, or status sources.
 
 ## API at a Glance
 
@@ -21,12 +21,15 @@ When the item is removed, the stored snapshot is removed without recalculating i
 | `GetStatModifiers(MobileEntity wearer)` | Returns the item's complete continuous stat snapshot. Override this when creating equipment bonuses. |
 | `StatModifierSet.Add(...)` | Adds an ordinary `EntityStat` modifier to the snapshot. |
 | `StatModifierSet.AddMaximumValue(...)` | Changes the maximum-value constraint of an `EntityStat`. |
-| `UpdateStatModifiers()` | Replaces this item's active snapshot after one of its dependencies changes. It does nothing while the item is inactive. |
-| `MobileEntity.UpdateStatModifiers()` | Refreshes every equipped and wielded item for the wearer. |
+| `UpdateStatModifiers()` | Replaces this source's active snapshot after one of its dependencies changes. It does nothing while the source is inactive. |
+| `MobileEntity.UpdateStatModifiers()` | Refreshes every registered item and status source for the wearer. |
+| `IStatModifierSource` | Identifies an item or status that owns a replaceable modifier snapshot. |
 | `CanApplyStatModifiers(MobileEntity wearer)` | Determines whether the item may currently provide its stat modifiers. It uses side-effect-free item validation by default. Override it only when modifier eligibility differs from use eligibility. |
 | `ActivateBonus(...)` / `InactivateBonus(...)` | Lifecycle operations used by equipment containers. Normal item code should not call these to refresh a bonus. |
 
 The system resolves the wearer from the item's `Parent`. Items do not need to store their own wearer reference.
+
+Sources are compared by object identity. Always replace and remove a modifier snapshot with the same item or status instance that registered it.
 
 ## Basic Example
 
@@ -274,6 +277,40 @@ protected override void OnInactivateBonus(MobileEntity entity)
 }
 ```
 
+## Buffs and Debuffs
+
+A `SpellStatus` supplies one complete snapshot for all of its spell and item sources. This example applies Strength once while at least one spell source remains:
+
+```csharp
+protected override StatModifierSet GetStatModifiers(MobileEntity target)
+{
+    var modifiers = base.GetStatModifiers(target);
+
+    if (Spells.Count > 0)
+        modifiers.Add(EntityStat.Strength, 6);
+
+    return modifiers;
+}
+```
+
+Multiple casters do not automatically multiply the modifier. The status decides whether sources are fixed, additive, or strongest-wins when it builds the snapshot.
+
+A debuff uses negative values:
+
+```csharp
+protected override StatModifierSet GetStatModifiers(MobileEntity target)
+{
+    var modifiers = base.GetStatModifiers(target);
+    modifiers.Add(EntityStat.Strength, -6);
+    modifiers.Add(EntityStat.HealthRegenerationRate, -2);
+    return modifiers;
+}
+```
+
+When a source is added, refreshed, or removed, the status replaces its previous aggregate snapshot. When the status expires, the exact stored snapshot is removed. Do not recalculate an amount to subtract in `OnRemoved`.
+
+Keep messages, sounds, timers, and other lifecycle behavior in `OnAcquire`, `OnRemoved`, `OnSourceAdded`, and `OnSourceRemoved`. Those hooks must not directly mutate stats represented by the snapshot.
+
 ## Dynamic Combat Properties
 
 Not every calculated equipment value belongs in a snapshot. Properties read only when combat occurs can remain ordinary calculated properties, for example:
@@ -332,6 +369,8 @@ Failing to call `base.GetStatModifiers(wearer)` silently drops modifiers declare
 ### Side effects during calculation
 
 `GetStatModifiers` can run because of unrelated equipment or wearer changes. It must be deterministic and safe to call repeatedly. Do not send messages, roll randomness, create timers, subscribe to events, or mutate other items from it.
+
+The same rule applies to `SpellStatus.GetStatModifiers`. Read authoritative status sources and wearer state rather than another source's already-calculated stat value, which would make refresh results order dependent.
 
 ### Returning only the value that changed
 
