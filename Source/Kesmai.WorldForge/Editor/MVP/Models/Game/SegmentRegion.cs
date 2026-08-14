@@ -170,7 +170,10 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 			{
 				var tile = GetTile(x, y);
 
-				if (tile != null)
+				// Older maps can contain explicit <tile /> placeholders. They have no
+				// effect in-game and should not survive merely because they fall inside
+				// the occupied region bounds.
+				if (tile?.Providers.Count > 0)
 				{
 					var tileElement = tile.GetSerializingElement();
 
@@ -258,7 +261,9 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 	public SegmentTile GetTile(int x, int y, bool create = false)
 	{
 		var chunkCoordinate = GetChunkCoordinate(x, y);
-		var tiles = GetChunk(chunkCoordinate, true);
+		var tiles = GetChunk(chunkCoordinate, create);
+		if (tiles == null)
+			return null;
 
 		var ox = Math.Abs(x - (chunkCoordinate.X * _chunkSize));
 		var oy = Math.Abs(y - (chunkCoordinate.Y * _chunkSize));
@@ -279,7 +284,9 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 	public SegmentTile SetTile(int x, int y, SegmentTile tile)
 	{
 		var coordinate = GetChunkCoordinate(x, y);
-		var tiles = GetChunk(coordinate, true);
+		var tiles = GetChunk(coordinate, tile != null);
+		if (tiles == null)
+			return tile;
 
 		var chunkX = (x - coordinate.X * _chunkSize);
 		var chunkY = (y - coordinate.Y * _chunkSize);
@@ -288,6 +295,34 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 		_tilesUpdated = false;
 
 		return tile;
+	}
+
+	/// <summary>
+	/// Gets the preferred viewport origin. Regions with content near 0,0 retain the traditional
+	/// origin; distant regions receive a one-tile margin around their minimum occupied bounds.
+	/// </summary>
+	public bool TryGetViewportOrigin(out int left, out int top)
+	{
+		// Some older region files contain explicit <tile /> placeholders. They are model
+		// objects, but have no terrain/components and must not influence camera placement.
+		var tiles = GetTiles(tile => tile.Providers.Count > 0).ToArray();
+		if (tiles.Length == 0)
+		{
+			left = 0;
+			top = 0;
+			return false;
+		}
+
+		if (tiles.Any(tile => Math.Abs(tile.X) <= 10 && Math.Abs(tile.Y) <= 10))
+		{
+			left = 0;
+			top = 0;
+			return true;
+		}
+
+		left = tiles.Min(tile => tile.X) - 1;
+		top = tiles.Min(tile => tile.Y) - 1;
+		return true;
 	}
 		
 	/// <summary>
@@ -311,7 +346,7 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 				for (var x = 0; x < _chunkSize; x++)
 				{
 					var tile = tiles[x, y];
-					var validTile = (tile != null);
+					var validTile = tile?.Providers.Count > 0;
 
 					if (validTile)
 					{

@@ -69,6 +69,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				return;
 			
 			_componentFrames.Children.Clear();
+			_selectedComponentFrame = null;
 
 			if (selection.SurfaceArea is not 1)
 			{
@@ -89,7 +90,12 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			var segmentTile = region.GetTile(selected.X, selected.Y);
 
 			if (segmentTile is null)
+			{
+				_editingTile = null;
+				_editingProviders = null;
+				_grid.IsVisible = false;
 				return;
+			}
 
 			// create restore point.
 			_editingTile = segmentTile;
@@ -203,6 +209,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	protected override void OnInitialize()
 	{
 		base.OnInitialize();
+
+		MoveCameraToRegionTopLeft();
 		
 		_grid = new Grid()
 		{
@@ -524,6 +532,14 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	private void Delete(ComponentFrame frame)
 	{
+		if (frame?.Provider == null || _editingTile == null ||
+			!_editingTile.Providers.Contains(frame.Provider))
+		{
+			_selectedComponentFrame = null;
+			InvalidateFrames();
+			return;
+		}
+
 		frame.Provider.RemoveComponent(_editingTile.Providers);
 		
 		if (_selectedComponentFrame == frame)
@@ -685,10 +701,10 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 		else if (inputManager.IsPressed(Keys.Home, false))
 		{
-			CenterCameraOn(0, 0);
+			var (left, top) = MoveCameraToRegionTopLeft();
 
 			if (_selection != null)
-				_selection.Select(new Rectangle(0, 0, 1, 1), region);
+				_selection.Select(new Rectangle(left, top, 1, 1), region);
 			
 			inputManager.IsKeyboardHandled = true;
 		}
@@ -721,6 +737,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 							tile.RemoveComponent(provider);
 						}
+
+						if (tile.Providers.Count == 0)
+							region.DeleteTile(x, y);
 					}
 				}
 
@@ -766,6 +785,17 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				}
 			}
 		}
+	}
+
+	public (int Left, int Top) MoveCameraToRegionTopLeft()
+	{
+		var region = _worldPresentationTarget.Region;
+		var left = 0;
+		var top = 0;
+		region?.TryGetViewportOrigin(out left, out top);
+		CameraLocation = new Vector2F(left, top);
+		CameraDrag = Vector2F.Zero;
+		return (left, top);
 	}
 	
 	protected override void OnRender(RenderContext context)

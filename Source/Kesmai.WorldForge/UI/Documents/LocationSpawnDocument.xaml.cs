@@ -17,6 +17,8 @@ public partial class LocationSpawnDocument : UserControl
         InitializeComponent();
 
         DataContextChanged += OnDataContextChanged;
+		Loaded += (_, _) => _presenter.Focus();
+		_presenter.PreviewMouseDown += (_, _) => _presenter.Focus();
     }
 
     private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

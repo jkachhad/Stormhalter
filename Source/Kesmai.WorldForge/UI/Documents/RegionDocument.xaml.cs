@@ -9,6 +9,7 @@ namespace Kesmai.WorldForge.UI.Documents;
 public partial class RegionDocument : UserControl
 {
 	private bool _isRegistered;
+	private bool _cameraPositioned;
 
 	public RegionDocument()
 	{
@@ -22,6 +23,15 @@ public partial class RegionDocument : UserControl
 	private void OnLoaded(object sender, RoutedEventArgs args)
 	{
 		Refresh();
+		if (!_cameraPositioned)
+		{
+			_cameraPositioned = true;
+			Dispatcher.BeginInvoke(new System.Action(() =>
+			{
+				if (_presenter?.WorldScreen is RegionGraphicsScreen regionScreen)
+					regionScreen.MoveCameraToRegionTopLeft();
+			}), System.Windows.Threading.DispatcherPriority.ContextIdle);
+		}
 
 		if (!_isRegistered)
 		{
@@ -66,7 +76,9 @@ public partial class RegionDocument : UserControl
 		}
 
 		if (_presenter is not null && _presenter.WorldScreen is not null)
+		{
 			_presenter.WorldScreen.InvalidateRender();
+		}
 	}
 	
 	private void OnToolChanged(Tool tool)

@@ -12,6 +12,8 @@ using DigitalRune.Game.UI.Content;
 using DigitalRune.Mathematics.Content;
 using DigitalRune.Storages;
 using Microsoft.Xna.Framework.Content;
+using Kesmai.WorldForge.Editor;
+using System.ComponentModel;
 
 namespace Kesmai.WorldForge;
 
@@ -25,6 +27,7 @@ public record ActivateDocument(object Content);
 /// </summary>
 public partial class ApplicationWindow : Window
 {
+	private bool _closeConfirmed;
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ApplicationWindow"/> class.
 	/// </summary>
@@ -48,12 +51,28 @@ public partial class ApplicationWindow : Window
 		});
 		
 		_dockingManager.DocumentClosed += OnDocumentClosed;
+		Closing += OnWindowClosing;
 		_dockingManager.ActiveContentChanged += (s, e) =>
 		{
 			// When a document is activated in the layout panel, notify interested parties.
 			if (_dockingManager.Layout.ActiveContent is LayoutDocument layoutDocument)
 				WeakReferenceMessenger.Default.Send(new ActiveDocumentChanged(layoutDocument.Content));
 		};
+	}
+
+	private void OnWindowClosing(object sender, CancelEventArgs args)
+	{
+		if (_closeConfirmed)
+			return;
+
+		if (Application.Current.Resources["applicationPresenter"] is ApplicationPresenter presenter &&
+			!presenter.ConfirmSaveBeforeClose())
+		{
+			args.Cancel = true;
+			return;
+		}
+
+		_closeConfirmed = true;
 	}
 
 	private void OnDocumentClosed(object sender, DocumentClosedEventArgs args)

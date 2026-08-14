@@ -34,6 +34,7 @@ public abstract class WorldPresentationTarget : InteropPresentationTarget
 	{
 		if (args.NewValue is SegmentRegion region)
 			region.EnsureTilesUpdated();
+
 	}
 		
 	protected WorldPresentationTarget()
