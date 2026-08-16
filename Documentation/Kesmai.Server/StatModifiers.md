@@ -23,9 +23,9 @@ When the source is removed, the stored snapshot is removed without recalculating
 | `StatModifierSet.AddMaximumValue(...)` | Changes the maximum-value constraint of an `EntityStat`. |
 | `UpdateStatModifiers()` | Replaces this source's active snapshot after one of its dependencies changes. It does nothing while the source is inactive. |
 | `MobileEntity.UpdateStatModifiers()` | Refreshes every registered item and status source for the wearer. |
-| `IStatModifierSource` | Identifies an item or status that owns a replaceable modifier snapshot. |
+| `IStatModifierSource` | Gives an item or status the shared `AreModifiersActive`, activation, update, and inactivation lifecycle. |
 | `CanApplyStatModifiers(MobileEntity wearer)` | Determines whether the item may currently provide its stat modifiers. It uses side-effect-free item validation by default. Override it only when modifier eligibility differs from use eligibility. |
-| `ActivateBonus(...)` / `InactivateBonus(...)` | Lifecycle operations used by equipment containers. Normal item code should not call these to refresh a bonus. |
+| `ActivateModifiers(...)` / `InactivateModifiers(...)` | Register or remove a source's snapshot. Equipment and status lifecycles call these operations. |
 
 The system resolves the wearer from the item's `Parent`. Items do not need to store their own wearer reference.
 
@@ -113,7 +113,7 @@ protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 }
 ```
 
-There is no need to call `InactivateBonus` and `ActivateBonus` around a quality change.
+There is no need to call `InactivateModifiers` and `ActivateModifiers` around a quality change.
 
 ## Refreshing a Custom Item Property
 
@@ -356,7 +356,7 @@ If `Bonus` changes between activation and inactivation, the wrong value is remov
 
 ### Replaying activation to refresh stats
 
-Do not call `InactivateBonus` followed by `ActivateBonus` when a property changes. That replays unrelated lifecycle behavior. Call `UpdateStatModifiers()`.
+Do not call `InactivateModifiers` followed by `ActivateModifiers` when a property changes. That replays unrelated lifecycle behavior. Call `UpdateStatModifiers()`.
 
 ### Depending on activation-hook setup
 
