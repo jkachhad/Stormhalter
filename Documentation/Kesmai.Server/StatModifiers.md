@@ -23,9 +23,9 @@ When the source is removed, the stored snapshot is removed without recalculating
 | `StatModifierSet.AddMaximumValue(...)` | Changes the maximum-value constraint of an `EntityStat`. |
 | `UpdateStatModifiers()` | Replaces this source's active snapshot after one of its dependencies changes. It does nothing while the source is inactive. |
 | `MobileEntity.UpdateStatModifiers()` | Refreshes every registered item and status source for the wearer. |
-| `IStatModifierSource` | Gives an item or status the shared `AreModifiersActive`, activation, update, and inactivation lifecycle. |
+| `IStatModifierSource` | Provides the shared public `UpdateStatModifiers()` refresh contract. |
 | `CanApplyStatModifiers(MobileEntity wearer)` | Determines whether the item may currently provide its stat modifiers. It uses side-effect-free item validation by default. Override it only when modifier eligibility differs from use eligibility. |
-| `ActivateModifiers(...)` / `InactivateModifiers(...)` | Register or remove a source's snapshot. Equipment and status lifecycles call these operations. |
+| `ActivateModifiers(...)` / `InactivateModifiers(...)` | Protected or internal framework operations that register and remove snapshots. Normal callers should not invoke them. |
 
 The system resolves the wearer from the item's `Parent`. Items do not need to store their own wearer reference.
 

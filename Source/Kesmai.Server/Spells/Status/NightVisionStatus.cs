@@ -23,14 +23,14 @@ public class NightVisionStatus : SpellStatus
 		}
 	}
 
-	public override void OnAcquire()
+	protected override void OnAcquire()
 	{
 		base.OnAcquire();
 			
 		_entity.Delta(MobileDelta.Visibility);
 	}
 
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		_entity.Delta(MobileDelta.Visibility);
 			

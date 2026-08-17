@@ -22,7 +22,7 @@ public class StunStatus : SpellStatus
 		_delay = delay;
 	}
 
-	public override void OnAcquire()
+	protected override void OnAcquire()
 	{
 		base.OnAcquire();
 
@@ -41,7 +41,7 @@ public class StunStatus : SpellStatus
 		Announce();
 	}
 
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		// TODO: Should we still do this? Or is there a better mechanism.
 		// What if the player is stunned, but has a round lock from action?

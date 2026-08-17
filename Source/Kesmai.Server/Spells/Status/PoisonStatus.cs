@@ -65,7 +65,7 @@ public partial class PoisonStatus : SpellStatus
 			_entity.RemoveStatus(this);
 	}
 		
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		if (_internalTimer != null && _internalTimer.Running)
 			_internalTimer.Stop();

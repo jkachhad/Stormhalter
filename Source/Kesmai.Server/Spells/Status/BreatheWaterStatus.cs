@@ -23,14 +23,14 @@ public class BreatheWaterStatus : SpellStatus
 		}
 	}
 
-	public override void OnAcquire()
+	protected override void OnAcquire()
 	{
 		base.OnAcquire();
 			
 		_entity.StopWaterTimer();
 	}
 
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		base.OnRemoved();
 			

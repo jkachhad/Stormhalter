@@ -42,7 +42,7 @@ public class VigorStatus : SpellStatus
 		});
 	}
 
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		if (_decayTimer != null)
 			_decayTimer.Stop();
