@@ -23,7 +23,7 @@ public class PerceptionStatus : SpellStatus
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource && !_spellSources.Any())
+		if (source is SpellSource && !Spells.Any())
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 595); /* The spell of [Perception] has worn off. */

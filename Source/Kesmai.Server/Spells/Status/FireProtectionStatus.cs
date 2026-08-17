@@ -23,7 +23,7 @@ public class FireProtectionStatus : SpellStatus
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource && _spellSources.Count is 0)
+		if (source is SpellSource && Spells.Count is 0)
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 543); /* The spell of [Protection from Fire] has worn off. */

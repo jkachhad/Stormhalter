@@ -23,7 +23,7 @@ public class PoisonProtectionStatus : SpellStatus
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource && !_spellSources.Any())
+		if (source is SpellSource && !Spells.Any())
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 584); /* The spell of [Protection from Poison] has worn off. */

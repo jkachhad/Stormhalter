@@ -31,6 +31,8 @@ The system resolves the wearer from the item's `Parent`. Items do not need to st
 
 Sources are compared by object identity. Always replace and remove a modifier snapshot with the same item or status instance that registered it.
 
+`EntityStat.None` does not identify a real stat and cannot be added to a snapshot. `Add` and `AddMaximumValue` throw `ArgumentOutOfRangeException` when it is supplied.
+
 ## Basic Example
 
 This ring always grants five Strength while equipped:
@@ -295,6 +297,10 @@ protected override StatModifierSet GetStatModifiers(MobileEntity target)
 
 Multiple casters do not automatically multiply the modifier. The status decides whether sources are fixed, additive, or strongest-wins when it builds the snapshot.
 
+`Spells` and `Items` are read-only, runtime-enforced views. Add and remove entries through `AddSource` and `RemoveSource`; direct dictionary mutation is not supported because it would bypass source ownership, expiration timers, lifecycle hooks, and modifier refreshes. Only `SpellSource` and `ItemSource` are accepted, their fixed mobile or item key cannot be null, and one source instance cannot belong to multiple statuses.
+
+Adding another source for the same caster or item is a refresh. The old source instance is detached and the new instance becomes the status-owned source.
+
 A debuff uses negative values:
 
 ```csharp
@@ -310,6 +316,8 @@ protected override StatModifierSet GetStatModifiers(MobileEntity target)
 When a source is added, refreshed, or removed, the status replaces its previous aggregate snapshot. When the status expires, the exact stored snapshot is removed. Do not recalculate an amount to subtract in `OnRemoved`.
 
 Keep messages, sounds, timers, and other lifecycle behavior in `OnAcquire`, `OnRemoved`, `OnSourceAdded`, and `OnSourceRemoved`. Those hooks must not directly mutate stats represented by the snapshot.
+
+The owning mobile controls status lifecycle through internal `NotifyAcquired` and `NotifyRemoved` dispatchers. Status implementations override the protected `OnAcquire` and `OnRemoved` hooks; they do not call or override the internal dispatchers.
 
 ## Dynamic Combat Properties
 
@@ -371,6 +379,14 @@ Failing to call `base.GetStatModifiers(wearer)` silently drops modifiers declare
 `GetStatModifiers` can run because of unrelated equipment or wearer changes. It must be deterministic and safe to call repeatedly. Do not send messages, roll randomness, create timers, subscribe to events, or mutate other items from it.
 
 The same rule applies to `SpellStatus.GetStatModifiers`. Read authoritative status sources and wearer state rather than another source's already-calculated stat value, which would make refresh results order dependent.
+
+### Throwing from calculations or lifecycle hooks
+
+Treat `GetStatModifiers`, `OnActivateBonus`, `OnInactivateBonus`, `OnAcquire`, and `OnRemoved` as no-throw operations. Item modifier calculation finishes before the item is marked active, but the framework cannot automatically reverse arbitrary messages, timers, subscriptions, or other side effects if a hook throws. Handle expected missing or inapplicable state by returning the appropriate snapshot and completing the hook normally.
+
+### Mutating status source dictionaries
+
+Do not cast or otherwise attempt to mutate the `Spells` or `Items` views. Use `AddSource` and `RemoveSource` so timers, ownership, hooks, and the aggregate modifier snapshot stay consistent.
 
 ### Returning only the value that changed
 

@@ -21,7 +21,7 @@ public class ShieldStatus : SpellStatus
 	{
 		var modifiers = base.GetStatModifiers(target);
 
-		if (_spellSources.Count > 0)
+		if (Spells.Count > 0)
 			modifiers.Add(EntityStat.Barrier, 3);
 
 		return modifiers;
@@ -29,7 +29,7 @@ public class ShieldStatus : SpellStatus
 
 	protected override void OnSourceRemoved(SpellStatusSource source)
 	{
-		if (source is SpellSource && _spellSources.Count is 0)
+		if (source is SpellSource && Spells.Count is 0)
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 552); /* The spell of [Shield] has worn off. */

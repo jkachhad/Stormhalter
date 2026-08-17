@@ -23,7 +23,7 @@ public class StunResistanceStatus : SpellStatus
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource && _spellSources.Count is 0)
+		if (source is SpellSource && Spells.Count is 0)
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 551); /* The spell of [Stun Resistance] has worn off. */

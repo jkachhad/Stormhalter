@@ -24,7 +24,7 @@ public class StunDeathProtectionStatus : SpellStatus
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource && _spellSources.Count is 0)
+		if (source is SpellSource && Spells.Count is 0)
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 545); /* The spell of [Protection from Stun and Death] has worn off. */

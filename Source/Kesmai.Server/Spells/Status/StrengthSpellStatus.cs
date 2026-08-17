@@ -18,7 +18,7 @@ public class StrengthSpellStatus : SpellStatus
 	{
 		var modifiers = base.GetStatModifiers(target);
 
-		if (_spellSources.Count > 0)
+		if (Spells.Count > 0)
 			modifiers.Add(EntityStat.Strength, 6);
 
 		return modifiers;
@@ -26,7 +26,7 @@ public class StrengthSpellStatus : SpellStatus
 
 	protected override void OnSourceRemoved(SpellStatusSource source)
 	{
-		if (source is SpellSource && _spellSources.Count is 0)
+		if (source is SpellSource && Spells.Count is 0)
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 553); /* The spell of [Strength] has worn off. */
