@@ -31,7 +31,7 @@ The system resolves the wearer from the item's `Parent`. Items do not need to st
 
 Sources are compared by object identity. Always replace and remove a modifier snapshot with the same item or status instance that registered it.
 
-`EntityStat.None` does not identify a real stat and cannot be added to a snapshot. `Add` and `AddMaximumValue` throw `ArgumentOutOfRangeException` when it is supplied.
+`EntityStat.None`, undefined `EntityStat` values, and undefined `ModifierType` values cannot be added to a snapshot. Construction and addition throw `ArgumentOutOfRangeException` for invalid values. `Modifiers` and `MaximumValueModifiers` are runtime-enforced read-only views; add entries through `Add` and `AddMaximumValue` rather than attempting to mutate those collections.
 
 ## Basic Example
 
