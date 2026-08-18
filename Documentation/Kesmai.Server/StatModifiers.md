@@ -301,6 +301,10 @@ Multiple casters do not automatically multiply the modifier. The status decides 
 
 Adding another source for the same caster or item is a refresh. The old source instance is detached and the new instance becomes the status-owned source.
 
+A status runs at most one spell-expiration timer. When no item source exists, the finite spell source with the latest `End` controls it; shorter sources therefore cannot shorten the benefit. At expiration, all spell sources ending at or before that controlling time are removed together. A zero-duration spell source is indefinite and suppresses expiration.
+
+An item source also suppresses the timer because it makes the status persistent. Spell expiration timestamps continue to elapse while the item remains. Removing the last item source restarts timing from the latest remaining spell expiration, which may expire immediately if that time has already passed. Status implementations should not create additional timers for `SpellSource` expiration.
+
 A debuff uses negative values:
 
 ```csharp
