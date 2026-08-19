@@ -41,12 +41,17 @@ public class PowerBracelet : Bracelet, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200377)); /* [You are looking at] [a golden bracelet embued with sapphires.] */
 	}
 
-	public override bool CanUse(MobileEntity entity)
+	public override ItemUseResult ValidateUse(MobileEntity entity)
 	{
+		var result = base.ValidateUse(entity);
+
+		if (!result.IsAllowed)
+			return result;
+
 		if (entity is PlayerEntity player)
-			return player.Profession.RestrictSpellcast; /* Thief, Thaum, Wizard. */
+			return player.Profession.RestrictSpellcast ? ItemUseResult.Allowed : ItemUseResult.Denied(); /* Thief, Thaum, Wizard. */
 			
-		return false;
+		return ItemUseResult.Denied();
 	}
 		
 	private int GetMagicDamageDealtIncrease()
@@ -69,36 +74,20 @@ public class PowerBracelet : Bracelet, ITreasure
 		return bonus;
 	}
 		
-	/// <summary>
-	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnActivateBonus(MobileEntity entity)
+	/// <inheritdoc />
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
-		base.OnActivateBonus(entity);
+		var modifiers = base.GetStatModifiers(wearer);
 
-		if (CanUse(entity))
+		if (CanApplyStatModifiers(wearer))
 		{
 			var magicDamageDealtIncrease = GetMagicDamageDealtIncrease();
 
 			if (magicDamageDealtIncrease > 0)
-				entity.Stats[EntityStat.MagicDamageDealtIncrease].Add(+magicDamageDealtIncrease, ModifierType.Constant);
+				modifiers.Add(EntityStat.MagicDamageDealtIncrease, magicDamageDealtIncrease);
 		}
-	}
-		
-	/// <summary>
-	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnInactivateBonus(MobileEntity entity)
-	{
-		base.OnInactivateBonus(entity);
 
-		if (CanUse(entity))
-		{
-			var magicDamageDealtIncrease = GetMagicDamageDealtIncrease();
-
-			if (magicDamageDealtIncrease > 0)
-				entity.Stats[EntityStat.MagicDamageDealtIncrease].Remove(+magicDamageDealtIncrease, ModifierType.Constant);
-		}
+		return modifiers;
 	}
 	
 	/// <inheritdoc />

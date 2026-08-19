@@ -55,6 +55,16 @@ public class SwiftShield : Shield, ITreasure
 	{
 	}
 
+	/// <inheritdoc />
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
+	{
+		var modifiers = base.GetStatModifiers(wearer);
+
+		modifiers.Add(EntityStat.Barrier, Shield);
+
+		return modifiers;
+	}
+
 	public override void OnWield(MobileEntity entity)
 	{
 		base.OnWield(entity);
@@ -73,8 +83,6 @@ public class SwiftShield : Shield, ITreasure
 		{
 			status.AddSource(new ItemSource(this));
 		}
-		
-		entity.Stats[EntityStat.Barrier].Add(+Shield, ModifierType.Constant);
 	}
 
 	public override void OnUnwield(MobileEntity entity)
@@ -83,7 +91,5 @@ public class SwiftShield : Shield, ITreasure
 
 		if (entity.GetStatus(typeof(ShieldStatus), out var status))
 			status.RemoveSource(this);
-		
-		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
 	}
 }

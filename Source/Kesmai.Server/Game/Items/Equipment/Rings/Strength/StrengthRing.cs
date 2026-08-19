@@ -53,6 +53,16 @@ public class StrengthRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250034)); /* The ring contains a medium spell of Strength. */
 	}
 
+	/// <inheritdoc />
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
+	{
+		var modifiers = base.GetStatModifiers(wearer);
+
+		modifiers.Add(EntityStat.Strength, StrengthBonus);
+
+		return modifiers;
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -74,8 +84,6 @@ public class StrengthRing : Ring, ITreasure
 		{
 			status.AddSource(new ItemSource(this));
 		}
-
-		entity.Stats[EntityStat.Strength].Add(+StrengthBonus, ModifierType.Constant);
 	}
 	
 	/// <summary>
@@ -84,8 +92,6 @@ public class StrengthRing : Ring, ITreasure
 	protected override void OnInactivateBonus(MobileEntity entity)
 	{
 		base.OnInactivateBonus(entity);
-
-		entity.Stats[EntityStat.Strength].Remove(+StrengthBonus, ModifierType.Constant);
 
 		if (entity.GetStatus(typeof(StrengthSpellStatus), out var status))
 			status.RemoveSource(this);

@@ -17,7 +17,7 @@ public class FearStatus : SpellStatus
 		_rounds = rounds;
 	}
 		
-	public override void OnAcquire()
+	protected override void OnAcquire()
 	{
 		base.OnAcquire();
 
@@ -27,7 +27,7 @@ public class FearStatus : SpellStatus
 		_internalTimer = Timer.DelayCall(TimeSpan.Zero, OnTick);
 	}
 		
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		if (_internalTimer != null && _internalTimer.Running)
 			_internalTimer.Stop();

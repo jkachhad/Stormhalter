@@ -215,32 +215,30 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 	public virtual void OnWield(MobileEntity entity)
 	{
-		if (CanUse(entity))
-		{
-			if (HealthRegeneration > 0)
-				entity.Stats[EntityStat.HealthRegenerationRate].Add(+HealthRegeneration, ModifierType.Constant);
-
-			if (StaminaRegeneration > 0)
-				entity.Stats[EntityStat.StaminaRegenerationRate].Add(+StaminaRegeneration, ModifierType.Constant);
-
-			if (ManaRegeneration > 0)
-				entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
-		}
 	}
 
 	public virtual void OnUnwield(MobileEntity entity)
 	{
-		if (CanUse(entity))
+	}
+
+	/// <inheritdoc />
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
+	{
+		var modifiers = base.GetStatModifiers(wearer);
+
+		if (CanApplyStatModifiers(wearer))
 		{
 			if (HealthRegeneration > 0)
-				entity.Stats[EntityStat.HealthRegenerationRate].Remove(+HealthRegeneration, ModifierType.Constant);
+				modifiers.Add(EntityStat.HealthRegenerationRate, HealthRegeneration);
 
 			if (StaminaRegeneration > 0)
-				entity.Stats[EntityStat.StaminaRegenerationRate].Remove(+StaminaRegeneration, ModifierType.Constant);
+				modifiers.Add(EntityStat.StaminaRegenerationRate, StaminaRegeneration);
 
 			if (ManaRegeneration > 0)
-				entity.Stats[EntityStat.ManaRegenerationRate].Remove(+ManaRegeneration, ModifierType.Constant);
+				modifiers.Add(EntityStat.ManaRegenerationRate, ManaRegeneration);
 		}
+
+		return modifiers;
 	}
 
 	/// <inheritdoc />
@@ -326,10 +324,12 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// <summary>
 	/// Overridable. Determines whether the specified instance can use this item.
 	/// </summary>
-	public override bool CanUse(MobileEntity entity)
+	public override ItemUseResult ValidateUse(MobileEntity entity)
 	{
-		if (!base.CanUse(entity))
-			return false;
+		var result = base.ValidateUse(entity);
+
+		if (!result.IsAllowed)
+			return result;
 
 		/* I thought I recalled information about being unable to swing two handed weapons with left hand. */
 /*			if (entity.LeftHand != null && flags.HasFlag(WeaponFlags.TwoHanded))
@@ -342,9 +342,9 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		if ((flags.HasFlag(WeaponFlags.Lawful) && alignment != Alignment.Lawful) ||
 		    (flags.HasFlag(WeaponFlags.Neutral) && alignment != Alignment.Neutral) ||
 		    (flags.HasFlag(WeaponFlags.Chaotic) && alignment != Alignment.Chaotic && alignment != Alignment.Evil))
-			return false;
+			return ItemUseResult.Denied();
 
-		return true;
+		return ItemUseResult.Allowed;
 	}
 
 	/// <summary>

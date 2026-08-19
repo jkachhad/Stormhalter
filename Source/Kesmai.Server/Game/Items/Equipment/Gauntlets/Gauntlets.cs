@@ -144,10 +144,12 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	/// <summary>
 	/// Overridable. Determines whether the specified instance can use this item.
 	/// </summary>
-	public override bool CanUse(MobileEntity entity)
+	public override ItemUseResult ValidateUse(MobileEntity entity)
 	{
-		if (!base.CanUse(entity))
-			return false;
+		var result = base.ValidateUse(entity);
+
+		if (!result.IsAllowed)
+			return result;
 
 		/* We prevent the weapon from being beneficial if alignment values do not match. */
 		var flags = Flags;
@@ -156,9 +158,9 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 		if ((flags.HasFlag(WeaponFlags.Lawful) && alignment != Alignment.Lawful) ||
 		    (flags.HasFlag(WeaponFlags.Neutral) && alignment != Alignment.Neutral) ||
 		    (flags.HasFlag(WeaponFlags.Chaotic) && alignment != Alignment.Chaotic && alignment != Alignment.Evil))
-			return false;
+			return ItemUseResult.Denied();
 			
-		return true;
+		return ItemUseResult.Allowed;
 	}
 	
 	/// <inheritdoc />

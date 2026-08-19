@@ -16,7 +16,7 @@ public class SpeedStatus : SpellStatus
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource && !_spellSources.Any())
+		if (source is SpellSource && !Spells.Any())
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 573); /* The spell of [Speed] has worn off. */

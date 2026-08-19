@@ -105,62 +105,33 @@ public abstract class Equipment : ItemEntity
 		}
 	}
 
-	/// <summary>
-	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnActivateBonus(MobileEntity entity)
+	/// <inheritdoc />
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
-		base.OnActivateBonus(entity);
+		var modifiers = base.GetStatModifiers(wearer);
 
-		if (CanUse(entity))
+		if (CanApplyStatModifiers(wearer))
 		{
 			if (ProtectionFromFire > 0)
-				entity.Stats[EntityStat.FireProtection].Add(+ProtectionFromFire, ModifierType.Constant);
+				modifiers.Add(EntityStat.FireProtection, ProtectionFromFire);
 				
 			if (ProtectionFromIce > 0)
-				entity.Stats[EntityStat.IceProtection].Add(+ProtectionFromIce, ModifierType.Constant);
+				modifiers.Add(EntityStat.IceProtection, ProtectionFromIce);
 				
 			if (ProtectionFromDaze > 0)
-				entity.Stats[EntityStat.DazeProtection].Add(+ProtectionFromDaze, ModifierType.Constant);
+				modifiers.Add(EntityStat.DazeProtection, ProtectionFromDaze);
 
 			if (HealthRegeneration > 0)
-				entity.Stats[EntityStat.HealthRegenerationRate].Add(+HealthRegeneration, ModifierType.Constant);
+				modifiers.Add(EntityStat.HealthRegenerationRate, HealthRegeneration);
 
 			if (StaminaRegeneration > 0)
-				entity.Stats[EntityStat.StaminaRegenerationRate].Add(+StaminaRegeneration, ModifierType.Constant);
+				modifiers.Add(EntityStat.StaminaRegenerationRate, StaminaRegeneration);
 
 			if (ManaRegeneration > 0)
-				entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
+				modifiers.Add(EntityStat.ManaRegenerationRate, ManaRegeneration);
 		}
-	}
-		
-	/// <summary>
-	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnInactivateBonus(MobileEntity entity)
-	{
-		base.OnInactivateBonus(entity);
-		
-		if (CanUse(entity))
-		{
-			if (ProtectionFromFire > 0)
-				entity.Stats[EntityStat.FireProtection].Remove(+ProtectionFromFire, ModifierType.Constant);
-				
-			if (ProtectionFromIce > 0)
-				entity.Stats[EntityStat.IceProtection].Remove(+ProtectionFromIce, ModifierType.Constant);
-				
-			if (ProtectionFromDaze > 0)
-				entity.Stats[EntityStat.DazeProtection].Remove(+ProtectionFromDaze, ModifierType.Constant);
 
-			if (HealthRegeneration > 0)
-				entity.Stats[EntityStat.HealthRegenerationRate].Remove(+HealthRegeneration, ModifierType.Constant);
-
-			if (StaminaRegeneration > 0)
-				entity.Stats[EntityStat.StaminaRegenerationRate].Remove(+StaminaRegeneration, ModifierType.Constant);
-				
-			if (ManaRegeneration > 0)
-				entity.Stats[EntityStat.ManaRegenerationRate].Remove(+ManaRegeneration, ModifierType.Constant);
-		}
+		return modifiers;
 	}
 	
 	/// <inheritdoc />

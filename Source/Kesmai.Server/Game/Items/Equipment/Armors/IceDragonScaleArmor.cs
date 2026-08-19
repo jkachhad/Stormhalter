@@ -55,30 +55,18 @@ public class IceDragonScaleArmor : Armor, ITreasure
 	{
 	}
 	
-	/// <summary>
-	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnActivateBonus(MobileEntity entity)
+	/// <inheritdoc />
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
-		base.OnActivateBonus(entity);
+		var modifiers = base.GetStatModifiers(wearer);
 
-		entity.Stats[EntityStat.MeleeDamageMitigation].Add(+5, ModifierType.Constant);
-		entity.Stats[EntityStat.RangedDamageMitigation].Add(+5, ModifierType.Constant);
-		entity.Stats[EntityStat.ProjectileDamageMitigation].Add(+5, ModifierType.Constant);
+		modifiers.Add(EntityStat.MeleeDamageMitigation, 5);
+		modifiers.Add(EntityStat.RangedDamageMitigation, 5);
+		modifiers.Add(EntityStat.ProjectileDamageMitigation, 5);
+
+		return modifiers;
 	}
 
-	/// <summary>
-	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
-	/// </summary>
-	protected override void OnInactivateBonus(MobileEntity entity)
-	{
-		base.OnInactivateBonus(entity);
-        
-		entity.Stats[EntityStat.MeleeDamageMitigation].Remove(+5, ModifierType.Constant);
-		entity.Stats[EntityStat.RangedDamageMitigation].Remove(+5, ModifierType.Constant);
-		entity.Stats[EntityStat.ProjectileDamageMitigation].Remove(+5, ModifierType.Constant);
-	}
-		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
