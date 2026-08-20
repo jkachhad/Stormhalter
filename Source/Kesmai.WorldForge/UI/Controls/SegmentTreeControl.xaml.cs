@@ -269,7 +269,7 @@ public class SegmentTreeViewItem : TreeViewItem
     public SegmentTreeViewItem(ISegmentObject segmentObject, Brush brush, bool circleIcon, string displayFormat = "{0}")
     {
         _segmentObject = segmentObject ?? throw new ArgumentNullException(nameof(segmentObject));
-        
+
         var innerPanel = new StackPanel
         {
             Orientation = Orientation.Horizontal,

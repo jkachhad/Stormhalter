@@ -20,12 +20,21 @@ public abstract class WorldPresentationTarget : InteropPresentationTarget
 	public static readonly DependencyProperty RegionProperty =
 		DependencyProperty.Register(nameof(Region), typeof(SegmentRegion), typeof(WorldPresentationTarget),
 			new FrameworkPropertyMetadata(
-				default(SegmentRegion), FrameworkPropertyMetadataOptions.AffectsRender));
+				default(SegmentRegion), FrameworkPropertyMetadataOptions.AffectsRender,
+				OnRegionChanged));
 		
 	public SegmentRegion Region
 	{
 		get => (SegmentRegion)GetValue(RegionProperty);
 		set => SetValue(RegionProperty, value);
+	}
+
+	private static void OnRegionChanged(DependencyObject dependencyObject,
+		DependencyPropertyChangedEventArgs args)
+	{
+		if (args.NewValue is SegmentRegion region)
+			region.EnsureTilesUpdated();
+
 	}
 		
 	protected WorldPresentationTarget()
@@ -41,6 +50,9 @@ public abstract class WorldPresentationTarget : InteropPresentationTarget
 		InputManager.Mouse.CaptureMouseWithin = true;
 		
 		base.OnInitialize();
+
+		// Terrain colors are prepared only when a region is first displayed.
+		Region?.EnsureTilesUpdated();
 		
 		_worldScreen = CreateGraphicsScreen(GraphicsService);
 		_worldScreen.Initialize();

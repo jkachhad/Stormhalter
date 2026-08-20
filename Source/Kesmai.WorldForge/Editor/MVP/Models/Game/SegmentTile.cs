@@ -30,6 +30,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         _y = y;
 
         Providers = new ObservableCollection<IComponentProvider> ( );
+        _renders = new List<TerrainRender>();
     }
 
     public SegmentTile ( XElement element )
@@ -38,6 +39,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         _y = (int)element.Attribute("y");
 
         Providers = new ObservableCollection<IComponentProvider>();
+        _renders = new List<TerrainRender>();
         
         var componentPalette = ServiceLocator.Current.GetInstance<ComponentPalette>();
         
@@ -50,7 +52,6 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
                 Providers.Add(component);
         }
 
-        UpdateTerrain();
     }
 
     /// <summary>

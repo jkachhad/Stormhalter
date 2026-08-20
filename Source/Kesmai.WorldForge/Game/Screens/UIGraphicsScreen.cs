@@ -4,6 +4,7 @@ using DigitalRune.Game.Interop;
 using DigitalRune.Game.UI.Controls;
 using DigitalRune.Game.UI.Rendering;
 using DigitalRune.Graphics;
+using Kesmai.WorldForge.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
@@ -27,10 +28,14 @@ public abstract class UIGraphicsScreen : InteropGraphicsScreen
 	
 	public void Initialize()
 	{
+		using var initializeTiming = PerformanceTrace.Measure(
+			$"Graphics screen initialize [{GetType().Name}]");
 		var services = ServiceLocator.Current;
 		var contentManager = services.GetInstance<ContentManager>();
 
-		_theme = contentManager.Load<Theme>(@"UI\Theme");
+		using (PerformanceTrace.Measure("UI theme load"))
+			_theme = contentManager.Load<Theme>(@"UI\Theme");
+
 		_uiRenderer = new UIRenderer(GraphicsService.GraphicsDevice, _theme);
 		
 		_uiScreen = new UIScreen($"{PresentationTarget.GetHashCode()} GUI Screen", _uiRenderer);

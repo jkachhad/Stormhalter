@@ -9,6 +9,7 @@ namespace Kesmai.WorldForge.UI.Documents;
 public partial class RegionDocument : UserControl
 {
 	private bool _isRegistered;
+	private bool _cameraPositioned;
 
 	public RegionDocument()
 	{
@@ -22,14 +23,23 @@ public partial class RegionDocument : UserControl
 	private void OnLoaded(object sender, RoutedEventArgs args)
 	{
 		Refresh();
+		if (!_cameraPositioned)
+		{
+			_cameraPositioned = true;
+			Dispatcher.BeginInvoke(new System.Action(() =>
+			{
+				if (_presenter?.WorldScreen is RegionGraphicsScreen regionScreen)
+					regionScreen.MoveCameraToRegionTopLeft();
+			}), System.Windows.Threading.DispatcherPriority.ContextIdle);
+		}
 
 		if (!_isRegistered)
 		{
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionFilterChanged>(this,
-				static (recipient, _) => recipient.Refresh());
+				static (recipient, _) => recipient.Refresh(true));
 
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionVisibilityChanged>(this,
-				static (recipient, _) => recipient.Refresh());
+				static (recipient, _) => recipient.Refresh(true));
 
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionToolChanged>(this,
 				(recipient, message) => recipient.OnToolChanged(message.Value));
@@ -55,13 +65,20 @@ public partial class RegionDocument : UserControl
 		_isRegistered = false;
 	}
 	
-	private void Refresh()
+	private void Refresh(bool forceTileUpdate = false)
 	{
 		if (DataContext is SegmentRegion region)
-			region.UpdateTiles();
+		{
+			if (forceTileUpdate)
+				region.UpdateTiles();
+			else
+				region.EnsureTilesUpdated();
+		}
 
 		if (_presenter is not null && _presenter.WorldScreen is not null)
+		{
 			_presenter.WorldScreen.InvalidateRender();
+		}
 	}
 	
 	private void OnToolChanged(Tool tool)

@@ -180,15 +180,28 @@ public class ScriptEditor : RoslynCodeEditor
             return;
 
         _updatingDocument = true;
-        
-        BodySegment.Length += e.InsertionLength - e.RemovalLength;
+        try
+        {
+            // Undo/redo can replay a complete Document.Text replacement. Recalculate the
+            // editable range from the current document instead of applying a potentially
+            // negative change delta to the previous body length.
+            var documentLength = Document.TextLength;
+            var bodyStart = Math.Clamp(BodySegment.StartOffset, 0, documentLength);
+            var footerStart = Math.Clamp(documentLength - _footer.Length, bodyStart, documentLength);
+            var bodyEnd = Math.Max(bodyStart, footerStart - NewLine.Length);
 
-        SetCurrentValue(BodyProperty, 
-            _body = (BodySegment.Length > 0 ? Document.GetText(BodySegment) : String.Empty));
+            BodySegment.StartOffset = bodyStart;
+            BodySegment.Length = bodyEnd - bodyStart;
+            FooterSegment.StartOffset = footerStart;
+            FooterSegment.Length = Math.Min(_footer.Length, documentLength - footerStart);
 
-        FooterSegment.StartOffset = BodySegment.EndOffset + NewLine.Length;
-
-        _updatingDocument = false;
+            SetCurrentValue(BodyProperty,
+                _body = BodySegment.Length > 0 ? Document.GetText(BodySegment) : String.Empty);
+        }
+        finally
+        {
+            _updatingDocument = false;
+        }
     }
     
     private class ReadOnlySectionsProvider : IReadOnlySectionProvider

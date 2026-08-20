@@ -30,6 +30,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	private TimeSpan _maximumDelay;
 
 	private int _maximum;
+	private int? _sortId;
 		
 	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
 
@@ -69,6 +70,17 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	}
 
 	[Browsable(false)]
+	public int? SortId
+	{
+		get => _sortId;
+		set
+		{
+			if (SetProperty(ref _sortId, value))
+				WeakReferenceMessenger.Default.Send(new SegmentSpawnChanged(this));
+		}
+	}
+
+	[Browsable(false)]
 	public ObservableCollection<SpawnEntry> Entries { get; set; } = new ObservableCollection<SpawnEntry>();
 
 	[Browsable(false)]
@@ -101,6 +113,9 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 		if (maximumElement != null)
 			_maximum = (int)maximumElement;
+
+		if (Int32.TryParse((string)element.Element("sortid"), out var sortId))
+			_sortId = sortId;
 
 		ValidateScripts(element);
 	}
@@ -165,7 +180,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 		if (_maximum > 0)
 			element.Add(new XElement("maximum", _maximum));
-			
+
 		foreach (var script in _scripts.Where(s => !s.IsEmpty))
 			element.Add(script.GetSerializingElement());
 

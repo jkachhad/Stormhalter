@@ -1,10 +1,12 @@
 using System;
 using CommonServiceLocator;
+using DigitalRune.Game.Input;
 using DigitalRune.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using DigitalRune.Mathematics.Algebra;
 
 namespace Kesmai.WorldForge;
 
@@ -33,6 +35,9 @@ public class LocationSpawnGraphicsScreen : WorldGraphicsScreen
 	private bool _locked;
 
 	private Texture2D[] _arrowTextures;
+	private bool _isCameraPanning;
+	private Vector2F _cameraPanStart;
+	private Vector2F _cameraLocationAtPanStart;
 
 	public LocationSpawnGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget presentationTarget) : base(graphicsService, presentationTarget)
 	{
@@ -80,12 +85,42 @@ public class LocationSpawnGraphicsScreen : WorldGraphicsScreen
 
 	protected override void OnHandleInput(TimeSpan deltaTime)
 	{
+		var inputManager = PresentationTarget.InputManager;
+		if (inputManager != null)
+		{
+			var mousePosition = inputManager.MousePosition;
+			if (inputManager.IsDown(MouseButtons.Right))
+			{
+				if (!_isCameraPanning)
+				{
+					_isCameraPanning = true;
+					_cameraPanStart = mousePosition;
+					_cameraLocationAtPanStart = CameraLocation;
+				}
+				var delta = mousePosition - _cameraPanStart;
+				if (delta.Magnitude > 2f)
+				{
+					CameraLocation = _cameraLocationAtPanStart - new Vector2F(
+						delta.X / (_presenter.UnitSize * ZoomFactor),
+						delta.Y / (_presenter.UnitSize * ZoomFactor));
+					inputManager.IsMouseOrTouchHandled = true;
+				}
+			}
+			else if (_isCameraPanning)
+			{
+				var wasDrag = (mousePosition - _cameraPanStart).Magnitude > 2f;
+				_isCameraPanning = false;
+				if (wasDrag)
+					inputManager.IsMouseOrTouchHandled = true;
+			}
+		}
+
 		base.OnHandleInput(deltaTime);
 
 		if (_segmentSpawner == null)
 			return;
 
-		var inputManager = PresentationTarget.InputManager;
+		inputManager = PresentationTarget.InputManager;
 
 		if (inputManager is null)
 			return;

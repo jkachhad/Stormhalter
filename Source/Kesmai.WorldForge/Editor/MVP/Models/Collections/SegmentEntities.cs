@@ -47,7 +47,7 @@ public class SegmentEntities : ObservableCollection<SegmentEntity>
 	protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
 	{
 		base.OnCollectionChanged(args);
-			
+
 		if (args.NewItems != null)
 		{
 			foreach (var newItem in args.NewItems.OfType<SegmentEntity>())

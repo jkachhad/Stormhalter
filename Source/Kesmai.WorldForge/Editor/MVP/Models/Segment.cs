@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.Collections;
 using Kesmai.WorldForge.Models;
+using Kesmai.WorldForge.Diagnostics;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -144,6 +145,7 @@ public class Segment : ObservableObject, ISegmentObject
 				case "components": Components.Load(rootElement, Core.Version); break;
 				case "brushes": Brushes.Load(rootElement, Core.Version); break;
 				case "templates": Templates.Load(rootElement, Core.Version); break;
+				case "worldforge": LoadWorldForgeLayout(rootElement); break;
 			}
 		}
 		catch
@@ -159,8 +161,108 @@ public class Segment : ObservableObject, ISegmentObject
 		
 	public void UpdateTiles()
 	{
+		using var updateTiming = PerformanceTrace.Measure(
+			"Update all region tiles", () => $"{Regions.Count} regions");
+
 		foreach (var region in Regions)
-			region.UpdateTiles();
+		{
+			using (PerformanceTrace.Measure(
+				       $"Update region tiles [{region.ID}]",
+				       () => region.Name))
+				region.UpdateTiles();
+		}
+	}
+
+	public void LoadWorldForgeLayout(XElement element)
+	{
+		var entityOrder = element.Element("entityOrder");
+
+		if (entityOrder is not null)
+		{
+			var sortIds = entityOrder.Elements("entity")
+				.Select((entry, index) => new
+				{
+					Name = (string)entry.Attribute("name"),
+					SortId = index
+				})
+				.Where(entry => !String.IsNullOrWhiteSpace(entry.Name))
+				.GroupBy(entry => entry.Name, StringComparer.OrdinalIgnoreCase)
+				.ToDictionary(group => group.Key, group => group.First().SortId,
+					StringComparer.OrdinalIgnoreCase);
+
+			foreach (var entity in Entities)
+			{
+				if (sortIds.TryGetValue(entity.Name, out var sortId))
+					entity.SortId = sortId;
+			}
+		}
+
+		var spawnRegionOrder = element.Element("spawnRegionOrder");
+
+		if (spawnRegionOrder is not null)
+		{
+			var sortIds = spawnRegionOrder.Elements("region")
+				.Select((entry, index) => new
+				{
+					Id = (int?)entry.Attribute("id"),
+					SortId = index
+				})
+				.Where(entry => entry.Id.HasValue)
+				.GroupBy(entry => entry.Id.Value)
+				.ToDictionary(group => group.Key, group => group.First().SortId);
+
+			foreach (var spawn in Spawns.GetSpawns())
+			{
+				var region = spawn switch
+				{
+					LocationSegmentSpawner locationSpawner => locationSpawner.Region,
+					RegionSegmentSpawner regionSpawner => regionSpawner.Region,
+					_ => (int?)null
+				};
+
+				if (region.HasValue && sortIds.TryGetValue(region.Value, out var sortId))
+					spawn.SortId = sortId;
+			}
+		}
+	}
+
+	public XElement GetWorldForgeLayoutElement()
+	{
+		var element = new XElement("worldforge");
+
+		var orderedEntities = Entities
+			.Where(entity => entity.SortId.HasValue)
+			.OrderBy(entity => entity.SortId.Value)
+			.Select(entity => new XElement("entity",
+				new XAttribute("name", entity.Name)));
+
+		element.Add(new XElement("entityOrder", orderedEntities));
+
+		var orderedRegions = Spawns.GetSpawns()
+			.Where(spawn => spawn.SortId.HasValue)
+			.Select(spawn => new
+			{
+				Region = spawn switch
+				{
+					LocationSegmentSpawner locationSpawner => locationSpawner.Region,
+					RegionSegmentSpawner regionSpawner => regionSpawner.Region,
+					_ => (int?)null
+				},
+				SortId = spawn.SortId.Value
+			})
+			.Where(entry => entry.Region.HasValue)
+			.GroupBy(entry => entry.Region.Value)
+			.Select(group => new
+			{
+				Region = group.Key,
+				SortId = group.Min(entry => entry.SortId)
+			})
+			.OrderBy(entry => entry.SortId)
+			.Select(entry => new XElement("region",
+				new XAttribute("id", entry.Region)));
+
+		element.Add(new XElement("spawnRegionOrder", orderedRegions));
+		return element;
 	}
 	
 	public XElement GetSerializingElement()

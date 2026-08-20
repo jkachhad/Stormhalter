@@ -7,9 +7,11 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Diagnostics;
 using Kesmai.WorldForge.UI.Controls;
 
 namespace Kesmai.WorldForge.UI;
@@ -17,6 +19,7 @@ namespace Kesmai.WorldForge.UI;
 internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
 {
     private const string DragFormat = "Kesmai.WorldForge.SpawnsTreeViewItem.Spawn";
+    private const string RegionDragFormat = "Kesmai.WorldForge.SpawnsTreeViewItem.Region";
 
     private readonly Segment _segment;
     private readonly Dictionary<SegmentSpawner, SegmentTreeViewItem> _spawnItems = new();
@@ -27,8 +30,10 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
     
     private Point? _dragStartPoint;
     private SegmentTreeViewItem _dragSourceItem;
+    private TreeViewItem _dragSourceRegionItem;
     private TreeViewItem _currentDropTarget;
     private DropHighlightAdorner _currentDropAdorner;
+    private bool _orderApplyPending;
 
     public SpawnsTreeViewItem(Segment segment, object header)
     {
@@ -50,6 +55,7 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
         messenger.Register<SegmentSpawnAdded>(this, (_, message) =>
         {
             Bind(message.Value, CreateSpawnItem(message.Value));
+            ScheduleXmlRegionOrder();
         });
 
         messenger.Register<SegmentSpawnRemoved>(this, (_, message) =>
@@ -63,6 +69,8 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
             }
         });
 
+        messenger.Register<SegmentSpawnsReset>(this, (_, _) => ResetSpawnNodes());
+
         messenger.Register<SegmentSpawnChanged>(this, (_, message) =>
         {
             if (!_spawnItems.TryGetValue(message.Value, out var item))
@@ -73,11 +81,17 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
             Bind(message.Value, item);
         });
         
-        foreach (var locationSpawner in _segment.Spawns.Location)
-            Bind(locationSpawner, CreateSpawnItem(locationSpawner));
+        using (PerformanceTrace.Measure(
+                   "Build spawn tree", () => $"{_spawnItems.Count} spawns, {_regionNodes.Count} regions"))
+        {
+            foreach (var locationSpawner in _segment.Spawns.Location)
+                Bind(locationSpawner, CreateSpawnItem(locationSpawner));
 
-        foreach (var regionSpawner in _segment.Spawns.Region)
-            Bind(regionSpawner, CreateSpawnItem(regionSpawner));
+            foreach (var regionSpawner in _segment.Spawns.Region)
+                Bind(regionSpawner, CreateSpawnItem(regionSpawner));
+
+            ApplyXmlRegionOrder();
+        }
     }
 
     public void Dispose()
@@ -90,6 +104,31 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
         _spawnItems.Clear();
         _regionNodes.Clear();
         _regionLookup.Clear();
+    }
+
+    private void ResetSpawnNodes()
+    {
+        SetDropTarget(null);
+        Items.Clear();
+        _spawnItems.Clear();
+        _regionNodes.Clear();
+        _regionLookup.Clear();
+    }
+
+    private void ScheduleXmlRegionOrder()
+    {
+        if (_orderApplyPending)
+            return;
+
+        _orderApplyPending = true;
+        Dispatcher.BeginInvoke(new Action(() =>
+        {
+            _orderApplyPending = false;
+            using (PerformanceTrace.Measure(
+                       "Apply spawn XML order",
+                       () => $"{_spawnItems.Count} spawns, {_regionNodes.Count} regions"))
+                ApplyXmlRegionOrder();
+        }), DispatcherPriority.Background);
     }
 
     private SegmentTreeViewItem CreateSpawnItem(SegmentSpawner spawner)
@@ -165,6 +204,9 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
         node.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) => AddRegionSpawner(regionId));
 
         AttachDropTarget(node);
+        node.PreviewMouseLeftButtonDown += OnRegionPreviewMouseLeftButtonDown;
+        node.PreviewMouseMove += OnRegionPreviewMouseMove;
+        node.PreviewMouseLeftButtonUp += OnRegionPreviewMouseLeftButtonUp;
         _regionLookup[node] = regionId;
 
         Items.Add(node);
@@ -247,6 +289,22 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
 
         args.Handled = true;
 
+        if (TryGetDraggedRegion(args.Data, out var draggedRegion))
+        {
+            var regionTarget = dragControl.FindAncestor<TreeViewItem>();
+
+            if (!CanReorderRegion(draggedRegion, regionTarget))
+            {
+                args.Effects = DragDropEffects.None;
+                SetDropTarget(null);
+                return;
+            }
+
+            args.Effects = DragDropEffects.Move;
+            SetDropTarget(regionTarget);
+            return;
+        }
+
         if (!TryGetDraggedSpawner(args.Data, out _))
         {
             args.Effects = DragDropEffects.None;
@@ -280,7 +338,7 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
     {
         args.Handled = true;
 
-        if (!TryGetDraggedSpawner(args.Data, out _))
+        if (!TryGetDraggedSpawner(args.Data, out _) && !TryGetDraggedRegion(args.Data, out _))
             return;
 
         if (sender is TreeViewItem treeViewItem && ReferenceEquals(treeViewItem, _currentDropTarget))
@@ -291,6 +349,15 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
     {
         args.Handled = true;
         SetDropTarget(null);
+
+        if (TryGetDraggedRegion(args.Data, out var draggedRegion))
+        {
+            if (sender is TreeViewItem regionFolderTarget && CanReorderRegion(draggedRegion, regionFolderTarget))
+                ReorderRegion(draggedRegion, regionFolderTarget,
+                    args.GetPosition(regionFolderTarget).Y >= regionFolderTarget.ActualHeight / 2);
+
+            return;
+        }
 
         if (!TryGetDraggedSpawner(args.Data, out var spawner))
             return;
@@ -329,6 +396,74 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
 
         spawner = null!;
         return false;
+    }
+
+    private static bool TryGetDraggedRegion(IDataObject data, out TreeViewItem region)
+    {
+        if (data.GetDataPresent(RegionDragFormat) && data.GetData(RegionDragFormat) is TreeViewItem treeViewItem)
+        {
+            region = treeViewItem;
+            return true;
+        }
+
+        region = null!;
+        return false;
+    }
+
+    private bool CanReorderRegion(TreeViewItem draggedRegion, TreeViewItem targetRegion)
+    {
+        return draggedRegion is not null &&
+               targetRegion is not null &&
+               !ReferenceEquals(draggedRegion, targetRegion) &&
+               _regionLookup.ContainsKey(draggedRegion) &&
+               _regionLookup.ContainsKey(targetRegion) &&
+               ReferenceEquals(draggedRegion.Parent, targetRegion.Parent);
+    }
+
+    private void ReorderRegion(TreeViewItem draggedRegion, TreeViewItem targetRegion, bool placeAfter)
+    {
+        if (draggedRegion.Parent is not ItemsControl parent)
+            return;
+
+        var oldIndex = parent.Items.IndexOf(draggedRegion);
+
+        if (oldIndex < 0 || parent.Items.IndexOf(targetRegion) < 0)
+            return;
+
+        parent.Items.RemoveAt(oldIndex);
+        var targetIndex = parent.Items.IndexOf(targetRegion);
+        parent.Items.Insert(targetIndex + (placeAfter ? 1 : 0), draggedRegion);
+
+        var regionOrder = parent.Items.OfType<TreeViewItem>()
+            .Where(item => _regionLookup.ContainsKey(item))
+            .Select(item => _regionLookup[item])
+            .ToList();
+
+        for (var sortId = 0; sortId < regionOrder.Count; sortId++)
+        {
+            var regionId = regionOrder[sortId];
+
+            foreach (var spawn in _segment.Spawns.GetSpawns().Where(spawn => GetRegionValue(spawn) == regionId))
+                spawn.SortId = sortId;
+        }
+    }
+
+    private void ApplyXmlRegionOrder()
+    {
+        var folders = Items.OfType<TreeViewItem>()
+            .Where(item => _regionLookup.ContainsKey(item))
+            .OrderBy(item => _segment.Spawns.GetSpawns()
+                .Where(spawn => GetRegionValue(spawn) == _regionLookup[item] && spawn.SortId.HasValue)
+                .Select(spawn => spawn.SortId.Value)
+                .DefaultIfEmpty(Int32.MaxValue)
+                .Min())
+            .ToList();
+
+        foreach (var folder in folders)
+        {
+            Items.Remove(folder);
+            Items.Add(folder);
+        }
     }
 
     private void SetDropTarget(TreeViewItem? treeViewItem)
@@ -397,6 +532,44 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
         _dragSourceItem = sender as SegmentTreeViewItem;
     }
 
+    private void OnRegionPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs args)
+    {
+        if (args.OriginalSource is not DependencyObject source ||
+            source.FindAncestor<SegmentTreeViewItem>() is not null)
+            return;
+
+        _dragStartPoint = args.GetPosition(this);
+        _dragSourceRegionItem = sender as TreeViewItem;
+    }
+
+    private void OnRegionPreviewMouseMove(object sender, MouseEventArgs args)
+    {
+        if (_dragStartPoint is null || !ReferenceEquals(sender, _dragSourceRegionItem))
+            return;
+
+        if (args.LeftButton != MouseButtonState.Pressed)
+        {
+            ResetDrag();
+            return;
+        }
+
+        var currentPosition = args.GetPosition(this);
+
+        if (Math.Abs(currentPosition.X - _dragStartPoint.Value.X) < SystemParameters.MinimumHorizontalDragDistance &&
+            Math.Abs(currentPosition.Y - _dragStartPoint.Value.Y) < SystemParameters.MinimumVerticalDragDistance)
+            return;
+
+        DragDrop.DoDragDrop(_dragSourceRegionItem,
+            new DataObject(RegionDragFormat, _dragSourceRegionItem), DragDropEffects.Move);
+
+        ResetDrag();
+    }
+
+    private void OnRegionPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs args)
+    {
+        ResetDrag();
+    }
+
     private void OnSpawnPreviewMouseMove(object sender, MouseEventArgs args)
     {
         if (_dragStartPoint is null)
@@ -432,6 +605,7 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
     {
         _dragStartPoint = null;
         _dragSourceItem = null;
+        _dragSourceRegionItem = null;
     }
 
     private static object CreateHeader(string name, string icon)

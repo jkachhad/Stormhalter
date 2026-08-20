@@ -7,6 +7,7 @@ using DigitalRune.Collections;
 using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Models;
+using Kesmai.WorldForge.Diagnostics;
 using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
@@ -19,10 +20,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using System.Xml.Linq;
 
 namespace Kesmai.WorldForge.Editor;
@@ -35,6 +38,11 @@ public class ActiveSegmentChanged(Segment Segment) : ValueChangedMessage<Segment
 
 public class ApplicationPresenter : ObservableRecipient
 {
+	private static readonly string RecoveryDirectory = Path.Combine(".storage", "WorldForge", "Recovery");
+	private static readonly string RecoveryArchive = Path.Combine(RecoveryDirectory, "LastSession.zip");
+	private readonly DispatcherTimer _recoveryTimer;
+	private string _savedFingerprint;
+	private bool _hasUnsavedChanges;
 	private int _unitSize = 55;
 	
 	private Segment _segment;
@@ -68,6 +76,7 @@ public class ApplicationPresenter : ObservableRecipient
 	public RelayCommand CloseSegmentCommand { get; set; }
 	public RelayCommand OpenSegmentCommand { get; set; }
 	public RelayCommand<bool> SaveSegmentCommand { get; set; }
+	public AsyncRelayCommand ExportToPdfCommand { get; }
 
 	public RelayCommand CreateRegionCommand { get; set; }
 	public RelayCommand<object> DeleteRegionCommand { get; set; }
@@ -84,7 +93,11 @@ public class ApplicationPresenter : ObservableRecipient
 	public object ActiveDocument
 	{
 		get => _activeDocument;
-		set => SetProperty(ref _activeDocument, value, true);
+		set
+		{
+			if (SetProperty(ref _activeDocument, value, true))
+				ExportToPdfCommand?.NotifyCanExecuteChanged();
+		}
 	}
 
 	public ISegmentObject ActiveContent
@@ -119,8 +132,11 @@ public class ApplicationPresenter : ObservableRecipient
 		OpenSegmentCommand = new RelayCommand(OpenSegment, () => (Segment == null));
 		OpenSegmentCommand.DependsOn(() => Segment);
 			
-		SaveSegmentCommand = new RelayCommand<bool>(SaveSegment, (queryPath) => (Segment != null));
+		SaveSegmentCommand = new RelayCommand<bool>(queryPath => SaveSegment(queryPath), (queryPath) => (Segment != null));
 		SaveSegmentCommand.DependsOn(() => Segment);
+
+		ExportToPdfCommand = new AsyncRelayCommand(ExportToPdfAsync,
+			() => ActiveDocument is SegmentRegion);
 		
 		ConvertSegmentCommand = new RelayCommand(ConvertSegment, () => (Segment is null));
 		ConvertSegmentCommand.DependsOn(() => Segment);
@@ -147,6 +163,12 @@ public class ApplicationPresenter : ObservableRecipient
 		ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
 
 		Selection = new Selection();
+
+		_recoveryTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
+		_recoveryTimer.Tick += (_, _) => WriteRecoverySnapshot();
+		_recoveryTimer.Start();
+		Application.Current.Exit += (_, _) => DeleteRecoverySnapshot();
+		Application.Current.Dispatcher.BeginInvoke(new Action(CheckForRecoverySnapshot), DispatcherPriority.ApplicationIdle);
 
 		// update active document when the segment changes occurs.
 		messenger.Register<ActiveSegmentChanged>(this, (_, message) =>
@@ -207,6 +229,7 @@ public class ApplicationPresenter : ObservableRecipient
 		var dialog = new Microsoft.Win32.OpenFolderDialog()
 		{
 			Multiselect = false,
+			InitialDirectory = GetProjectInitialDirectory(),
 		};
 
 		var openResult = dialog.ShowDialog();
@@ -215,6 +238,7 @@ public class ApplicationPresenter : ObservableRecipient
 			return;
 
 		var targetDirectory = new DirectoryInfo(dialog.FolderName);
+		RememberProjectDirectory(targetDirectory.FullName);
 
 		if (!targetDirectory.Exists)
 			targetDirectory.Create();
@@ -226,6 +250,7 @@ public class ApplicationPresenter : ObservableRecipient
 		};
 
 		Segment = segment;
+		MarkCurrentStateSaved();
 	}
 
 	private void CloseSegment()
@@ -233,9 +258,35 @@ public class ApplicationPresenter : ObservableRecipient
 		if (_segment == null)
 			throw new InvalidOperationException("Attempt to close a segment when an active segment does not exist.");
 
+		if (!ConfirmSaveBeforeClose())
+			return;
+
 		Segment = null;
 
 		Documents.Clear();
+	}
+
+	public bool ConfirmSaveBeforeClose()
+	{
+		if (_segment == null)
+			return true;
+
+		WeakReferenceMessenger.Default.Send(new SegmentSerialize(_segment));
+		RefreshUnsavedChangesFlag();
+		if (!_hasUnsavedChanges)
+			return true;
+
+		var result = MessageBox.Show(
+			$"Do you want to save changes to '{_segment.Name}' before closing?\n\n" +
+			"Yes: save and close\nNo: close without saving\nCancel: keep WorldForge open",
+			"Save before closing?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
+		return result switch
+		{
+			MessageBoxResult.Yes => SaveSegment(false),
+			MessageBoxResult.No => true,
+			_ => false
+		};
 	}
 	
 	private void OpenSegment()
@@ -257,6 +308,7 @@ public class ApplicationPresenter : ObservableRecipient
 		var dialog = new Microsoft.Win32.OpenFolderDialog()
 		{
 			Multiselect = false,
+			InitialDirectory = GetProjectInitialDirectory(),
 		};
 		
 		var openResult = dialog.ShowDialog();
@@ -265,16 +317,26 @@ public class ApplicationPresenter : ObservableRecipient
 			return;
 		
 		var targetDirectory = new DirectoryInfo(dialog.FolderName);
+		RememberProjectDirectory(targetDirectory.FullName);
+		LoadSegmentDirectory(targetDirectory, targetDirectory.FullName);
+	}
+
+	private void LoadSegmentDirectory(DirectoryInfo targetDirectory, string projectDirectory)
+	{
+		using var openTiming = PerformanceTrace.Measure(
+			"Open project", () => targetDirectory.Name);
 		var segment = new Segment()
 		{
-			Name = targetDirectory.Name,
-			Directory = targetDirectory.FullName
+			Name = new DirectoryInfo(projectDirectory).Name,
+			Directory = projectDirectory
 		};
 		
 		Segment = segment;
 		
 		void process(string documentName, Action assignment, Action<XElement, Version> load)
 		{
+			using var documentTiming = PerformanceTrace.Measure(
+				$"Load project XML [{documentName}]");
 			var documentFile = new FileInfo(Path.Combine(targetDirectory.FullName, documentName));
 		
 			if (documentFile.Exists)
@@ -316,6 +378,9 @@ public class ApplicationPresenter : ObservableRecipient
 
 		if (regionsFolder.Exists)
 		{
+			using var regionsTiming = PerformanceTrace.Measure(
+				"Load region XML files",
+				() => $"{segment.Regions.Count} regions");
 			foreach (var file in regionsFolder.GetFiles("*.xml"))
 			{
 				var regionDocument = XDocument.Load(file.FullName);
@@ -336,14 +401,167 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		process("Spawns.xml", () => segment.Spawns = new SegmentSpawns(),
 			(root, version) => segment.Spawns.Load(segment.Entities, root, version));
+
+		process("WorldForge.xml", null,
+			(root, version) => segment.LoadWorldForgeLayout(root));
 		
 		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
 			(root, version) => segment.Treasures.Load(root, version));
 
-		Segment.UpdateTiles();
+		MarkCurrentStateSaved();
+
 	}
 
-	private void SaveSegment(bool queryPath)
+	private void WriteRecoverySnapshot()
+	{
+		if (_segment == null) return;
+		try
+		{
+			WeakReferenceMessenger.Default.Send(new SegmentSerialize(_segment));
+			RefreshUnsavedChangesFlag();
+			if (!_hasUnsavedChanges)
+			{
+				DeleteRecoverySnapshot();
+				return;
+			}
+			Directory.CreateDirectory(RecoveryDirectory);
+			var temporaryArchive = RecoveryArchive + ".tmp";
+			if (File.Exists(temporaryArchive)) File.Delete(temporaryArchive);
+			using (var stream = File.Create(temporaryArchive))
+			using (var archive = new ZipArchive(stream, ZipArchiveMode.Create))
+			{
+				WriteRecoveryEntry(archive, "Recovery.xml", new XElement("recovery",
+					new XAttribute("projectDirectory", _segment.Directory ?? String.Empty),
+					new XAttribute("segmentName", _segment.Name ?? "Segment"),
+					new XAttribute("savedUtc", DateTime.UtcNow.ToString("O"))));
+				WriteRecoveryCollection(archive, "Locations.xml", "locations", _segment.Locations.Save);
+				WriteRecoveryCollection(archive, "Subregions.xml", "subregions", _segment.Subregions.Save);
+				WriteRecoveryCollection(archive, "Entities.xml", "entities", _segment.Entities.Save);
+				WriteRecoveryCollection(archive, "Spawns.xml", "spawns", _segment.Spawns.Save);
+				WriteRecoveryCollection(archive, "Treasures.xml", "treasures", _segment.Treasures.Save);
+				WriteRecoveryCollection(archive, "Brushes.xml", "brushes", _segment.Brushes.Save);
+				WriteRecoveryCollection(archive, "Components.xml", "components", _segment.Components.Save);
+				WriteRecoveryCollection(archive, "Templates.xml", "templates", _segment.Templates.Save);
+				WriteRecoveryEntry(archive, "WorldForge.xml", _segment.GetWorldForgeLayoutElement());
+				foreach (var region in _segment.Regions)
+					WriteRecoveryEntry(archive, $"Regions/{region.ID}.xml", region.GetSerializingElement());
+			}
+			File.Move(temporaryArchive, RecoveryArchive, true);
+		}
+		catch
+		{
+			// Recovery must never interrupt editing or normal saves.
+		}
+	}
+
+	private static void WriteRecoveryCollection(ZipArchive archive, string fileName, string rootName,
+		Action<XElement> save)
+	{
+		var root = new XElement(rootName);
+		save(root);
+		WriteRecoveryEntry(archive, fileName, root);
+	}
+
+	private static void WriteRecoveryEntry(ZipArchive archive, string fileName, XElement element)
+	{
+		var entry = archive.CreateEntry(fileName, CompressionLevel.Optimal);
+		using var entryStream = entry.Open();
+		new XDocument(element).Save(entryStream);
+	}
+
+	private void CheckForRecoverySnapshot()
+	{
+		if (!File.Exists(RecoveryArchive) || Segment != null) return;
+		try
+		{
+			string projectDirectory;
+			DateTime savedUtc;
+			using (var archive = ZipFile.OpenRead(RecoveryArchive))
+			using (var stream = archive.GetEntry("Recovery.xml")!.Open())
+			{
+				var recovery = XDocument.Load(stream).Root!;
+				projectDirectory = (string?)recovery.Attribute("projectDirectory") ?? String.Empty;
+				savedUtc = DateTime.TryParse((string?)recovery.Attribute("savedUtc"), out var parsed)
+					? parsed.ToLocalTime() : File.GetLastWriteTime(RecoveryArchive);
+			}
+			var answer = MessageBox.Show(
+				$"WorldForge found an autosave from {savedUtc:g}.\n\nRestore the last editing state?",
+				"Restore autosave", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (answer != MessageBoxResult.Yes)
+			{
+				DeleteRecoverySnapshot();
+				return;
+			}
+
+			var restoreDirectory = Path.Combine(RecoveryDirectory, "Restore");
+			if (Directory.Exists(restoreDirectory)) Directory.Delete(restoreDirectory, true);
+			ZipFile.ExtractToDirectory(RecoveryArchive, restoreDirectory);
+			LoadSegmentDirectory(new DirectoryInfo(restoreDirectory), projectDirectory);
+			_savedFingerprint = null;
+			_hasUnsavedChanges = true;
+			Directory.Delete(restoreDirectory, true);
+		}
+		catch (Exception ex)
+		{
+			MessageBox.Show($"The autosave could not be restored: {ex.Message}", "Restore autosave",
+				MessageBoxButton.OK, MessageBoxImage.Warning);
+			DeleteRecoverySnapshot();
+		}
+	}
+
+	private static void DeleteRecoverySnapshot()
+	{
+		try
+		{
+			if (File.Exists(RecoveryArchive)) File.Delete(RecoveryArchive);
+			var temporaryArchive = RecoveryArchive + ".tmp";
+			if (File.Exists(temporaryArchive)) File.Delete(temporaryArchive);
+		}
+		catch
+		{
+			// A locked recovery file can safely be replaced on the next autosave.
+		}
+	}
+
+	private void MarkCurrentStateSaved()
+	{
+		if (_segment == null) return;
+		_savedFingerprint = CreateSegmentFingerprint(_segment);
+		_hasUnsavedChanges = false;
+		DeleteRecoverySnapshot();
+	}
+
+	private void RefreshUnsavedChangesFlag()
+	{
+		if (_segment == null || _hasUnsavedChanges || _savedFingerprint == null) return;
+		_hasUnsavedChanges = !String.Equals(_savedFingerprint, CreateSegmentFingerprint(_segment),
+			StringComparison.Ordinal);
+	}
+
+	private static string CreateSegmentFingerprint(Segment segment)
+	{
+		var root = new XElement("snapshot",
+			new XAttribute("name", segment.Name ?? String.Empty));
+		void add(string name, Action<XElement> save)
+		{
+			var element = new XElement(name);
+			save(element);
+			root.Add(element);
+		}
+		add("locations", segment.Locations.Save);
+		add("subregions", segment.Subregions.Save);
+		add("entities", segment.Entities.Save);
+		add("spawns", segment.Spawns.Save);
+		add("treasures", segment.Treasures.Save);
+		add("brushes", segment.Brushes.Save);
+		add("components", segment.Components.Save);
+		add("templates", segment.Templates.Save);
+		root.Add(new XElement("regions", segment.Regions
+			.OrderBy(region => region.ID).Select(region => region.GetSerializingElement())));
+		return root.ToString(SaveOptions.DisableFormatting);
+	}
+
+	private bool SaveSegment(bool queryPath)
 	{
 		var targetPath = String.Empty;
 		
@@ -355,14 +573,16 @@ public class ApplicationPresenter : ObservableRecipient
 			var dialog = new Microsoft.Win32.OpenFolderDialog()
 			{
 				Multiselect = false,
+				InitialDirectory = GetProjectInitialDirectory(),
 			};
 
 			var saveResult = dialog.ShowDialog();
 
 			if (!saveResult.HasValue || saveResult != true)
-				return;
+				return false;
 
 			targetPath = dialog.FolderName;
+			RememberProjectDirectory(targetPath);
 		}
 		else
 		{
@@ -410,6 +630,7 @@ public class ApplicationPresenter : ObservableRecipient
 			write(_segment.Brushes.Save, "brushes", "Brushes.xml");
 			write(_segment.Components.Save, "components", "Components.xml");
 			write(_segment.Templates.Save, "templates", "Templates.xml");
+			_segment.GetWorldForgeLayoutElement().Save(Path.Combine(targetPath, "WorldForge.xml"));
 			
 			// find the project file and save it
 			var segmentProject = new FileInfo(Path.Combine(targetPath, $"{_segment.Name}.csproj"));
@@ -463,9 +684,12 @@ public class ApplicationPresenter : ObservableRecipient
 		catch (Exception ex)
 		{
 			MessageBox.Show($"Error when saving project: {ex.Message}", "Unable to save", MessageBoxButton.OK, MessageBoxImage.Error);
+			return false;
 		}
 		
 		WeakReferenceMessenger.Default.Send(new SegmentSerialized(_segment));
+		MarkCurrentStateSaved();
+		return true;
 	}
 	
 	private void CreateRegion()
@@ -520,6 +744,91 @@ public class ApplicationPresenter : ObservableRecipient
 
 		if (graphicsScreen != null)
 			graphicsScreen.InvalidateRender();
+	}
+
+	private async Task ExportToPdfAsync()
+	{
+		if (ActiveDocument is not SegmentRegion region)
+			return;
+
+		// Save dialogs update Windows' shared recent-directory state. Preserve the
+		// project location separately before opening the PDF dialog.
+		if (!String.IsNullOrWhiteSpace(Segment?.Directory))
+			RememberProjectDirectory(Segment.Directory);
+
+		var dialog = new Microsoft.Win32.SaveFileDialog
+		{
+			AddExtension = true,
+			DefaultExt = ".pdf",
+			FileName = $"{region.Name}.pdf",
+			Filter = "PDF files (*.pdf)|*.pdf",
+			InitialDirectory = GetPdfInitialDirectory(),
+			Title = "Export region map to PDF"
+		};
+
+		if (dialog.ShowDialog() != true)
+			return;
+
+		RememberPdfDirectory(Path.GetDirectoryName(dialog.FileName));
+
+		var progressWindow = new ProgressBarWindow
+		{
+			Owner = Application.Current.MainWindow,
+			Title = "Exporting region map"
+		};
+		var progress = new Progress<int>(progressWindow.UpdateProgress);
+		progressWindow.Show();
+
+		try
+		{
+			await PdfExportService.ExportAsync(region, dialog.FileName, progress);
+			MessageBox.Show("The region map was exported successfully.", "Export complete",
+				MessageBoxButton.OK, MessageBoxImage.Information);
+		}
+		catch (Exception ex)
+		{
+			MessageBox.Show($"The PDF could not be created.\n\n{ex.Message}", "Export failed",
+				MessageBoxButton.OK, MessageBoxImage.Error);
+		}
+		finally
+		{
+			progressWindow.Close();
+		}
+	}
+
+	private static string GetProjectInitialDirectory()
+	{
+		var directory = Properties.Settings.Default.LastProjectDirectory;
+		return !String.IsNullOrWhiteSpace(directory) && Directory.Exists(directory)
+			? directory
+			: Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+	}
+
+	private static void RememberProjectDirectory(string directory)
+	{
+		if (String.IsNullOrWhiteSpace(directory))
+			return;
+
+		Properties.Settings.Default.LastProjectDirectory = Path.GetFullPath(directory);
+		Properties.Settings.Default.Save();
+	}
+
+	private static string GetPdfInitialDirectory()
+	{
+		var directory = Properties.Settings.Default.LastPdfDirectory;
+		if (!String.IsNullOrWhiteSpace(directory) && Directory.Exists(directory))
+			return directory;
+
+		return GetProjectInitialDirectory();
+	}
+
+	private static void RememberPdfDirectory(string directory)
+	{
+		if (String.IsNullOrWhiteSpace(directory))
+			return;
+
+		Properties.Settings.Default.LastPdfDirectory = Path.GetFullPath(directory);
+		Properties.Settings.Default.Save();
 	}
 
     private void ConvertSegment()

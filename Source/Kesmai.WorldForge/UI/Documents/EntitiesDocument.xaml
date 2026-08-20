@@ -4,10 +4,90 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
+             xmlns:documents="clr-namespace:Kesmai.WorldForge.UI.Documents"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              
              FontFamily="Tahoma" FontSize="16">
+    <UserControl.Resources>
+        <documents:SpellTypeDisplayConverter x:Key="SpellTypeDisplayConverter" />
+        <DataTemplate x:Key="CollectionDetailsTemplate">
+            <Border Margin="28,2,8,6" Padding="8" Background="#FFF4F4F4"
+                    BorderBrush="#FFB8B8B8" BorderThickness="1">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Fields.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <StackPanel>
+                    <TextBlock Text="Parameters" FontWeight="Bold" Margin="0,0,0,5" />
+                    <ItemsControl ItemsSource="{Binding Fields}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,2">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsAvailable}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="145" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="0,0,8,0" />
+                                    <ComboBox Grid.Column="1" ItemsSource="{Binding Suggestions}"
+                                              Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              IsEditable="True" IsTextSearchEnabled="True" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="CollectionConstructorTemplate">
+            <ComboBox ItemsSource="{Binding KnownConstructors}" DisplayMemberPath="Name"
+                      SelectedValuePath="Arguments"
+                      SelectedValue="{Binding ConstructorOption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Text="{Binding CurrentValuesSummary, Mode=OneWay}"
+                      IsEditable="True" IsReadOnly="True" IsTextSearchEnabled="True" />
+        </DataTemplate>
+		<DataTemplate x:Key="LootConstructorTemplate">
+			<ComboBox ItemsSource="{Binding KnownConstructors}" DisplayMemberPath="Name"
+					  SelectedValuePath="Arguments"
+					  SelectedValue="{Binding ConstructorOption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					  Text="{Binding CurrentValuesSummary, Mode=OneWay}"
+					  IsEditable="True" IsReadOnly="True" IsTextSearchEnabled="True" />
+		</DataTemplate>
+		<DataTemplate x:Key="CooldownEditorTemplate">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="48" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<TextBox Text="{Binding CooldownDisplay, Mode=OneWay}" IsReadOnly="True"
+						 TextAlignment="Right" HorizontalContentAlignment="Right"
+						 VerticalContentAlignment="Center" Margin="0,0,3,0" />
+				<ComboBox Grid.Column="1" Text="{Binding Cooldown, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						  IsEditable="True" HorizontalContentAlignment="Right" Loaded="CooldownComboBoxLoaded">
+					<ComboBoxItem>TimeSpan.Zero</ComboBoxItem>
+					<ComboBoxItem>TimeSpan.FromSeconds(6)</ComboBoxItem>
+					<ComboBoxItem>TimeSpan.FromSeconds(12)</ComboBoxItem>
+					<ComboBoxItem>TimeSpan.FromMinutes(1)</ComboBoxItem>
+					<ComboBoxItem>TimeSpan.FromHours(1)</ComboBoxItem>
+				</ComboBox>
+			</Grid>
+		</DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -19,7 +99,319 @@
         </Grid.RowDefinitions>
         
         <Border Grid.Row="0" Grid.Column="0" Margin="2" BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="_structuredColumn" Width="0" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border x:Name="_structuredOnSpawn" Grid.Column="0" BorderBrush="LightGray"
+                        BorderThickness="0,0,1,0" Padding="5" Visibility="Collapsed">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <TextBlock Text="Structured OnSpawn" FontWeight="Bold" FontSize="14" />
+                                <TextBlock Text="  —  custom code remains in the source editor." FontSize="10"
+                                           Foreground="DimGray" VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <Grid Margin="0,0,0,3">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="105" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                                <TextBlock Text="Creation pattern" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" />
+                                <ComboBox Grid.Column="1" ItemsSource="{Binding OnSpawn.CreationPatterns}"
+                                          SelectedItem="{Binding OnSpawn.CreationPattern, Mode=TwoWay}" />
+                            </Grid>
+
+                            <Grid Margin="0,0,0,3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,3,0">
+                                    <TextBlock Text="Base mob variable" FontWeight="Bold" FontSize="11" />
+                                    <ComboBox ItemsSource="{Binding OnSpawn.KnownBaseMobVariables}" IsEditable="True"
+                                              Text="{Binding OnSpawn.BaseMobVariable, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="3,0,0,0">
+                                    <TextBlock Text="Base mob type" FontWeight="Bold" FontSize="11" />
+                                    <ComboBox ItemsSource="{Binding OnSpawn.KnownBaseMobTypes}" IsEditable="True"
+                                              Text="{Binding OnSpawn.BaseMobType, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,3,0">
+                                    <TextBlock Text="Entity variable" FontWeight="Bold" FontSize="11" />
+                                    <ComboBox ItemsSource="{Binding OnSpawn.KnownEntityVariables}" IsEditable="True"
+                                              Text="{Binding OnSpawn.EntityVariable, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="3,0,0,0">
+                                    <TextBlock Text="Entity type" FontWeight="Bold" FontSize="11" />
+                                    <ComboBox ItemsSource="{Binding OnSpawn.KnownEntityTypes}" IsEditable="True"
+                                              Text="{Binding OnSpawn.EntityType, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel Margin="0,0,0,3">
+                                <TextBlock Text="Entity constructor arguments" FontWeight="Bold" FontSize="11" />
+                                <ComboBox IsEditable="True"
+                                          Text="{Binding OnSpawn.EntityConstructorArguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+
+                            <Grid Margin="0,0,0,3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,3,0">
+                                    <TextBlock Text="Config variable" FontWeight="Bold" FontSize="11" />
+                                    <ComboBox ItemsSource="{Binding OnSpawn.KnownConfigurationVariables}" IsEditable="True"
+                                              Text="{Binding OnSpawn.ConfigurationVariable, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="3,0,0,0">
+                                    <TextBlock Text="Config type" FontWeight="Bold" FontSize="11" />
+                                    <ComboBox ItemsSource="{Binding OnSpawn.KnownConfigurationTypes}" IsEditable="True"
+                                              Text="{Binding OnSpawn.ConfigurationType, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Button Content="Create skeleton from pattern" Click="CreatePatternSkeletonClick"
+                                    Height="24" Padding="3,0" Margin="0,0,0,4" />
+
+                            <Grid Margin="0,0,0,4">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="1.35*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                    <TextBlock Text="Configuration" FontWeight="Bold" FontSize="11" />
+                                    <TextBlock Text="{Binding OnSpawn.ConfigurationDescription}" TextWrapping="Wrap" FontSize="10" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Returned entity" FontWeight="Bold" FontSize="11" />
+                                    <TextBlock Text="{Binding OnSpawn.EntityDescription}" TextWrapping="Wrap" FontSize="10" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel DockPanel.Dock="Bottom">
+                            <Button Content="Apply structured values" Click="ApplyStructuredOnSpawnClick"
+                                    Margin="0,4,0,0" Height="30" Padding="4" />
+                        </StackPanel>
+
+                        <TabControl FontSize="12">
+                            <TabItem Header="Fields">
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4">
+                                        <ComboBox x:Name="_newPropertyName" ItemsSource="{Binding OnSpawn.AvailablePropertyNames}"
+                                                  Width="210" IsEditable="True" />
+                                        <Button Content="Add" Click="AddStructuredPropertyClick" Margin="4,0,0,0" Padding="8,2" />
+                                        <Button Content="Delete selected" Click="DeleteStructuredPropertyClick" CommandParameter="{Binding ElementName=_propertiesGrid}" Margin="4,0,0,0" Padding="8,2" />
+                                    </StackPanel>
+                                    <DataGrid x:Name="_propertiesGrid" ItemsSource="{Binding OnSpawn.OrdinaryProperties}" AutoGenerateColumns="False"
+                                              CanUserAddRows="False" CanUserDeleteRows="True" HeadersVisibility="Column">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn Header="Enabled" Width="62">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Header="Property" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                            <DataGridTemplateColumn Header="Value" Width="1.2*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <ComboBox ItemsSource="{Binding SuggestedValues}"
+                                                                  Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                                                  IsEditable="True" IsTextSearchEnabled="True" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DockPanel>
+                            </TabItem>
+                            <TabItem Header="Effects &amp; Defenses">
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4">
+                                        <Button Content="Add immunity" Tag="AddImmunity" Click="AddStructuredMethodClick" Padding="7,2" />
+                                        <Button Content="Add weakness" Tag="AddWeakness" Click="AddStructuredMethodClick" Margin="4,0,0,0" Padding="7,2" />
+                                        <Button Content="Add status" Tag="AddStatus" Click="AddStructuredMethodClick" Margin="4,0,0,0" Padding="7,2" />
+                                        <Button Content="Delete selected" Click="DeleteStructuredMethodClick" CommandParameter="{Binding ElementName=_defenseMethodsGrid}" Margin="4,0,0,0" Padding="7,2" />
+                                    </StackPanel>
+                                    <DataGrid x:Name="_defenseMethodsGrid" ItemsSource="{Binding OnSpawn.DefenseMethods}" AutoGenerateColumns="False" CanUserAddRows="False">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn Header="Enabled" Width="62"><DataGridTemplateColumn.CellTemplate><DataTemplate><CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay}" HorizontalAlignment="Center" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                            <DataGridTextColumn Header="Action" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                            <DataGridTemplateColumn Header="Arguments" Width="1.5*"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox ItemsSource="{Binding SuggestedArguments}" Text="{Binding Arguments, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsTextSearchEnabled="True" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DockPanel>
+                            </TabItem>
+							<TabItem Header="Stats">
+								<DockPanel>
+									<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4">
+										<Button Content="Add stat" Click="AddStatClick" Padding="8,2" />
+										<Button Content="Delete selected" Click="DeleteStatClick" Margin="4,0,0,0" Padding="8,2" />
+									</StackPanel>
+									<DataGrid x:Name="_statsGrid" ItemsSource="{Binding OnSpawn.StatItems}" AutoGenerateColumns="False" CanUserAddRows="False">
+										<DataGrid.Columns>
+											<DataGridCheckBoxColumn Header="Enabled" Width="62" Binding="{Binding IsEnabled, Mode=TwoWay}" />
+											<DataGridTemplateColumn Header="Entity stat" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox ItemsSource="{Binding KnownStats}" Text="{Binding Stat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsTextSearchEnabled="True" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+											<DataGridTemplateColumn Header="Operation" Width="90"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox ItemsSource="{Binding Operations}" SelectedItem="{Binding Operation, Mode=TwoWay}" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+											<DataGridTemplateColumn Header="Value / arguments" Width="1.2*"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+										</DataGrid.Columns>
+									</DataGrid>
+								</DockPanel>
+							</TabItem>
+                            <TabItem Header="Attacks">
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4"><ComboBox x:Name="_newAttackType" ItemsSource="{Binding OnSpawn.AttackTypes}" SelectedIndex="0" Width="190" IsEditable="True" /><Button Content="Add attack" Tag="Attacks" Click="AddCollectionItemClick" Margin="4,0,0,0" Padding="8,2" /><Button Content="Delete selected" Click="DeleteCollectionItemClick" CommandParameter="{Binding ElementName=_attacksGrid}" Margin="4,0,0,0" Padding="8,2" /></StackPanel>
+                                    <DataGrid x:Name="_attacksGrid" ItemsSource="{Binding OnSpawn.AttackItems}" AutoGenerateColumns="False" CanUserAddRows="False"><DataGrid.Columns><DataGridTemplateColumn Header="Enabled" Width="62"><DataGridTemplateColumn.CellTemplate><DataTemplate><CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay}" HorizontalAlignment="Center" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Attack type" Width="165"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox ItemsSource="{Binding KnownTypes}" SelectedItem="{Binding Type, Mode=TwoWay}" IsEditable="True" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Arguments" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox ItemsSource="{Binding KnownArguments}" Text="{Binding Arguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsTextSearchEnabled="True" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Cooldown" Width="116"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox Text="{Binding Cooldown, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" HorizontalContentAlignment="Right" Loaded="CooldownComboBoxLoaded"><ComboBox.Resources><Style TargetType="TextBox"><Setter Property="TextAlignment" Value="Right" /></Style><Style TargetType="ComboBoxItem"><Setter Property="HorizontalContentAlignment" Value="Right" /></Style></ComboBox.Resources><ComboBoxItem>TimeSpan.Zero</ComboBoxItem><ComboBoxItem>TimeSpan.FromSeconds(6)</ComboBoxItem><ComboBoxItem>TimeSpan.FromSeconds(12)</ComboBoxItem><ComboBoxItem>TimeSpan.FromMinutes(1)</ComboBoxItem><ComboBoxItem>TimeSpan.FromHours(1)</ComboBoxItem></ComboBox></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Weight" Width="70"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox Text="{Binding Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True"><ComboBoxItem>10</ComboBoxItem><ComboBoxItem>20</ComboBoxItem><ComboBoxItem>40</ComboBoxItem><ComboBoxItem>50</ComboBoxItem><ComboBoxItem>60</ComboBoxItem><ComboBoxItem>100</ComboBoxItem></ComboBox></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn></DataGrid.Columns></DataGrid>
+                                </DockPanel>
+                            </TabItem>
+                            <TabItem Header="Blocks">
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4"><ComboBox x:Name="_newBlockType" ItemsSource="{Binding OnSpawn.BlockTypes}" SelectedIndex="0" Width="190" IsEditable="True" /><Button Content="Add block" Tag="Blocks" Click="AddCollectionItemClick" Margin="4,0,0,0" Padding="8,2" /><Button Content="Delete selected" Click="DeleteCollectionItemClick" CommandParameter="{Binding ElementName=_blocksGrid}" Margin="4,0,0,0" Padding="8,2" /></StackPanel>
+                                    <DataGrid x:Name="_blocksGrid" ItemsSource="{Binding OnSpawn.BlockItems}" AutoGenerateColumns="False" CanUserAddRows="False"><DataGrid.Columns><DataGridTemplateColumn Header="Enabled" Width="62"><DataGridTemplateColumn.CellTemplate><DataTemplate><CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay}" HorizontalAlignment="Center" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Block type" Width="160"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox ItemsSource="{Binding KnownTypes}" SelectedItem="{Binding Type, Mode=TwoWay}" IsEditable="True" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Arguments" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox ItemsSource="{Binding KnownArguments}" Text="{Binding Arguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsTextSearchEnabled="True" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn></DataGrid.Columns></DataGrid>
+                                </DockPanel>
+                            </TabItem>
+                            <TabItem Header="Spells">
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Top" Margin="0,4">
+                                        <StackPanel Orientation="Horizontal">
+                                            <ComboBox x:Name="_newSpellType" ItemsSource="{Binding OnSpawn.SpellTypes}" SelectedIndex="0" Width="245" IsEditable="True" />
+                                            <Button Content="Add spell" Tag="Spells" Click="AddCollectionItemClick" Margin="4,0,0,0" Padding="8,2" />
+                                            <Button Content="Delete selected" Click="DeleteCollectionItemClick" CommandParameter="{Binding ElementName=_spellsGrid}" Margin="4,0,0,0" Padding="8,2" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding OnSpawn.SpellItems.Count}" Value="0">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <TextBlock Text="Collection constructor" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                            <ComboBox Width="360" ItemsSource="{Binding OnSpawn.SpellCollectionConstructors}"
+                                                      DisplayMemberPath="Name" SelectedValuePath="Arguments"
+                                                      SelectedValue="{Binding OnSpawn.SpellCollectionConstructor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <ItemsControl ItemsSource="{Binding OnSpawn.SpellCollectionFields}" Margin="0,4,0,0">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Margin="0,0,12,3">
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="0,0,5,0" />
+                                                        <ComboBox Width="100" ItemsSource="{Binding Suggestions}"
+                                                                  Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                  IsEditable="True" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                    <DataGrid x:Name="_spellsGrid" ItemsSource="{Binding OnSpawn.SpellItems}" AutoGenerateColumns="False" CanUserAddRows="False"><DataGrid.Columns><DataGridTemplateColumn Header="Enabled" Width="62"><DataGridTemplateColumn.CellTemplate><DataTemplate><CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay}" HorizontalAlignment="Center" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Spell type" Width="145"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox ItemsSource="{Binding KnownTypes}" SelectedItem="{Binding Type, Mode=TwoWay}" IsEditable="False"><ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding Converter={StaticResource SpellTypeDisplayConverter}}" /></DataTemplate></ComboBox.ItemTemplate></ComboBox></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Arguments" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox ItemsSource="{Binding KnownArguments}" Text="{Binding Arguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsTextSearchEnabled="True" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Cooldown" Width="116"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox Text="{Binding Cooldown, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" HorizontalContentAlignment="Right" Loaded="CooldownComboBoxLoaded"><ComboBox.Resources><Style TargetType="TextBox"><Setter Property="TextAlignment" Value="Right" /></Style><Style TargetType="ComboBoxItem"><Setter Property="HorizontalContentAlignment" Value="Right" /></Style></ComboBox.Resources><ComboBoxItem>TimeSpan.Zero</ComboBoxItem><ComboBoxItem>TimeSpan.FromSeconds(6)</ComboBoxItem><ComboBoxItem>TimeSpan.FromSeconds(12)</ComboBoxItem><ComboBoxItem>TimeSpan.FromMinutes(1)</ComboBoxItem><ComboBoxItem>TimeSpan.FromHours(1)</ComboBoxItem></ComboBox></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTemplateColumn Header="Weight" Width="70"><DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox Text="{Binding Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True"><ComboBoxItem>10</ComboBoxItem><ComboBoxItem>20</ComboBoxItem><ComboBoxItem>40</ComboBoxItem><ComboBoxItem>50</ComboBoxItem><ComboBoxItem>60</ComboBoxItem><ComboBoxItem>100</ComboBoxItem></ComboBox></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn></DataGrid.Columns></DataGrid>
+                                </DockPanel>
+                            </TabItem>
+                            <TabItem Header="Others">
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4">
+                                        <ComboBox x:Name="_newMethodName" ItemsSource="{Binding OnSpawn.AvailableOtherMethodNames}"
+                                                  Width="210" />
+                                        <Button Content="Add" Click="AddStructuredMethodClick" Margin="4,0,0,0" Padding="8,2" />
+                                        <Button Content="Delete selected" Click="DeleteStructuredMethodClick" CommandParameter="{Binding ElementName=_methodsGrid}" Margin="4,0,0,0" Padding="8,2" />
+                                    </StackPanel>
+                                    <DataGrid x:Name="_methodsGrid" ItemsSource="{Binding OnSpawn.OtherMethods}" AutoGenerateColumns="False"
+                                              CanUserAddRows="False" CanUserDeleteRows="True" HeadersVisibility="Column">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn Header="Enabled" Width="62">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Header="Action" Width="*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <ComboBox ItemsSource="{Binding DataContext.OnSpawn.AvailableOtherMethodNames, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                  SelectedItem="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                                                  PreviewMouseLeftButtonDown="GridEditorPreviewMouseLeftButtonDown" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Header="Arguments" Width="1.5*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <ComboBox x:Name="ArgumentSelector" ItemsSource="{Binding SuggestedArguments}"
+                                                                      Text="{Binding Arguments, UpdateSourceTrigger=PropertyChanged}"
+                                                                      IsEditable="True" IsTextSearchEnabled="True"
+                                                                      StaysOpenOnEdit="True"
+                                                                      PreviewMouseLeftButtonDown="GridEditorPreviewMouseLeftButtonDown" />
+                                                            <TextBox x:Name="LootPackEditor"
+                                                                     Text="{Binding Arguments, UpdateSourceTrigger=PropertyChanged}"
+                                                                     Visibility="Collapsed" />
+                                                        </Grid>
+                                                        <DataTemplate.Triggers>
+                                                            <DataTrigger Binding="{Binding IsLootPack}" Value="True">
+                                                                <Setter TargetName="ArgumentSelector" Property="Visibility" Value="Collapsed" />
+                                                                <Setter TargetName="LootPackEditor" Property="Visibility" Value="Visible" />
+                                                            </DataTrigger>
+                                                        </DataTemplate.Triggers>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DockPanel>
+                            </TabItem>
+                            <TabItem Header="Loot">
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4">
+                                        <Button Content="Add loot item" Click="AddLootItemClick" Padding="8,2" />
+                                        <Button Content="Delete selected" Click="DeleteLootItemClick" Margin="4,0,0,0" Padding="8,2" />
+										<TextBlock Text="Amount" VerticalAlignment="Center" Margin="14,0,4,0" />
+										<ComboBox Width="80" IsEditable="True"
+											Text="{Binding OnSpawn.LootAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+											<ComboBoxItem>1</ComboBoxItem><ComboBoxItem>2</ComboBoxItem>
+											<ComboBoxItem>3</ComboBoxItem><ComboBoxItem>5</ComboBoxItem>
+											<ComboBoxItem>10</ComboBoxItem>
+										</ComboBox>
+                                    </StackPanel>
+                                    <DataGrid x:Name="_lootGrid" ItemsSource="{Binding OnSpawn.LootItems}" AutoGenerateColumns="False"
+                                              CanUserAddRows="False" CanUserDeleteRows="True" HeadersVisibility="Column">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn Header="Enabled" Width="62">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox IsChecked="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+											<DataGridTemplateColumn Header="Constructor / options" Width="*"
+												CellTemplate="{StaticResource LootConstructorTemplate}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DockPanel>
+                            </TabItem>
+                        </TabControl>
+                    </DockPanel>
+                </Border>
+
             <TabControl x:Name="_scriptsTabControl"
+                        Grid.Column="1"
                         ItemsSource="{Binding Entity.Scripts}"
                         SelectedItem="{Binding SelectedScript, Mode=TwoWay}"
                         Margin="5">
@@ -57,6 +449,7 @@
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
+            </Grid>
         </Border>
         
         <Border Grid.Row="1" Grid.Column="0" Margin="2" BorderBrush="Black" BorderThickness="1">
