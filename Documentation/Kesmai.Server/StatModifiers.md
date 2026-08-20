@@ -252,7 +252,7 @@ Keep this check free of messages, timers, random rolls, subscriptions, and other
 
 ## Lifecycle Side Effects
 
-`OnActivateBonus` and `OnInactivateBonus` still have a purpose. Use them for behavior that happens once when the item becomes active or inactive, such as adding an item source to a status effect.
+`OnActivateModifiers` and `OnInactivateModifiers` still have a purpose. Use them for behavior that happens once when the item becomes active or inactive, such as adding an item source to a status effect.
 
 Likewise, `OnWield` and `OnUnwield` remain appropriate for wield messages, cooldowns, event subscriptions, and other actual wield events.
 
@@ -266,16 +266,16 @@ protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
     return modifiers;
 }
 
-protected override void OnActivateBonus(MobileEntity entity)
+protected override void OnActivateModifiers(MobileEntity entity)
 {
-    base.OnActivateBonus(entity);
+    base.OnActivateModifiers(entity);
     AddStatusSource(entity);
 }
 
-protected override void OnInactivateBonus(MobileEntity entity)
+protected override void OnInactivateModifiers(MobileEntity entity)
 {
     RemoveStatusSource(entity);
-    base.OnInactivateBonus(entity);
+    base.OnInactivateModifiers(entity);
 }
 ```
 
@@ -357,10 +357,10 @@ Do not add new direct `wearer.BaseDodge += value` and `-= value` pairs for equip
 Do not write equipment stats like this:
 
 ```csharp
-protected override void OnActivateBonus(MobileEntity entity) =>
+protected override void OnActivateModifiers(MobileEntity entity) =>
     entity.Stats[EntityStat.MaxHealth].Add(Bonus, ModifierType.Constant);
 
-protected override void OnInactivateBonus(MobileEntity entity) =>
+protected override void OnInactivateModifiers(MobileEntity entity) =>
     entity.Stats[EntityStat.MaxHealth].Remove(Bonus, ModifierType.Constant);
 ```
 
@@ -372,7 +372,7 @@ Do not call `InactivateModifiers` followed by `ActivateModifiers` when a propert
 
 ### Depending on activation-hook setup
 
-The initial snapshot is registered before `OnActivateBonus` runs, and it is removed before `OnInactivateBonus` runs. Do not make `GetStatModifiers` depend on state initialized or cleared by those hooks. Store required item state before equip or refresh it explicitly after that state changes.
+The initial snapshot is registered before `OnActivateModifiers` runs, and it is removed before `OnInactivateModifiers` runs. Do not make `GetStatModifiers` depend on state initialized or cleared by those hooks. Store required item state before equip or refresh it explicitly after that state changes.
 
 ### Omitting the base snapshot
 
@@ -386,7 +386,7 @@ The same rule applies to `SpellStatus.GetStatModifiers`. Read authoritative stat
 
 ### Throwing from calculations or lifecycle hooks
 
-Treat `GetStatModifiers`, `OnActivateBonus`, `OnInactivateBonus`, `OnAcquire`, and `OnRemoved` as no-throw operations. Item modifier calculation finishes before the item is marked active, but the framework cannot automatically reverse arbitrary messages, timers, subscriptions, or other side effects if a hook throws. Handle expected missing or inapplicable state by returning the appropriate snapshot and completing the hook normally.
+Treat `GetStatModifiers`, `OnActivateModifiers`, `OnInactivateModifiers`, `OnAcquire`, and `OnRemoved` as no-throw operations. Item modifier calculation finishes before the item is marked active, but the framework cannot automatically reverse arbitrary messages, timers, subscriptions, or other side effects if a hook throws. Handle expected missing or inapplicable state by returning the appropriate snapshot and completing the hook normally.
 
 ### Mutating status source dictionaries
 

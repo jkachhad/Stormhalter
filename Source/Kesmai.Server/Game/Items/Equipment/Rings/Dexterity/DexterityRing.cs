@@ -54,9 +54,9 @@ public class DexterityRing : Ring, ITreasure
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
-	protected override void OnActivateBonus(MobileEntity entity)
+	protected override void OnActivateModifiers(MobileEntity entity)
 	{
-		base.OnActivateBonus(entity);
+		base.OnActivateModifiers(entity);
 
 		/* Bonus dexterity is not modified like strength rings.
 		 * There is a cap of max +2, calculated by DexterityAttribute. */
@@ -66,9 +66,9 @@ public class DexterityRing : Ring, ITreasure
 	/// <summary>
 	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
 	/// </summary>
-	protected override void OnInactivateBonus(MobileEntity entity)
+	protected override void OnInactivateModifiers(MobileEntity entity)
 	{
-		base.OnInactivateBonus(entity);
+		base.OnInactivateModifiers(entity);
 
 		entity.Stats[EntityStat.Dexterity].Update();
 	}
