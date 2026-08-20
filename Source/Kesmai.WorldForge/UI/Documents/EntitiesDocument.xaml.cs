@@ -619,7 +619,7 @@ public class StructuredOnSpawnCatalog
 				["CreatureAttack"] = new[] { "AttackLevel", "MinimumDamage", "MaximumDamage", "Message" },
 				["CreatureBasicAttack"] = new[] { "SkillLevel", "MinimumDamage", "MaximumDamage" },
 				["CreatureBlock"] = new[] { "Chance", "Description" },
-				["CreatureSpell"] = new[] { "SkillLevel", "Cost", "InstantCast", "Mantra" }
+				["CreatureSpell"] = new[] { "SkillLevel", "Intensity", "Cost", "Mantra", "InstantCast" }
 			};
 			foreach (Match constructor in Regex.Matches(source,
 			         @"new\s+(?<type>CreatureAttack|CreatureBasicAttack|CreatureBlock|CreatureSpell(?:<[^>]+>)?)\s*\("))
@@ -1187,7 +1187,7 @@ public class StructuredCollectionItem : ObservableObject
 			"skillLevel: 12, minimumDamage: 10, maximumDamage: 20, new AttackProneComponent(0)"
 		},
 		"CreatureBlock" => new[] { "6, \"tough skin.\"", "3, \"an inexplicable miss\"", "1, \"a fearful aura\"" },
-		_ when type.StartsWith("CreatureSpell<", StringComparison.Ordinal) => new[] { "skillLevel: 60, cost: 20, instantCast: false, mantra: SpellHelper.GenerateMantra()", "skillLevel: 40, cost: 10, instantCast: false, mantra: SpellHelper.GenerateMantra()" },
+		_ when type.StartsWith("CreatureSpell<", StringComparison.Ordinal) => new[] { "skillLevel: 60, intensity: 20, cost: 20, mantra: SpellHelper.GenerateMantra(), instantCast: false", "skillLevel: 40, intensity: 10, cost: 10, mantra: SpellHelper.GenerateMantra(), instantCast: false" },
 		_ => Array.Empty<string>()
 	};
 	public string Arguments
@@ -1317,7 +1317,10 @@ public class StructuredCollectionItem : ObservableObject
 			foreach (var parameter in constructor.Parameters.Where(parameter =>
 				         !parameter.IsParams && !boundParameters.Contains(parameter.Name)))
 				values.Add($"{parameter.Name}: {GetInitialParameterValue(parameter)}");
-			values = OrderArgumentsByConstructor(values, constructor);
+			var orderedValues = OrderArgumentsByConstructor(values, constructor);
+			if (!values.SequenceEqual(orderedValues, StringComparer.Ordinal))
+				Arguments = String.Join(", ", orderedValues);
+			values = orderedValues;
 		}
 		for (var index = 0; index < values.Count; index++)
 		{
@@ -1558,7 +1561,7 @@ public class StructuredCollectionItem : ObservableObject
 			"CreatureAttack" => new[] { "Attack level", "Minimum damage", "Maximum damage", "Message", "Component" },
 			"CreatureBasicAttack" => new[] { "Skill level", "Minimum damage", "Maximum damage", "Component" },
 			"CreatureBlock" => new[] { "Chance", "Description" },
-			_ when type.StartsWith("CreatureSpell<", StringComparison.Ordinal) => new[] { "Skill level", "Cost", "Instant cast", "Mantra" },
+			_ when type.StartsWith("CreatureSpell<", StringComparison.Ordinal) => new[] { "Skill level", "Intensity", "Cost", "Mantra", "Instant cast" },
 			_ => Array.Empty<string>()
 		};
 		return index < names.Length ? names[index] : $"Argument {index + 1}";
