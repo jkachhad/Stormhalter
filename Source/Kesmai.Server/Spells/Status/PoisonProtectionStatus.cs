@@ -12,25 +12,18 @@ public class PoisonProtectionStatus : SpellStatus
 	{
 	}
 
-	public override void OnAcquire()
+	protected override StatModifierSet GetStatModifiers(MobileEntity target)
 	{
-		base.OnAcquire();
-
-		_entity.Stats[EntityStat.PoisonProtection].Add(+1, ModifierType.Constant);
-	}
-
-	public override void OnRemoved()
-	{
-		_entity.Stats[EntityStat.PoisonProtection].Remove(+1, ModifierType.Constant);
-
-		base.OnRemoved();
+		var modifiers = base.GetStatModifiers(target);
+		modifiers.Add(EntityStat.PoisonProtection, 1);
+		return modifiers;
 	}
 		
 	protected override void OnSourceRemoved(SpellStatusSource source)
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource && !_spellSources.Any())
+		if (source is SpellSource && !Spells.Any())
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 584); /* The spell of [Protection from Poison] has worn off. */

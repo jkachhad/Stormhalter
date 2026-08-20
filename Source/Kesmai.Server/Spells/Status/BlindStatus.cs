@@ -17,7 +17,7 @@ public class BlindStatus : SpellStatus
 		_rounds = rounds;
 	}
 
-	public override void OnAcquire()
+	protected override void OnAcquire()
 	{
 		base.OnAcquire();
 			
@@ -27,7 +27,7 @@ public class BlindStatus : SpellStatus
 			Refresh(_rounds);
 	}
 
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		_entity.Delta(MobileDelta.Visibility);
 

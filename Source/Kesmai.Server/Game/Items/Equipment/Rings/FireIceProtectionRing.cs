@@ -47,9 +47,9 @@ public class FireIceProtectionRing : Ring, ITreasure
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
-	protected override void OnActivateBonus(MobileEntity entity)
+	protected override void OnActivateModifiers(MobileEntity entity)
 	{
-		base.OnActivateBonus(entity);
+		base.OnActivateModifiers(entity);
 
 		if (!entity.GetStatus(typeof(FireProtectionStatus), out var fireStatus))
 		{
@@ -85,9 +85,9 @@ public class FireIceProtectionRing : Ring, ITreasure
 	/// <summary>
 	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
 	/// </summary>
-	protected override void OnInactivateBonus(MobileEntity entity)
+	protected override void OnInactivateModifiers(MobileEntity entity)
 	{
-		base.OnInactivateBonus(entity);
+		base.OnInactivateModifiers(entity);
 
 		if (entity.GetStatus(typeof(FireProtectionStatus), out var fireStatus))
 			fireStatus.RemoveSource(this);

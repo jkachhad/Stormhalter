@@ -12,7 +12,7 @@ public class StalkerInTheShadowsStatus : SpellStatus
 	{
 	}
 
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		base.OnRemoved();
 			

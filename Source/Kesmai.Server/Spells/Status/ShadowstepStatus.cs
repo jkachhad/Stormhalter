@@ -16,13 +16,13 @@ public class ShadowstepStatus : SpellStatus
 		_rounds = rounds;
 	}
 		
-	public override void OnAcquire()
+	protected override void OnAcquire()
 	{
 		_internalTimer = Timer.DelayCall(_entity.Facet.TimeSpan.FromRounds(_rounds), 
 			OnTick);
 	}
 		
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		if (_internalTimer != null && _internalTimer.Running)
 			_internalTimer.Stop();

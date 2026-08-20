@@ -17,20 +17,20 @@ public class ShieldStatus : SpellStatus
 	{
 	}
 
-	protected override void OnSourceAdded(SpellStatusSource source)
+	protected override StatModifierSet GetStatModifiers(MobileEntity target)
 	{
-		base.OnSourceAdded(source);
+		var modifiers = base.GetStatModifiers(target);
 
-		if (source is SpellSource spellSource && _spellSources.Count is 1)
-			_entity.Stats[EntityStat.Barrier].Add(+3, ModifierType.Constant);
+		if (Spells.Count > 0)
+			modifiers.Add(EntityStat.Barrier, 3);
+
+		return modifiers;
 	}
 
 	protected override void OnSourceRemoved(SpellStatusSource source)
 	{
-		if (source is SpellSource spellSource && _spellSources.Count is 0)
+		if (source is SpellSource && Spells.Count is 0)
 		{
-			_entity.Stats[EntityStat.Barrier].Remove(+3, ModifierType.Constant);
-			
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 552); /* The spell of [Shield] has worn off. */
 		}

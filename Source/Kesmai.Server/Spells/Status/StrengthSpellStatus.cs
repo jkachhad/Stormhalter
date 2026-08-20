@@ -14,20 +14,20 @@ public class StrengthSpellStatus : SpellStatus
 	{
 	}
 
-	protected override void OnSourceAdded(SpellStatusSource source)
+	protected override StatModifierSet GetStatModifiers(MobileEntity target)
 	{
-		base.OnSourceAdded(source);
+		var modifiers = base.GetStatModifiers(target);
 
-		if (source is SpellSource spellSource && _spellSources.Count is 1)
-			_entity.Stats[EntityStat.Strength].Add(+6, ModifierType.Constant);
+		if (Spells.Count > 0)
+			modifiers.Add(EntityStat.Strength, 6);
+
+		return modifiers;
 	}
 
 	protected override void OnSourceRemoved(SpellStatusSource source)
 	{
-		if (source is SpellSource spellSource && _spellSources.Count is 0)
+		if (source is SpellSource && Spells.Count is 0)
 		{
-			_entity.Stats[EntityStat.Strength].Remove(+6, ModifierType.Constant);
-				
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 553); /* The spell of [Strength] has worn off. */
 		}

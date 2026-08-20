@@ -12,27 +12,19 @@ public class BlindFearProtectionStatus : SpellStatus
 	{
 	}
 
-	public override void OnAcquire()
+	protected override StatModifierSet GetStatModifiers(MobileEntity target)
 	{
-		base.OnAcquire();
-
-		_entity.Stats[EntityStat.BlindProtection].Add(+1, ModifierType.Constant);
-		_entity.Stats[EntityStat.FearProtection].Add(+1, ModifierType.Constant);
-	}
-
-	public override void OnRemoved()
-	{
-		_entity.Stats[EntityStat.BlindProtection].Remove(+1, ModifierType.Constant);
-		_entity.Stats[EntityStat.FearProtection].Remove(+1, ModifierType.Constant);
-
-		base.OnRemoved();
+		var modifiers = base.GetStatModifiers(target);
+		modifiers.Add(EntityStat.BlindProtection, 1);
+		modifiers.Add(EntityStat.FearProtection, 1);
+		return modifiers;
 	}
 		
 	protected override void OnSourceRemoved(SpellStatusSource source)
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource && !_spellSources.Any())
+		if (source is SpellSource && !Spells.Any())
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 541); /* The spell of [Protection from Blind and Fear] has worn off. */

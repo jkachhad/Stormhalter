@@ -12,25 +12,18 @@ public class IceProtectionStatus : SpellStatus
 	{
 	}
 		
-	public override void OnAcquire()
+	protected override StatModifierSet GetStatModifiers(MobileEntity target)
 	{
-		base.OnAcquire();
-			
-		_entity.Stats[EntityStat.IceProtection].Add(+20, ModifierType.Constant);
-	}
-
-	public override void OnRemoved()
-	{
-		_entity.Stats[EntityStat.IceProtection].Remove(+20, ModifierType.Constant);
-			
-		base.OnRemoved();
+		var modifiers = base.GetStatModifiers(target);
+		modifiers.Add(EntityStat.IceProtection, 20);
+		return modifiers;
 	}
 		
 	protected override void OnSourceRemoved(SpellStatusSource source)
 	{
 		base.OnSourceRemoved(source);
 
-		if (source is SpellSource spellSource && _spellSources.Count is 0)
+		if (source is SpellSource && Spells.Count is 0)
 		{
 			if (_entity.Client != null)
 				_entity.SendLocalizedMessage(Color.Magenta, 6300270, 542); /* The spell of [Protection from Ice] has worn off. */

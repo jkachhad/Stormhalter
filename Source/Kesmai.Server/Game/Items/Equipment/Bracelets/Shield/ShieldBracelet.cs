@@ -51,12 +51,22 @@ public class ShieldBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250127)); /* The bracelet contains a medium spell of Shield. */
 	}
 
+	/// <inheritdoc />
+	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
+	{
+		var modifiers = base.GetStatModifiers(wearer);
+
+		modifiers.Add(EntityStat.Barrier, Shield);
+
+		return modifiers;
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
-	protected override void OnActivateBonus(MobileEntity entity)
+	protected override void OnActivateModifiers(MobileEntity entity)
 	{
-		base.OnActivateBonus(entity);
+		base.OnActivateModifiers(entity);
 
 		if (!entity.GetStatus(typeof(ShieldStatus), out var status))
 		{
@@ -72,21 +82,17 @@ public class ShieldBracelet : Bracelet, ITreasure
 		{
 			status.AddSource(new ItemSource(this));
 		}
-		
-		entity.Stats[EntityStat.Barrier].Add(+Shield, ModifierType.Constant);
 	}
 
 	/// <summary>
 	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
 	/// </summary>
-	protected override void OnInactivateBonus(MobileEntity entity)
+	protected override void OnInactivateModifiers(MobileEntity entity)
 	{
-		base.OnInactivateBonus(entity);
+		base.OnInactivateModifiers(entity);
 
 		if (entity.GetStatus(typeof(ShieldStatus), out var status))
 			status.RemoveSource(this);
-		
-		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
 	}
 	
 	/// <inheritdoc />

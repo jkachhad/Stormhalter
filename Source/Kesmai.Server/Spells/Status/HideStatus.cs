@@ -49,7 +49,7 @@ public class HideStatus : SpellStatus
 		OnInternalTick();
 	}
 
-	public override void OnAcquire()
+	protected override void OnAcquire()
 	{
 		base.OnAcquire();
 
@@ -59,7 +59,7 @@ public class HideStatus : SpellStatus
 		OnInternalTick();
 	}
 
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		base.OnRemoved();
 

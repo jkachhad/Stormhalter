@@ -56,27 +56,18 @@ public class UnholyScepter : Mace
     }
 
     /// <inheritdoc />
-    public override bool CanUse(MobileEntity entity)
+    public override ItemUseResult ValidateUse(MobileEntity entity)
     {
-        var isUsable = true;
-            
-        if (entity is PlayerEntity player)
-        {
-            if (player.Profession == Profession.Wizard || player.Profession == Profession.Thaumaturge)
-            {
-                isUsable = true;
-            }
-            else
-            {
-                isUsable = false;
-            }
-        }
-        else
-        {
-            isUsable = false;   
-        }
-            
-        return isUsable;        
+        var result = base.ValidateUse(entity);
+
+        if (!result.IsAllowed)
+            return result;
+
+        if (entity is PlayerEntity player &&
+            (player.Profession == Profession.Wizard || player.Profession == Profession.Thaumaturge))
+            return ItemUseResult.Allowed;
+
+        return ItemUseResult.Denied();
     }
 
     /// <inheritdoc />
