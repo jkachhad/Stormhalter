@@ -125,7 +125,7 @@ Do not work around identification by placing secret values into always-visible c
 
 ## Keeping Cached Tooltips Fresh
 
-Rich tooltip responses are cached. If a property used by `WriteTooltip` changes, invalidate the cache:
+Rich tooltip responses and their structured stat-modifier snapshots are cached together. If a property used by `WriteTooltip` or `GetStatModifiers` changes, refresh the stat modifiers as appropriate and invalidate the cache:
 
 ```csharp
 private int _power;
@@ -154,7 +154,7 @@ Weapons, armor, shields, gauntlets, and other equipment already have specialized
 
 Use an existing property and panel when it already represents the same gameplay concept. Adding a new typed property or a new panel requires coordinated Kesmai server and client changes; it cannot be completed in a Stormhalter server item alone.
 
-The `GetStatModifiers` snapshot is not automatically displayed in tooltips today. Do not duplicate every stat modifier as hard-coded tooltip text in anticipation of that feature. Structured transport is planned separately in the Kesmai repository.
+The `GetStatModifiers` snapshot is transported to the client and cached with the item, but it is not automatically displayed in tooltips today. Do not duplicate every stat modifier as hard-coded tooltip text. Client panels can consume the structured snapshot in a focused follow-up change.
 
 ## Choosing the Right Technique
 
