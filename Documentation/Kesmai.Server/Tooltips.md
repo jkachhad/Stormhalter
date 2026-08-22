@@ -144,13 +144,15 @@ public int Power
 }
 ```
 
-If the same change also affects the normal item model, send its normal item delta as well. A regular item update does not automatically invalidate rich tooltip content.
+If the same change also affects the normal item model, send its normal item delta as well. A replacement `UpdateProperty` snapshot clears the cached tooltip on the client. Scalar item updates such as amount, color, or quality do not themselves invalidate rich content, so call `InvalidateTooltip` when `WriteTooltip` also depends on one of those values.
 
 Viewer-dependent content also needs invalidation when the relevant viewer state changes. If a tooltip depends on a new character property, make sure that property's update path clears affected tooltip caches.
 
 ## Standard Equipment Panels
 
-Weapons, armor, shields, gauntlets, and other equipment already have specialized client panels. Their values come from the server item's `WriteProperties` method and the matching client model's `ReadProperties` method.
+Weapons, armor, shields, gauntlets, and other equipment already have specialized client panels. Their values come from the server item's `WriteProperties` method and the built-in client model's immutable property snapshot.
+
+Properties are transmitted as framed ID, value-type, payload-length, and payload entries. Their order is not part of the contract: the client reads known IDs and skips unknown entries by length. Reuse the shared `ClientItemPropertyId` and its registered value type; never assign an ad hoc ID, reuse a removed ID, or change the type of a published property.
 
 Use an existing property and panel when it already represents the same gameplay concept. Adding a new typed property or a new panel requires coordinated Kesmai server and client changes; it cannot be completed in a Stormhalter server item alone.
 
@@ -177,6 +179,6 @@ See [Stat Modifiers](StatModifiers.md) for implementing continuous gameplay bonu
 - Respect item identification.
 - Keep tooltip generation deterministic and free of side effects.
 - Invalidate cached rich content whenever one of its inputs changes.
-- Keep server `WriteProperties` and client `ReadProperties` in the same field order.
+- Keep server property IDs and value types aligned with the shared property schema.
 - Reuse existing client panels when their semantics match.
 - Keep gameplay modifiers in `GetStatModifiers`.
