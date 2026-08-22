@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
+using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
@@ -80,6 +82,24 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	/// </summary>
 	protected Gauntlets(Serial serial) : base(serial)
 	{
+	}
+
+	/// <inheritdoc />
+	public override IEnumerable<ClientItemProperty> WriteProperties()
+	{
+		foreach (var property in base.WriteProperties())
+			yield return property;
+
+		yield return ClientItemProperty.Create(ClientItemPropertyId.MinimumDamage, MinimumDamage, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.MaximumDamage, MaximumDamage, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.WeaponFlags, (int)Flags, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.MaximumRange, MaxRange, ClientItemPropertyVisibility.Identified);
+
+		yield return ClientItemProperty.Create(ClientItemPropertyId.BaseArmorBonus, BaseArmorBonus, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.ProjectileProtection, ProjectileProtection, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.PiercingProtection, PiercingProtection, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.SlashingProtection, SlashingProtection, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.BashingProtection, BashingProtection, ClientItemPropertyVisibility.Identified);
 	}
 
 	/// <inheritdoc />

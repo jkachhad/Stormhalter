@@ -74,6 +74,19 @@ public abstract class Armor : Equipment, IArmored
 	protected Armor(Serial serial) : base(serial)
 	{
 	}
+
+	/// <inheritdoc />
+	public override IEnumerable<ClientItemProperty> WriteProperties()
+	{
+		foreach (var property in base.WriteProperties())
+			yield return property;
+
+		yield return ClientItemProperty.Create(ClientItemPropertyId.BaseArmorBonus, BaseArmorBonus, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.ProjectileProtection, ProjectileProtection, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.PiercingProtection, PiercingProtection, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.SlashingProtection, SlashingProtection, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.BashingProtection, BashingProtection, ClientItemPropertyVisibility.Identified);
+	}
 		
 	/// <summary>
 	/// Gets the armor bonus against a specified <see cref="ItemEntity"/>.

@@ -4,6 +4,7 @@ using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
+using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
@@ -75,6 +76,18 @@ public abstract class Equipment : ItemEntity
 	/// </summary>
 	protected Equipment(Serial serial) : base(serial)
 	{
+	}
+
+	/// <inheritdoc />
+	public override IEnumerable<ClientItemProperty> WriteProperties()
+	{
+		foreach (var property in base.WriteProperties())
+			yield return property;
+
+		yield return ClientItemProperty.Create(ClientItemPropertyId.FireProtection, ProtectionFromFire, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.IceProtection, ProtectionFromIce, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.DazeProtection, ProtectionFromDaze, ClientItemPropertyVisibility.Identified);
+		yield return ClientItemProperty.Create(ClientItemPropertyId.ConcussionProtection, ProtectionFromConcussion, ClientItemPropertyVisibility.Identified);
 	}
 
 	/// <summary>
