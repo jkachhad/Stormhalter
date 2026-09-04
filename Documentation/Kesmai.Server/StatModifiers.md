@@ -18,7 +18,8 @@ When the source is removed, the stored snapshot is removed without recalculating
 
 | API | Purpose |
 | --- | --- |
-| `GetStatModifiers(MobileEntity wearer)` | Returns the item's complete continuous stat snapshot. Override this when creating equipment bonuses. |
+| `GetBaseModifiers(MobileEntity wearer)` | Returns intrinsic/shared property-based item modifiers. Override this only in the shared Kesmai or Stormhalter item layers. |
+| `GetStatModifiers(MobileEntity wearer)` | Returns item-specific, conditional, wearer-dependent, or set-dependent modifiers. Segment repositories should continue using this method for their overrides. |
 | `StatModifierSet.Add(...)` | Adds an ordinary `EntityStat` modifier to the snapshot. |
 | `StatModifierSet.AddMaximumValue(...)` | Changes the maximum-value constraint of an `EntityStat`. |
 | `UpdateStatModifiers()` | Replaces this source's active snapshot after one of its dependencies changes. It does nothing while the source is inactive. |
@@ -57,7 +58,7 @@ public class ExampleStrengthRing : Ring
 }
 ```
 
-Always call `base.GetStatModifiers(wearer)`. Base equipment classes may already provide protection, regeneration, or other modifiers.
+Always call the corresponding base method. Base equipment classes may already provide protection, regeneration, or other modifiers. Item activation and refresh merge the results of both methods into one source snapshot.
 
 ## Multiple Modifiers and Modifier Types
 
