@@ -58,7 +58,7 @@ public class ExampleStrengthRing : Ring
 }
 ```
 
-Always call the corresponding base method. Base equipment classes may already provide protection, regeneration, or other modifiers. Item activation and refresh merge the results of both methods into one source snapshot.
+Always call the corresponding base method. Base equipment classes may already provide protection, regeneration, or other modifiers. Item activation and refresh combine the results of both methods with the in-place `+` operator into one source snapshot.
 
 ## Multiple Modifiers and Modifier Types
 
