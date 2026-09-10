@@ -40,7 +40,7 @@ public class Book : ItemEntity
 			{
 				_publicationId = newValue;
 				
-				if (Library.TryGetPublication(_publicationId, out var libraryBook))
+				if (Library.Instance.TryGetPublication(_publicationId, out var libraryBook))
 					Publication = libraryBook;
 			}
 		}
@@ -128,7 +128,7 @@ public class Book : ItemEntity
 
 			if (!publication.IsOwned(account, out var record))
 			{
-				publication.Own(account, record = new PublicationRecord(account, publication));
+				publication.Own(account, record = new PublicationRecord(Library.Instance, account, publication));
 				
 				player.SendServerMessage($"A book titled '{publication.Title}' has been added to your library.");
 

@@ -59,7 +59,7 @@ public abstract class Equipment : ItemEntity
 	/// result in an uninitialized instance. This constructor is primarily
 	/// provided to facilitate deserialization processes.
 	/// </remarks>
-	public Equipment()
+	public Equipment() : base(0)
 	{
 	}
 
