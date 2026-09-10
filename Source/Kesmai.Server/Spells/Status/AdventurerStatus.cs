@@ -26,12 +26,12 @@ public class AdventurerStatus : SpellStatus
 	{
 	}
 
-	public override void OnAcquire()
+	protected override void OnAcquire()
 	{
 		Refresh();
 	}
 		
-	public override void OnRemoved()
+	protected override void OnRemoved()
 	{
 		if (_internalTimer != null && _internalTimer.Running)
 			_internalTimer.Stop();
