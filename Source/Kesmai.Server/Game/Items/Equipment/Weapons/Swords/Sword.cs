@@ -32,6 +32,11 @@ public abstract class Sword : MeleeWeapon
 	{
 	}
 
+	protected Sword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

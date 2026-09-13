@@ -43,6 +43,11 @@ public class BlackSteelRapier : Rapier, ITreasure
 	{
 	}
 
+	public BlackSteelRapier(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{

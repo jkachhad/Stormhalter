@@ -26,6 +26,11 @@ public class SteelLongsword : Longsword
 	{
 	}
 
+	public SteelLongsword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{

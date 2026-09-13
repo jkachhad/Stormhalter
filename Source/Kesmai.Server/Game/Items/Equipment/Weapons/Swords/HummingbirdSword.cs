@@ -34,6 +34,11 @@ public class HummingbirdSword : ShortSword, ITreasure
 	{
 	}
 
+	public HummingbirdSword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
