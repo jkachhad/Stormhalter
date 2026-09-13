@@ -22,6 +22,11 @@ public abstract class Currency : ItemEntity, ITreasure
 	protected Currency(int currencyID) : base(currencyID)
 	{
 	}
+
+	protected Currency(IEntityProvider entityProvider, EntityDependencies entityDependencies, int currencyID)
+		: base(entityProvider, entityDependencies, currencyID)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Currency"/> class.

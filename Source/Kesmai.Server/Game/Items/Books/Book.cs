@@ -83,6 +83,12 @@ public class Book : ItemEntity
 	{
 		PublicationId = publicationId;
 	}
+
+	public Book(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint publicationId)
+		: base(entityProvider, entityDependencies, 152)
+	{
+		PublicationId = publicationId;
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Book"/> class.

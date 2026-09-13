@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -40,6 +41,12 @@ public class Gold : Currency
 	/// Initializes a new instance of the <see cref="Gold"/> class.
 	/// </summary>
 	public Gold(uint amount = 1) : base(73)
+	{
+		Amount = amount;
+	}
+
+	public Gold(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint amount = 1)
+		: base(entityProvider, entityDependencies, 73)
 	{
 		Amount = amount;
 	}
