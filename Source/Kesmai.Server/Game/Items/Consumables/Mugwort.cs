@@ -28,6 +28,11 @@ public class Mugwort : Food
 	public Mugwort() : base(138)
 	{
 	}
+
+	public Mugwort(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 138)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Mugwort"/> class.

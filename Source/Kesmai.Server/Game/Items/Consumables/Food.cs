@@ -14,6 +14,11 @@ public abstract class Food : Consumable
 	public Food(int foodId) : base(foodId)
 	{
 	}
+
+	public Food(IEntityProvider entityProvider, EntityDependencies entityDependencies, int foodId)
+		: base(entityProvider, entityDependencies, foodId)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Food"/> class.

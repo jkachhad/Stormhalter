@@ -21,6 +21,11 @@ public class RedBerries : Food
 	public RedBerries() : base(26)
 	{
 	}
+
+	public RedBerries(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 26)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RedBerries"/> class.

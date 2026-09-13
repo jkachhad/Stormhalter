@@ -21,6 +21,11 @@ public class YellowBerries : Food
 	public YellowBerries() : base(25)
 	{
 	}
+
+	public YellowBerries(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 25)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YellowBerries"/> class.
