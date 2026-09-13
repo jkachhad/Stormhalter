@@ -31,6 +31,11 @@ public abstract class Ring : ItemEntity
 	protected Ring(Serial serial) : base(serial)
 	{
 	}
+
+	protected Ring(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{

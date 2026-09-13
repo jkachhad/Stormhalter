@@ -33,6 +33,11 @@ public class FireIceProtectionRing : Ring, ITreasure
 	{
 	}
 
+	public FireIceProtectionRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Gets the description for this instance.
 	/// </summary>
