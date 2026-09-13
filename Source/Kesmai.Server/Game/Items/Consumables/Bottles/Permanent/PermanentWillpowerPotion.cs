@@ -24,6 +24,11 @@ public class PermanentWillpowerPotion : Bottle, ITreasure
 	public PermanentWillpowerPotion() : base(289)
 	{
 	}
+
+	public PermanentWillpowerPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 289)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentWillpowerPotion"/> class.

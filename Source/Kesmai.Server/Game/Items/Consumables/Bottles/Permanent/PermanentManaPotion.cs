@@ -25,6 +25,11 @@ public class PermanentManaPotion : Bottle, ITreasure
 	public PermanentManaPotion() : base(316)
 	{
 	}
+
+	public PermanentManaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 316)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentManaPotion"/> class.

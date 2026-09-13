@@ -29,6 +29,16 @@ public class TemporaryStrengthPotion : Bottle, ITreasure
 	public TemporaryStrengthPotion(int closedId, int openId) : base(closedId)
 	{
 	}
+
+	public TemporaryStrengthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, int closedId, int openId)
+		: base(entityProvider, entityDependencies, closedId)
+	{
+	}
+
+	public TemporaryStrengthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: this(entityProvider, entityDependencies, 211, 41)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TemporaryStrengthPotion"/> class.

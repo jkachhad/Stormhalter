@@ -24,6 +24,11 @@ public class PermanentDexterityPotion : Bottle, ITreasure
 	public PermanentDexterityPotion() : base(222)
 	{
 	}
+
+	public PermanentDexterityPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 222)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentDexterityPotion"/> class.

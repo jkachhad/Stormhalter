@@ -24,6 +24,11 @@ public class PermanentIntelligencePotion : Bottle, ITreasure
 	public PermanentIntelligencePotion() : base(216)
 	{
 	}
+
+	public PermanentIntelligencePotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 216)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentIntelligencePotion"/> class.

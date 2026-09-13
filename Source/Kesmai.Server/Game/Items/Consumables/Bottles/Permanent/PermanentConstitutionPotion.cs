@@ -25,6 +25,11 @@ public class PermanentConstitutionPotion : Bottle, ITreasure
 	public PermanentConstitutionPotion() : base(303)
 	{
 	}
+
+	public PermanentConstitutionPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 303)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentConstitutionPotion"/> class.
