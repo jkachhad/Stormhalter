@@ -34,6 +34,11 @@ public class WaveRobe : Robe, ITreasure
 	public WaveRobe(Serial serial) : base(serial)
 	{
 	}
+
+	public WaveRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

@@ -38,6 +38,11 @@ public class Kimono : Robe, ITreasure
 	public Kimono(Serial serial) : base(serial)
 	{
 	}
+
+	public Kimono(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

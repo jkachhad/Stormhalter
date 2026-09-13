@@ -35,6 +35,11 @@ public class ScorpionRobe : Robe, ITreasure
 	{
 	}
 
+	public ScorpionRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{

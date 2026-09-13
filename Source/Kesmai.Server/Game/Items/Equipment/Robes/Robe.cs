@@ -38,6 +38,11 @@ public abstract class Robe : Equipment
 	{
 	}
 
+	protected Robe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>
