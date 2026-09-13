@@ -38,6 +38,11 @@ public abstract class Flail : MeleeWeapon
 	{
 	}
 
+	protected Flail(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

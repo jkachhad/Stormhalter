@@ -44,6 +44,11 @@ public class CopperHalberd : Halberd, ITreasure
 	public CopperHalberd(Serial serial) : base(serial)
 	{
 	}
+
+	public CopperHalberd(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

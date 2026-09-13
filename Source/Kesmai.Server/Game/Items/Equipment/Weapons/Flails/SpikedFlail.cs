@@ -38,6 +38,11 @@ public class SpikedFlail : Flail
 	public SpikedFlail(Serial serial) : base(serial)
 	{
 	}
+
+	public SpikedFlail(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
