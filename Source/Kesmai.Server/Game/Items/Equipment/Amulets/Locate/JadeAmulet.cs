@@ -33,6 +33,11 @@ public class JadeAmulet : LocateAmulet
 	public JadeAmulet(Serial serial) : base(serial)
 	{
 	}
+
+	public JadeAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <summary>
 	/// Gets the description for this instance.

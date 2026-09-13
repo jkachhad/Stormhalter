@@ -40,6 +40,11 @@ public class GoldenTorc : StunDeathProtectionAmulet
 	{
 	}
 
+	public GoldenTorc(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Gets the description for this instance.
 	/// </summary>

@@ -31,6 +31,11 @@ public class IvoryBrooch : StunDeathProtectionAmulet
 	public IvoryBrooch(Serial serial) : base(serial)
 	{
 	}
+
+	public IvoryBrooch(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IvoryBrooch"/> class.

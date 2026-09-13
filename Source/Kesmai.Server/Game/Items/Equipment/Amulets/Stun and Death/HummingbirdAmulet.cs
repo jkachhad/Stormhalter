@@ -33,6 +33,11 @@ public class HummingbirdAmulet : StunDeathProtectionAmulet
 	public HummingbirdAmulet(Serial serial) : base(serial)
 	{
 	}
+
+	public HummingbirdAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <summary>
 	/// Gets the description for this instance.

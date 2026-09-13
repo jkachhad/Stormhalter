@@ -34,6 +34,11 @@ public class BlackPearls : LocateAmulet
 	public BlackPearls(Serial serial) : base(serial)
 	{
 	}
+
+	public BlackPearls(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <summary>
 	/// Gets the description for this instance.

@@ -43,6 +43,11 @@ public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 	protected LocateAmulet(Serial serial) : base(serial)
 	{
 	}
+
+	protected LocateAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override ActionType GetAction()

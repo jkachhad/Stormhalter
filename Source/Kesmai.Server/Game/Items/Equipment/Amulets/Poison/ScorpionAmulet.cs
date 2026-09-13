@@ -59,6 +59,11 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 	public ScorpionAmulet(Serial serial) : base(serial)
 	{
 	}
+
+	public ScorpionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override ActionType GetAction()
