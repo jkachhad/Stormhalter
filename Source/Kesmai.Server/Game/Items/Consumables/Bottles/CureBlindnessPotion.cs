@@ -21,6 +21,11 @@ public class CureBlindnessPotion : Bottle
 	public CureBlindnessPotion() : base(212)
 	{
 	}
+
+	public CureBlindnessPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 212)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CureBlindnessPotion"/> class.

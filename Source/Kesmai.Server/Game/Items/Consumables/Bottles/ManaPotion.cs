@@ -19,11 +19,21 @@ public class ManaPotion : Bottle, ITreasure
 	public ManaPotion() : this(6, 24)
 	{
 	}
+
+	public ManaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: this(entityProvider, entityDependencies, 6, 24)
+	{
+	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ManaPotion"/> class.
 	/// </summary>
 	public ManaPotion(int closedId, int openId) : base(closedId)
+	{
+	}
+
+	public ManaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, int closedId, int openId)
+		: base(entityProvider, entityDependencies, closedId)
 	{
 	}
 	

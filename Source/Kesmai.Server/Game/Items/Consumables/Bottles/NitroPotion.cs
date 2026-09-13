@@ -23,6 +23,11 @@ public class NitroPotion : Bottle
 	public NitroPotion() : base(209)
 	{
 	}
+
+	public NitroPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 209)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="NitroPotion"/> class.

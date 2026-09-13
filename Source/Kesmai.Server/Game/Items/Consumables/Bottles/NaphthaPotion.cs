@@ -24,6 +24,11 @@ public class NaphthaPotion : Bottle
 	public NaphthaPotion() : base(209)
 	{
 	}
+
+	public NaphthaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 209)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="NaphthaPotion"/> class.
