@@ -5,7 +5,6 @@ using Kesmai.Server.Engines.Permadeath;
 using Kesmai.Server.Game;
 using Kesmai.Server.Items;
 using Kesmai.Server.Targeting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Kesmai.Server.Spells;
 
@@ -37,7 +36,7 @@ public class RaiseDeadSpell : DelayedSpell
 			{
 				var resurrectType = (_item != null) ? ResurrectType.Item : ResurrectType.Spell;
 
-				if (ServiceLocator.ServiceProvider.GetRequiredService<PermadeathService>().CanResurrect(dead, resurrectType))
+				if (_caster.Dependencies.Permadeath.CanResurrect(dead, resurrectType))
 				{
 					base.OnCast();
 					
