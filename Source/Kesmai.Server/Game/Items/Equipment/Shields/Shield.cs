@@ -56,6 +56,11 @@ public abstract class Shield : ItemEntity, IArmored, IWieldable
 	{
 	}
 
+	protected Shield(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc/>
 	/// <remarks>
 	/// Shields only provide a blocking bonus against weapons when equipped in the left-hand.

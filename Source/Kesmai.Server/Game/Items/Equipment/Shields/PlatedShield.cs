@@ -36,6 +36,11 @@ public class PlatedShield : Shield
 	public PlatedShield(Serial serial) : base(serial)
 	{
 	}
+
+	public PlatedShield(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
