@@ -25,6 +25,11 @@ public class Diamond : Gem
 	{
 	}
 
+	public Diamond(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Gets the description for this instance.
 	/// </summary>

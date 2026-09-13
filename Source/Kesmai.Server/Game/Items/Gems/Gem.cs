@@ -35,6 +35,11 @@ public abstract class Gem : ItemEntity, ITreasure
 	{
 	}
 
+	protected Gem(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>
