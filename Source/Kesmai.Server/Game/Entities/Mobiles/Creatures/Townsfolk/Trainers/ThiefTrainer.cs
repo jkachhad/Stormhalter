@@ -9,7 +9,8 @@ public partial class ThiefTrainer : SpellTrainer
 {
 	public override Profession Profession => Profession.Thief;
 		
-	public ThiefTrainer() : base()
+	public ThiefTrainer(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies)
 	{
 	}
 }

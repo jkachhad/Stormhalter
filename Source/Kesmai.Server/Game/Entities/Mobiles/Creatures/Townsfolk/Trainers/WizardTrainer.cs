@@ -6,7 +6,8 @@ public partial class WizardTrainer : SpellTrainer
 {
 	public override Profession Profession => Profession.Wizard;
 		
-	public WizardTrainer() : base()
+	public WizardTrainer(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies)
 	{
 	}
 }

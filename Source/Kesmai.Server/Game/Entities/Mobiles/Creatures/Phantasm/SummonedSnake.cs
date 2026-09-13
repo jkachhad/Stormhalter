@@ -8,7 +8,8 @@ public partial class SummonedSnake : Snake
 {
 	private double _focusLevelModifier = 0.0;
 
-	public SummonedSnake(double focusLevelModifier = 0.0) : base()
+	public SummonedSnake(IEntityProvider entityProvider, EntityDependencies entityDependencies, double focusLevelModifier = 0.0)
+		: base(entityProvider, entityDependencies)
 	{
 		_focusLevelModifier = focusLevelModifier;
 		Alignment = Alignment.Lawful;

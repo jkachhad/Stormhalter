@@ -49,7 +49,7 @@ public class CreateSnakeSpell : DelayedSpell
 			{
 				base.OnCast();
 					
-				var snake = new SummonedSnake()
+				var snake = new SummonedSnake(_caster.EntityProvider, _caster.Dependencies)
 				{
 					Combatant = target,
 				};

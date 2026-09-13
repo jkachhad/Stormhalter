@@ -5,11 +5,6 @@ namespace Kesmai.Server.Game;
 
 public abstract partial class AnimalEntity : CreatureEntity
 {
-	protected AnimalEntity() : base()
-	{
-		CanLoot = false;
-	}
-
 	/// <inheritdoc />
 	protected override Dictionary<InventoryGroup, Container> OnCreateInventory()
 	{

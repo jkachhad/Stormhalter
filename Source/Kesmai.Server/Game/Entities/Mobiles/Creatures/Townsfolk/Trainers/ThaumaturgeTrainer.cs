@@ -6,7 +6,8 @@ public partial class ThaumaturgeTrainer : SpellTrainer
 {
 	public override Profession Profession => Profession.Thaumaturge;
 		
-	public ThaumaturgeTrainer() : base()
+	public ThaumaturgeTrainer(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies)
 	{
 	}
 }
