@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -23,7 +24,8 @@ public class BrightFeather : ItemEntity, ITreasure
 	{
 	}
 	
-	public BrightFeather(Serial serial) : base(serial)
+	public BrightFeather(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

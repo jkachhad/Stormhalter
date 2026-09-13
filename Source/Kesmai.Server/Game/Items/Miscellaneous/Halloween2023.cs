@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -30,7 +31,8 @@ public class Halloween2023 : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PetrifiedWood"/> class.
 	/// </summary>
-	public Halloween2023(Serial serial) : base(serial)
+	public Halloween2023(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

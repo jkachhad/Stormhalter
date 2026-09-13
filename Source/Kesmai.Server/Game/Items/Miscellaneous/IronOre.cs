@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
+using Kesmai.Server.Game;
 using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 
@@ -38,7 +39,8 @@ public class IronOre : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IronOre"/> class.
 	/// </summary>
-	public IronOre(Serial serial) : base(serial)
+	public IronOre(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

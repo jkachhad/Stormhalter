@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
+using Kesmai.Server.Game;
 using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 
@@ -37,7 +38,8 @@ public class Yttril : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Yttril"/> class.
 	/// </summary>
-	public Yttril(Serial serial) : base(serial)
+	public Yttril(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

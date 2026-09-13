@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -30,7 +31,8 @@ public class PewterMug : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PewterMug"/> class.
 	/// </summary>
-	public PewterMug(Serial serial) : base(serial)
+	public PewterMug(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

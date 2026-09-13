@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -26,7 +27,8 @@ public class TigerStatuette : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerStatuette"/> class.
 	/// </summary>
-	public TigerStatuette(Serial serial) : base(serial)
+	public TigerStatuette(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

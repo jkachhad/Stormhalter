@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -26,7 +27,8 @@ public class OysterShell : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OysterShell"/> class.
 	/// </summary>
-	public OysterShell(Serial serial) : base(serial)
+	public OysterShell(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -30,7 +31,8 @@ public class ChristmasGift : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PetrifiedWood"/> class.
 	/// </summary>
-	public ChristmasGift(Serial serial) : base(serial)
+	public ChristmasGift(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 		
