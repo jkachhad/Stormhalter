@@ -1,4 +1,5 @@
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 
