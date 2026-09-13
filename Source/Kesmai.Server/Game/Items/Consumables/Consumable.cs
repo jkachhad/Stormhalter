@@ -29,6 +29,11 @@ public abstract class Consumable : ItemEntity
 	{
 	}
 
+	protected Consumable(IEntityProvider entityProvider, EntityDependencies entityDependencies, int consumableID)
+		: base(entityProvider, entityDependencies, consumableID)
+	{
+	}
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Consumable"/> class.
 	/// </summary>

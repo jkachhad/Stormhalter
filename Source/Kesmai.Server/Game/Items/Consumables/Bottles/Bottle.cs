@@ -69,6 +69,11 @@ public abstract class Bottle : Consumable
 	public Bottle(int closedId) : base(closedId)
 	{
 	}
+
+	public Bottle(IEntityProvider entityProvider, EntityDependencies entityDependencies, int closedId)
+		: base(entityProvider, entityDependencies, closedId)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Bottle"/> class.

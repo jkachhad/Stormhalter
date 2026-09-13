@@ -18,6 +18,11 @@ public class StaminaPotion : Bottle
 	public StaminaPotion() : base(214)
 	{
 	}
+
+	public StaminaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 214)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StaminaPotion"/> class.

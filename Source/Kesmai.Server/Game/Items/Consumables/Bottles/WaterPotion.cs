@@ -22,6 +22,11 @@ public class WaterPotion : Bottle
 	public WaterPotion() : base(210)
 	{
 	}
+
+	public WaterPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WaterPotion"/> class.
