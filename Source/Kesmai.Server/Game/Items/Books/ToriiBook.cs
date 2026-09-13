@@ -30,6 +30,11 @@ public class ToriiBook : ItemEntity, ITreasure
 	{
 	}
 
+	public ToriiBook(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
