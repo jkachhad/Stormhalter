@@ -4,7 +4,6 @@ using System.Xml.Linq;
 using Kesmai.Server.Miscellaneous;
 using Kesmai.Server.Miscellaneous.WorldForge;
 using Kesmai.Server.Spells;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Kesmai.Server.Game;
 
@@ -18,10 +17,10 @@ public class ItemTeleporter : HiddenTeleporter
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ItemTeleporter"/> class.
 	/// </summary>
-	public ItemTeleporter(XElement element) : base(element)
+	public ItemTeleporter(XElement element, WorldForgeComponentService componentService) : base(element)
 	{
 		if (element.TryGetElement("type", out var typeElement))
-			Type = ServiceLocator.ServiceProvider.GetRequiredService<TypeCacheService>().FindTypeByName(typeElement.Value);
+			Type = componentService.TypeCache.FindTypeByName(typeElement.Value);
 			
 		if (element.TryGetElement("fail", out var failElement))
 			OnFail = Enum.Parse<PathingResult>(failElement.Value);

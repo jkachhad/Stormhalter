@@ -2,7 +2,6 @@
 using System.Xml.Linq;
 using Kesmai.Server.Miscellaneous.WorldForge;
 using Kesmai.Server.Miscellaneous;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Kesmai.Server.Game;
 
@@ -16,9 +15,9 @@ public class Staircase : ActiveTeleporter
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Staircase"/> class.
 	/// </summary>
-	public Staircase(XElement element) : base(element)
+	public Staircase(XElement element, WorldForgeComponentService componentService) : base(element)
 	{
-		if (_teleporter != null && ServiceLocator.ServiceProvider.GetRequiredService<TerrainService>().GetAction(_teleporter.ID, out var actionType))
+		if (_teleporter != null && componentService.Terrain.GetAction(_teleporter.ID, out var actionType))
 			_descends = (actionType == ActionType.Down);
 	}
 
