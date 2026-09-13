@@ -28,6 +28,11 @@ public class FineCrossbow : Crossbow
 	public FineCrossbow(Serial serial) : base(serial)
 	{
 	}
+
+	public FineCrossbow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

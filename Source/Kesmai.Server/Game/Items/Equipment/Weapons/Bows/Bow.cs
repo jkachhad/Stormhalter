@@ -35,6 +35,11 @@ public abstract class Bow : ProjectileWeapon
 	{
 	}
 
+	protected Bow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	public override void OnDropped()
 	{
 		/* When the bow is dropped, either from death, fumble, or moved, it will unnock. */

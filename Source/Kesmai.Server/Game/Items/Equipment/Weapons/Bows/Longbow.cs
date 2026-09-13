@@ -44,6 +44,11 @@ public class Longbow : Bow
 	public Longbow(Serial serial) : base(serial)
 	{
 	}
+
+	public Longbow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
