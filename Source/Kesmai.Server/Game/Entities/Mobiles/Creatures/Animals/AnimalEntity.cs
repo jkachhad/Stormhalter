@@ -19,7 +19,7 @@ public abstract partial class AnimalEntity : CreatureEntity
 			/* Create a unrestricted backpack to allow for any content to be stored.
 			 * LootPacks will generate items that may not be typically allowed in a
 			 * strict backpack. */
-			{ InventoryGroup.Backpack, new Backpack(ServiceLocator.ServiceProvider, this, false) },
+			{ InventoryGroup.Backpack, new Backpack(ContainerProvider, this, false) },
 		};
 	}
 }
