@@ -12,6 +12,11 @@ public class GreenBalm : Balm
 	public GreenBalm() : base(247, 94)
 	{
 	}
+
+	public GreenBalm(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 247, 94)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GreenBalm"/> class.

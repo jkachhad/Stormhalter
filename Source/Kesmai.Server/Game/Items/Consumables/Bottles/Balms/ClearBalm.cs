@@ -19,6 +19,11 @@ public class ClearBalm : Balm
 	public ClearBalm() : base(210, 93)
 	{
 	}
+
+	public ClearBalm(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210, 93)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ClearBalm"/> class.

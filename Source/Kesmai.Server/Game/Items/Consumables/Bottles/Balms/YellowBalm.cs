@@ -12,6 +12,11 @@ public class YellowBalm : Balm
 	public YellowBalm() : base(211, 41)
 	{
 	}
+
+	public YellowBalm(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 211, 41)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YellowBalm"/> class.

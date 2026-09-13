@@ -16,6 +16,11 @@ public abstract class Balm : Bottle
 	protected Balm(int closedId, int openId) : base(closedId)
 	{
 	}
+
+	protected Balm(IEntityProvider entityProvider, EntityDependencies entityDependencies, int closedId, int openId)
+		: base(entityProvider, entityDependencies, closedId)
+	{
+	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Balm"/> class.
