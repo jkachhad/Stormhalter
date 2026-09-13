@@ -8,6 +8,7 @@ using Kesmai.Server.Engines.Gumps;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 using Kesmai.Server.Engines.Library;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Kesmai.Server.Items;
 
@@ -40,7 +41,7 @@ public class Book : ItemEntity
 			{
 				_publicationId = newValue;
 				
-				if (Library.Instance.TryGetPublication(_publicationId, out var libraryBook))
+				if (ServiceLocator.ServiceProvider.GetRequiredService<IPublicationProvider>().TryGetPublication(_publicationId, out var libraryBook))
 					Publication = libraryBook;
 			}
 		}
@@ -128,7 +129,7 @@ public class Book : ItemEntity
 
 			if (!publication.IsOwned(account, out var record))
 			{
-				publication.Own(account, record = new PublicationRecord(Library.Instance, account, publication));
+				publication.Own(account, record = new PublicationRecord(ServiceLocator.ServiceProvider.GetRequiredService<IPublicationProvider>(), account, publication));
 				
 				player.SendServerMessage($"A book titled '{publication.Title}' has been added to your library.");
 
