@@ -77,6 +77,11 @@ public abstract class Equipment : ItemEntity
 	{
 	}
 
+	protected Equipment(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

@@ -47,6 +47,11 @@ public class LizardScales : Armor
 	public LizardScales(Serial serial) : base(serial)
 	{
 	}
+
+	public LizardScales(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)

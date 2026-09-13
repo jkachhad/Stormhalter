@@ -36,6 +36,11 @@ public class LeatherArmor : Armor
 	public LeatherArmor(Serial serial) : base(serial)
 	{
 	}
+
+	public LeatherArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)

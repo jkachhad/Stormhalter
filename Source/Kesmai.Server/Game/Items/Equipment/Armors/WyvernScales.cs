@@ -41,6 +41,11 @@ public class WyvernScales : Armor, ITreasure
 	public WyvernScales(Serial serial) : base(serial)
 	{
 	}
+
+	public WyvernScales(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)

@@ -44,6 +44,11 @@ public class TrollVest : Armor, ITreasure
 	public TrollVest(Serial serial) : base(serial)
 	{
 	}
+
+	public TrollVest(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)

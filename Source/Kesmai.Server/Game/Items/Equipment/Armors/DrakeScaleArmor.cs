@@ -50,6 +50,11 @@ public class DrakeScaleArmor : Armor, ITreasure
 	public DrakeScaleArmor(Serial serial) : base(serial)
 	{
 	}
+
+	public DrakeScaleArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)

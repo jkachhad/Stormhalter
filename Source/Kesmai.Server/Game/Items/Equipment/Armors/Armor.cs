@@ -74,6 +74,11 @@ public abstract class Armor : Equipment, IArmored
 	protected Armor(Serial serial) : base(serial)
 	{
 	}
+
+	protected Armor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <summary>
 	/// Gets the armor bonus against a specified <see cref="ItemEntity"/>.

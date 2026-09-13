@@ -48,6 +48,11 @@ public class SalamanderScales : Armor, ITreasure
 	{
 	}
 
+	public SalamanderScales(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{

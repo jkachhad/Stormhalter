@@ -41,6 +41,11 @@ public class AlligatorVest : Armor
 	public AlligatorVest(Serial serial) : base(serial)
 	{
 	}
+
+	public AlligatorVest(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)

@@ -44,6 +44,11 @@ public class PlatemailArmor : Armor
 	public PlatemailArmor(Serial serial) : base(serial)
 	{
 	}
+
+	public PlatemailArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)

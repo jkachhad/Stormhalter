@@ -54,6 +54,11 @@ public class IceDragonScaleArmor : Armor, ITreasure
 	public IceDragonScaleArmor(Serial serial) : base(serial)
 	{
 	}
+
+	public IceDragonScaleArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
