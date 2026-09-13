@@ -31,6 +31,11 @@ public abstract class Staff : MeleeWeapon
 	{
 	}
 
+	protected Staff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

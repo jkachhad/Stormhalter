@@ -44,6 +44,11 @@ public class BlackStaff : Staff
 	public BlackStaff(Serial serial) : base(serial)
 	{
 	}
+
+	public BlackStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

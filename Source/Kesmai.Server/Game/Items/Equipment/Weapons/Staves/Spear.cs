@@ -41,6 +41,11 @@ public class Spear : Staff
 	public Spear(Serial serial) : base(serial)
 	{
 	}
+
+	public Spear(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

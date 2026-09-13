@@ -50,6 +50,11 @@ public class GreatScythe : Staff
 	public GreatScythe(Serial serial) : base(serial)
 	{
 	}
+
+	public GreatScythe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

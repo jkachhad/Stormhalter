@@ -53,6 +53,11 @@ public class RamStaff : Staff, ITreasure
 	public RamStaff(Serial serial) : base(serial)
 	{
 	}
+
+	public RamStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

@@ -35,6 +35,11 @@ public class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
 	{
 	}
 
+	public BlueStaffRaiseDead(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		base.GetDescription(entries);

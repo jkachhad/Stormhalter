@@ -37,6 +37,11 @@ public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 	{
 	}
 
+	public BlueStaffHeal(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		base.GetDescription(entries);
