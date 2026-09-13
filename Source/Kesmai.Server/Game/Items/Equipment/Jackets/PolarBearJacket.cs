@@ -31,6 +31,11 @@ public class PolarBearJacket : Jacket, ITreasure
 	public PolarBearJacket(Serial serial) : base(serial)
 	{
 	}
+
+	public PolarBearJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

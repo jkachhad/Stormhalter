@@ -28,6 +28,11 @@ public class HyenaJacket : Jacket
 	public HyenaJacket(Serial serial) : base(serial)
 	{
 	}
+
+	public HyenaJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
         
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

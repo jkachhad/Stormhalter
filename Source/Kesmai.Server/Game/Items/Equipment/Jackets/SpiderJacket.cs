@@ -25,6 +25,11 @@ public class SpiderJacket : Jacket
 	public SpiderJacket(Serial serial) : base(serial)
 	{
 	}
+
+	public SpiderJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
         
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

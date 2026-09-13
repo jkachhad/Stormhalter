@@ -29,6 +29,11 @@ public class WolfJacket : Jacket
 	{
 	}
 
+	public WolfJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200177)); /* [You are looking at] [a jacket made from the fur of a wolf.] */

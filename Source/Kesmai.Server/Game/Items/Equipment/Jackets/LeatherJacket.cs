@@ -28,6 +28,11 @@ public class LeatherJacket : Jacket
 	public LeatherJacket(Serial serial) : base(serial)
 	{
 	}
+
+	public LeatherJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

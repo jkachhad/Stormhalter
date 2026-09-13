@@ -21,6 +21,11 @@ public abstract class Jacket : Robe
 	{
 	}
 
+	protected Jacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

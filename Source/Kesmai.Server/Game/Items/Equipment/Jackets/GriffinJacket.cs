@@ -31,6 +31,11 @@ public class GriffinJacket : Jacket, ITreasure
 	public GriffinJacket(Serial serial) : base(serial)
 	{
 	}
+
+	public GriffinJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
         
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
