@@ -30,6 +30,11 @@ public class StunResistanceBracelet : Bracelet, ITreasure
 	{
 	}
 
+	public StunResistanceBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{

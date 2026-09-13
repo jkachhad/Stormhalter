@@ -29,6 +29,11 @@ public class StunDeathProtectionBracelet : Bracelet, ITreasure
 	public StunDeathProtectionBracelet(Serial serial) : base(serial)
 	{
 	}
+
+	public StunDeathProtectionBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
