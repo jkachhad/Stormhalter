@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -20,7 +21,8 @@ public class FlawlessSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FlawlessSapphire"/> class.
 	/// </summary>
-	public FlawlessSapphire(Serial serial) : base(serial)
+	public FlawlessSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

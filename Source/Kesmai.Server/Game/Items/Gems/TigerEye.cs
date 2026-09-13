@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -20,7 +21,8 @@ public class TigerEye : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerEye"/> class.
 	/// </summary>
-	public TigerEye(Serial serial) : base(serial)
+	public TigerEye(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

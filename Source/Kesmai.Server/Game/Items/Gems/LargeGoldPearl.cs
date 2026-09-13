@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -25,7 +26,8 @@ public class LargeGoldPearl : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LargeGoldPearl"/> class.
 	/// </summary>
-	public LargeGoldPearl(Serial serial) : base(serial)
+	public LargeGoldPearl(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

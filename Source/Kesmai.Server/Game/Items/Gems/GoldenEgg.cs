@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -23,7 +24,8 @@ public class GoldenEgg : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldenEgg"/> class.
 	/// </summary>
-	public GoldenEgg(Serial serial) : base(serial)
+	public GoldenEgg(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -19,7 +20,8 @@ public class UncutDiamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UncutDiamond"/> class.
 	/// </summary>
-	public UncutDiamond(Serial serial) : base(serial)
+	public UncutDiamond(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

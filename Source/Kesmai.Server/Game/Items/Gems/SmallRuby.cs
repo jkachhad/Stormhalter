@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -21,7 +22,8 @@ public class SmallRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallRuby"/> class.
 	/// </summary>
-	public SmallRuby(Serial serial) : base(serial)
+	public SmallRuby(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

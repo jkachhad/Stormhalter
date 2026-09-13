@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -20,7 +21,8 @@ public class OvalOnyx : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OvalOnyx"/> class.
 	/// </summary>
-	public OvalOnyx(Serial serial) : base(serial)
+	public OvalOnyx(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

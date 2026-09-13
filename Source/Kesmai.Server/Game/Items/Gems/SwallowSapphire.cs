@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -20,7 +21,8 @@ public class SwallowSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwallowSapphire"/> class.
 	/// </summary>
-	public SwallowSapphire(Serial serial) : base(serial)
+	public SwallowSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

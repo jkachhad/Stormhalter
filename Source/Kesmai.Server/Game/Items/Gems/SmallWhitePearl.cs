@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -25,7 +26,8 @@ public class SmallWhitePearl : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallWhitePearl"/> class.
 	/// </summary>
-	public SmallWhitePearl(Serial serial) : base(serial)
+	public SmallWhitePearl(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -21,7 +22,8 @@ public class LargeEmerald : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LargeEmerald"/> class.
 	/// </summary>
-	public LargeEmerald(Serial serial) : base(serial)
+	public LargeEmerald(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
