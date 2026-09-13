@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Miscellaneous;
 using Kesmai.Server.Network;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Kesmai.Server.Game;
 
@@ -91,7 +90,7 @@ public abstract class Consumable : ItemEntity
 
 					if (!String.IsNullOrEmpty(contentTypeName))
 					{
-			var contentType = ServiceLocator.ServiceProvider.GetRequiredService<TypeCacheService>().FindTypeByFullName(contentTypeName);
+						var contentType = _entityDependencies.TypeCache.FindTypeByFullName(contentTypeName);
 						var writeLength = reader.ReadInt32();
 						var writeEnd = reader.ConsumedCount + writeLength;
 
