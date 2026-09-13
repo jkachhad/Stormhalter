@@ -86,6 +86,11 @@ public abstract class Dagger : MeleeWeapon
 	{
 	}
 
+	protected Dagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

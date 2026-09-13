@@ -38,6 +38,11 @@ public class GiltDagger : Dagger
 	public GiltDagger(Serial serial) : base(serial)
 	{
 	}
+
+	public GiltDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

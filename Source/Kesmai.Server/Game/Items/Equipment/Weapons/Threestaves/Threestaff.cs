@@ -33,6 +33,11 @@ public abstract class Threestaff : MeleeWeapon
 	{
 	}
 
+	protected Threestaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

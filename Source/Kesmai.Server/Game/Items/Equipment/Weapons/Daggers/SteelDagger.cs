@@ -26,6 +26,11 @@ public class SteelDagger : Dagger
 	public SteelDagger(Serial serial) : base(serial)
 	{
 	}
+
+	public SteelDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
