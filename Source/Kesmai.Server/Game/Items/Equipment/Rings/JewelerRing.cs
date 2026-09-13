@@ -48,6 +48,11 @@ public class JewelerRing : Ring, ITreasure
 	{
 	}
 
+	public JewelerRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	protected override bool OnEquip(MobileEntity entity)
 	{
 		var delay = TimeSpan.FromSeconds(3.0 * TransmuteDelayRounds);

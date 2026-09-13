@@ -44,6 +44,11 @@ public class BankerRing : Ring, ITreasure
 	public BankerRing(Serial serial) : base(serial)
 	{
 	}
+
+	public BankerRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/* Feature 1: Dragging gold and dropping the ring allows for gold to be consumed and extracted. */
 
