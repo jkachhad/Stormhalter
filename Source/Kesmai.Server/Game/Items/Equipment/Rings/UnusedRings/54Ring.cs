@@ -31,6 +31,11 @@ public class FiftyFourRing : Ring, ITreasure
 	public FiftyFourRing(Serial serial) : base(serial)
 	{
 	}
+
+	public FiftyFourRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <summary>
 	/// Gets the description for this instance.

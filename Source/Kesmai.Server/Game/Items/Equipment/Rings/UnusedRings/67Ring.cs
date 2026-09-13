@@ -32,6 +32,11 @@ public class SixtySevenRing : Ring, ITreasure
 	{
 	}
 
+	public SixtySevenRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Gets the description for this instance.
 	/// </summary>
