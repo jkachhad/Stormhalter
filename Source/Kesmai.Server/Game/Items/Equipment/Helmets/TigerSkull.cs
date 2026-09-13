@@ -41,6 +41,11 @@ public class TigerSkull : Helmet, ITreasure
 	{
 	}
 
+	public TigerSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Gets the description for this instance.
 	/// </summary>

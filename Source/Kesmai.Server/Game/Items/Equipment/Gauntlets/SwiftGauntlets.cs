@@ -37,6 +37,11 @@ public class SwiftGauntlets : Gauntlets, ITreasure
 	{
 	}
 
+	public SwiftGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override bool CanEquip(MobileEntity entity)
 	{

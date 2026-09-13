@@ -30,6 +30,11 @@ public class CrocodileBoots : Boots, ITreasure
 	public CrocodileBoots(Serial serial) : base(serial)
 	{
 	}
+
+	public CrocodileBoots(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

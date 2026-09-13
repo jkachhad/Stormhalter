@@ -51,6 +51,11 @@ public class CrystalGauntlets : Gauntlets, ITreasure
 	{
 	}
 
+	public CrystalGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override bool CanEquip(MobileEntity entity)
 	{

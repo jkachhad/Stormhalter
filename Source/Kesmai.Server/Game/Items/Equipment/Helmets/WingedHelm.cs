@@ -42,6 +42,11 @@ public class WingedHelm : Helmet, ITreasure
 	public WingedHelm(Serial serial) : base(serial)
 	{
 	}
+
+	public WingedHelm(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WingedHelm"/> class.

@@ -41,6 +41,11 @@ public class BearSkull : Helmet, ITreasure
 	{
 	}
 
+	public BearSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{

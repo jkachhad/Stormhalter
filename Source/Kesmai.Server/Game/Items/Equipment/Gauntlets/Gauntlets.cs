@@ -82,6 +82,11 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	{
 	}
 
+	protected Gauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override int GetFumbleLocalization()
 	{
