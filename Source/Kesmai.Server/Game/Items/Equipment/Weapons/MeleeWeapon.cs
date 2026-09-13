@@ -22,6 +22,11 @@ public abstract class MeleeWeapon : Weapon
 	{
 	}
 
+	protected MeleeWeapon(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

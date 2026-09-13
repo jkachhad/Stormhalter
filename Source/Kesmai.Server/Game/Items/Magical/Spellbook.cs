@@ -49,6 +49,11 @@ public class Spellbook : ItemEntity, ITreasure
 	public Spellbook(Serial serial) : base(serial)
 	{
 	}
+
+	public Spellbook(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <summary>
 	/// Gets the description for this instance.

@@ -36,6 +36,11 @@ public class DemonWand : Wand, ITreasure
 	{
 	}
 
+	public DemonWand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{

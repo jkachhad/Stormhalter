@@ -29,6 +29,11 @@ public class GlassWand : Wand, ITreasure
 	{
 	}
 
+	public GlassWand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{

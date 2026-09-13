@@ -136,6 +136,11 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 	}
 
+	protected Weapon(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		if (Container is Hands || Container is Belt || (Container is Backpack && Container.GetSlot(this) < 5))
