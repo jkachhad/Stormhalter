@@ -30,6 +30,11 @@ public abstract class SpellOrb : ItemEntity
 	protected SpellOrb(Serial serial) : base(serial)
 	{
 	}
+
+	protected SpellOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
