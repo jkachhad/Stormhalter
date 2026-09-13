@@ -29,6 +29,11 @@ public class StrongShieldRing : ShieldRing
 	public StrongShieldRing(Serial serial) : base(serial)
 	{
 	}
+
+	public StrongShieldRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <summary>
 	/// Gets the description for this instance.

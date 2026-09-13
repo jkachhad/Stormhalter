@@ -33,6 +33,11 @@ public class BreatheWaterRing : Ring, ITreasure
 	{
 	}
 
+	public BreatheWaterRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Gets the description for this instance.
 	/// </summary>

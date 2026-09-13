@@ -42,6 +42,11 @@ public class DexterityRing : Ring, ITreasure
 	{
 	}
 
+	public DexterityRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{

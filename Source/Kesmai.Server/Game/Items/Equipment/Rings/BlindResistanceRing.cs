@@ -32,6 +32,11 @@ public class BlindResistanceRing : Ring, ITreasure
 	{
 	}
 
+	public BlindResistanceRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Gets the description for this instance.
 	/// </summary>

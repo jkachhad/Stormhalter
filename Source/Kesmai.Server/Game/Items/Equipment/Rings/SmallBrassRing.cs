@@ -24,6 +24,11 @@ public class SmallBrassRing : Ring
 	public SmallBrassRing(Serial serial) : base(serial)
 	{
 	}
+
+	public SmallBrassRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 		
 	/// <summary>
 	/// Gets the description for this instance.
