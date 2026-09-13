@@ -48,8 +48,15 @@ public class Corpse : ItemEntity
 	{
 		Owner = owner;
 	}
+
+	public Corpse(IEntityProvider entityProvider, EntityDependencies entityDependencies, MobileEntity owner, int body)
+		: base(entityProvider, entityDependencies, body)
+	{
+		Owner = owner;
+	}
 	
-	public Corpse(Serial serial) : base(serial)
+	public Corpse(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

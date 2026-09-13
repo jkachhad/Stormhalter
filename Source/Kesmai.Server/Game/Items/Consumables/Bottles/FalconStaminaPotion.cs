@@ -15,14 +15,16 @@ public class FalconStaminaPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FalconStaminaPotion"/> class.
 	/// </summary>
-	public FalconStaminaPotion() : base(276)
+	public FalconStaminaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 276)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FalconStaminaPotion"/> class.
 	/// </summary>
-	public FalconStaminaPotion(Serial serial) : base(serial)
+	public FalconStaminaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

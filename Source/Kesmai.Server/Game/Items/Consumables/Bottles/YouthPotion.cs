@@ -20,14 +20,16 @@ public class YouthPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YouthPotion"/> class.
 	/// </summary>
-	public YouthPotion() : base(227)
+	public YouthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 227)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YouthPotion"/> class.
 	/// </summary>
-	public YouthPotion(Serial serial) : base(serial)
+	public YouthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

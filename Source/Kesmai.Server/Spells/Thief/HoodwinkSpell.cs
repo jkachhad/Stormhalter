@@ -72,7 +72,7 @@ public class HoodwinkSpell : DelayedSpell, IWorldSpell
 					base.OnCast();
 
 					for (var i = 0; i < amount; i++)
-						new HoodwinkOpal().Move(target, true, _caster.Segment);
+						new HoodwinkOpal(_caster.EntityProvider, _caster.Dependencies).Move(target, true, _caster.Segment);
 
 					_caster.EmitSound(233, 3, 6);
 
@@ -182,12 +182,14 @@ public class HoodwinkOpal : ItemEntity, ITreasure
 	/// <inheritdoc />
 	public override bool CanDisintegrate => true;
 
-	public HoodwinkOpal() : base(392)
+	public HoodwinkOpal(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 392)
 	{
 		IsConjured = true;
 	}
 
-	public HoodwinkOpal(Serial serial) : base(serial)
+	public HoodwinkOpal(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

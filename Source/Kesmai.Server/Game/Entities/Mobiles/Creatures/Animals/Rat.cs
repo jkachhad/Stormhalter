@@ -4,7 +4,8 @@ namespace Kesmai.Server.Game;
 
 public abstract partial class Rat : AnimalEntity
 {
-	protected Rat()
+	protected Rat(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies)
 	{
 		Name = "rat";
 		Alignment = Alignment.Chaotic;
@@ -27,7 +28,7 @@ public abstract partial class Rat : AnimalEntity
 
 public partial class BlackRat : Rat
 {
-	public BlackRat() : base()
+	public BlackRat(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Body = 72;
 	}
@@ -35,7 +36,7 @@ public partial class BlackRat : Rat
 	
 public partial class WhiteRat : Rat
 {
-	public WhiteRat() : base()
+	public WhiteRat(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Body = 207;
 	}

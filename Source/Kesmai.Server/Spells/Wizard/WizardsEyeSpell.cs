@@ -26,7 +26,7 @@ public class WizardsEyeSpell : DelayedSpell
 			var segment = _caster.Segment;
 			var location = _caster.Location;
 
-			var frog = new SummonedFrog()
+			var frog = new SummonedFrog(_caster.EntityProvider, _caster.Dependencies)
 			{
 				MaxHealth = 1, Health = 1,
 				Movement = 3,
@@ -72,11 +72,13 @@ public class SummonedFrog : Frog
 {
 	private Timer _deathTimer;
 		
-	public SummonedFrog()
+	public SummonedFrog(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies)
 	{
 	}
 		
-	public SummonedFrog(Serial serial) : base(serial)
+	public SummonedFrog(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

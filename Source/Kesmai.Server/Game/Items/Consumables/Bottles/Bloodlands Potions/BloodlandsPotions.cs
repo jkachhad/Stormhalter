@@ -19,14 +19,16 @@ public class ForestBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ForestBlood"/> class.
 	/// </summary>
-	public ForestBlood() : base(210)
+	public ForestBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ForestBlood"/> class.
 	/// </summary>
-	public ForestBlood(Serial serial) : base(serial)
+	public ForestBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -85,14 +87,16 @@ public class KeepBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="KeepBlood"/> class.
 	/// </summary>
-	public KeepBlood() : base(210)
+	public KeepBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="KeepBlood"/> class.
 	/// </summary>
-	public KeepBlood(Serial serial) : base(serial)
+	public KeepBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -151,14 +155,16 @@ public class LandBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LandBlood"/> class.
 	/// </summary>
-	public LandBlood() : base(210)
+	public LandBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LandBlood"/> class.
 	/// </summary>
-	public LandBlood(Serial serial) : base(serial)
+	public LandBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -217,14 +223,16 @@ public class ShadowBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShadowBlood"/> class.
 	/// </summary>
-	public ShadowBlood() : base(210)
+	public ShadowBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShadowBlood"/> class.
 	/// </summary>
-	public ShadowBlood(Serial serial) : base(serial)
+	public ShadowBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -283,14 +291,16 @@ public class CorruptedBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CorruptedBlood"/> class.
 	/// </summary>
-	public CorruptedBlood() : base(210)
+	public CorruptedBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CorruptedBlood"/> class.
 	/// </summary>
-	public CorruptedBlood(Serial serial) : base(serial)
+	public CorruptedBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -349,14 +359,16 @@ public class MakersBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MakersBlood"/> class.
 	/// </summary>
-	public MakersBlood() : base(210)
+	public MakersBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MakersBlood"/> class.
 	/// </summary>
-	public MakersBlood(Serial serial) : base(serial)
+	public MakersBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -415,14 +427,16 @@ public class UshersBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UshersBlood"/> class.
 	/// </summary>
-	public UshersBlood() : base(210)
+	public UshersBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UshersBlood"/> class.
 	/// </summary>
-	public UshersBlood(Serial serial) : base(serial)
+	public UshersBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -481,14 +495,16 @@ public class FeralBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FeralBlood"/> class.
 	/// </summary>
-	public FeralBlood() : base(210)
+	public FeralBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FeralBlood"/> class.
 	/// </summary>
-	public FeralBlood(Serial serial) : base(serial)
+	public FeralBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -547,14 +563,16 @@ public class FlameBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FlameBlood"/> class.
 	/// </summary>
-	public FlameBlood() : base(210)
+	public FlameBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FlameBlood"/> class.
 	/// </summary>
-	public FlameBlood(Serial serial) : base(serial)
+	public FlameBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -613,14 +631,16 @@ public class AirBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AirBlood"/> class.
 	/// </summary>
-	public AirBlood() : base(210)
+	public AirBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AirBlood"/> class.
 	/// </summary>
-	public AirBlood(Serial serial) : base(serial)
+	public AirBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -679,14 +699,16 @@ public class IceBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceBlood"/> class.
 	/// </summary>
-	public IceBlood() : base(210)
+	public IceBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceBlood"/> class.
 	/// </summary>
-	public IceBlood(Serial serial) : base(serial)
+	public IceBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -745,14 +767,16 @@ public class WaterBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WaterBlood"/> class.
 	/// </summary>
-	public WaterBlood() : base(210)
+	public WaterBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WaterBlood"/> class.
 	/// </summary>
-	public WaterBlood(Serial serial) : base(serial)
+	public WaterBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -811,14 +835,16 @@ public class RegenerationBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RegenerationBlood"/> class.
 	/// </summary>
-	public RegenerationBlood() : base(210)
+	public RegenerationBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RegenerationBlood"/> class.
 	/// </summary>
-	public RegenerationBlood(Serial serial) : base(serial)
+	public RegenerationBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
@@ -877,14 +903,16 @@ public class DeadBlood : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DeadBlood"/> class.
 	/// </summary>
-	public DeadBlood() : base(210)
+	public DeadBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 210)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DeadBlood"/> class.
 	/// </summary>
-	public DeadBlood(Serial serial) : base(serial)
+	public DeadBlood(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

@@ -19,14 +19,16 @@ public class UnfurledScroll : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UnfurledScroll"/> class.
 	/// </summary>
-	public UnfurledScroll() : base(141)
+	public UnfurledScroll(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 141)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RolledScroll"/> class.
 	/// </summary>
-	public UnfurledScroll(Serial serial) : base(serial)
+	public UnfurledScroll(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

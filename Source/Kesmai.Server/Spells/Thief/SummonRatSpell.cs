@@ -25,7 +25,7 @@ public class SummonRatSpell : DelayedSpell
 			var segment = _caster.Segment;
 			var location = _caster.Location;
 
-			var rat = new SummonedRat()
+			var rat = new SummonedRat(_caster.EntityProvider, _caster.Dependencies)
 			{
 				MaxHealth = 1, Health = 1,
 				Movement = 3,
@@ -69,11 +69,13 @@ public class SummonedRat : BlackRat
 {
 	private Timer _deathTimer;
 		
-	public SummonedRat()
+	public SummonedRat(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies)
 	{
 	}
 		
-	public SummonedRat(Serial serial) : base(serial)
+	public SummonedRat(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 

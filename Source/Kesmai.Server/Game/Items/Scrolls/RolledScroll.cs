@@ -19,14 +19,16 @@ public class RolledScroll : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RolledScroll"/> class.
 	/// </summary>
-	public RolledScroll() : base(128)
+	public RolledScroll(IEntityProvider entityProvider, EntityDependencies entityDependencies)
+		: base(entityProvider, entityDependencies, 128)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RolledScroll"/> class.
 	/// </summary>
-	public RolledScroll(Serial serial) : base(serial)
+	public RolledScroll(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
 	{
 	}
 
