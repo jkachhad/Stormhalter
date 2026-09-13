@@ -24,6 +24,11 @@ public abstract class Bracelet : Equipment
 	{
 	}
 
+	protected Bracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{

@@ -27,6 +27,11 @@ public abstract class Amulet : Equipment
 	protected Amulet(Serial serial) : base(serial)
 	{
 	}
+
+	protected Amulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

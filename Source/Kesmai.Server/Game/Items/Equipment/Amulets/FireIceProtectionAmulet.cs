@@ -61,6 +61,11 @@ public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 	{
 	}
 
+	public FireIceProtectionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
