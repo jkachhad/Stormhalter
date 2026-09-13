@@ -44,6 +44,11 @@ public class SteelMace : Mace
 	public SteelMace(Serial serial) : base(serial)
 	{
 	}
+
+	public SteelMace(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

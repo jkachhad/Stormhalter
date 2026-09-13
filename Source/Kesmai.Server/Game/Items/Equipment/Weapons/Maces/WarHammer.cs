@@ -44,6 +44,11 @@ public class WarHammer : Mace
 	public WarHammer(Serial serial) : base(serial)
 	{
 	}
+
+	public WarHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

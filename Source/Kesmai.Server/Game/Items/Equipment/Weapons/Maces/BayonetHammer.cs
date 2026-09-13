@@ -44,6 +44,11 @@ public class BayonetHammer : Mace
 	public BayonetHammer(Serial serial) : base(serial)
 	{
 	}
+
+	public BayonetHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
