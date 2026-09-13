@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Kesmai.Server.Game;
-using Kesmai.Server.Game;
 using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 
