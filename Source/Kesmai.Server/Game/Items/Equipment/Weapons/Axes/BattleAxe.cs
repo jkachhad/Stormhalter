@@ -38,6 +38,11 @@ public class BattleAxe : Axe
 	public BattleAxe(Serial serial) : base(serial)
 	{
 	}
+
+	public BattleAxe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
+		: base(entityProvider, entityDependencies, serial)
+	{
+	}
 	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
