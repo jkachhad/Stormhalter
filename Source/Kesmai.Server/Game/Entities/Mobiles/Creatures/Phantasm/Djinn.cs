@@ -13,7 +13,7 @@ public partial class Djinn : CreatureEntity, IPhantasm
 		{
 			var client = args.Client;
 
-			if (client.State != State.World)
+			if (client.State is not WorldState)
 				return false;
 
 			var character = client.Character;
@@ -36,7 +36,7 @@ public partial class Djinn : CreatureEntity, IPhantasm
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Djinn"/> class.
 	/// </summary>
-	public Djinn()
+	public Djinn(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "djinn";
 		Body = 5;
