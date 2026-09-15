@@ -18,7 +18,8 @@ When the source is removed, the stored snapshot is removed without recalculating
 
 | API | Purpose |
 | --- | --- |
-| `GetStatModifiers(MobileEntity wearer)` | Returns the item's complete continuous stat snapshot. Override this when creating equipment bonuses. |
+| `GetBaseModifiers(MobileEntity wearer)` | Returns intrinsic or shared property-derived stat contributions. |
+| `GetStatModifiers(MobileEntity wearer)` | Returns item-specific, conditional, wearer-dependent, or set-dependent stat contributions. |
 | `StatModifierSet.Add(...)` | Adds an ordinary `EntityStat` modifier to the snapshot. |
 | `StatModifierSet.AddMaximumValue(...)` | Changes the maximum-value constraint of an `EntityStat`. |
 | `UpdateStatModifiers()` | Replaces this source's active snapshot after one of its dependencies changes. It does nothing while the source is inactive. |
@@ -57,7 +58,28 @@ public class ExampleStrengthRing : Ring
 }
 ```
 
-Always call `base.GetStatModifiers(wearer)`. Base equipment classes may already provide protection, regeneration, or other modifiers.
+Always call the matching base method. `GetBaseModifiers` and `GetStatModifiers` are merged into one gameplay snapshot when the item activates. Shared equipment classes use `GetBaseModifiers` for intrinsic property-based values; segment and item-specific conditional bonuses belong in `GetStatModifiers`.
+
+## Base Modifiers and Item Properties
+
+Use `GetBaseModifiers` when a shared item property directly supplies a continuous stat. Communicate the semantic property to the client with `ItemPropertyAttribute`, then derive the gameplay modifier from that same property. The item property is the client-facing representation; do not add the corresponding `GetBaseModifiers` entry to tooltip modifier data. Client modifier data is sourced from `GetStatModifiers`.
+
+```csharp
+[ItemProperty(ItemPropertyId.ProtectionFromFire)]
+public virtual int ProtectionFromFire => 0;
+
+protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
+{
+    var modifiers = base.GetBaseModifiers(wearer);
+
+    if (CanApplyStatModifiers(wearer) && ProtectionFromFire > 0)
+        modifiers.Add(EntityStat.FireProtection, ProtectionFromFire);
+
+    return modifiers;
+}
+```
+
+Keep wearer-, profession-, equipment-set-, and condition-dependent contributions in `GetStatModifiers`. Call `base.GetBaseModifiers(wearer)` and `base.GetStatModifiers(wearer)` in their respective overrides.
 
 ## Multiple Modifiers and Modifier Types
 

@@ -23,66 +23,77 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// Gets the base attack bonus value for this <see cref="Weapon"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.BaseAttackBonus)]
 	public virtual int BaseAttackBonus => 0;
 
 	/// <summary>
 	/// Gets the penetration value for this <see cref="Weapon"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.Penetration)]
 	public virtual ShieldPenetration Penetration => ShieldPenetration.None;
 
 	/// <summary>
 	/// Gets the weapon flags.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.WeaponFlags)]
 	public virtual WeaponFlags Flags => WeaponFlags.None;
 
 	/// <summary>
 	/// Gets the minimum damage for this <see cref="IWeapon"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.MinimumDamage)]
 	public virtual int MinimumDamage => 0;
 
 	/// <summary>
 	/// Gets the maximum damage for this <see cref="IWeapon"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.MaximumDamage)]
 	public virtual int MaximumDamage => 0;
 
 	/// <summary>
 	/// Gets the base armor bonus provided by this <see cref="IArmored"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.BaseArmorBonus)]
 	public virtual int BaseArmorBonus => 0;
 
 	/// <summary>
 	/// Gets the protection provided against slashing attacks.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.SlashingProtection)]
 	public virtual int SlashingProtection => 0;
 
 	/// <summary>
 	/// Gets the protection provided against peircing attacks.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.PiercingProtection)]
 	public virtual int PiercingProtection => 0;
 
 	/// <summary>
 	/// Gets the protection provided against bashing attacks.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.BashingProtection)]
 	public virtual int BashingProtection => 0;
 
 	/// <summary>
 	/// Gets the protection provided against projectile attacks.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.ProjectileProtection)]
 	public virtual int ProjectileProtection => 0;
 
 	/// <summary>
 	/// Gets the maximum range at which this weapon can be used.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.MaximumRange)]
 	public virtual int MaxRange => 0;
 
 	/// <summary>
@@ -222,9 +233,9 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	}
 
 	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
+	protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
 	{
-		var modifiers = base.GetStatModifiers(wearer);
+		var modifiers = base.GetBaseModifiers(wearer);
 
 		if (CanApplyStatModifiers(wearer))
 		{
@@ -239,6 +250,12 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		}
 
 		return modifiers;
+	}
+
+	public override void AddClientProperties(ItemPropertySet builder, PlayerEntity observer)
+	{
+		base.AddClientProperties(builder, observer);
+		builder.Add(ItemPropertyId.WeaponSkill, (int)Skill);
 	}
 
 	/// <inheritdoc />

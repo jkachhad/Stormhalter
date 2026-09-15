@@ -13,42 +13,51 @@ public abstract class Equipment : ItemEntity
 	/// Gets the hindrance penalty for this <see cref="Equipment"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.Hindrance)]
 	public virtual int Hindrance => 0;
 
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.ProtectionFromDaze)]
 	public virtual int ProtectionFromDaze => 0;
 		
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.ProtectionFromFire)]
 	public virtual int ProtectionFromFire => 0;
 		
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.ProtectionFromIce)]
 	public virtual int ProtectionFromIce => 0;
 		
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.ProtectionFromConcussion)]
 	public virtual int ProtectionFromConcussion => 0;
 		
 	/// <summary>
 	/// Gets the health regeneration provided by this <see cref="Equipment"/>
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.HealthRegeneration)]
 	public virtual int HealthRegeneration => 0;
 		
 	/// <summary>
 	/// Gets the stamina regeneration provided by this <see cref="Equipment"/>
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.StaminaRegeneration)]
 	public virtual int StaminaRegeneration => 0;
 		
 	/// <summary>
 	/// Gets the mana regeneration provided by this <see cref="Equipment"/>
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.ManaRegeneration)]
 	public virtual int ManaRegeneration => 0;
 
 	/// <summary>
 	/// Gets a value indicating if this instance restricts spell casting for certain professions.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.RestrictSpellcast)]
 	public virtual bool RestrictSpellcast => false;
 
 	/// <summary>
@@ -106,9 +115,9 @@ public abstract class Equipment : ItemEntity
 	}
 
 	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
+	protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
 	{
-		var modifiers = base.GetStatModifiers(wearer);
+		var modifiers = base.GetBaseModifiers(wearer);
 
 		if (CanApplyStatModifiers(wearer))
 		{
@@ -133,7 +142,7 @@ public abstract class Equipment : ItemEntity
 
 		return modifiers;
 	}
-	
+
 	/// <inheritdoc />
 	protected override void OnBreak(MobileEntity source)
 	{

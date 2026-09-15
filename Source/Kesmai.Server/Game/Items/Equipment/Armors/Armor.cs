@@ -23,28 +23,34 @@ public abstract class Armor : Equipment, IArmored
 	public override int Category => 9;
 		
 	/// <inheritdoc />
+	[ItemProperty(ItemPropertyId.Hindrance)]
 	public override int Hindrance => 1;
 		
 	#region IArmored
 		
 	/// <inheritdoc />
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.BaseArmorBonus)]
 	public virtual int BaseArmorBonus => 0;
 
 	/// <inheritdoc />
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.SlashingProtection)]
 	public virtual int SlashingProtection => 0;
 
 	/// <inheritdoc />
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.PiercingProtection)]
 	public virtual int PiercingProtection => 0;
 
 	/// <inheritdoc />
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.BashingProtection)]
 	public virtual int BashingProtection => 0;
 
 	/// <inheritdoc />
 	[CommandProperty(AccessLevel.GameMaster)]
+	[ItemProperty(ItemPropertyId.ProjectileProtection)]
 	public virtual int ProjectileProtection => 0;
 
 	#endregion
