@@ -73,7 +73,13 @@ public override void GetClientProperties(PlayerEntity observer, ItemPropertySet 
 
 `ItemPropertySet` is compiled from shared source for both client and server builds. Use `Set<T>` for values, `Get<T>` for required values, and `TryGet<T>` for optional values. Primitive and enum property values are transported by the shared `ItemPropertySchema` definitions; do not add a separate wire-type switch or serialize enum values manually in item code.
 
-Property snapshots are complete replacements and are calculated for the observing player. Call `InvalidateProperties()` when a transmitted value or its visibility changes. `UpdateStatModifiers()` also refreshes the item property delta when an active item's dependent state changes. Keep tooltip-only values in the property snapshot and continuous gameplay contributions in the stat modifier snapshot; do not duplicate a base item property as a contextual modifier.
+Property snapshots are complete replacements and are calculated for the observing player. Call `InvalidateProperties()` when a transmitted value or its visibility changes. `UpdateStatModifiers()` refreshes the separate modifier snapshot when an active item's dependent state changes. Keep tooltip-only values in the property snapshot and continuous gameplay contributions in the stat modifier snapshot; do not duplicate a base item property as a contextual modifier.
+
+## Client Modifier Snapshots
+
+The server transports contextual item modifiers separately from ordinary item properties through `ServerItemModifiersUpdate`. Each item entry contains complete replacements for both `Modifiers` and `MaximumValueModifiers`, preserving repeated entries and list order. The client exposes these values through `ItemEntity.ModifierSet`, so tooltip consumers can observe modifier changes through the same client property/notification system used by item properties.
+
+`UpdateStatModifiers()` invalidates the modifier snapshot with `InvalidateModifiers()`. The transmitted value is `GetModifierSet(observer)`, which is based on `GetStatModifiers(observer)` only. `GetBaseModifiers` remains the server-side gameplay conversion of intrinsic item properties and is not duplicated in the client snapshot. `BaseDodge` is not part of this transport contract.
 
 ## Multiple Modifiers and Modifier Types
 
