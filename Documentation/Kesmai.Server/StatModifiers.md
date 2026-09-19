@@ -59,6 +59,22 @@ public class ExampleStrengthRing : Ring
 
 Always call `base.GetStatModifiers(wearer)`. Base equipment classes may already provide protection, regeneration, or other modifiers.
 
+## Client Item Properties
+
+Client-facing item properties are separate from the gameplay modifier snapshot. Use `ItemEntity.GetClientProperties(PlayerEntity observer, ItemPropertySet properties)` to add semantic values that the client may display or use for tooltip decisions. Call the base implementation first so inherited properties remain present, then write values with the shared property-set API:
+
+```csharp
+public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+{
+    base.GetClientProperties(observer, properties);
+    properties.Set(ItemPropertyId.Description, Description);
+}
+```
+
+`ItemPropertySet` is compiled from shared source for both client and server builds. Use `Set<T>` for values, `Get<T>` for required values, and `TryGet<T>` for optional values. Primitive and enum property values are transported by the shared `ItemPropertySchema` definitions; do not add a separate wire-type switch or serialize enum values manually in item code.
+
+Property snapshots are complete replacements and are calculated for the observing player. Call `InvalidateProperties()` when a transmitted value or its visibility changes. `UpdateStatModifiers()` also refreshes the item property delta when an active item's dependent state changes. Keep tooltip-only values in the property snapshot and continuous gameplay contributions in the stat modifier snapshot; do not duplicate a base item property as a contextual modifier.
+
 ## Multiple Modifiers and Modifier Types
 
 One snapshot can contain any number of entries:
