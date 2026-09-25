@@ -485,7 +485,7 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 					AutoRevenom = true;
 				}
 
-				goto case 2;
+				break;
 			}
 			case 2:
 			{
