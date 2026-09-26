@@ -105,6 +105,18 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	public bool IsPoisoned => _poison != null;
 
 	/// <summary>
+	/// Gets or sets whether the poison on this weapon is re-applied after a hit.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public bool AutoRevenom { get; set; }
+
+	/// <summary>
+	/// Gets or sets the potency of the venom re-applied when <see cref="AutoRevenom"/> is set.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public int RevenomPotency { get; set; }
+
+	/// <summary>
 	/// Gets the health regeneration provided by this <see cref="Weapon"/>
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
@@ -219,6 +231,12 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 	public virtual void OnUnwield(MobileEntity entity)
 	{
+		/* Unequipping removes any revenom enchantment. */
+		if (AutoRevenom)
+		{
+			AutoRevenom = false;
+			RevenomPotency = 0;
+		}
 	}
 
 	/// <inheritdoc />
@@ -374,6 +392,9 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 				attacker.Alignment = Alignment.Neutral;
 
 			Poison = null;
+
+			if (AutoRevenom && RevenomPotency > 0)
+				Poison = new Venom(RevenomPotency);
 		}
 	}
 
@@ -382,6 +403,13 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		/* Remove enchantment if dropped to the world (death, moved, etc.) */
 		if (IsEnchanted)
 			IsEnchanted = false;
+
+		/* A fumble or other drop-to-world removes any revenom enchantment. */
+		if (AutoRevenom)
+		{
+			AutoRevenom = false;
+			RevenomPotency = 0;
+		}
 
 		return base.DropToLocation(location);
 	}
@@ -404,12 +432,13 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 		base.Serialize(writer);
 
-		writer.Write((short)2); /* version */
+		writer.Write((short)3); /* version */
 
 		var flags = SaveFlag.None;
 
 		SetSaveFlag(ref flags, SaveFlag.IsEnchanted, IsEnchanted);
 		SetSaveFlag(ref flags, SaveFlag.Envenomed, _poison != null);
+		SetSaveFlag(ref flags, SaveFlag.Revenom, AutoRevenom);
 
 		writer.Write((int)flags);
 
@@ -418,6 +447,9 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 			writer.Write(_poison.Delay);
 			writer.Write(_poison.Potency);
 		}
+
+		if (GetSaveFlag(flags, SaveFlag.Revenom))
+			writer.Write(RevenomPotency);
 	}
 
 	/// <summary>
@@ -431,6 +463,30 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 		switch (version)
 		{
+			case 3:
+			{
+				var flags = (SaveFlag)reader.ReadInt32();
+
+				if (GetSaveFlag(flags, SaveFlag.IsEnchanted))
+					IsEnchanted = true;
+
+				if (GetSaveFlag(flags, SaveFlag.Envenomed))
+				{
+					var delay = reader.ReadTimeSpan();
+					var potency = reader.ReadInt32();
+
+					if (potency > 0)
+						Poison = new Venom(potency);
+				}
+
+				if (GetSaveFlag(flags, SaveFlag.Revenom))
+				{
+					RevenomPotency = reader.ReadInt32();
+					AutoRevenom = true;
+				}
+
+				break;
+			}
 			case 2:
 			{
 				var flags = (SaveFlag)reader.ReadInt32();
@@ -462,7 +518,8 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		None = 0x00000000,
 
 		Envenomed = 0x00000010,
-		IsEnchanted = 0x00000020
+		IsEnchanted = 0x00000020,
+		Revenom = 0x00000040
 	}
 }
 
