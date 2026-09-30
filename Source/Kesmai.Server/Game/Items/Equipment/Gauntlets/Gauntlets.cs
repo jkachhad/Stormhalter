@@ -164,6 +164,23 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	}
 	
 	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		properties.Set(ItemPropertyId.MinimumDamage, MinimumDamage);
+		properties.Set(ItemPropertyId.MaximumDamage, MaximumDamage);
+		properties.Set(ItemPropertyId.WeaponFlags, Flags);
+		properties.Set(ItemPropertyId.MaximumRange, MaxRange);
+
+		properties.Set(ItemPropertyId.BaseArmorBonus, BaseArmorBonus);
+		properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+		properties.Set(ItemPropertyId.PiercingProtection, PiercingProtection);
+		properties.Set(ItemPropertyId.SlashingProtection, SlashingProtection);
+		properties.Set(ItemPropertyId.BashingProtection, BashingProtection);
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

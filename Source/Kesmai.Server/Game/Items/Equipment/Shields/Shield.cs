@@ -81,6 +81,18 @@ public abstract class Shield : ItemEntity, IArmored, IWieldable
 	{
 	}
 
+	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		properties.Set(ItemPropertyId.BaseArmorBonus, BaseArmorBonus);
+		properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+		properties.Set(ItemPropertyId.PiercingProtection, PiercingProtection);
+		properties.Set(ItemPropertyId.SlashingProtection, SlashingProtection);
+		properties.Set(ItemPropertyId.BashingProtection, BashingProtection);
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

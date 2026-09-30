@@ -77,6 +77,15 @@ public abstract class Equipment : ItemEntity
 	{
 	}
 
+	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		// fire, ice and daze protection are sent as contextual modifiers by GetStatModifiers.
+		properties.Set(ItemPropertyId.ProtectionFromConcussion, ProtectionFromConcussion);
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>
