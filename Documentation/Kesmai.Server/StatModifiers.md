@@ -21,8 +21,11 @@ When the source is removed, the stored snapshot is removed without recalculating
 | `GetStatModifiers(MobileEntity wearer)` | Returns the item's complete continuous stat snapshot. Override this when creating equipment bonuses. |
 | `StatModifierSet.Add(...)` | Adds an ordinary `EntityStat` modifier to the snapshot. |
 | `StatModifierSet.AddMaximumValue(...)` | Changes the maximum-value constraint of an `EntityStat`. |
-| `UpdateStatModifiers()` | Replaces this source's active snapshot after one of its dependencies changes. It does nothing while the source is inactive. |
-| `MobileEntity.UpdateStatModifiers()` | Refreshes every registered item and status source for the wearer. |
+| `UpdateStatModifiers()` | Replaces this source's active snapshot after one of its dependencies changes and marks the item's client modifier snapshot stale. While the source is inactive it only marks the client snapshot stale. |
+| `MobileEntity.UpdateStatModifiers()` | Refreshes every registered item and status source for the wearer, then sends updated client property and modifier snapshots for the items the mobile carries or looks at to every attached client, including players peeking at it. |
+| `GetClientProperties(PlayerEntity observer, ItemPropertySet properties)` | Adds client-facing item property values for the observing player. See [Client Item Properties](#client-item-properties). |
+| `InvalidateProperties()` | Marks the item's client property snapshot stale after a transmitted value or its visibility changes. |
+| `InvalidateModifiers()` | Marks the item's client modifier snapshot stale. `UpdateStatModifiers()` calls it. |
 | `IStatModifierSource` | Provides the shared public `UpdateStatModifiers()` refresh contract. |
 | `CanApplyStatModifiers(MobileEntity wearer)` | Determines whether the item may currently provide its stat modifiers. It uses side-effect-free item validation by default. Override it only when modifier eligibility differs from use eligibility. |
 | `ActivateModifiers(...)` / `InactivateModifiers(...)` | Protected or internal framework operations that register and remove snapshots. Normal callers should not invoke them. |
@@ -73,13 +76,23 @@ public override void GetClientProperties(PlayerEntity observer, ItemPropertySet 
 
 `ItemPropertySet` is compiled from shared source for both client and server builds. Use `Set<T>` for values, `Get<T>` for required values, and `TryGet<T>` for optional values. Primitive and enum property values are transported by the shared `ItemPropertySchema` definitions; do not add a separate wire-type switch or serialize enum values manually in item code.
 
-Property snapshots are complete replacements and are calculated for the observing player. Call `InvalidateProperties()` when a transmitted value or its visibility changes. `UpdateStatModifiers()` refreshes the separate modifier snapshot when an active item's dependent state changes. Keep tooltip-only values in the property snapshot and continuous gameplay contributions in the stat modifier snapshot; do not duplicate a base item property as a contextual modifier.
+`Set<T>` requires the value type to match the property's schema definition exactly and throws `ArgumentException` otherwise (or `ArgumentOutOfRangeException` for a property with no definition). Most numeric properties are `int`; `ActualPrice` is `uint`; `Identified` and `RestrictSpellcast` are `bool`; `Description` is `string`; `WeaponFlags` and `Penetration` use the `WeaponFlags` and `ShieldPenetration` enums. Convert a value explicitly when its source type differs, for example `properties.Set(ItemPropertyId.ActualPrice, (uint)Price)` because `Price` is an `int`, rather than relying on the inferred type of an expression.
+
+The base implementation sends `Identified` for every observer and `ActualPrice` for thieves. The `Identified` setter already invalidates both client snapshots.
+
+Property snapshots are complete replacements and are calculated separately for each observing player: the owner, players looking at the item on the ground, and players peeking at the owner. Call `InvalidateProperties()` when a transmitted value or its visibility changes. Each client receives the new snapshot only if it differs from the one it last received. Do not use `Delta(ItemDelta.Update)` for this: item delta flags describe only item-update fields (icon, amount, label, color, action, and quality), and `ItemDelta.Update` resends all of them. A property change that is not invalidated still reaches a client the next time the item is sent to it (for example when the player looks at the tile, opens the locker, or logs in), but not immediately.
+
+`UpdateStatModifiers()` refreshes the separate modifier snapshot when an active item's dependent state changes. Keep tooltip-only values in the property snapshot and continuous gameplay contributions in the stat modifier snapshot; do not duplicate a base item property as a contextual modifier. `Equipment` currently contributes its protections and regeneration from `GetStatModifiers`, so they are transmitted as modifiers. Before also sending such a value as an item property, move its gameplay contribution to `GetBaseModifiers`, which is not transmitted.
 
 ## Client Modifier Snapshots
 
 The server transports contextual item modifiers separately from ordinary item properties through `ServerItemModifiersUpdate`. Each item entry contains complete replacements for both `Modifiers` and `MaximumValueModifiers`, preserving repeated entries and list order. The client exposes these values through `ItemEntity.ModifierSet`, so tooltip consumers can observe modifier changes through the same client property/notification system used by item properties.
 
-`UpdateStatModifiers()` invalidates the modifier snapshot with `InvalidateModifiers()`. The transmitted value is `GetModifierSet(observer)`, which is based on `GetStatModifiers(observer)` only. `GetBaseModifiers` remains the server-side gameplay conversion of intrinsic item properties and is not duplicated in the client snapshot. `BaseDodge` is not part of this transport contract.
+`UpdateStatModifiers()` invalidates the modifier snapshot with `InvalidateModifiers()`. The transmitted value is `GetModifierSet(observer)`, which is based on `GetStatModifiers(observer)` only, and is empty for an item that requires identification and is not identified. `GetBaseModifiers` remains the server-side gameplay conversion of intrinsic item properties and is not duplicated in the client snapshot. `BaseDodge` is not part of this transport contract.
+
+To build the client snapshot, `GetStatModifiers` is called with the observing player as its `wearer` argument. That player may not be wearing the item: it may be in a backpack, on the ground, or on a mobile the player is peeking at. Calculate the snapshot from the argument without assuming the item is equipped by it; a `CanApplyStatModifiers(wearer)` check then reflects whether the observer could use the item.
+
+While an item is inactive, `UpdateStatModifiers()` leaves the wearer's stats unchanged but still marks the client modifier snapshot stale, so an unequipped item's displayed modifiers stay current. The `Quality` setter relies on this.
 
 ## Multiple Modifiers and Modifier Types
 
@@ -157,7 +170,6 @@ public int Power
 
         _power = value;
         UpdateStatModifiers();
-        Delta(ItemDelta.Update);
     }
 }
 
@@ -169,7 +181,7 @@ protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 }
 ```
 
-`UpdateStatModifiers` safely does nothing if the item is not active.
+`UpdateStatModifiers` safely leaves stats unchanged if the item is not active. It always marks the client modifier snapshot stale, so no item delta is needed for the modifier change. If `Power` is also sent as an item property, call `InvalidateProperties()` as well. Use `Delta` with a specific `ItemDelta` flag only when an item-update field such as the label or icon changes.
 
 ## Wearer-Dependent Bonus
 
@@ -187,7 +199,7 @@ protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 }
 ```
 
-Core gameplay refreshes equipment after level, profession, alignment, relevant skill, segment, facet, and equipment changes. If new wearer state affects equipment, its change path must call `wearer.UpdateStatModifiers()`.
+Core gameplay refreshes equipment after level, profession, alignment, relevant skill, segment, facet, and equipment changes. The same refresh sends updated client property and modifier snapshots for the items the mobile carries or looks at. If new wearer state affects equipment, its change path must call `wearer.UpdateStatModifiers()`.
 
 Use an ordinary equality expression for professions. `Profession` is not a compile-time constant, so this property-pattern form does not compile:
 
@@ -355,7 +367,7 @@ Not every calculated equipment value belongs in a snapshot. Properties read only
 - armor protection and blocking calculations;
 - tooltip-only values.
 
-Refresh a stat snapshot only when the item contributes to an `EntityStat` or an attribute maximum. Dynamic properties may still require an item delta so the tooltip is updated.
+Refresh a stat snapshot only when the item contributes to an `EntityStat` or an attribute maximum. Values the client displays belong in `GetClientProperties`; call `InvalidateProperties()` when they change. Use an item delta only for item-update fields such as the label or icon.
 
 ## BaseDodge Compatibility
 
@@ -420,7 +432,11 @@ Every call must return the item's complete snapshot. `Replace` removes the entir
 
 ### Forgetting a refresh trigger
 
-The system cannot detect arbitrary custom dependencies. A custom item property must call `UpdateStatModifiers`; a new wearer dependency must call `MobileEntity.UpdateStatModifiers` from its change path.
+The system cannot detect arbitrary custom dependencies. A custom item property must call `UpdateStatModifiers`; a new wearer dependency must call `MobileEntity.UpdateStatModifiers` from its change path. A value sent as an item property must call `InvalidateProperties()` when it changes.
+
+### Setting a property with the wrong value type
+
+`ItemPropertySet.Set<T>` throws when `T` does not match the schema, for example `properties.Set(ItemPropertyId.ActualPrice, 42)` (an `int`) instead of `42u`. The exception is raised in `GetClientProperties`, so the stack trace points at the item that set the value.
 
 ### Recalculating during removal
 
