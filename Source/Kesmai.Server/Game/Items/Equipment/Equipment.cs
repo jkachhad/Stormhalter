@@ -82,8 +82,20 @@ public abstract class Equipment : ItemEntity
 	{
 		base.GetClientProperties(observer, properties);
 
-		// fire, ice and daze protection are sent as contextual modifiers by GetStatModifiers.
-		properties.Set(ItemPropertyId.ProtectionFromConcussion, ProtectionFromConcussion);
+		if (Hindrance > 0)
+			properties.Set(ItemPropertyId.Hindrance, Hindrance);
+
+		if (ProtectionFromFire > 0)
+			properties.Set(ItemPropertyId.ProtectionFromFire, ProtectionFromFire);
+
+		if (ProtectionFromIce > 0)
+			properties.Set(ItemPropertyId.ProtectionFromIce, ProtectionFromIce);
+
+		if (ProtectionFromDaze > 0)
+			properties.Set(ItemPropertyId.ProtectionFromDaze, ProtectionFromDaze);
+
+		if (ProtectionFromConcussion > 0)
+			properties.Set(ItemPropertyId.ProtectionFromConcussion, ProtectionFromConcussion);
 	}
 
 	/// <summary>
@@ -115,31 +127,28 @@ public abstract class Equipment : ItemEntity
 	}
 
 	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
+	protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
 	{
-		var modifiers = base.GetStatModifiers(wearer);
-
-		if (CanApplyStatModifiers(wearer))
-		{
-			if (ProtectionFromFire > 0)
-				modifiers.Add(EntityStat.FireProtection, ProtectionFromFire);
+		var modifiers = base.GetBaseModifiers(wearer);
+		
+		if (ProtectionFromFire > 0)
+			modifiers.Add(EntityStat.FireProtection, ProtectionFromFire);
 				
-			if (ProtectionFromIce > 0)
-				modifiers.Add(EntityStat.IceProtection, ProtectionFromIce);
+		if (ProtectionFromIce > 0)
+			modifiers.Add(EntityStat.IceProtection, ProtectionFromIce);
 				
-			if (ProtectionFromDaze > 0)
-				modifiers.Add(EntityStat.DazeProtection, ProtectionFromDaze);
+		if (ProtectionFromDaze > 0)
+			modifiers.Add(EntityStat.DazeProtection, ProtectionFromDaze);
 
-			if (HealthRegeneration > 0)
-				modifiers.Add(EntityStat.HealthRegenerationRate, HealthRegeneration);
+		if (HealthRegeneration > 0)
+			modifiers.Add(EntityStat.HealthRegenerationRate, HealthRegeneration);
 
-			if (StaminaRegeneration > 0)
-				modifiers.Add(EntityStat.StaminaRegenerationRate, StaminaRegeneration);
+		if (StaminaRegeneration > 0)
+			modifiers.Add(EntityStat.StaminaRegenerationRate, StaminaRegeneration);
 
-			if (ManaRegeneration > 0)
-				modifiers.Add(EntityStat.ManaRegenerationRate, ManaRegeneration);
-		}
-
+		if (ManaRegeneration > 0)
+			modifiers.Add(EntityStat.ManaRegenerationRate, ManaRegeneration);
+		
 		return modifiers;
 	}
 	
