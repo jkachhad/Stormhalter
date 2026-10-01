@@ -18,7 +18,8 @@ When the source is removed, the stored snapshot is removed without recalculating
 
 | API | Purpose |
 | --- | --- |
-| `GetStatModifiers(MobileEntity wearer)` | Returns the item's complete continuous stat snapshot. Override this when creating equipment bonuses. |
+| `GetBaseModifiers(MobileEntity wearer)` | Returns intrinsic/shared property-based item modifiers. Override this only in the shared Kesmai or Stormhalter item layers. |
+| `GetStatModifiers(MobileEntity wearer)` | Returns item-specific, conditional, wearer-dependent, or set-dependent modifiers. Segment repositories should continue using this method for their overrides. |
 | `StatModifierSet.Add(...)` | Adds an ordinary `EntityStat` modifier to the snapshot. |
 | `StatModifierSet.AddMaximumValue(...)` | Changes the maximum-value constraint of an `EntityStat`. |
 | `UpdateStatModifiers()` | Replaces this source's active snapshot after one of its dependencies changes and marks the item's client modifier snapshot stale. While the source is inactive it only marks the client snapshot stale. |
@@ -60,7 +61,7 @@ public class ExampleStrengthRing : Ring
 }
 ```
 
-Always call `base.GetStatModifiers(wearer)`. Base equipment classes may already provide protection, regeneration, or other modifiers.
+Always call the corresponding base method. Base equipment classes may already provide protection, regeneration, or other modifiers. Item activation and refresh combine the results of both methods with the in-place `+` operator into one source snapshot.
 
 ## Client Item Properties
 
@@ -406,21 +407,21 @@ Do not call `InactivateModifiers` followed by `ActivateModifiers` when a propert
 
 ### Depending on activation-hook setup
 
-The initial snapshot is registered before `OnActivateModifiers` runs, and it is removed before `OnInactivateModifiers` runs. Do not make `GetStatModifiers` depend on state initialized or cleared by those hooks. Store required item state before equip or refresh it explicitly after that state changes.
+The initial snapshot is registered before `OnActivateModifiers` runs, and it is removed before `OnInactivateModifiers` runs. Do not make `GetBaseModifiers` or `GetStatModifiers` depend on state initialized or cleared by those hooks. Store required item state before equip or refresh it explicitly after that state changes.
 
 ### Omitting the base snapshot
 
-Failing to call `base.GetStatModifiers(wearer)` silently drops modifiers declared by base equipment classes.
+Failing to call the corresponding base method—`base.GetBaseModifiers(wearer)` for intrinsic/shared contributions or `base.GetStatModifiers(wearer)` for item-specific contributions—silently drops modifiers declared by base equipment classes.
 
 ### Side effects during calculation
 
-`GetStatModifiers` can run because of unrelated equipment or wearer changes. It must be deterministic and safe to call repeatedly. Do not send messages, roll randomness, create timers, subscribe to events, or mutate other items from it.
+`GetBaseModifiers` and `GetStatModifiers` can run because of unrelated equipment or wearer changes. They must be deterministic and safe to call repeatedly. Do not send messages, roll randomness, create timers, subscribe to events, or mutate other items from them.
 
 The same rule applies to `SpellStatus.GetStatModifiers`. Read authoritative status sources and wearer state rather than another source's already-calculated stat value, which would make refresh results order dependent.
 
 ### Throwing from calculations or lifecycle hooks
 
-Treat `GetStatModifiers`, `OnActivateModifiers`, `OnInactivateModifiers`, `OnAcquire`, and `OnRemoved` as no-throw operations. Item modifier calculation finishes before the item is marked active, but the framework cannot automatically reverse arbitrary messages, timers, subscriptions, or other side effects if a hook throws. Handle expected missing or inapplicable state by returning the appropriate snapshot and completing the hook normally.
+Treat `GetBaseModifiers`, `GetStatModifiers`, `OnActivateModifiers`, `OnInactivateModifiers`, `OnAcquire`, and `OnRemoved` as no-throw operations. Item modifier calculation finishes before the item is marked active, but the framework cannot automatically reverse arbitrary messages, timers, subscriptions, or other side effects if a hook throws. Handle expected missing or inapplicable state by returning the appropriate snapshot and completing the hook normally.
 
 ### Mutating status source dictionaries
 
