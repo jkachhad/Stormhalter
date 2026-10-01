@@ -71,7 +71,10 @@ Client-facing item properties are separate from the gameplay modifier snapshot. 
 public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
 {
     base.GetClientProperties(observer, properties);
-    properties.Set(ItemPropertyId.Description, Description);
+
+    // only the owner can see how much this cursed robe hinders them.
+    if (observer != Owner)
+        properties.Remove(ItemPropertyId.Hindrance);
 }
 ```
 
@@ -81,18 +84,7 @@ public override void GetClientProperties(PlayerEntity observer, ItemPropertySet 
 
 The base implementation sends `Identified` for every observer and `ActualPrice` for thieves. The `Identified` and `Quality` setters already invalidate the property snapshot.
 
-The shared item classes already send their standard values, so most items need no `GetClientProperties` override. Overriding one of these members is enough for the new value to appear on the tooltip:
-
-| Item class | Values sent |
-| --- | --- |
-| `Equipment` (armor, robes, helmets, boots, rings, amulets, gauntlets, …) | `Hindrance`, `RestrictSpellcast`, `ProtectionFromFire`, `ProtectionFromIce`, `ProtectionFromDaze`, `ProtectionFromConcussion`, `HealthRegeneration`, `StaminaRegeneration`, `ManaRegeneration` |
-| `Armor`, `Shield` | `BaseArmorBonus`, `SlashingProtection`, `PiercingProtection`, `BashingProtection`, `ProjectileProtection` |
-| `Weapon`, `Gauntlets` | the armor values above, plus `Skill` (as `WeaponSkill`), `MinimumDamage`, `MaximumDamage`, `BaseAttackBonus`, `Flags` (as `WeaponFlags`), `Penetration`, and `MaxRange` (as `MaximumRange`) |
-| `Weapon` | `HealthRegeneration`, `StaminaRegeneration`, `ManaRegeneration` |
-
-A value is sent only when it differs from its default (zero, `false`, or `None`); the client treats a missing value as the default. `WeaponSkill` is always sent for weapons and holds the skill's `Id`. None of these values are sent for an item that requires identification and is not identified.
-
-If one of these values is calculated from state that changes at runtime, such as an item level or a field set when the item is equipped, call `InvalidateProperties()` after the state changes so the tooltip updates immediately. Values calculated from `Quality` need nothing extra, and values that depend on the wearer's stats are refreshed whenever the wearer's modifiers are recalculated.
+The shared item classes already send the standard equipment, armor, and weapon values (hindrance, protections, regeneration, damage, and so on), so most items need no `GetClientProperties` override. See [Item Values on Tooltips](ItemTooltips.md) for the list of values sent automatically, examples, and when to call `InvalidateProperties()`.
 
 Property snapshots are complete replacements and are calculated separately for each observing player: the owner, players looking at the item on the ground, and players peeking at the owner. Call `InvalidateProperties()` when a transmitted value or its visibility changes. Each client receives the new snapshot only if it differs from the one it last received. Do not use `Delta(ItemDelta.Update)` for this: item delta flags describe only item-update fields (icon, amount, label, color, action, and quality), and `ItemDelta.Update` resends all of them. A property change that is not invalidated still reaches a client the next time the item is sent to it (for example when the player looks at the tile, opens the locker, or logs in), but not immediately.
 
