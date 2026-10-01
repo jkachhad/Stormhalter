@@ -73,6 +73,17 @@ public abstract class Shield : ItemEntity, IArmored, IWieldable
 	{
 	}
 
+	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		if (RequiresIdentification && !Identified)
+			return;
+
+		properties.SetArmorProperties(this);
+	}
+
 	public virtual void OnWield(MobileEntity entity)
 	{
 	}

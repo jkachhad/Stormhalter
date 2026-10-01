@@ -162,6 +162,18 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 			
 		return ItemUseResult.Allowed;
 	}
+
+	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		if (RequiresIdentification && !Identified)
+			return;
+
+		properties.SetWeaponProperties(this);
+		properties.SetArmorProperties(this);
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

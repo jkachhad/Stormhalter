@@ -126,6 +126,17 @@ public abstract class Armor : Equipment, IArmored
 	{
 	}
 
+	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		if (RequiresIdentification && !Identified)
+			return;
+
+		properties.SetArmorProperties(this);
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

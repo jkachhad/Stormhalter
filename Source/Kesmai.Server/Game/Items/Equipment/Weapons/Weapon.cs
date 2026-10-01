@@ -240,6 +240,27 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	}
 
 	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		if (RequiresIdentification && !Identified)
+			return;
+
+		properties.SetWeaponProperties(this);
+		properties.SetArmorProperties(this);
+
+		if (HealthRegeneration != 0)
+			properties.Set(ItemPropertyId.HealthRegeneration, HealthRegeneration);
+
+		if (StaminaRegeneration != 0)
+			properties.Set(ItemPropertyId.StaminaRegeneration, StaminaRegeneration);
+
+		if (ManaRegeneration != 0)
+			properties.Set(ItemPropertyId.ManaRegeneration, ManaRegeneration);
+	}
+
+	/// <inheritdoc />
 	protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
 	{
 		var modifiers = base.GetBaseModifiers(wearer);
