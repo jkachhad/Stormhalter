@@ -16,6 +16,9 @@ public class AncientCoin : ItemEntity, ITreasure
 	/// </summary>
 	public override int LabelNumber => 6000028;
 
+	/// <inheritdoc />
+	public override bool RequiresIdentification => false;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AncientCoin"/> class.
 	/// </summary>
