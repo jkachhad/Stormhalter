@@ -168,7 +168,7 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	{
 		base.GetClientProperties(observer, properties);
 
-		if (RequiresIdentification && !Identified)
+		if (!Identified)
 			return;
 
 		// the skill identifier, not the implicit int conversion (which is a zero-based index).
