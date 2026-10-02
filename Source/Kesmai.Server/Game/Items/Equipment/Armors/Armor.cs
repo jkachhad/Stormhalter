@@ -131,7 +131,7 @@ public abstract class Armor : Equipment, IArmored
 	{
 		base.GetClientProperties(observer, properties);
 
-		if (RequiresIdentification && !Identified)
+		if (!Identified)
 			return;
 
 		if (BaseArmorBonus != 0)
