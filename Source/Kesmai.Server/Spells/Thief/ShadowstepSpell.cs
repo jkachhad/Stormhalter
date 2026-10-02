@@ -146,6 +146,8 @@ public class ShadowstepSpell : InstantSpell, IWorldSpell
 	private class InternalTarget : Target
 	{
 		private ShadowstepSpell _spell;
+
+		public override bool UnrestrictedPath => true;
 			
 		public InternalTarget(ShadowstepSpell spell) : base(3, TargetFlags.Path | TargetFlags.Direction)
 		{
