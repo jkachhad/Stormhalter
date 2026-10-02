@@ -240,6 +240,61 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	}
 
 	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		if (RequiresIdentification && !Identified)
+			return;
+
+		// the skill identifier, not the implicit int conversion (which is a zero-based index).
+		if (Skill is { } skill)
+			properties.Set(ItemPropertyId.WeaponSkill, skill.Id);
+
+		if (MinimumDamage != 0)
+			properties.Set(ItemPropertyId.MinimumDamage, MinimumDamage);
+
+		if (MaximumDamage != 0)
+			properties.Set(ItemPropertyId.MaximumDamage, MaximumDamage);
+
+		if (BaseAttackBonus != 0)
+			properties.Set(ItemPropertyId.BaseAttackBonus, BaseAttackBonus);
+
+		if (Flags != WeaponFlags.None)
+			properties.Set(ItemPropertyId.WeaponFlags, Flags);
+
+		if (Penetration != ShieldPenetration.None)
+			properties.Set(ItemPropertyId.Penetration, Penetration);
+
+		if (MaxRange != 0)
+			properties.Set(ItemPropertyId.MaximumRange, MaxRange);
+
+		if (BaseArmorBonus != 0)
+			properties.Set(ItemPropertyId.BaseArmorBonus, BaseArmorBonus);
+
+		if (SlashingProtection != 0)
+			properties.Set(ItemPropertyId.SlashingProtection, SlashingProtection);
+
+		if (PiercingProtection != 0)
+			properties.Set(ItemPropertyId.PiercingProtection, PiercingProtection);
+
+		if (BashingProtection != 0)
+			properties.Set(ItemPropertyId.BashingProtection, BashingProtection);
+
+		if (ProjectileProtection != 0)
+			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+
+		if (HealthRegeneration != 0)
+			properties.Set(ItemPropertyId.HealthRegeneration, HealthRegeneration);
+
+		if (StaminaRegeneration != 0)
+			properties.Set(ItemPropertyId.StaminaRegeneration, StaminaRegeneration);
+
+		if (ManaRegeneration != 0)
+			properties.Set(ItemPropertyId.ManaRegeneration, ManaRegeneration);
+	}
+
+	/// <inheritdoc />
 	protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
 	{
 		var modifiers = base.GetBaseModifiers(wearer);

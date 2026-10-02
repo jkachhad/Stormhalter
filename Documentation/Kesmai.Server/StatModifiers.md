@@ -71,19 +71,24 @@ Client-facing item properties are separate from the gameplay modifier snapshot. 
 public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
 {
     base.GetClientProperties(observer, properties);
-    properties.Set(ItemPropertyId.Description, Description);
+
+    // only the owner can see how much this cursed robe hinders them.
+    if (observer != Owner)
+        properties.Remove(ItemPropertyId.Hindrance);
 }
 ```
 
 `ItemPropertySet` is compiled from shared source for both client and server builds. Use `Set<T>` for values, `Get<T>` for required values, and `TryGet<T>` for optional values. Primitive and enum property values are transported by the shared `ItemPropertySchema` definitions; do not add a separate wire-type switch or serialize enum values manually in item code.
 
-`Set<T>` requires the value type to match the property's schema definition exactly and throws `ArgumentException` otherwise (or `ArgumentOutOfRangeException` for a property with no definition). Most numeric properties are `int`; `ActualPrice` is `uint`; `Identified` and `RestrictSpellcast` are `bool`; `Description` is `string`; `WeaponFlags` and `Penetration` use the `WeaponFlags` and `ShieldPenetration` enums. Convert a value explicitly when its source type differs, for example `properties.Set(ItemPropertyId.ActualPrice, (uint)Price)` because `Price` is an `int`, rather than relying on the inferred type of an expression.
+`Set<T>` requires the value type to match the property's schema definition exactly and throws `ArgumentException` otherwise (or `ArgumentOutOfRangeException` for a property with no definition). Most numeric properties are `int`; `ActualPrice` is `uint`; `Identified` and `RestrictSpellcast` are `bool`; `Description` is `string`; `WeaponFlags` and `Penetration` use the `WeaponFlags` and `ShieldPenetration` enums; `WeaponSkill` is an `int` holding `Skill.Id`. Convert a value explicitly when its source type differs, for example `properties.Set(ItemPropertyId.ActualPrice, (uint)Price)` because `Price` is an `int`, rather than relying on the inferred type of an expression.
 
-The base implementation sends `Identified` for every observer and `ActualPrice` for thieves. The `Identified` setter already invalidates both client snapshots.
+The base implementation sends `Identified` for every observer and `ActualPrice` for thieves. The `Identified` and `Quality` setters already invalidate the property snapshot.
+
+The shared item classes already send the standard equipment, armor, and weapon values (hindrance, protections, regeneration, damage, and so on), so most items need no `GetClientProperties` override. See [Item Values on Tooltips](ItemTooltips.md) for the list of values sent automatically, examples, and when to call `InvalidateProperties()`.
 
 Property snapshots are complete replacements and are calculated separately for each observing player: the owner, players looking at the item on the ground, and players peeking at the owner. Call `InvalidateProperties()` when a transmitted value or its visibility changes. Each client receives the new snapshot only if it differs from the one it last received. Do not use `Delta(ItemDelta.Update)` for this: item delta flags describe only item-update fields (icon, amount, label, color, action, and quality), and `ItemDelta.Update` resends all of them. A property change that is not invalidated still reaches a client the next time the item is sent to it (for example when the player looks at the tile, opens the locker, or logs in), but not immediately.
 
-`UpdateStatModifiers()` refreshes the separate modifier snapshot when an active item's dependent state changes. Keep tooltip-only values in the property snapshot and continuous gameplay contributions in the stat modifier snapshot; do not duplicate a base item property as a contextual modifier. `Equipment` currently contributes its protections and regeneration from `GetStatModifiers`, so they are transmitted as modifiers. Before also sending such a value as an item property, move its gameplay contribution to `GetBaseModifiers`, which is not transmitted.
+`UpdateStatModifiers()` refreshes the separate modifier snapshot when an active item's dependent state changes. Keep tooltip-only values in the property snapshot and continuous gameplay contributions in the stat modifier snapshot; do not duplicate a base item property as a contextual modifier. `Equipment` and `Weapon` contribute their protections and regeneration from `GetBaseModifiers`, which is not transmitted, so those values are sent only as item properties. Follow the same pattern before sending another value as an item property: move its gameplay contribution to `GetBaseModifiers`. If an item adds an extra protection or regeneration bonus in `GetStatModifiers`, that bonus is sent separately as a contextual modifier.
 
 ## Client Modifier Snapshots
 

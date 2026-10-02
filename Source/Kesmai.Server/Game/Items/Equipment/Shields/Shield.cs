@@ -73,6 +73,30 @@ public abstract class Shield : ItemEntity, IArmored, IWieldable
 	{
 	}
 
+	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		if (RequiresIdentification && !Identified)
+			return;
+
+		if (BaseArmorBonus != 0)
+			properties.Set(ItemPropertyId.BaseArmorBonus, BaseArmorBonus);
+
+		if (SlashingProtection != 0)
+			properties.Set(ItemPropertyId.SlashingProtection, SlashingProtection);
+
+		if (PiercingProtection != 0)
+			properties.Set(ItemPropertyId.PiercingProtection, PiercingProtection);
+
+		if (BashingProtection != 0)
+			properties.Set(ItemPropertyId.BashingProtection, BashingProtection);
+
+		if (ProjectileProtection != 0)
+			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+	}
+
 	public virtual void OnWield(MobileEntity entity)
 	{
 	}

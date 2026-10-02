@@ -77,6 +77,42 @@ public abstract class Equipment : ItemEntity
 	{
 	}
 
+	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		if (RequiresIdentification && !Identified)
+			return;
+
+		if (Hindrance != 0)
+			properties.Set(ItemPropertyId.Hindrance, Hindrance);
+
+		if (RestrictSpellcast)
+			properties.Set(ItemPropertyId.RestrictSpellcast, true);
+
+		if (ProtectionFromFire != 0)
+			properties.Set(ItemPropertyId.ProtectionFromFire, ProtectionFromFire);
+
+		if (ProtectionFromIce != 0)
+			properties.Set(ItemPropertyId.ProtectionFromIce, ProtectionFromIce);
+
+		if (ProtectionFromDaze != 0)
+			properties.Set(ItemPropertyId.ProtectionFromDaze, ProtectionFromDaze);
+
+		if (ProtectionFromConcussion != 0)
+			properties.Set(ItemPropertyId.ProtectionFromConcussion, ProtectionFromConcussion);
+
+		if (HealthRegeneration != 0)
+			properties.Set(ItemPropertyId.HealthRegeneration, HealthRegeneration);
+
+		if (StaminaRegeneration != 0)
+			properties.Set(ItemPropertyId.StaminaRegeneration, StaminaRegeneration);
+
+		if (ManaRegeneration != 0)
+			properties.Set(ItemPropertyId.ManaRegeneration, ManaRegeneration);
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

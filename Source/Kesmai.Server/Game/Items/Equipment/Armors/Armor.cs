@@ -126,6 +126,30 @@ public abstract class Armor : Equipment, IArmored
 	{
 	}
 
+	/// <inheritdoc />
+	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	{
+		base.GetClientProperties(observer, properties);
+
+		if (RequiresIdentification && !Identified)
+			return;
+
+		if (BaseArmorBonus != 0)
+			properties.Set(ItemPropertyId.BaseArmorBonus, BaseArmorBonus);
+
+		if (SlashingProtection != 0)
+			properties.Set(ItemPropertyId.SlashingProtection, SlashingProtection);
+
+		if (PiercingProtection != 0)
+			properties.Set(ItemPropertyId.PiercingProtection, PiercingProtection);
+
+		if (BashingProtection != 0)
+			properties.Set(ItemPropertyId.BashingProtection, BashingProtection);
+
+		if (ProjectileProtection != 0)
+			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>
