@@ -134,7 +134,20 @@ public abstract class Armor : Equipment, IArmored
 		if (RequiresIdentification && !Identified)
 			return;
 
-		properties.SetArmorProperties(this);
+		if (BaseArmorBonus != 0)
+			properties.Set(ItemPropertyId.BaseArmorBonus, BaseArmorBonus);
+
+		if (SlashingProtection != 0)
+			properties.Set(ItemPropertyId.SlashingProtection, SlashingProtection);
+
+		if (PiercingProtection != 0)
+			properties.Set(ItemPropertyId.PiercingProtection, PiercingProtection);
+
+		if (BashingProtection != 0)
+			properties.Set(ItemPropertyId.BashingProtection, BashingProtection);
+
+		if (ProjectileProtection != 0)
+			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
 	}
 
 	/// <summary>

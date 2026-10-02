@@ -171,8 +171,42 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 		if (RequiresIdentification && !Identified)
 			return;
 
-		properties.SetWeaponProperties(this);
-		properties.SetArmorProperties(this);
+		// the skill identifier, not the implicit int conversion (which is a zero-based index).
+		if (Skill is { } skill)
+			properties.Set(ItemPropertyId.WeaponSkill, skill.Id);
+
+		if (MinimumDamage != 0)
+			properties.Set(ItemPropertyId.MinimumDamage, MinimumDamage);
+
+		if (MaximumDamage != 0)
+			properties.Set(ItemPropertyId.MaximumDamage, MaximumDamage);
+
+		if (BaseAttackBonus != 0)
+			properties.Set(ItemPropertyId.BaseAttackBonus, BaseAttackBonus);
+
+		if (Flags != WeaponFlags.None)
+			properties.Set(ItemPropertyId.WeaponFlags, Flags);
+
+		if (Penetration != ShieldPenetration.None)
+			properties.Set(ItemPropertyId.Penetration, Penetration);
+
+		if (MaxRange != 0)
+			properties.Set(ItemPropertyId.MaximumRange, MaxRange);
+
+		if (BaseArmorBonus != 0)
+			properties.Set(ItemPropertyId.BaseArmorBonus, BaseArmorBonus);
+
+		if (SlashingProtection != 0)
+			properties.Set(ItemPropertyId.SlashingProtection, SlashingProtection);
+
+		if (PiercingProtection != 0)
+			properties.Set(ItemPropertyId.PiercingProtection, PiercingProtection);
+
+		if (BashingProtection != 0)
+			properties.Set(ItemPropertyId.BashingProtection, BashingProtection);
+
+		if (ProjectileProtection != 0)
+			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
 	}
 	
 	/// <inheritdoc />
