@@ -244,7 +244,7 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 		base.GetClientProperties(observer, properties);
 
-		if (RequiresIdentification && !Identified)
+		if (!Identified)
 			return;
 
 		// the skill identifier, not the implicit int conversion (which is a zero-based index).

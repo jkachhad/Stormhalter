@@ -78,7 +78,7 @@ public abstract class Shield : ItemEntity, IArmored, IWieldable
 	{
 		base.GetClientProperties(observer, properties);
 
-		if (RequiresIdentification && !Identified)
+		if (!Identified)
 			return;
 
 		if (BaseArmorBonus != 0)
