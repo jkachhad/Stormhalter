@@ -157,6 +157,14 @@ That shows "+3 Strength" and "+10% Magic Damage Dealt". Some things to know:
 - Percentage stats, such as magic damage dealt and critical strike chance, show a `%`.
 - A bonus that hurts the player, such as a negative value or magic damage dealt reduction, shows in red.
 - Like the other values, bonuses only appear once the item is identified.
+- A bonus that doesn't apply yet, for example one that needs a higher level or another profession, can still be shown. Leave it out to hide it, or add it with `StatModifierFlags.Inactive` to list it in gray. An inactive bonus is never given to the player:
+
+  ```csharp
+  var isKnight = wearer is PlayerEntity { Profession.Info.Name: "Knight" };
+
+  // shown in blue to a knight, and in gray to everyone else.
+  modifiers.Add(EntityStat.Barrier, 2, flags: isKnight ? StatModifierFlags.None : StatModifierFlags.Inactive);
+  ```
 - The tooltip shows the common stats: mitigation (for wearer-dependent bonuses; the item's own mitigation uses the members above), magic damage and critical strike, max health/mana/stamina, regeneration, Barrier, Strength, Dexterity, protections, Lightning Resistance, Spell Focus, and the fire and ice protection limits from `AddMaximumValue`. A bonus to any other stat still works in game but doesn't appear yet. Ask the core team if you need one added.
 
 A bonus here is separate from the matching item member. A robe with `ManaRegeneration => 1` and an extra +2 in `GetStatModifiers` shows two regeneration lines.
