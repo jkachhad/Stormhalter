@@ -46,6 +46,18 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 
 	/// <inheritdoc />
 	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int MeleeDamageMitigation => 0;
+
+	/// <inheritdoc />
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int RangedDamageMitigation => 0;
+
+	/// <inheritdoc />
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int ProjectileDamageMitigation => 0;
+
+	/// <inheritdoc />
+	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int MinimumDamage => 0;
 
 	/// <inheritdoc />
@@ -207,6 +219,26 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 
 		if (ProjectileProtection != 0)
 			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+	}
+
+	/// <inheritdoc />
+	protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
+	{
+		var modifiers = base.GetBaseModifiers(wearer);
+
+		if (CanApplyStatModifiers(wearer))
+		{
+			if (MeleeDamageMitigation != 0)
+				modifiers.Add(EntityStat.MeleeDamageMitigation, MeleeDamageMitigation);
+
+			if (RangedDamageMitigation != 0)
+				modifiers.Add(EntityStat.RangedDamageMitigation, RangedDamageMitigation);
+
+			if (ProjectileDamageMitigation != 0)
+				modifiers.Add(EntityStat.ProjectileDamageMitigation, ProjectileDamageMitigation);
+		}
+
+		return modifiers;
 	}
 	
 	/// <inheritdoc />

@@ -37,6 +37,15 @@ public class DrakeScaleArmor : Armor, ITreasure
 	/// <inheritdoc />
 	public override int ProtectionFromIce => 10;
 
+	/// <inheritdoc />
+	public override int MeleeDamageMitigation => 4;
+
+	/// <inheritdoc />
+	public override int RangedDamageMitigation => 4;
+
+	/// <inheritdoc />
+	public override int ProjectileDamageMitigation => 4;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DrakeScaleArmor"/> class.
 	/// </summary>
@@ -51,20 +60,6 @@ public class DrakeScaleArmor : Armor, ITreasure
 	{
 	}
 	
-	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
-	{
-		var modifiers = base.GetStatModifiers(wearer);
-
-		modifiers.Add(EntityStat.MeleeDamageMitigation, 4);
-		modifiers.Add(EntityStat.RangedDamageMitigation, 4);
-		modifiers.Add(EntityStat.ProjectileDamageMitigation, 4);
-
-		return modifiers;
-	}
-
-
-		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
