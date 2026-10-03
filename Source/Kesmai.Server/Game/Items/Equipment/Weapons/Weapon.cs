@@ -80,6 +80,24 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	public virtual int ProjectileProtection => 0;
 
 	/// <summary>
+	/// Gets the melee damage mitigation provided to the wearer.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int MeleeDamageMitigation => 0;
+
+	/// <summary>
+	/// Gets the ranged damage mitigation provided to the wearer.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int RangedDamageMitigation => 0;
+
+	/// <summary>
+	/// Gets the projectile damage mitigation provided to the wearer.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int ProjectileDamageMitigation => 0;
+
+	/// <summary>
 	/// Gets the maximum range at which this weapon can be used.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
@@ -244,7 +262,7 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 		base.GetClientProperties(observer, properties);
 
-		if (RequiresIdentification && !Identified)
+		if (!Identified)
 			return;
 
 		// the skill identifier, not the implicit int conversion (which is a zero-based index).
@@ -284,6 +302,15 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		if (ProjectileProtection != 0)
 			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
 
+		if (MeleeDamageMitigation != 0)
+			properties.Set(ItemPropertyId.MeleeDamageMitigation, MeleeDamageMitigation);
+
+		if (RangedDamageMitigation != 0)
+			properties.Set(ItemPropertyId.RangedDamageMitigation, RangedDamageMitigation);
+
+		if (ProjectileDamageMitigation != 0)
+			properties.Set(ItemPropertyId.ProjectileDamageMitigation, ProjectileDamageMitigation);
+
 		if (HealthRegeneration != 0)
 			properties.Set(ItemPropertyId.HealthRegeneration, HealthRegeneration);
 
@@ -309,6 +336,15 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 			if (ManaRegeneration > 0)
 				modifiers.Add(EntityStat.ManaRegenerationRate, ManaRegeneration);
+
+			if (MeleeDamageMitigation != 0)
+				modifiers.Add(EntityStat.MeleeDamageMitigation, MeleeDamageMitigation);
+
+			if (RangedDamageMitigation != 0)
+				modifiers.Add(EntityStat.RangedDamageMitigation, RangedDamageMitigation);
+
+			if (ProjectileDamageMitigation != 0)
+				modifiers.Add(EntityStat.ProjectileDamageMitigation, ProjectileDamageMitigation);
 		}
 
 		return modifiers;
