@@ -34,6 +34,15 @@ public class SalamanderScales : Armor, ITreasure
 	/// <inheritdoc />
 	public override int ProtectionFromFire => 5;
 
+	/// <inheritdoc />
+	public override int MeleeDamageMitigation => 2;
+
+	/// <inheritdoc />
+	public override int RangedDamageMitigation => 2;
+
+	/// <inheritdoc />
+	public override int ProjectileDamageMitigation => 2;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SalamanderScales"/> class.
 	/// </summary>
@@ -48,20 +57,6 @@ public class SalamanderScales : Armor, ITreasure
 	{
 	}
 
-	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
-	{
-		var modifiers = base.GetStatModifiers(wearer);
-
-		modifiers.Add(EntityStat.MeleeDamageMitigation, 2);
-		modifiers.Add(EntityStat.RangedDamageMitigation, 2);
-		modifiers.Add(EntityStat.ProjectileDamageMitigation, 2);
-
-		return modifiers;
-	}
-
-
-	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
