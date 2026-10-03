@@ -43,6 +43,24 @@ public abstract class Shield : ItemEntity, IArmored, IWieldable
 	public virtual int ProjectileProtection => 0;
 
 	/// <summary>
+	/// Gets the melee damage mitigation provided to the wearer.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int MeleeDamageMitigation => 0;
+
+	/// <summary>
+	/// Gets the ranged damage mitigation provided to the wearer.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int RangedDamageMitigation => 0;
+
+	/// <summary>
+	/// Gets the projectile damage mitigation provided to the wearer.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int ProjectileDamageMitigation => 0;
+
+	/// <summary>
 	/// Initializes a new instance of the <see cref="Shield"/> class.
 	/// </summary>
 	protected Shield(int shieldID) : base(shieldID)
@@ -95,6 +113,26 @@ public abstract class Shield : ItemEntity, IArmored, IWieldable
 
 		if (ProjectileProtection != 0)
 			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+	}
+
+	/// <inheritdoc />
+	protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
+	{
+		var modifiers = base.GetBaseModifiers(wearer);
+
+		if (CanApplyStatModifiers(wearer))
+		{
+			if (MeleeDamageMitigation != 0)
+				modifiers.Add(EntityStat.MeleeDamageMitigation, MeleeDamageMitigation);
+
+			if (RangedDamageMitigation != 0)
+				modifiers.Add(EntityStat.RangedDamageMitigation, RangedDamageMitigation);
+
+			if (ProjectileDamageMitigation != 0)
+				modifiers.Add(EntityStat.ProjectileDamageMitigation, ProjectileDamageMitigation);
+		}
+
+		return modifiers;
 	}
 
 	public virtual void OnWield(MobileEntity entity)

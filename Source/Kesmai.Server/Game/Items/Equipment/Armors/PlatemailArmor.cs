@@ -31,6 +31,15 @@ public class PlatemailArmor : Armor
 	/// <inheritdoc />
 	public override bool RestrictSpellcast => true;
 
+	/// <inheritdoc />
+	public override int MeleeDamageMitigation => 2;
+
+	/// <inheritdoc />
+	public override int RangedDamageMitigation => 2;
+
+	/// <inheritdoc />
+	public override int ProjectileDamageMitigation => 1;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PlatemailArmor"/> class.
 	/// </summary>
@@ -45,20 +54,6 @@ public class PlatemailArmor : Armor
 	{
 	}
 	
-	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
-	{
-		var modifiers = base.GetStatModifiers(wearer);
-
-		modifiers.Add(EntityStat.MeleeDamageMitigation, 2);
-		modifiers.Add(EntityStat.RangedDamageMitigation, 2);
-		modifiers.Add(EntityStat.ProjectileDamageMitigation, 1);
-
-		return modifiers;
-	}
-
-
-
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
