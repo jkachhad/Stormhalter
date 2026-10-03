@@ -15,7 +15,7 @@ The shared item classes send these values for you. Anything that inherits from t
 | If your item inherits from… | These values are sent |
 | --- | --- |
 | `Equipment` (armor, robes, helmets, boots, rings, amulets, gauntlets, …) | `Hindrance`, `RestrictSpellcast`, `ProtectionFromFire`, `ProtectionFromIce`, `ProtectionFromDaze`, `ProtectionFromConcussion`, `HealthRegeneration`, `StaminaRegeneration`, `ManaRegeneration` |
-| `Armor` or `Shield` | `BaseArmorBonus`, `SlashingProtection`, `PiercingProtection`, `BashingProtection`, `ProjectileProtection` |
+| `Armor` or `Shield` | `BaseArmorBonus`, `SlashingProtection`, `PiercingProtection`, `BashingProtection`, `ProjectileProtection`, `MeleeDamageMitigation`, `RangedDamageMitigation`, `ProjectileDamageMitigation` |
 | `Weapon` or `Gauntlets` | Everything in the `Armor` row, plus `Skill`, `MinimumDamage`, `MaximumDamage`, `BaseAttackBonus`, `Flags`, `Penetration`, and `MaxRange` |
 | `Weapon` | `HealthRegeneration`, `StaminaRegeneration`, `ManaRegeneration` |
 
@@ -66,6 +66,26 @@ public class StormBlade : Sword, ITreasure
 
 The tooltip shows the sword skill (inherited from `Sword`), damage 2–10, attack bonus 3, the slashing and blue-glowing flags, and heavy shield penetration.
 
+## Example: Armor With Damage Mitigation
+
+Set melee, ranged, and projectile damage mitigation with the mitigation members, not in `GetStatModifiers`. The tooltip shows them as a row of melee, ranged, and projectile icons, and the wearer gets the same mitigation in game:
+
+```csharp
+public class WardenScales : Armor, ITreasure
+{
+    public override int SlashingProtection => 3;
+    public override int ProjectileProtection => 2;
+
+    public override int MeleeDamageMitigation => 4;
+    public override int RangedDamageMitigation => 4;
+    public override int ProjectileDamageMitigation => 2 + Quality;
+
+    // constructors and serialization omitted
+}
+```
+
+Only a bonus that depends on the wearer, such as one that grows with their skill or level, belongs in `GetStatModifiers`. It shows as its own mitigation line below the icon row (see [Bonuses From GetStatModifiers](#bonuses-from-getstatmodifiers)).
+
 ## When a Value Changes During Play
 
 If a value is fixed (`=> 10`), you're done. If it's calculated from something that changes while the server is running, the tooltip needs a nudge so it refreshes straight away. Call `InvalidateProperties()` right after the change:
@@ -112,7 +132,7 @@ Such an item always counts as identified, including for any description text tha
 ## Things to Avoid
 
 - **Don't override `GetClientProperties` to send the values above.** They're already sent. Sending them again is redundant and easy to get out of step with the shared rules, such as leaving off zero values or hiding values on unidentified items.
-- **Don't add the same bonus twice.** Protection and regeneration from the members above already apply in game. If you also add, say, `EntityStat.FireProtection` in `GetStatModifiers`, the player gets both bonuses and sees both on the tooltip. Only use `GetStatModifiers` for an extra, conditional bonus on top of the base value.
+- **Don't add the same bonus twice.** Protection, regeneration, and damage mitigation from the members above already apply in game. If you also add, say, `EntityStat.FireProtection` in `GetStatModifiers`, the player gets both bonuses and sees both on the tooltip. Only use `GetStatModifiers` for an extra, conditional bonus on top of the base value.
 - **Don't use `Delta(ItemDelta.Update)` to refresh a tooltip.** It resends the whole item. Use `InvalidateProperties()` instead.
 
 ## Bonuses From GetStatModifiers
@@ -137,7 +157,7 @@ That shows "+3 Strength" and "+10% Magic Damage Dealt". Some things to know:
 - Percentage stats, such as magic damage dealt and critical strike chance, show a `%`.
 - A bonus that hurts the player, such as a negative value or magic damage dealt reduction, shows in red.
 - Like the other values, bonuses only appear once the item is identified.
-- The tooltip shows the common stats: mitigation, magic damage and critical strike, max health/mana/stamina, regeneration, Barrier, Strength, Dexterity, protections, Lightning Resistance, Spell Focus, and the fire and ice protection limits from `AddMaximumValue`. A bonus to any other stat still works in game but doesn't appear yet. Ask the core team if you need one added.
+- The tooltip shows the common stats: mitigation (for wearer-dependent bonuses; the item's own mitigation uses the members above), magic damage and critical strike, max health/mana/stamina, regeneration, Barrier, Strength, Dexterity, protections, Lightning Resistance, Spell Focus, and the fire and ice protection limits from `AddMaximumValue`. A bonus to any other stat still works in game but doesn't appear yet. Ask the core team if you need one added.
 
 A bonus here is separate from the matching item member. A robe with `ManaRegeneration => 1` and an extra +2 in `GetStatModifiers` shows two regeneration lines.
 
