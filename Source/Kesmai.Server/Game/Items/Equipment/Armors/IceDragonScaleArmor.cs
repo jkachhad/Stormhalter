@@ -41,6 +41,15 @@ public class IceDragonScaleArmor : Armor, ITreasure
 	/// <inheritdoc />
 	public override int ProtectionFromIce => 15;
 
+	/// <inheritdoc />
+	public override int MeleeDamageMitigation => 5;
+
+	/// <inheritdoc />
+	public override int RangedDamageMitigation => 5;
+
+	/// <inheritdoc />
+	public override int ProjectileDamageMitigation => 5;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceDragonScaleArmor"/> class.
 	/// </summary>
@@ -55,18 +64,6 @@ public class IceDragonScaleArmor : Armor, ITreasure
 	{
 	}
 	
-	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
-	{
-		var modifiers = base.GetStatModifiers(wearer);
-
-		modifiers.Add(EntityStat.MeleeDamageMitigation, 5);
-		modifiers.Add(EntityStat.RangedDamageMitigation, 5);
-		modifiers.Add(EntityStat.ProjectileDamageMitigation, 5);
-
-		return modifiers;
-	}
-
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
