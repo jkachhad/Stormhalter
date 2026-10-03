@@ -137,7 +137,7 @@ Such an item always counts as identified, including for any description text tha
 
 ## Bonuses From GetStatModifiers
 
-Extra bonuses you add in `GetStatModifiers` also show on the tooltip, as their own lines below the protections. For example:
+Extra bonuses you add in `GetStatModifiers` also show on the tooltip, as their own bulleted lines below the item's stats. For example:
 
 ```csharp
 protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
