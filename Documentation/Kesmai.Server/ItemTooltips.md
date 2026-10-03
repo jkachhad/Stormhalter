@@ -186,6 +186,18 @@ Things to know:
 - Pass numbers you want shown as text (`Power.ToString()`). A plain number argument is read as a reference to another localization entry, which is how the stored spell's name is shown.
 - `beholder` is the player looking at the item. You can use it to show different lines to different players, but don't change the item or send messages while building the tooltip.
 - The last argument before your values is the line's order: higher numbers appear first, and lines with the same number keep the order you add them in.
+- The style sets how the line looks: each line gets a small bullet and a default color for its style.
+
+  | Style | Use it for | Default color |
+  | --- | --- | --- |
+  | `Normal` | plain information | white |
+  | `Active` | something the player can use or trigger | green |
+  | `Passive` | an always-on effect | orange |
+  | `Harmful` | a drawback or curse | red |
+  | `Disabled` | an effect that is currently unavailable | gray |
+  | `Consume` | an effect used up on use (looks like `Active`) | green |
+
+  Pass `Color.White` to use the style's color, or any other color to override it, as the example does with `Color.Cyan`.
 - The lines only appear once the item is identified.
 
 Players' clients keep the tooltip until something changes. When a value your lines use changes during play, call `InvalidateTooltip()` so it refreshes:
