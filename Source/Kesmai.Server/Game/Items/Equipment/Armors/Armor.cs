@@ -160,6 +160,15 @@ public abstract class Armor : Equipment, IArmored
 
 		if (ProjectileProtection != 0)
 			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+
+		if (MeleeDamageMitigation != 0)
+			properties.Set(ItemPropertyId.MeleeDamageMitigation, MeleeDamageMitigation);
+
+		if (RangedDamageMitigation != 0)
+			properties.Set(ItemPropertyId.RangedDamageMitigation, RangedDamageMitigation);
+
+		if (ProjectileDamageMitigation != 0)
+			properties.Set(ItemPropertyId.ProjectileDamageMitigation, ProjectileDamageMitigation);
 	}
 
 	/// <inheritdoc />
