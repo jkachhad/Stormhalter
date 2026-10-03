@@ -302,6 +302,15 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		if (ProjectileProtection != 0)
 			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
 
+		if (MeleeDamageMitigation != 0)
+			properties.Set(ItemPropertyId.MeleeDamageMitigation, MeleeDamageMitigation);
+
+		if (RangedDamageMitigation != 0)
+			properties.Set(ItemPropertyId.RangedDamageMitigation, RangedDamageMitigation);
+
+		if (ProjectileDamageMitigation != 0)
+			properties.Set(ItemPropertyId.ProjectileDamageMitigation, ProjectileDamageMitigation);
+
 		if (HealthRegeneration != 0)
 			properties.Set(ItemPropertyId.HealthRegeneration, HealthRegeneration);
 
