@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -30,6 +31,10 @@ public class ComponentPalette : ObservableRecipient
 	
 	private ComponentsCategory _segmentBrushCategory;
 	private ComponentsCategory _segmentTemplateCategory;
+
+	// name lookup used while loading segments; rebuilt lazily after any category's components change.
+	private Dictionary<string, IComponentProvider> _componentsByName = new(StringComparer.OrdinalIgnoreCase);
+	private volatile bool _componentsByNameInvalidated = true;
 	
 	public IComponentProvider SelectedProvider
 	{
@@ -53,6 +58,24 @@ public class ComponentPalette : ObservableRecipient
 	{
 		_rootCategories = new ObservableCollection<ComponentsCategory>();
 		_allCategories = new ObservableCollection<ComponentsCategory>();
+
+		_allCategories.CollectionChanged += OnCategoriesChanged;
+	}
+
+	private void OnCategoriesChanged(object sender, NotifyCollectionChangedEventArgs args)
+	{
+		if (args.NewItems != null)
+		{
+			foreach (var category in args.NewItems.OfType<ComponentsCategory>())
+				category.Components.CollectionChanged += OnCategoryComponentsChanged;
+		}
+
+		_componentsByNameInvalidated = true;
+	}
+
+	private void OnCategoryComponentsChanged(object sender, NotifyCollectionChangedEventArgs args)
+	{
+		_componentsByNameInvalidated = true;
 	}
 
 	public void Initialize()
@@ -434,6 +457,50 @@ public class ComponentPalette : ObservableRecipient
 		return false;
 	}
 	
+	/// <summary>
+	/// Finds a palette component by name, matching the first component in category order.
+	/// </summary>
+	private bool TryGetComponent(string name, out IComponentProvider component)
+	{
+		if (_componentsByNameInvalidated)
+		{
+			// clear the flag before building, so changes made while building invalidate the new index.
+			_componentsByNameInvalidated = false;
+
+			var componentsByName = new Dictionary<string, IComponentProvider>(StringComparer.OrdinalIgnoreCase);
+
+			foreach (var searchCategory in _allCategories)
+			foreach (var childComponent in searchCategory.Components)
+			{
+				if (childComponent.Name != null)
+					componentsByName.TryAdd(childComponent.Name, childComponent);
+			}
+
+			_componentsByName = componentsByName;
+		}
+
+		if (_componentsByName.TryGetValue(name, out component)
+		    && name.Equals(component.Name, StringComparison.OrdinalIgnoreCase))
+			return true;
+
+		// renames do not raise collection changes, so the index can be stale; fall back to a scan.
+		foreach (var searchCategory in _allCategories)
+		{
+			foreach (var childComponent in searchCategory.Components)
+			{
+				if (name.Equals(childComponent.Name, StringComparison.OrdinalIgnoreCase))
+				{
+					component = childComponent;
+					_componentsByNameInvalidated = true;
+					return true;
+				}
+			}
+		}
+
+		component = null;
+		return false;
+	}
+
 	private Dictionary<string, Type> _componentTypeCache = new Dictionary<string, Type>();
 	private Dictionary<Type, ConstructorInfo> _componentCtorCache = new Dictionary<Type, ConstructorInfo>();
 	
@@ -443,20 +510,8 @@ public class ComponentPalette : ObservableRecipient
 		
 		var nameAttribute = element.Attribute("name");
 
-		if (nameAttribute is not null)
-		{
-			foreach (var searchCategory in _allCategories)
-			{
-				foreach (var childComponent in searchCategory.Components)
-				{
-					if (childComponent.Name.Equals(nameAttribute.Value, StringComparison.OrdinalIgnoreCase))
-					{
-						component = childComponent;
-						return true;
-					}
-				}
-			}
-		}
+		if (nameAttribute is not null && TryGetComponent(nameAttribute.Value, out component))
+			return true;
 
 		// the component was not found. determine if it's a terrain component.
 		if (Equals(element.Name.LocalName, "component"))
