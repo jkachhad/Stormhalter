@@ -51,6 +51,16 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	private bool _invalidated;
 	private bool _collapsedComponents;
 
+	// teleporter overlay cache, rebuilt only when tiles, the segment or the active region change.
+	private bool _teleportersInvalidated = true;
+	private int _teleportersRevision;
+	private Segment _teleportersSegment;
+	private SegmentRegion _teleportersRegion;
+	private int _teleportersRegionId;
+	private int _teleportersRegionCount;
+	private (int X, int Y)[] _globalTeleporters = [];
+	private (int X, int Y)[] _localTeleporters = [];
+
 	public override bool DisplayComments => _visibility.ShowComments;
 
 	public RegionGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
@@ -102,6 +112,14 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 			_grid.IsVisible = true;
 		});
+
+		// template, segment component and region edits can change teleporters without touching tiles.
+		WeakReferenceMessenger.Default.Register<RegionGraphicsScreen, SegmentTemplateChanged>(this,
+			static (recipient, _) => recipient._teleportersInvalidated = true);
+		WeakReferenceMessenger.Default.Register<RegionGraphicsScreen, SegmentComponentChanged>(this,
+			static (recipient, _) => recipient._teleportersInvalidated = true);
+		WeakReferenceMessenger.Default.Register<RegionGraphicsScreen, SegmentRegionChanged>(this,
+			static (recipient, _) => recipient._teleportersInvalidated = true);
 	}
 	
 	protected override IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
@@ -806,6 +824,86 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 	}
 
+	/// <summary>
+	/// Rebuilds the cached teleporter overlay lists when tiles, the segment or the active region have changed.
+	/// </summary>
+	private void UpdateTeleporters(Segment segment, SegmentRegion region)
+	{
+		if (!_teleportersInvalidated && _teleportersRevision == SegmentTile.Revision
+		    && _teleportersSegment == segment && _teleportersRegion == region
+		    && _teleportersRegionId == region.ID && _teleportersRegionCount == segment.Regions.Count)
+			return;
+
+		var global = new HashSet<(int X, int Y)>();
+		var local = new HashSet<(int X, int Y)>();
+
+		foreach (var searchRegion in segment.Regions)
+		{
+			foreach (var segmentTile in searchRegion.GetTiles())
+			{
+				var teleporter = FindTeleporter(segmentTile.Providers);
+
+				if (teleporter is null)
+					continue;
+
+				if (searchRegion != region)
+				{
+					// not in this region, skip unless it's a destination here.
+					if (teleporter.DestinationRegion != region.ID)
+						continue;
+
+					global.Add((teleporter.DestinationX, teleporter.DestinationY));
+				}
+				else
+				{
+					// in this region, skip unless it's a source here.
+					if (teleporter.DestinationRegion != region.ID)
+					{
+						global.Add((teleporter.DestinationX, teleporter.DestinationY));
+					}
+					else
+					{
+						local.Add((segmentTile.X, segmentTile.Y));
+						local.Add((teleporter.DestinationX, teleporter.DestinationY));
+					}
+				}
+			}
+		}
+
+		_globalTeleporters = global.ToArray();
+		_localTeleporters = local.ToArray();
+
+		_teleportersInvalidated = false;
+		_teleportersRevision = SegmentTile.Revision;
+		_teleportersSegment = segment;
+		_teleportersRegion = region;
+		_teleportersRegionId = region.ID;
+		_teleportersRegionCount = segment.Regions.Count;
+	}
+
+	/// <summary>
+	/// Finds the first teleporter in the providers, including those wrapped by segment components and templates.
+	/// </summary>
+	private static TeleportComponent FindTeleporter(IEnumerable<IComponentProvider> providers)
+	{
+		foreach (var provider in providers)
+		{
+			if (provider is TeleportComponent teleporter)
+				return teleporter;
+
+			// terrain components yield themselves from GetComponents; only descend into wrappers.
+			if (provider is TerrainComponent)
+				continue;
+
+			var nested = FindTeleporter(provider.GetComponents());
+
+			if (nested != null)
+				return nested;
+		}
+
+		return null;
+	}
+
 	protected override void OnAfterRender(SpriteBatch spriteBatch)
 	{
 		base.OnAfterRender(spriteBatch);
@@ -828,46 +926,15 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			var globalFillColor = Color.FromNonPremultiplied(0, 255, 91, 50);
 			var globalBorderColor = Color.FromNonPremultiplied(0, 255, 91, 255);
 
-			var global = new List<(int X, int Y)>();
-			var local = new List<(int X, int Y)>();
+			UpdateTeleporters(segment, region);
 
-			foreach (var searchRegion in segment.Regions)
+			void renderTeleporters((int X, int Y)[] teleporters, Color fillColor, Color borderColor)
 			{
-				var regionTeleporters = searchRegion.GetTiles()
-					.Where(tile => tile.Providers.OfType<TeleportComponent>().Any())
-					.ToDictionary((tile => tile), tile => tile.Providers.OfType<TeleportComponent>().FirstOrDefault());
-
-				foreach (var (segmentTile, teleporter) in regionTeleporters)
+				foreach (var teleporter in teleporters)
 				{
-					if (searchRegion != region)
-					{
-						// not in this region, skip unless it's a destination here.
-						if (teleporter.DestinationRegion != region.ID)
-							continue;
+					if (!viewRectangle.Contains(teleporter.X, teleporter.Y))
+						continue;
 
-						global.Add(new(teleporter.DestinationX, teleporter.DestinationY));
-					}
-					else
-					{
-						// in this region, skip unless it's a source here.
-						if (teleporter.DestinationRegion != region.ID)
-						{
-							global.Add((teleporter.DestinationX, teleporter.DestinationY));
-						}
-						else
-						{
-							local.Add((segmentTile.X, segmentTile.Y));
-							local.Add((teleporter.DestinationX, teleporter.DestinationY));
-						}
-					}
-				}
-			}
-
-			void renderTeleporters(List<(int X, int Y)> teleporters, Color fillColor, Color borderColor)
-			{
-				foreach (var teleporter in teleporters.Distinct()
-					         .Where((entry, _) => viewRectangle.Contains(entry.X, entry.Y)))
-				{
 					var bounds = GetRenderRectangle(viewRectangle, teleporter.X, teleporter.Y);
 
 					spriteBatch.FillRectangle(bounds, fillColor);
@@ -880,8 +947,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				}
 			}
 
-			renderTeleporters(global, globalFillColor, globalBorderColor);
-			renderTeleporters(local, localFillColor, localBorderColor);
+			renderTeleporters(_globalTeleporters, globalFillColor, globalBorderColor);
+			renderTeleporters(_localTeleporters, localFillColor, localBorderColor);
 		}
 
 		if (_visibility.ShowSpawns)

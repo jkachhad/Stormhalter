@@ -293,6 +293,8 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 
 		tiles[chunkX, chunkY] = tile;
 
+		SegmentTile.IncrementRevision();
+
 		return tile;
 	}
 		
