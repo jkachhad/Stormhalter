@@ -5,7 +5,13 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge;
 
-public class RegionVisibilityChanged(RegionVisibility Visibility) : ValueChangedMessage<RegionVisibility>(Visibility);
+public class RegionVisibilityChanged(RegionVisibility Visibility, string PropertyName) : ValueChangedMessage<RegionVisibility>(Visibility)
+{
+    /// <summary>
+    /// Gets the name of the visibility setting that changed.
+    /// </summary>
+    public string PropertyName { get; } = PropertyName;
+}
 
 public class RegionVisibility : ObservableRecipient
 {
@@ -52,12 +58,23 @@ public class RegionVisibility : ObservableRecipient
         set => SetProperty(ref _showComments, value);
     }
 
+    /// <summary>
+    /// Gets a value indicating whether the setting changes component renders (walls and doors),
+    /// as opposed to overlays drawn on top of the terrain.
+    /// </summary>
+    public static bool AffectsTerrain(string propertyName)
+    {
+        // a null or empty name means every property changed.
+        return string.IsNullOrEmpty(propertyName)
+            || propertyName is nameof(BreakWalls) or nameof(OpenDoors) or nameof(HideSecretDoors);
+    }
+
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
 
         // Notify that visibility settings have changed
-        WeakReferenceMessenger.Default.Send(new RegionVisibilityChanged(this));
+        WeakReferenceMessenger.Default.Send(new RegionVisibilityChanged(this, e.PropertyName));
     }
 }
 
