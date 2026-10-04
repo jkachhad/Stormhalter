@@ -5,10 +5,14 @@
          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
          xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
          xmlns:converters="clr-namespace:Kesmai.WorldForge.UI.Converters"
+         xmlns:wpfToolkit="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
 
          mc:Ignorable="d"
 
-         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+         ScrollViewer.CanContentScroll="True"
+         VirtualizingPanel.IsVirtualizing="True"
+         VirtualizingPanel.VirtualizationMode="Recycling">
     <ListBox.Resources>
         <converters:ComponentProviderToBorderBrushConverter x:Key="ComponentProviderBorderBrushConverter" />
     </ListBox.Resources>
@@ -32,7 +36,8 @@
     
     <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
-            <WrapPanel></WrapPanel>
+            <!-- virtualizing, so large categories (STATIC) only build the visible items. -->
+            <wpfToolkit:VirtualizingWrapPanel SpacingMode="None" />
         </ItemsPanelTemplate>
     </ListBox.ItemsPanel>
 </ListBox>
