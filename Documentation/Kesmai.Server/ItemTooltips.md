@@ -132,6 +132,7 @@ Such an item always counts as identified, including for any description text tha
 ## Things to Avoid
 
 - **Don't override `GetClientProperties` to send the values above.** They're already sent. Sending them again is redundant and easy to get out of step with the shared rules, such as leaving off zero values or hiding values on unidentified items.
+- **Exception: a value that changes during combat.** If a member such as `MinimumDamage` adds a short-lived bonus (a proc or a charge-up), override `GetClientProperties`, call `base` first, and set the stable value, so the tooltip doesn't change every swing. Remove the property when the stable value is zero, to match the shared rules.
 - **Don't add the same bonus twice.** Protection, regeneration, and damage mitigation from the members above already apply in game. If you also add, say, `EntityStat.FireProtection` in `GetStatModifiers`, the player gets both bonuses and sees both on the tooltip. Only use `GetStatModifiers` for an extra, conditional bonus on top of the base value.
 - **Don't use `Delta(ItemDelta.Update)` to refresh a tooltip.** It resends the whole item. Use `InvalidateProperties()` instead.
 
