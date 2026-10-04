@@ -419,7 +419,15 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 
 		width = Math.Max(1, Math.Min(width, 4096));
 		height = Math.Max(1, Math.Min(height, 16384));
-		
+
+		// a clamped size can never match the screen, so avoid recreating an identical target every frame.
+		if (_renderTarget != null && _renderTarget.Width == width && _renderTarget.Height == height)
+			return;
+
+		// release the previous target's video memory; it is never bound here, since rendering
+		// switches to it only after this check.
+		_renderTarget?.Dispose();
+
 		_renderTarget = new RenderTarget2D(graphicsService.GraphicsDevice, width, height);
 		_invalidateRender = true;
 	}
