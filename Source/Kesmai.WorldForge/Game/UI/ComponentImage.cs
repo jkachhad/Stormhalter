@@ -48,6 +48,8 @@ public class ComponentImage : UIControl
 
 			if (Provider != null)
 				_renders.AddRange(Provider.GetRenders());
+
+			_invalidated = false;
 		}
 		
 		base.OnUpdate(deltaTime);
@@ -97,7 +99,7 @@ public class ComponentImage : UIControl
 						if (sprite.Offset != Vector2F.Zero)
 							spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
 							
-						spriteBatch.Draw(sprite.Texture, originalBounds,  render.Color);
+						spriteBatch.Draw(sprite.Texture, spriteBounds, render.Color);
 					}
 				}
 			}

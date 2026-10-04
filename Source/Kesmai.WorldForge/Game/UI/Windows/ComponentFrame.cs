@@ -83,6 +83,9 @@ public abstract class ComponentFrame : Grid
 		MinWidth = 800;
 		
 		_componentProvider = provider;
+
+		// the image caches its renders, so refresh it when the provider is edited through this frame.
+		Invalidate += (_, _) => _componentImage?.Invalidate();
 	}
 
 	protected override void OnLoad()
