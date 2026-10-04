@@ -176,7 +176,8 @@ For anything that isn't a stat, such as a special power, a recharge timer, or a 
 - the stored spell on wands and staves ("Spell: Fireball");
 - charges ("Charges: 2 / 5");
 - Enchanted and Conjured;
-- Owner or Unbound for bindable items.
+- the item values that aren't shown as icons: the weapon skill ("Skill: Sword"), hindrance ("Hindrance: 2"), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting";
+- Owner or Unbound for bindable items, last.
 
 ```csharp
 public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
