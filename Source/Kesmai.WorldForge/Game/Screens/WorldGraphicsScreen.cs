@@ -248,8 +248,6 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 		var selection = _selection;
 
 		graphicsDevice.Clear(Color.Black);
-
-		spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
 			
 		var presentation = _worldPresentationTarget;
 		var region = presentation.Region;
@@ -269,6 +267,10 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 			if (_invalidateRender)
 			{
 				graphicsService.GraphicsDevice.SetRenderTarget(_renderTarget);
+
+				// the offscreen pass uses its own deferred batch so consecutive draws sharing a texture
+				// are submitted together, instead of one draw call per sprite in immediate mode.
+				spriteBatch.Begin(SpriteSortMode.Deferred, samplerState: SamplerState.PointClamp);
 
 				OnBeforeRender(spriteBatch);
 				
@@ -316,12 +318,19 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 							spriteBatch.Draw(_commentSprite, iconBounds, Color.White);
 					}
 				}
+
+				spriteBatch.End();
+
+				graphicsService.GraphicsDevice.SetRenderTargets(oldTargets);
 			}
-				
-			graphicsService.GraphicsDevice.SetRenderTargets(oldTargets);
-				
-			spriteBatch.Draw(_renderTarget, Vector2.Zero, Color.White);
 		}
+
+		// the screen pass stays immediate; the UI renderer draws with its own sprite batch,
+		// so selection must be flushed before the UI is drawn over it.
+		spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
+
+		if (region != default(SegmentRegion))
+			spriteBatch.Draw(_renderTarget, Vector2.Zero, Color.White);
 
 		if (DrawSelection)
 		{
