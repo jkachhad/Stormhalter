@@ -69,7 +69,7 @@ public class TerrainComponentImage : Image
             return;
 
         if (forceRefresh)
-            Source = componentImageCache.Update(provider, true);
+            Source = componentImageCache.Update(provider);
         else
             Source = componentImageCache.Get(provider);
     }
