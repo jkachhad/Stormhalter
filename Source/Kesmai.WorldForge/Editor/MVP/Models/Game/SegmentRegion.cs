@@ -235,10 +235,20 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 
 	private ChunkCoordinate GetChunkCoordinate(int x, int y)
 	{
-		var chunkX = (int)Math.Floor((double)x / _chunkSize);
-		var chunkY = (int)Math.Floor((double)y / _chunkSize);
+		return new ChunkCoordinate(FloorDivide(x, _chunkSize), FloorDivide(y, _chunkSize));
+	}
 
-		return new ChunkCoordinate(chunkX, chunkY);
+	/// <summary>
+	/// Integer division that rounds toward negative infinity, so negative coordinates map to the correct chunk.
+	/// </summary>
+	private static int FloorDivide(int value, int divisor)
+	{
+		var quotient = value / divisor;
+
+		if ((value % divisor) != 0 && ((value < 0) != (divisor < 0)))
+			quotient--;
+
+		return quotient;
 	}
 
 	public SegmentTile GetTile(SegmentTile source, Direction direction, bool create = false)
@@ -256,8 +266,8 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 		// only allocate chunks when writing; reads of empty space return null.
 		if (tiles != null)
 		{
-			var ox = Math.Abs(x - (chunkCoordinate.X * _chunkSize));
-			var oy = Math.Abs(y - (chunkCoordinate.Y * _chunkSize));
+			var ox = x - (chunkCoordinate.X * _chunkSize);
+			var oy = y - (chunkCoordinate.Y * _chunkSize);
 
 			tile = tiles[ox, oy];
 		}
@@ -336,12 +346,4 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 	}
 }
 
-public class ChunkCoordinate : Tuple<int, int>
-{
-	public int X => Item1;
-	public int Y => Item2;
-
-	public ChunkCoordinate(int x, int y) : base(x, y)
-	{
-	}
-}
+public readonly record struct ChunkCoordinate(int X, int Y);
