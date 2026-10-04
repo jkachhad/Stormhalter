@@ -166,7 +166,7 @@ That shows "+3 Strength" and "+10% Magic Damage Dealt". Some things to know:
   // shown in blue to a knight, and in gray to everyone else.
   modifiers.Add(EntityStat.Barrier, 2, flags: isKnight ? StatModifierFlags.None : StatModifierFlags.Inactive);
   ```
-- The tooltip shows the common stats: mitigation (for wearer-dependent bonuses; the item's own mitigation uses the members above), magic damage and critical strike, max health/mana/stamina, regeneration, Barrier, Strength, Dexterity, protections, Lightning Resistance, Spell Focus, and the fire and ice protection limits from `AddMaximumValue`. A bonus to any other stat still works in game but doesn't appear yet. Ask the core team if you need one added.
+- The tooltip shows the common stats: mitigation (for wearer-dependent bonuses; the item's own mitigation uses the members above), magic damage and critical strike, max health/mana/stamina, regeneration, Barrier, Strength, Dexterity, protections, Lightning Resistance, Spell Focus, Spell Clearcast, Mana Recovery Delay, and the fire and ice protection limits from `AddMaximumValue`. A bonus to any other stat still works in game but doesn't appear yet. Ask the core team if you need one added.
 
 A bonus here is separate from the matching item member. A robe with `ManaRegeneration => 1` and an extra +2 in `GetStatModifiers` shows two regeneration lines.
 
