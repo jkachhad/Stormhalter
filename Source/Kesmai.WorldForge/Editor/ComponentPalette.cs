@@ -114,13 +114,17 @@ public class ComponentPalette : ObservableRecipient
 		
 		_rootCategories.Add(_editorCategory);
 		
-		// load editor components
+		// load editor components. the package is fetched and parsed in the background, but the categories
+		// are bound to WPF controls, so the components are added on the UI thread.
+		var dispatcher = System.Windows.Application.Current.Dispatcher;
+
 		Task.Run(async () =>
 		{
 			var packageReader = await NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0");
 			var documentStream = await NuGetResolver.ResolveStream(packageReader, "Components.xml");
+			var document = XDocument.Load(documentStream);
 
-			Load("EDITOR", XDocument.Load(documentStream));
+			await dispatcher.InvokeAsync(() => Load("EDITOR", document));
 		});
 
 		// create segment category
