@@ -14,6 +14,7 @@ The shared item classes send these values for you. Anything that inherits from t
 
 | If your item inherits from… | These values are sent |
 | --- | --- |
+| `ItemEntity` (every item) | `BasePrice` as the item's value once identified; thieves see the actual price (`BasePrice` plus `Price`) instead |
 | `Equipment` (armor, robes, helmets, boots, rings, amulets, gauntlets, …) | `Hindrance`, `RestrictSpellcast`, `ProtectionFromFire`, `ProtectionFromIce`, `ProtectionFromDaze`, `ProtectionFromConcussion`, `HealthRegeneration`, `StaminaRegeneration`, `ManaRegeneration` |
 | `Armor` or `Shield` | `BaseArmorBonus`, `SlashingProtection`, `PiercingProtection`, `BashingProtection`, `ProjectileProtection`, `MeleeDamageMitigation`, `RangedDamageMitigation`, `ProjectileDamageMitigation` |
 | `Weapon` or `Gauntlets` | Everything in the `Armor` row, plus `Skill`, `MinimumDamage`, `MaximumDamage`, `BaseAttackBonus`, `Flags`, `Penetration`, and `MaxRange` |
