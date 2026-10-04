@@ -29,7 +29,7 @@ public partial class RegionDocument : UserControl
 				static (recipient, _) => recipient.Refresh());
 
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionVisibilityChanged>(this,
-				static (recipient, _) => recipient.Refresh());
+				static (recipient, message) => recipient.OnVisibilityChanged(message.PropertyName));
 
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionToolChanged>(this,
 				(recipient, message) => recipient.OnToolChanged(message.Value));
@@ -61,6 +61,15 @@ public partial class RegionDocument : UserControl
 			region.UpdateTiles();
 
 		if (_presenter is not null && _presenter.WorldScreen is not null)
+			_presenter.WorldScreen.InvalidateRender();
+	}
+	
+	private void OnVisibilityChanged(string propertyName)
+	{
+		// overlays (teleporters, spawns, comments) only need a redraw; wall and door settings change tile renders.
+		if (RegionVisibility.AffectsTerrain(propertyName))
+			Refresh();
+		else if (_presenter is not null && _presenter.WorldScreen is not null)
 			_presenter.WorldScreen.InvalidateRender();
 	}
 	
