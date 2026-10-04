@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,15 +13,21 @@ public sealed class ComponentImageCache
 {
     private readonly Dictionary<IComponentProvider, WriteableBitmap> _renders = new();
 
+    // premultiplied pixels per sprite; many components share sprites, so each is converted once.
+    private readonly Dictionary<GameSprite, SpritePixels> _spritePixels = new();
+
     public WriteableBitmap Get(IComponentProvider component)
     {
         if (!_renders.TryGetValue(component, out var bmp))
-            _renders[component] = bmp = Update(component);
+            bmp = Update(component);
 
         return bmp;
     }
 
-    public WriteableBitmap Update(IComponentProvider component, bool forceUpdate = false)
+    /// <summary>
+    /// Composites a new image for the component and caches it, replacing any previous image.
+    /// </summary>
+    public WriteableBitmap Update(IComponentProvider component)
     {
         // Build render list (layer + tint + order) from your component model.
         var renderList = new List<TerrainRender>();
@@ -30,7 +35,7 @@ public sealed class ComponentImageCache
         foreach (var render in component.GetRenders())
             renderList.AddRange(render.Terrain.Select(layer => new TerrainRender(layer, render.Color)));
 
-        // Prepare (normalize to Pbgra32, freeze) and compute bounds once.
+        // Resolve cached pixels and compute bounds once.
         var layers = PrepareLayers(renderList);
 
         if (layers.Count == 0)
@@ -46,22 +51,23 @@ public sealed class ComponentImageCache
             return empty;
         }
 
-        int maxWidth = layers.Max(l => l.OffsetX + l.Width);
-        int maxHeight = layers.Max(l => l.OffsetY + l.Height);
+        int maxWidth = layers.Max(l => l.OffsetX + l.Pixels.Width);
+        int maxHeight = layers.Max(l => l.OffsetY + l.Pixels.Height);
 
-        // Reuse existing WB if size matches; otherwise create new.
-        if (!_renders.TryGetValue(component, out var wb) || wb.PixelWidth != maxWidth || wb.PixelHeight != maxHeight || wb.Format != PixelFormats.Pbgra32 || forceUpdate)
-            _renders[component] = (wb = new WriteableBitmap(maxWidth, maxHeight, 96, 96, PixelFormats.Pbgra32, null));
+        // Images are frozen once composited, so each update creates a new bitmap.
+        var wb = new WriteableBitmap(maxWidth, maxHeight, 96, 96, PixelFormats.Pbgra32, null);
 
         CompositeInto(wb, layers);
 
-        wb.Freeze(); // freeze snapshot result (we’ll recreate on next Update)
+        wb.Freeze();
+
+        _renders[component] = wb;
         return wb;
     }
 
     // --- Preparation ---
 
-    private static List<PreparedLayer> PrepareLayers(IEnumerable<TerrainRender> renders)
+    private List<PreparedLayer> PrepareLayers(IEnumerable<TerrainRender> renders)
     {
         var list = new List<PreparedLayer>();
 
@@ -70,24 +76,12 @@ public sealed class ComponentImageCache
             var sprite = r.Layer.Sprite;
             if (sprite?.Bitmap == null) continue;
 
-            // Normalize to Pbgra32 once and Freeze so CopyPixels is cheap.
-            BitmapSource src = sprite.Bitmap;
-            if (src is BitmapImage bi && bi.IsDownloading) continue;
-
-            if (src.Format != PixelFormats.Pbgra32)
-                src = new FormatConvertedBitmap(src, PixelFormats.Pbgra32, null, 0);
-
-            if (src.CanFreeze) src.Freeze();
-
             var offset = sprite.Offset; // Vector2F
             var tint = r.Color;         // System.Windows.Media.Color (ARGB)
 
             list.Add(new PreparedLayer
             {
-                Source = src,
-                Width = src.PixelWidth,
-                Height = src.PixelHeight,
-                Stride = ((src.PixelWidth * 32 + 31) / 32) * 4,
+                Pixels = GetSpritePixels(sprite),
                 OffsetX = (int)offset.X,
                 OffsetY = (int)offset.Y,
                 // Keep tint factors as bytes; apply in-premultiplied space during blend.
@@ -99,6 +93,28 @@ public sealed class ComponentImageCache
         }
 
         return list;
+    }
+
+    private SpritePixels GetSpritePixels(GameSprite sprite)
+    {
+        if (_spritePixels.TryGetValue(sprite, out var pixels))
+            return pixels;
+
+        // Normalize to Pbgra32 and copy the whole image out in one call.
+        BitmapSource src = sprite.Bitmap;
+
+        if (src.Format != PixelFormats.Pbgra32)
+            src = new FormatConvertedBitmap(src, PixelFormats.Pbgra32, null, 0);
+
+        var width = src.PixelWidth;
+        var height = src.PixelHeight;
+        var stride = width * 4;
+        var data = new byte[stride * height];
+
+        src.CopyPixels(data, stride, 0);
+
+        _spritePixels[sprite] = pixels = new SpritePixels(data, width, height, stride);
+        return pixels;
     }
 
     // --- Compositing ---
@@ -123,65 +139,31 @@ public sealed class ComponentImageCache
         }
     }
 
-    private static void BlendLayer(WriteableBitmap dst, PreparedLayer layer)
+    private static unsafe void BlendLayer(WriteableBitmap dst, PreparedLayer layer)
     {
+        var pixels = layer.Pixels;
+
         // Intersect layer rect with dst
         int x0 = Math.Max(0, layer.OffsetX);
         int y0 = Math.Max(0, layer.OffsetY);
-        int x1 = Math.Min(dst.PixelWidth, layer.OffsetX + layer.Width);
-        int y1 = Math.Min(dst.PixelHeight, layer.OffsetY + layer.Height);
+        int x1 = Math.Min(dst.PixelWidth, layer.OffsetX + pixels.Width);
+        int y1 = Math.Min(dst.PixelHeight, layer.OffsetY + pixels.Height);
 
         if (x0 >= x1 || y0 >= y1) return;
 
-        // Reusable per-thread row buffer; stackalloc avoids heap traffic
         int cols = x1 - x0;
-        int rows = y1 - y0;
 
-        // For larger images, you can parallelize rows. Keep it simple (single-thread) unless needed.
-        // Parallel.For(0, rows, r => BlendRow(...));
-        for (int r = 0; r < rows; r++)
-            BlendRow(dst, layer, y0 + r, x0, cols, srcRowY: (y0 + r) - layer.OffsetY);
-    }
-
-    private static void BlendRow(WriteableBitmap dst, PreparedLayer layer, int dstY, int dstX, int cols, int srcRowY)
-    {
-        int byteCount = cols * 4;
-
-        unsafe
+        fixed (byte* pSrc = pixels.Data)
         {
-            // Prefer stackalloc for small rows to avoid heap traffic.
-            if (byteCount <= 32_768) // 32 KB threshold; tweak if you like
+            for (int y = y0; y < y1; y++)
             {
-                byte* pScratch = stackalloc byte[byteCount];
-                var rect = new Int32Rect(dstX - layer.OffsetX, srcRowY, cols, 1);
-                layer.Source.CopyPixels(rect, (IntPtr)pScratch, byteCount, cols * 4);
+                byte* pSrcRow = pSrc + (y - layer.OffsetY) * pixels.Stride + (x0 - layer.OffsetX) * 4;
+                byte* pDstRow = (byte*)dst.BackBuffer + y * dst.BackBufferStride + x0 * 4;
 
-                byte* pDstRow = (byte*)dst.BackBuffer + dstY * dst.BackBufferStride + dstX * 4;
-                TintAndBlendPremulRow(pScratch, pDstRow, cols, layer.TintR, layer.TintG, layer.TintB /*, layer.TintA*/);
-            }
-            else
-            {
-                // Large row: rent pooled array to keep GC pressure low.
-                byte[] scratch = ArrayPool<byte>.Shared.Rent(byteCount);
-                try
-                {
-                    fixed (byte* pScratch = scratch)
-                    {
-                        var rect = new Int32Rect(dstX - layer.OffsetX, srcRowY, cols, 1);
-                        layer.Source.CopyPixels(rect, (IntPtr)pScratch, byteCount, cols * 4);
-
-                        byte* pDstRow = (byte*)dst.BackBuffer + dstY * dst.BackBufferStride + dstX * 4;
-                        TintAndBlendPremulRow(pScratch, pDstRow, cols, layer.TintR, layer.TintG, layer.TintB /*, layer.TintA*/);
-                    }
-                }
-                finally
-                {
-                    ArrayPool<byte>.Shared.Return(scratch);
-                }
+                TintAndBlendPremulRow(pSrcRow, pDstRow, cols, layer.TintR, layer.TintG, layer.TintB /*, layer.TintA*/);
             }
         }
     }
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static unsafe void TintAndBlendPremulRow(byte* src, byte* dst, int cols, byte tr, byte tg, byte tb /*, byte ta*/)
@@ -213,10 +195,11 @@ public sealed class ComponentImageCache
         }
     }
 
+    private sealed record SpritePixels(byte[] Data, int Width, int Height, int Stride);
+
     private sealed class PreparedLayer
     {
-        public BitmapSource Source;
-        public int Width, Height, Stride;
+        public SpritePixels Pixels;
         public int OffsetX, OffsetY;
         public byte TintR, TintG, TintB, TintA;
     }
