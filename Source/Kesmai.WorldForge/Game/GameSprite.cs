@@ -52,21 +52,21 @@ public class GameSprite
 		Initialize(element);
 	}
 
-	public bool HitTest(int x, int y)
+	/// <summary>
+	/// Determines whether the texture pixel is fully opaque, as Texture2D.IsTransparent decided for hit tests.
+	/// </summary>
+	public bool IsOpaque(int textureX, int textureY)
 	{
-		var dx = (int)((x + Offset.X) * Resolution);
-		var dy = (int)((y + Offset.Y) * Resolution);
-
 		var texture = Texture;
 
-		if (texture is null || dx < 0 || dy < 0 || dx >= texture.Width || dy >= texture.Height)
+		if (texture is null || textureX < 0 || textureY < 0 || textureX >= texture.Width || textureY >= texture.Height)
 			return false;
 
 		// tools hit-test every input frame; reading single pixels back from the GPU stalls the pipeline,
 		// so the texture is read once and only fully opaque pixels hit, as Texture2D.IsTransparent decided.
 		_opaque ??= GetOpaquePixels(texture);
 
-		return _opaque[dy * texture.Width + dx];
+		return _opaque[textureY * texture.Width + textureX];
 	}
 
 	private static bool[] GetOpaquePixels(Texture2D texture)
