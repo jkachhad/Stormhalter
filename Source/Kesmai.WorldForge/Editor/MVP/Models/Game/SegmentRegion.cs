@@ -326,11 +326,12 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 						var mx = (coordinate.X * _chunkSize) + x;
 						var my = (coordinate.Y * _chunkSize) + y;
 
-						if (!left.HasValue || mx < left) left = mx; 
-						else if (!right.HasValue || mx > right) right = mx;
+						// check minimum and maximum independently; a tile can be both (e.g. the first or only tile).
+						if (!left.HasValue || mx < left) left = mx;
+						if (!right.HasValue || mx > right) right = mx;
 
 						if (!top.HasValue || my < top) top = my;
-						else if (!bottom.HasValue || my > bottom) bottom = my;
+						if (!bottom.HasValue || my > bottom) bottom = my;
 					}
 				}
 			}
