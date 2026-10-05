@@ -771,14 +771,21 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 							continue;
 
 						var providers = tile.Providers.ToArray();
+						var removed = false;
 
+						// remove through the provider, not the tile, so terrain is rebuilt once per tile
+						// instead of once per removed component.
 						foreach (var provider in providers)
 						{
 							if (!currentFilter.IsValid(provider))
 								continue;
 
-							tile.RemoveComponent(provider);
+							provider.RemoveComponent(tile.Providers);
+							removed = true;
 						}
+
+						if (removed)
+							tile.UpdateTerrain();
 					}
 				}
 
