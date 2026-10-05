@@ -12,6 +12,10 @@ namespace Kesmai.WorldForge.Editor;
 public class SegmentWorkspace
 {
 	private Segment _activeSegment;
+
+	// incremented by every start and reset, so a start still awaiting package resolution
+	// can tell it has been superseded.
+	private int _startGeneration;
 	
 	public CustomRoslynHost Host { get; set; }
 	
@@ -37,8 +41,15 @@ public class SegmentWorkspace
 
 	public async void Start(Segment segment)
 	{
+		var generation = ++_startGeneration;
+		
 		var packageReader = await NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0");
 		var packageReferences = await NuGetResolver.ResolveMetadataReferences(packageReader);
+
+		// a newer start or reset happened while resolving (e.g. another segment was opened);
+		// creating this host would replace the current one with a host for a stale segment.
+		if (generation != _startGeneration)
+			return;
 		
 		var blacklistedAssemblies = new[]
 		{
@@ -127,6 +138,8 @@ public class SegmentWorkspace
 
 	public void Reset()
 	{
+		_startGeneration++;
+		
 		if (Host is null)
 			return;
 
