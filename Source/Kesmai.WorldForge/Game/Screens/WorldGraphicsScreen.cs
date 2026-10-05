@@ -361,6 +361,26 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 		spriteBatch.End();
 	}
 
+	/// <summary>
+	/// Gets the screen position where a sprite of the tile at (x, y) is drawn, matching OnRenderTile and
+	/// OnRenderTerrain. The sprite is drawn from there scaled by ZoomFactor / Resolution.
+	/// </summary>
+	public Vector2 GetSpritePosition(Rectangle viewRectangle, int x, int y, GameSprite sprite)
+	{
+		var tileBounds = GetRenderRectangle(viewRectangle, x, y);
+
+		var sx = (int)Math.Floor(tileBounds.X - (45 * _zoomFactor));
+		var sy = (int)Math.Floor(tileBounds.Y - (45 * _zoomFactor));
+
+		if (sprite.Offset != Vector2F.Zero)
+		{
+			sx += (int)Math.Floor(sprite.Offset.X * _zoomFactor);
+			sy += (int)Math.Floor(sprite.Offset.Y * _zoomFactor);
+		}
+
+		return new Vector2(sx, sy);
+	}
+
 	protected virtual void OnRenderTile(SpriteBatch spritebatch, SegmentTile segmentTile, Rectangle bounds)
 	{
 		var terrainBounds = new Rectangle((int)Math.Floor(bounds.X - (45*_zoomFactor)), (int)Math.Floor(bounds.Y - (45*_zoomFactor)),

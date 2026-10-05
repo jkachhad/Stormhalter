@@ -34,7 +34,6 @@ public abstract class ComponentTool : Tool
 			return;
 			
 		var services = ServiceLocator.Current;
-		var presenter = services.GetInstance<ApplicationPresenter>();
 		var regionToolbar = services.GetInstance<RegionToolbar>();
 		var regionFilters = services.GetInstance<RegionFilters>();
 		
@@ -58,12 +57,6 @@ public abstract class ComponentTool : Tool
 			// Get the view rectangle to calculate the screen position of the tile and the offset within the tile.
 			var viewRectangle = worldScreen.GetViewRectangle();
 
-			var rx = (int)Math.Floor((wx - viewRectangle.Left) * (presenter.UnitSize * zoomFactor));
-			var ry = (int)Math.Floor((wy - viewRectangle.Top) * (presenter.UnitSize * zoomFactor));
-
-			var dx = _position.X - (rx - 45);
-			var dy = _position.Y - (ry - 45);
-
 			if (!tile.Providers.Any())
 				return false;
 
@@ -79,7 +72,17 @@ public abstract class ComponentTool : Tool
 				{
 					var sprite = layer.Sprite;
 
-					if (sprite is null || !sprite.HitTest((int)dx, (int)dy)) 
+					if (sprite is null)
+						continue;
+
+					// map the cursor into the sprite's texture the way the map draws it: from its screen
+					// position, scaled by zoom / resolution.
+					var spritePosition = worldScreen.GetSpritePosition(viewRectangle, wx, wy, sprite);
+
+					var textureX = (int)Math.Floor((_position.X - spritePosition.X) * sprite.Resolution / zoomFactor);
+					var textureY = (int)Math.Floor((_position.Y - spritePosition.Y) * sprite.Resolution / zoomFactor);
+
+					if (!sprite.IsOpaque(textureX, textureY)) 
 						continue;
 					
 					localTileUnderMouse = tile;
