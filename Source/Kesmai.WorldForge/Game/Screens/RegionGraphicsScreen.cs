@@ -413,14 +413,17 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		
 		segment.Components.Add(segmentComponent);
 		
-		// create replacement component.
+		// create replacement component. components of another type can't serialize identically,
+		// so only those of the source type are serialized and compared.
+		var sourceType = sourceComponent.GetType();
+		
 		foreach (var region in segment.Regions)
 		{
 			foreach (var tile in region.GetTiles())
 			{
 				var tileUpdated = false;
 				
-				var terrainComponents = tile.GetComponents<TerrainComponent>().ToArray();
+				var terrainComponents = tile.GetComponents<TerrainComponent>(c => c.GetType() == sourceType);
 				
 				foreach (var terrainComponent in terrainComponents)
 				{
@@ -476,6 +479,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		if (!serializedTile.HasElements)
 			return;
 
+		var sourceProviders = sourceTile.Providers.ToArray();
+		var sourceElements = serializedTile.Elements().ToArray();
+		
 		var matchingTiles = new List<SegmentTile>();
 
 		foreach (var region in segment.Regions)
@@ -485,7 +491,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				if (tile is null)
 					continue;
 
-				if (XNode.DeepEquals(tile.GetSerializingElement(), serializedTile))
+				if (HasSameProviders(tile, sourceProviders, sourceElements))
 					matchingTiles.Add(tile);
 			}
 		}
@@ -530,6 +536,40 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		InvalidateRender();
 
 		template.Present(applicationPresenter);
+	}
+	
+	/// <summary>
+	/// Determines whether the tile serializes the same as the source tile, without serializing every tile.
+	/// Equivalent to comparing the tiles' serializing elements, which hold one referencing element per provider.
+	/// </summary>
+	private static bool HasSameProviders(SegmentTile tile, IComponentProvider[] sourceProviders, XElement[] sourceElements)
+	{
+		var providers = tile.Providers;
+
+		if (providers.Count != sourceProviders.Length)
+			return false;
+
+		// providers of different types never serialize identically: terrain components write their type name,
+		// and segment components and templates write differently shaped elements. check types before any xml.
+		for (var index = 0; index < providers.Count; index++)
+		{
+			if (providers[index].GetType() != sourceProviders[index].GetType())
+				return false;
+		}
+
+		for (var index = 0; index < providers.Count; index++)
+		{
+			var provider = providers[index];
+
+			// shared providers (segment components, templates) serialize identically to themselves.
+			if (ReferenceEquals(provider, sourceProviders[index]))
+				continue;
+
+			if (!XNode.DeepEquals(provider.GetReferencingElement(), sourceElements[index]))
+				return false;
+		}
+
+		return true;
 	}
 	
 	private void OnFrameDelete(object sender, EventArgs args)
