@@ -14,7 +14,7 @@ The shared item classes send these values for you. Anything that inherits from t
 
 | If your item inherits from… | These values are sent |
 | --- | --- |
-| `ItemEntity` (every item) | `BasePrice` as the item's value once identified; thieves see the actual price (`BasePrice` plus `Price`) instead |
+| `ItemEntity` (every item) | `Weight`, even before the item is identified (the tooltip shows the whole stack's weight); `BasePrice` as the item's value once identified; thieves see the actual price (`BasePrice` plus `Price`) instead |
 | `Equipment` (armor, robes, helmets, boots, rings, amulets, gauntlets, …) | `Hindrance`, `RestrictSpellcast`, `ProtectionFromFire`, `ProtectionFromIce`, `ProtectionFromDaze`, `ProtectionFromConcussion`, `HealthRegeneration`, `StaminaRegeneration`, `ManaRegeneration` |
 | `Armor` or `Shield` | `BaseArmorBonus`, `SlashingProtection`, `PiercingProtection`, `BashingProtection`, `ProjectileProtection`, `MeleeDamageMitigation`, `RangedDamageMitigation`, `ProjectileDamageMitigation` |
 | `Weapon` or `Gauntlets` | Everything in the `Armor` row, plus `Skill`, `MinimumDamage`, `MaximumDamage`, `BaseAttackBonus`, `Flags`, `Penetration`, and `MaxRange` |
@@ -120,7 +120,7 @@ You don't need to call it in these cases, because they're already handled:
 
 ## Unidentified Items
 
-Every item needs to be identified before the values above are sent; until then, the client is only told that the item is unidentified. Once someone identifies it, the values appear without any extra code.
+Every item needs to be identified before the values above are sent; until then, the client is only told that the item is unidentified and how much it weighs. Once someone identifies it, the values appear without any extra code.
 
 Items bought from a merchant count as identified, and a new character's starting gear is identified, so players see those stats right away. Currency is also an exception: it never needs identifying. If you write an item that players should always see in full, override `RequiresIdentification`:
 
@@ -236,4 +236,4 @@ Charges, Enchanted, Conjured and the owner already refresh the tooltip when they
 
 Sometimes an item has a value the shared classes don't know about. If it already has a property ID, you can send it yourself by overriding `GetClientProperties`. Always call `base` first so the standard values stay on the tooltip. [Equipment Stat Modifiers](StatModifiers.md#client-item-properties) covers the full API and value types.
 
-Each new kind of value (weight, for example) needs a new property ID, and the game client has to be updated to understand it. Talk to the core team before adding one.
+Each new kind of value (a recharge time, for example) needs a new property ID, and the game client has to be updated to understand it. Talk to the core team before adding one.
