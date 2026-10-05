@@ -21,8 +21,21 @@ public class MissingTextureException : Exception
 
 public class GameSprite
 {
+	private Texture2D _texture;
+	private bool[] _opaque;
+
 	public int ID { get; protected set; }
-	public Texture2D Texture { get; protected set; }
+
+	public Texture2D Texture
+	{
+		get => _texture;
+		protected set
+		{
+			_texture = value;
+			_opaque = null;
+		}
+	}
+
 	public WriteableBitmap Bitmap { get; protected set; }
 		
 	public Vector2F Offset { get; protected set; }
@@ -44,10 +57,30 @@ public class GameSprite
 		var dx = (int)((x + Offset.X) * Resolution);
 		var dy = (int)((y + Offset.Y) * Resolution);
 
-		if (Texture != null && !Texture.IsTransparent(dx, dy))
-			return true;
+		var texture = Texture;
 
-		return false;
+		if (texture is null || dx < 0 || dy < 0 || dx >= texture.Width || dy >= texture.Height)
+			return false;
+
+		// tools hit-test every input frame; reading single pixels back from the GPU stalls the pipeline,
+		// so the texture is read once and only fully opaque pixels hit, as Texture2D.IsTransparent decided.
+		_opaque ??= GetOpaquePixels(texture);
+
+		return _opaque[dy * texture.Width + dx];
+	}
+
+	private static bool[] GetOpaquePixels(Texture2D texture)
+	{
+		var pixels = new Color[texture.Width * texture.Height];
+
+		texture.GetData(pixels);
+
+		var opaque = new bool[pixels.Length];
+
+		for (var index = 0; index < pixels.Length; index++)
+			opaque[index] = (pixels[index].A == 255);
+
+		return opaque;
 	}
 
 	public virtual void Initialize(XElement element)
