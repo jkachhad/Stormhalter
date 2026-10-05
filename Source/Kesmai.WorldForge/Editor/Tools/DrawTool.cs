@@ -97,15 +97,17 @@ public class DrawTool : Tool
                         {
                             var similar = selectedTile.GetComponents<TerrainComponent>(c => floorTypes.Contains(c.GetType().Name));
                             
+                            // remove through the provider, not the tile, so terrain is rebuilt once below
+                            // instead of once per removed component.
                             foreach (var existing in similar)
-                                selectedTile.RemoveComponent(existing);
+                                existing.RemoveComponent(selectedTile.Providers);
                         }
                         else
                         {
                             var similar = selectedTile.GetComponents<IComponentProvider>(c => c.GetType().IsAssignableFrom(componentType));
                             
                             foreach (var existing in similar)
-                                selectedTile.RemoveComponent(existing);
+                                existing.RemoveComponent(selectedTile.Providers);
                         }
                     }
                     else if (_isAltDown)
