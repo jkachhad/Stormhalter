@@ -108,6 +108,11 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 	/// </summary>
 	public virtual bool DrawSelection => true;
 
+	/// <summary>
+	/// Gets the on-screen size of one tile, in pixels, at the current zoom.
+	/// </summary>
+	protected int TileSize => (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+
 	public int Width => (int)_worldPresentationTarget.ActualWidth;
 	public int Height => (int)_worldPresentationTarget.ActualHeight;
 
@@ -218,23 +223,23 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 	
 	public Rectangle GetRenderRectangle(Rectangle viewRectangle, Rectangle inlay)
 	{
-		var x = (inlay.Left - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
-		var y = (inlay.Top - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+		var tileSize = TileSize;
 		
-		var width = inlay.Width * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
-		var height = inlay.Height * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+		var x = (inlay.Left - viewRectangle.Left) * tileSize;
+		var y = (inlay.Top - viewRectangle.Top) * tileSize;
+		
+		var width = inlay.Width * tileSize;
+		var height = inlay.Height * tileSize;
 
 		return new Rectangle(x, y, width, height);
 	}
 
 	public Rectangle GetRenderRectangle(Rectangle viewRectangle, int x, int y)
 	{
-		var rx = (x - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
-		var ry = (y - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+		var tileSize = TileSize;
 		
-		return new Rectangle(rx, ry,
-			(int)Math.Floor(_presenter.UnitSize * _zoomFactor), 
-			(int)Math.Floor(_presenter.UnitSize * _zoomFactor));
+		return new Rectangle((x - viewRectangle.Left) * tileSize, (y - viewRectangle.Top) * tileSize,
+			tileSize, tileSize);
 	}
 
 	protected override void OnRender(RenderContext context)
@@ -276,21 +281,18 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 				
 				var commentIcons = new List<(int X, int Y)>();
 				var displayComments = DisplayComments;
+				var tileSize = TileSize;
 					
 				// render terrain
 				for (var vx = viewRectangle.Left; vx <= viewRectangle.Right; vx++)
 				for (var vy = viewRectangle.Top; vy <= viewRectangle.Bottom; vy++)
 				{
-					var rx = (vx - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
-					var ry = (vy - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
-						
 					var segmentTile = region.GetTile(vx, vy);
 
 					if (segmentTile != null)
 					{
-						var tileBounds = new Rectangle(rx, ry,
-							(int)Math.Floor(_presenter.UnitSize * _zoomFactor), 
-							(int)Math.Floor(_presenter.UnitSize * _zoomFactor));
+						var tileBounds = new Rectangle((vx - viewRectangle.Left) * tileSize,
+							(vy - viewRectangle.Top) * tileSize, tileSize, tileSize);
 						
 						OnRenderTile(spriteBatch, segmentTile, tileBounds);
 
@@ -422,15 +424,10 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 		var viewRectangle = GetViewRectangle();
 
 		if (_drawgrid) {
-			for (var vx = viewRectangle.Left; vx <= viewRectangle.Right; vx++)
-			for (var vy = viewRectangle.Top; vy <= viewRectangle.Bottom; vy++)
+			// step straight to the multiples of 10 in view, rather than testing every tile.
+			for (var vx = FirstMultipleOf10(viewRectangle.Left); vx <= viewRectangle.Right; vx += 10)
+			for (var vy = FirstMultipleOf10(viewRectangle.Top); vy <= viewRectangle.Bottom; vy += 10)
 			{
-				var dx = vx % 10;
-				var dy = vy % 10;
-
-				if (dx != 0 || dy != 0)
-					continue;
-
 				var bounds = GetRenderRectangle(viewRectangle, vx, vy);
 				var innerRectangle = new Rectangle(bounds.Left, bounds.Top, 55, 20);
 
@@ -441,6 +438,15 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 					new Vector2(bounds.Left + 4, bounds.Top + 3), Color.Black);
 			}
 		}
+	}
+
+	/// <summary>
+	/// Gets the smallest multiple of 10 at or after the value, including for negative values.
+	/// </summary>
+	private static int FirstMultipleOf10(int value)
+	{
+		// the remainder keeps the value's sign in C#, so -13 % 10 is -3 and this yields -10.
+		return value + ((10 - (value % 10)) % 10);
 	}
 
 	public void OnSizeChanged(int width, int height)
