@@ -75,7 +75,7 @@ public partial class RegionDocument : UserControl
 	
 	private void OnToolChanged(Tool tool)
 	{
-		if (tool is DrawTool or PaintTool)
+		if (tool is DrawTool or PaintTool or FillTool)
 			_componentsPanel.Visibility = Visibility.Visible;
 		else
 			_componentsPanel.Visibility = Visibility.Collapsed;
