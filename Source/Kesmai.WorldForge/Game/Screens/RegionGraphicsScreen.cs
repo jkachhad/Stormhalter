@@ -48,6 +48,10 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	private ObservableCollection<IComponentProvider> _editingProviders;
 	private ComponentFrame _selectedComponentFrame;
 
+	// the editing tile's region and its contents before the next edit made through the component panel.
+	private SegmentRegion _editingRegion;
+	private TileSnapshot _editingSnapshot;
+
 	private bool _invalidated;
 	private bool _collapsedComponents;
 
@@ -84,6 +88,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			{
 				_editingTile = null;
 				_editingProviders = null;
+				_editingRegion = null;
+				_editingSnapshot = null;
 				
 				_grid.IsVisible = false;
 				return;
@@ -107,6 +113,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			
 			foreach(var provider in segmentTile.Providers)
 				provider.AddComponent(_editingProviders);
+
+			_editingRegion = region;
+			_editingSnapshot = TileSnapshot.Capture(segmentTile);
 			
 			InvalidateFrames();
 
@@ -120,6 +129,61 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			static (recipient, _) => recipient._teleportersInvalidated = true);
 		WeakReferenceMessenger.Default.Register<RegionGraphicsScreen, SegmentRegionChanged>(this,
 			static (recipient, _) => recipient._teleportersInvalidated = true);
+
+		WeakReferenceMessenger.Default.Register<RegionGraphicsScreen, MapEditApplied>(this,
+			static (recipient, message) => recipient.OnMapEditApplied(message.Edit));
+	}
+
+	/// <summary>
+	/// Refreshes the view after an undo or redo changed tiles in this region.
+	/// </summary>
+	private void OnMapEditApplied(MapEdit edit)
+	{
+		var region = _worldPresentationTarget.Region;
+
+		if (region is null || !edit.Regions.Contains(region))
+			return;
+
+		if (_editingTile != null && _editingRegion != null && edit.Affects(_editingRegion, _editingTile.X, _editingTile.Y))
+		{
+			// restoring can delete the tile, so look it up again.
+			var tile = _editingRegion.GetTile(_editingTile.X, _editingTile.Y);
+
+			if (tile is null)
+			{
+				_editingTile = null;
+				_editingProviders = null;
+				_editingRegion = null;
+				_editingSnapshot = null;
+
+				if (_grid != null)
+					_grid.IsVisible = false;
+			}
+			else
+			{
+				_editingTile = tile;
+				_editingSnapshot = TileSnapshot.Capture(tile);
+			}
+
+			_selectedComponentFrame = null;
+			
+			InvalidateFrames();
+		}
+
+		InvalidateRender();
+	}
+
+	/// <summary>
+	/// Records the change just made to the editing tile through the component panel as an undoable edit.
+	/// </summary>
+	private void RecordEditingTile(string description)
+	{
+		if (_editingTile is null || _editingRegion is null || _editingSnapshot is null)
+			return;
+
+		_presenter.History.Record(description, _editingRegion, _editingTile.X, _editingTile.Y, _editingSnapshot);
+
+		_editingSnapshot = TileSnapshot.Capture(_editingTile);
 	}
 	
 	protected override IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
@@ -249,7 +313,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				
 				HorizontalAlignment = HorizontalAlignment.Stretch,
 				
-				ToolTip = "[CONTROL + Z]"
+				ToolTip = "Restore this tile to how it was when selected"
 			};
 		}
 		_resetButton.Click += (o, args) => { Reset(); };
@@ -362,6 +426,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 					{
 						_editingTile.UpdateTerrain();
 
+						RecordEditingTile("Edit Component");
+						
 						InvalidateRender();
 					};
 
@@ -416,6 +482,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		// create replacement component. components of another type can't serialize identically,
 		// so only those of the source type are serialized and compared.
 		var sourceType = sourceComponent.GetType();
+
+		var edit = applicationPresenter.History.Begin("Convert to Component");
 		
 		foreach (var region in segment.Regions)
 		{
@@ -429,6 +497,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				{
 					if (!XNode.DeepEquals(terrainComponent.GetSerializingElement(), serializedComponent))
 						continue;
+
+					edit.Capture(region, tile.X, tile.Y);
 					
 					tile.ReplaceComponent(terrainComponent, segmentComponent);
 					
@@ -440,6 +510,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			}
 		}
 		
+		edit.Commit();
+		
 		// update the editing tile.
 		_editingTile.UpdateTerrain();
 			
@@ -447,6 +519,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		
 		foreach (var provider in _editingTile.Providers)
 			provider.AddComponent(_editingProviders);
+
+		_editingSnapshot = TileSnapshot.Capture(_editingTile);
 		
 		InvalidateFrames();
 		InvalidateRender();
@@ -483,6 +557,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		var sourceElements = serializedTile.Elements().ToArray();
 		
 		var matchingTiles = new List<SegmentTile>();
+		var edit = applicationPresenter.History.Begin("Convert to Template");
 
 		foreach (var region in segment.Regions)
 		{
@@ -492,7 +567,10 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 					continue;
 
 				if (HasSameProviders(tile, sourceProviders, sourceElements))
+				{
 					matchingTiles.Add(tile);
+					edit.Capture(region, tile.X, tile.Y);
+				}
 			}
 		}
 
@@ -523,12 +601,16 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			tile.UpdateTerrain();
 		}
 
+		edit.Commit();
+
 		if (editingTileAffected && _editingProviders != null)
 		{
 			_editingProviders.Clear();
 
 			foreach (var provider in _editingTile.Providers)
 				provider.AddComponent(_editingProviders);
+
+			_editingSnapshot = TileSnapshot.Capture(_editingTile);
 
 			InvalidateFrames();
 		}
@@ -588,6 +670,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			_selectedComponentFrame = null;
 		
 		_editingTile.UpdateTerrain();
+
+		RecordEditingTile("Delete Component");
 		
 		InvalidateFrames();
 		InvalidateRender();
@@ -610,6 +694,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			providers.Move(index, index - 1);
 		
 		_editingTile.UpdateTerrain();
+
+		RecordEditingTile("Move Component Up");
 		
 		InvalidateFrames();
 		InvalidateRender();
@@ -632,6 +718,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			providers.Move(index, index + 1);
 		
 		_editingTile.UpdateTerrain();
+
+		RecordEditingTile("Move Component Down");
 		
 		InvalidateFrames();
 		InvalidateRender();
@@ -649,6 +737,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			provider.AddComponent(_editingTile.Providers);
 
 		_editingTile.UpdateTerrain();
+
+		RecordEditingTile("Reset Tile");
 		
 		InvalidateFrames();
 		InvalidateRender();
@@ -719,7 +809,16 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		{
 			if (inputManager.IsReleased(Keys.Z))
 			{
-				Reset();
+				if (isShiftDown)
+					_presenter.Redo();
+				else
+					_presenter.Undo();
+
+				inputManager.IsKeyboardHandled = true;
+			}
+			else if (inputManager.IsReleased(Keys.Y))
+			{
+				_presenter.Redo();
 
 				inputManager.IsKeyboardHandled = true;
 			}
@@ -759,6 +858,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			else
 			{
 				var currentFilter = _filters.SelectedFilter;
+				var edit = _presenter.History.Begin("Delete");
 
 				foreach (var area in _selection)
 				{
@@ -780,6 +880,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 							if (!currentFilter.IsValid(provider))
 								continue;
 
+							if (!removed)
+								edit.Capture(region, x, y);
+
 							provider.RemoveComponent(tile.Providers);
 							removed = true;
 						}
@@ -788,6 +891,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 							tile.UpdateTerrain();
 					}
 				}
+
+				edit.Commit();
 
 				InvalidateFrames();
 				InvalidateRender();

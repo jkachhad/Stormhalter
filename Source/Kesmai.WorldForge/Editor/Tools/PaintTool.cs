@@ -82,11 +82,15 @@ public class PaintTool : Tool
 
             if (provider is not null)
             {
+                var edit = presenter.History.Begin("Paint");
+                
                 foreach (var area in selection)
                 {
                     for (var x = area.Left; x < area.Right; x++)
                     for (var y = area.Top; y < area.Bottom; y++)
                     {
+                        edit.Capture(region, x, y);
+                        
                         var selectedTile = region.GetTile(x, y);
 
                         if (selectedTile == null)
@@ -108,6 +112,8 @@ public class PaintTool : Tool
                         graphicsScreen.InvalidateRender();
                     }
                 }
+
+                edit.Commit();
             }
             
             inputService.IsMouseOrTouchHandled = true;
