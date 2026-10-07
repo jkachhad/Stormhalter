@@ -1,5 +1,9 @@
 <Project>
     <PropertyGroup>
+        <!-- The SDK defaults Configuration to Debug only after this file is imported. Default it here, because the
+             output paths below use it; otherwise a build without -c writes to <Project>/net8.0-windows. -->
+        <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+
         <!-- Set the solution directory to the directory of this file -->
         <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
 
