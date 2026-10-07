@@ -21,6 +21,11 @@ namespace Kesmai.WorldForge;
 
 public class WorldGraphicsScreen : UIGraphicsScreen
 {
+	/// <summary>
+	/// Deepest nesting of segment components and templates followed when looking inside a tile's providers.
+	/// </summary>
+	protected const int MaxProviderNesting = 8;
+
 	protected static Color _selectionFill = Color.FromNonPremultiplied(255, 255, 0, 75);
 	protected static Color _selectionBorder = Color.FromNonPremultiplied(255, 255, 0, 100);
 
@@ -385,15 +390,22 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 		return false;
 	}
 
-	private static bool HasComment(IComponentProvider provider)
+	private static bool HasComment(IComponentProvider provider, int depth = 0)
 	{
 		if (provider is TerrainComponent terrainComponent)
 			return !String.IsNullOrEmpty(terrainComponent.Comment);
 
-		// terrain components yield themselves from GetComponents; only descend into wrappers.
+		// wrappers only nest a few levels; the limit guards against a template that contains itself.
+		if (depth >= MaxProviderNesting)
+			return false;
+
+		// only descend into wrappers. brushes, like terrain components, yield themselves from GetComponents.
 		foreach (var component in provider.GetComponents())
 		{
-			if (HasComment(component))
+			if (ReferenceEquals(component, provider))
+				continue;
+
+			if (HasComment(component, depth + 1))
 				return true;
 		}
 
