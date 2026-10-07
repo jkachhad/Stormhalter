@@ -20,6 +20,9 @@ public class DrawTool : Tool
 
     private List<(int X, int Y)> _actionBlacklist;
 
+    // the tiles changed while the mouse button is held, recorded as one undoable edit.
+    private MapEdit _stroke;
+
     public DrawTool ( ) : base ( "Draw", @"Editor-Icon-Pencil" )
     {
     }
@@ -33,6 +36,14 @@ public class DrawTool : Tool
     public override void OnDeactivate ( )
     {
         base.OnDeactivate ( );
+
+        CommitStroke ( );
+    }
+
+    private void CommitStroke ( )
+    {
+        _stroke?.Commit ( );
+        _stroke = null;
     }
 
     public override void OnHandleInput ( WorldPresentationTarget target, IInputService inputService )
@@ -75,6 +86,8 @@ public class DrawTool : Tool
         if ( inputService.IsReleased ( MouseButtons.Left ) )
         {
             _actionBlacklist.Clear ( );
+
+            CommitStroke ( );
         }
         else if ( inputService.IsDown ( MouseButtons.Left ) && !_actionBlacklist.Contains ( (mx, my) ) )
         {
@@ -84,6 +97,9 @@ public class DrawTool : Tool
 
                 if (provider is not null)
                 {
+                    _stroke ??= presenter.History.Begin("Draw");
+                    _stroke.Capture(region, mx, my);
+                    
                     var selectedTile = region.GetTile(mx, my);
 
                     if (selectedTile == null)

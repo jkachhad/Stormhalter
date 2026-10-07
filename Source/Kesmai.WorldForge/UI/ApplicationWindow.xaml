@@ -14,7 +14,7 @@
 
         mc:Ignorable="d"
 		
-        Title="WorldForge" Width="800" Height="600" Icon="..\Resources\Icon.ico"
+        Title="{Binding WindowTitle}" Width="800" Height="600" Icon="..\Resources\Icon.ico"
 		WindowState="Maximized" Background="#FFDDDDDD"
         
         DataContext="{StaticResource applicationPresenter}">
@@ -60,6 +60,12 @@
                 <MenuItem Header="_Convert Segment..." Command="{Binding ConvertSegmentCommand}" />
                 <Separator />
                 <MenuItem Header="_Exit" Command="{Binding ExitApplicationCommand}" />
+            </MenuItem>
+
+            <!-- the map view handles Ctrl+Z and Ctrl+Y itself, so text fields keep their own undo. -->
+            <MenuItem Header="_Edit">
+                <MenuItem Header="{Binding UndoMenuHeader}" Command="{Binding UndoCommand}" InputGestureText="Ctrl+Z" />
+                <MenuItem Header="{Binding RedoMenuHeader}" Command="{Binding RedoCommand}" InputGestureText="Ctrl+Y" />
             </MenuItem>
 
             <MenuItem Header="_Regions">
