@@ -11,7 +11,9 @@ namespace Kesmai.WorldForge;
 
 public sealed class ComponentImageCache
 {
-    private readonly Dictionary<IComponentProvider, WriteableBitmap> _renders = new();
+    // weakly keyed, so images are released with their provider (deleted templates and brushes,
+    // providers removed from a template, a closed segment) without explicit removal.
+    private readonly ConditionalWeakTable<IComponentProvider, WriteableBitmap> _renders = new();
 
     // premultiplied pixels per sprite; many components share sprites, so each is converted once.
     private readonly Dictionary<GameSprite, SpritePixels> _spritePixels = new();
@@ -47,7 +49,7 @@ public sealed class ComponentImageCache
             empty.Unlock(); 
             empty.Freeze();
             
-            _renders[component] = empty;
+            _renders.AddOrUpdate(component, empty);
             return empty;
         }
 
@@ -61,7 +63,7 @@ public sealed class ComponentImageCache
 
         wb.Freeze();
 
-        _renders[component] = wb;
+        _renders.AddOrUpdate(component, wb);
         return wb;
     }
 
