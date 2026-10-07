@@ -130,6 +130,10 @@ public class SegmentWorkspace
 		if (Host is null)
 			return;
 
+		// the messenger holds recipients weakly, so a discarded host keeps receiving segment changes until it
+		// is collected; while the next segment loads, that rebuilt its editor stub once per treasure added.
+		WeakReferenceMessenger.Default.UnregisterAll(Host);
+
 		Host = null;
 	}
 
