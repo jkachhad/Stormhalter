@@ -275,6 +275,7 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 				OnBeforeRender(spriteBatch);
 				
 				var commentIcons = new List<(int X, int Y)>();
+				var displayComments = DisplayComments;
 					
 				// render terrain
 				for (var vx = viewRectangle.Left; vx <= viewRectangle.Right; vx++)
@@ -293,7 +294,7 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 						
 						OnRenderTile(spriteBatch, segmentTile, tileBounds);
 
-						if (DisplayComments && segmentTile.Providers.SelectMany(c => c.GetComponents()).OfType<TerrainComponent>().Any(c => !String.IsNullOrEmpty(c.Comment)))
+						if (displayComments && HasComment(segmentTile.Providers))
 							commentIcons.Add((vx, vy));
 					}
 				}
@@ -365,6 +366,36 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 		
 		foreach (var render in segmentTile.Renders)
 			OnRenderTerrain(spritebatch, segmentTile, render, terrainBounds);
+	}
+
+	/// <summary>
+	/// Determines whether any component has a comment, including those wrapped by segment components and templates.
+	/// </summary>
+	private static bool HasComment(IList<IComponentProvider> providers)
+	{
+		// indexed loop; this runs for every visible tile on each redraw, so avoid enumerator allocations.
+		for (var index = 0; index < providers.Count; index++)
+		{
+			if (HasComment(providers[index]))
+				return true;
+		}
+
+		return false;
+	}
+
+	private static bool HasComment(IComponentProvider provider)
+	{
+		if (provider is TerrainComponent terrainComponent)
+			return !String.IsNullOrEmpty(terrainComponent.Comment);
+
+		// terrain components yield themselves from GetComponents; only descend into wrappers.
+		foreach (var component in provider.GetComponents())
+		{
+			if (HasComment(component))
+				return true;
+		}
+
+		return false;
 	}
 
 	protected virtual void OnRenderTerrain(SpriteBatch spriteBatch, SegmentTile segmentTile, TerrainRender render, Rectangle bounds)
