@@ -48,6 +48,9 @@ public class RegionToolbar : ObservableRecipient
 			new EraseTool(),
 			new PaintTool(),
 			new HammerTool(),
+			
+			// last, so the existing number-key shortcuts (1-5) keep their tools.
+			new FillTool(),
 		};
 
 		SelectToolCommand = new RelayCommand<Tool>(SelectTool, (tool) =>
