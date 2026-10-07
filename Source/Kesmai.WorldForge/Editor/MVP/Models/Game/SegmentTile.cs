@@ -25,6 +25,14 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
 
     internal static void IncrementRevision ( ) => Revision++;
 
+    private static ComponentPalette _componentPalette;
+    private static RegionFilters _regionFilters;
+
+    // application-lifetime services registered at startup. cached because tiles look them up
+    // for every tile loaded and every terrain update; null results are retried on the next call.
+    private static ComponentPalette CachedComponentPalette => _componentPalette ??= ServiceLocator.Current.GetInstance<ComponentPalette>();
+    private static RegionFilters CachedRegionFilters => _regionFilters ??= ServiceLocator.Current.GetInstance<RegionFilters>();
+
     public int X => _x;
     public int Y => _y;
 
@@ -47,7 +55,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
 
         Providers = new ObservableCollection<IComponentProvider>();
         
-        var componentPalette = ServiceLocator.Current.GetInstance<ComponentPalette>();
+        var componentPalette = CachedComponentPalette;
         
         if (componentPalette is null)
             throw new InvalidOperationException("ComponentPalette service is not available.");
@@ -87,12 +95,17 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
 
     public IEnumerable<ComponentRender> GetRenderableTerrain ( TerrainSelector selector )
     {
-        foreach ( var provider in Providers.SelectMany(c => c.GetComponents()) )
+        var providers = Providers;
+
+        for ( var index = 0; index < providers.Count; index++ )
         {
-            if ( selector.IsValid ( provider ) )
+            foreach ( var provider in providers[index].GetComponents ( ) )
             {
-                foreach ( var render in provider.GetRenders() )
-                    yield return selector.TransformRender ( this, provider, render );
+                if ( selector.IsValid ( provider ) )
+                {
+                    foreach ( var render in provider.GetRenders() )
+                        yield return selector.TransformRender ( this, provider, render );
+                }
             }
         }
     }
@@ -159,7 +172,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
 
     public void UpdateTerrain ( )
     {
-        var regionFilters = ServiceLocator.Current.GetInstance<RegionFilters>();
+        var regionFilters = CachedRegionFilters;
 
         if (regionFilters != null)
             UpdateTerrain(regionFilters.SelectedFilter);
@@ -171,9 +184,31 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         var renders = new List<TerrainRender> ( );
 
         foreach ( var render in componentRenders )
-            renders.AddRange ( render.Terrain.Select ( layer => new TerrainRender ( layer, render.Color ) ) );
+        {
+            var terrain = render.Terrain;
 
-        _renders = renders.OrderBy ( render => render.Layer.Order ).ToList ( );
+            for ( var index = 0; index < terrain.Count; index++ )
+                renders.Add ( new TerrainRender ( terrain[index], render.Color ) );
+        }
+
+        // stable insertion sort by layer order, in place. layers with equal order must keep their
+        // draw order (as OrderBy did, unlike List.Sort), and a tile only holds a few layers.
+        for ( var index = 1; index < renders.Count; index++ )
+        {
+            var render = renders[index];
+            var order = render.Layer.Order;
+            var position = index - 1;
+
+            while ( position >= 0 && renders[position].Layer.Order > order )
+            {
+                renders[position + 1] = renders[position];
+                position--;
+            }
+
+            renders[position + 1] = render;
+        }
+
+        _renders = renders;
 
         IncrementRevision ( );
     }
