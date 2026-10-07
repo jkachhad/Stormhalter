@@ -249,12 +249,18 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 	public SegmentTile GetTile(int x, int y, bool create = false)
 	{
 		var chunkCoordinate = GetChunkCoordinate(x, y);
-		var tiles = GetChunk(chunkCoordinate, true);
+		var tiles = GetChunk(chunkCoordinate, false);
 
-		var ox = Math.Abs(x - (chunkCoordinate.X * _chunkSize));
-		var oy = Math.Abs(y - (chunkCoordinate.Y * _chunkSize));
+		var tile = default(SegmentTile);
 
-		var tile = tiles[ox, oy];
+		// only allocate chunks when writing; reads of empty space return null.
+		if (tiles != null)
+		{
+			var ox = Math.Abs(x - (chunkCoordinate.X * _chunkSize));
+			var oy = Math.Abs(y - (chunkCoordinate.Y * _chunkSize));
+
+			tile = tiles[ox, oy];
+		}
 
 		if (tile == null && create)
 			tile = CreateTile(x, y);
