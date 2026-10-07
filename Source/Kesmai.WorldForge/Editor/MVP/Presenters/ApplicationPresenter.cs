@@ -35,6 +35,11 @@ public class GetActiveSegmentRequestMessage : RequestMessage<Segment>
 
 public class ActiveSegmentChanged(Segment Segment) : ValueChangedMessage<Segment>(Segment);
 
+/// <summary>
+/// A request to show a tile in its region view; the view for that region applies it on its next update.
+/// </summary>
+public record RegionNavigation(SegmentRegion Region, int X, int Y);
+
 public class ApplicationPresenter : ObservableRecipient
 {
 	private int _unitSize = 55;
@@ -50,6 +55,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 	private bool _isModified;
 	private byte[] _savedFingerprint;
+
+	private string _problemsSummary = "Click Check to scan the segment for problems.";
 
 	public Selection Selection
 	{
@@ -68,6 +75,10 @@ public class ApplicationPresenter : ObservableRecipient
 			{
 				// edits to the previous segment can't be undone in this one.
 				History.Clear();
+
+				Problems.Clear();
+				ProblemsSummary = "Click Check to scan the segment for problems.";
+				PendingNavigation = null;
 
 				OnPropertyChanged(nameof(WindowTitle));
 				
@@ -111,6 +122,25 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public string UndoMenuHeader => History.CanUndo ? $"_Undo {History.UndoDescription}" : "_Undo";
 	public string RedoMenuHeader => History.CanRedo ? $"_Redo {History.RedoDescription}" : "_Redo";
+
+	/// <summary>
+	/// Gets the problems found by the last check.
+	/// </summary>
+	public ObservableCollection<SegmentProblem> Problems { get; } = new ObservableCollection<SegmentProblem>();
+
+	public string ProblemsSummary
+	{
+		get => _problemsSummary;
+		private set => SetProperty(ref _problemsSummary, value);
+	}
+
+	public RelayCommand CheckProblemsCommand { get; }
+	public RelayCommand<SegmentProblem> GoToProblemCommand { get; }
+
+	/// <summary>
+	/// Gets or sets a tile waiting to be shown by its region view.
+	/// </summary>
+	public RegionNavigation PendingNavigation { get; set; }
 
 	public RelayCommand CreateSegmentCommand { get; set; }
 	public RelayCommand CloseSegmentCommand { get; set; }
@@ -197,6 +227,11 @@ public class ApplicationPresenter : ObservableRecipient
 
 		UndoCommand = new RelayCommand(Undo, () => History.CanUndo);
 		RedoCommand = new RelayCommand(Redo, () => History.CanRedo);
+
+		CheckProblemsCommand = new RelayCommand(CheckProblems, () => (Segment != null));
+		CheckProblemsCommand.DependsOn(() => Segment);
+
+		GoToProblemCommand = new RelayCommand<SegmentProblem>(GoToProblem, (problem) => (problem != null));
 
 		History.Changed += (_, _) =>
 		{
@@ -654,6 +689,38 @@ public class ApplicationPresenter : ObservableRecipient
 	public void Undo()
 	{
 		History.Undo(_segment);
+	}
+
+	private void CheckProblems()
+	{
+		Problems.Clear();
+
+		foreach (var problem in SegmentProblemChecker.Check(_segment))
+			Problems.Add(problem);
+
+		var errors = Problems.Count(problem => problem.Severity is ProblemSeverity.Error);
+		var warnings = Problems.Count - errors;
+
+		ProblemsSummary = (Problems.Count is 0)
+			? "No problems found."
+			: $"{errors} error{(errors is 1 ? "" : "s")}, {warnings} warning{(warnings is 1 ? "" : "s")}. Double-click one to go to it.";
+	}
+
+	private void GoToProblem(SegmentProblem problem)
+	{
+		if (problem is null || _segment is null)
+			return;
+
+		// the region may have been deleted since the check ran.
+		if (problem.Region != null && _segment.Regions.Contains(problem.Region))
+		{
+			PendingNavigation = new RegionNavigation(problem.Region, problem.X, problem.Y);
+			problem.Region.Present(this);
+		}
+		else
+		{
+			problem.Source?.Present(this);
+		}
 	}
 
 	public void Redo()

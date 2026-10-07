@@ -176,6 +176,10 @@
                             <LayoutAnchorable Title="Properties" CanDockAsTabbedDocument="False">
                                 <xctk:PropertyGrid SelectedObject="{Binding ActiveContent, Mode=OneWay}" />
                             </LayoutAnchorable>
+
+                            <LayoutAnchorable Title="Problems" CanDockAsTabbedDocument="False">
+                                <ui:ProblemsPanel />
+                            </LayoutAnchorable>
                         </LayoutAnchorablePane>
                     </LayoutAnchorablePaneGroup>
                     
