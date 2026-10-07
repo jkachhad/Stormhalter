@@ -10,6 +10,11 @@ namespace Kesmai.WorldForge.Editor;
 
 public abstract class TerrainSelector : ObservableObject
 {
+	/// <summary>
+	/// Deepest nesting of segment components, templates and brushes followed when filtering a wrapper.
+	/// </summary>
+	private const int MaxProviderNesting = 8;
+
 	#region Static
 		
 	public static TerrainSelector Default = new AllTerrainSelector();
@@ -55,7 +60,39 @@ public abstract class TerrainSelector : ObservableObject
 	/// </summary>
 	public virtual bool IsValid(IComponentProvider provider)
 	{
-		return (bool)GetQuery().DynamicInvoke(provider);
+		return IsValid(provider, 0);
+	}
+
+	private bool IsValid(IComponentProvider provider, int depth)
+	{
+		// queries are written against terrain components.
+		if (provider is TerrainComponent)
+			return (bool)GetQuery().DynamicInvoke(provider);
+
+		// segment components, templates and brushes wrap other providers. a wrapper is valid when anything it
+		// can render is; the limit guards against wrappers that contain themselves.
+		if (provider is null || depth >= MaxProviderNesting)
+			return false;
+
+		foreach (var component in GetWrappedProviders(provider))
+		{
+			if (ReferenceEquals(component, provider))
+				continue;
+
+			if (IsValid(component, depth + 1))
+				return true;
+		}
+
+		return false;
+	}
+
+	private static IEnumerable<IComponentProvider> GetWrappedProviders(IComponentProvider provider)
+	{
+		// brushes yield themselves from GetComponents; what they render comes from their weighted entries.
+		if (provider is SegmentBrush brush)
+			return brush.Entries.Where(entry => entry.Component is not null && entry.Weight > 0).Select(entry => entry.Component);
+
+		return provider.GetComponents();
 	}
 
 	public virtual ComponentRender TransformRender(SegmentTile tile, IComponentProvider provider, ComponentRender render)
