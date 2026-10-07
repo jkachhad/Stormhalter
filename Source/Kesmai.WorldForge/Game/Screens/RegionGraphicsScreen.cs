@@ -388,6 +388,19 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	protected override void OnUpdate(TimeSpan deltaTime)
 	{
+		// show a tile requested from elsewhere (e.g. the problems panel) once this region's view is up.
+		var navigation = _presenter.PendingNavigation;
+
+		if (navigation != null && navigation.Region == _worldPresentationTarget.Region)
+		{
+			_presenter.PendingNavigation = null;
+
+			CenterCameraOn(navigation.X, navigation.Y);
+
+			if (_selection != null)
+				_selection.Select(new Rectangle(navigation.X, navigation.Y, 1, 1), navigation.Region);
+		}
+		
 		if (_invalidated && _componentFrames != null)
 		{
 			_componentFrames.Children.Clear();
