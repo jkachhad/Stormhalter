@@ -74,13 +74,6 @@
                         <Image Source="../Resources/Delete.png" Width="16" Height="16" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <!--<Separator />
-                <MenuItem Header="Shift Region" Command="{Binding ShiftRegionCommand}" 
-                          CommandParameter="{Binding ActiveDocument}">
-                    <MenuItem.Icon>
-                        <Image Source="../Resources/Move.png" Width="16" Height="16" />
-                    </MenuItem.Icon>
-                </MenuItem>-->
                 
                 <Separator Visibility="{x:Static local:Core.DebugOnly}" />
                 <MenuItem Header="Generate _Region..." Command="{Binding GenerateRegionCommand}"
