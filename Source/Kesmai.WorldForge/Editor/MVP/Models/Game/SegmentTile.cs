@@ -17,6 +17,14 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
 
     private List<TerrainRender> _renders;
 
+    /// <summary>
+    /// Incremented whenever any tile's terrain is rebuilt or a tile is placed in a region,
+    /// so screens can tell when segment-wide caches derived from tiles are stale.
+    /// </summary>
+    public static int Revision { get; private set; }
+
+    internal static void IncrementRevision ( ) => Revision++;
+
     public int X => _x;
     public int Y => _y;
 
@@ -166,5 +174,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
             renders.AddRange ( render.Terrain.Select ( layer => new TerrainRender ( layer, render.Color ) ) );
 
         _renders = renders.OrderBy ( render => render.Layer.Order ).ToList ( );
+
+        IncrementRevision ( );
     }
 }
