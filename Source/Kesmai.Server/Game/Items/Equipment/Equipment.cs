@@ -82,7 +82,7 @@ public abstract class Equipment : ItemEntity
 	{
 		base.GetClientProperties(observer, properties);
 
-		if (RequiresIdentification && !Identified)
+		if (!Identified)
 			return;
 
 		if (Hindrance != 0)
