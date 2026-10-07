@@ -102,7 +102,7 @@
     </PropertyGroup>
 
     <!-- Content archives (Data.bin, Kesmai.bin, Stormhalter.bin, UI.bin). WorldForge loads them from its own folder.
-         Building with -p:UseContentBuilder=true and a Kesmai checkout builds them and copies them here. The checkout is
+         With a Kesmai checkout, building WorldForge builds them and copies them here. The checkout is
          found next to this repository: a Stormhalter-<name> folder uses a sibling Kesmai-<name> when one exists,
          otherwise the sibling Kesmai. Override with -p:KesmaiPath=<path>. Without one, copy the archives from a
          client installation. -->
@@ -114,10 +114,10 @@
         <KesmaiContentTargets>$(KesmaiPath)/Source/Kesmai.Content/Kesmai.Content.targets</KesmaiContentTargets>
     </PropertyGroup>
 
-    <Import Project="$(KesmaiContentTargets)" Condition="'$(UseContentBuilder)' == 'true' and Exists('$(KesmaiContentTargets)')" />
+    <Import Project="$(KesmaiContentTargets)" Condition="Exists('$(KesmaiContentTargets)')" />
 
-    <Target Name="WarnMissingContentBuilder" BeforeTargets="Build" Condition="'$(UseContentBuilder)' == 'true' and !Exists('$(KesmaiContentTargets)')">
-        <Warning Text="UseContentBuilder is set, but no Kesmai checkout was found at '$(KesmaiPath)'. Content archives were not built; set KesmaiPath or copy them from a client installation." />
+    <Target Name="ReportMissingContentArchives" BeforeTargets="Build" Condition="!Exists('$(KesmaiContentTargets)')">
+        <Message Importance="high" Text="No Kesmai checkout at '$(KesmaiPath)', so the content archives were not built. Copy Data.bin, Kesmai.bin, Stormhalter.bin and UI.bin from a client installation, or set KesmaiPath." />
     </Target>
 
     <Target Name="CleanupAfterPublish" AfterTargets="Publish">
