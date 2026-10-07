@@ -124,11 +124,21 @@ public abstract class ComponentTool : Tool
 
 		if (inputService.IsReleased(MouseButtons.Left))
 		{
+			var edit = default(MapEdit);
+
+			if (_tileUnderMouse != null)
+			{
+				edit = services.GetInstance<ApplicationPresenter>().History.Begin(Name);
+				edit.Capture(region, _tileUnderMouse.X, _tileUnderMouse.Y);
+			}
+			
 			if (_componentUnderMouse != null)
 				OnClick();
 
 			if (_tileUnderMouse != null)
 				_tileUnderMouse.UpdateTerrain();
+
+			edit?.Commit();
 
 			worldScreen.InvalidateRender();
 				
