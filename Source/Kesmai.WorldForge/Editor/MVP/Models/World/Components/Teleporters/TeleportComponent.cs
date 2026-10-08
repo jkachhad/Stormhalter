@@ -97,14 +97,14 @@ public abstract class TeleportComponent : TerrainComponent
 	{
 		var element = base.GetSerializingElement();
 
-		if (_destinationX != 0)
+		// the server only reads a destination when all three values are present, so a zero coordinate must
+		// still be written. a teleporter with no destination at all writes none.
+		if (_destinationX != 0 || _destinationY != 0 || _destinationRegion != 0)
+		{
 			element.Add(new XElement("destinationX", _destinationX));
-
-		if (_destinationY != 0)
 			element.Add(new XElement("destinationY", _destinationY));
-
-		if (_destinationRegion != 0)
 			element.Add(new XElement("destinationRegion", _destinationRegion));
+		}
 
 		return element;
 	}
