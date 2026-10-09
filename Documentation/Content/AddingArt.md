@@ -76,6 +76,8 @@ WorldForge can show your art before it is in a client build:
 
 WorldForge shows these loose images as they are, so the magenta background is still visible there. The game makes it transparent once the image is in a client build.
 
+To try your art in the game client itself before a client build, see [Overriding Content in the Client](CustomContent.md).
+
 ## When It Reaches the Game
 
 The client's content archives (`Stormhalter.bin` and the others) are built from these folders. Every `.png` under `Content` and every `.wav` under `Content/Audio` is included automatically, so a new image or sound ships with the next client build. WorldForge no longer asks to add new textures to a content list.
