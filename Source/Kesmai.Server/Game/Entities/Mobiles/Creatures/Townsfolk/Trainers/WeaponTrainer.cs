@@ -19,6 +19,9 @@ public partial class WeaponTrainer : TrainerEntity
 	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
+		var critiqueSkill = new InteractionSubmenu("Critique skill");
+		var critiqueTraining = new InteractionSubmenu("Critique training");
+
 		foreach (var skill in Skill.All)
 		{
 			var skillLevel = source.GetSkillLevel(skill);
@@ -29,8 +32,16 @@ public partial class WeaponTrainer : TrainerEntity
 				{
 					Enabled = (skillLevel >= entry.Minimum && skillLevel < entry.Maximum)
 				});
+
+				critiqueSkill.Add(new CritiqueSkillInteraction(skill));
+				critiqueTraining.Add(new CritiqueTrainingInteraction(skill));
 			}
 		}
+
+		entries.Add(InteractionSeparator.Instance);
+		entries.Add(critiqueSkill);
+		entries.Add(critiqueTraining);
+		entries.Add(InteractionSeparator.Instance);
 		
 		base.GetInteractions(source, entries);
 	}
@@ -190,32 +201,30 @@ public class CritiqueSkillInteraction : InteractionEntry
 			return;
 		}
 
-		if (!trainer.CanTrain(Skill, out var _))
+		trainer.CritiqueSkill(source, Skill);
+	}
+}
+
+public class CritiqueTrainingInteraction : InteractionEntry
+{
+	private Skill Skill { get; }
+
+	public CritiqueTrainingInteraction(Skill skill) : base(new LocalizationEntry(6500021, $"{skill.Name.FirstLetterToUpperCase()} training"), range: 0)
+	{
+		Skill = skill;
+	}
+
+	public override void OnClick(PlayerEntity source, WorldEntity target)
+	{
+		if (source is null || target is not TrainerEntity trainer)
+			return;
+
+		if (!trainer.CanTrain(source.Profession))
 		{
-			trainer.SayTo(source, 6300248); /* I am not qualified to critique that skill. */
+			trainer.SayTo(source, 6300322); /* You are not of my profession! Get out! */
 			return;
 		}
 
-		var skillAchieved = source.Skills.GetAchievedLevel(Skill);
-		var skillAchievedLevel = (int)skillAchieved;
-		var skillPercent = (skillAchieved - skillAchievedLevel) * 100;
-		var skillAchievedTitle = Skill.GetTitle(source, skillAchievedLevel);
-
-		var skillCurrent = source.Skills.GetCurrentLevel(Skill);
-		var skillCurrentTitle = Skill.GetTitle(source, (int)skillCurrent);
-
-		var entries = new List<LocalizationEntry>();
-
-		if (skillPercent > 0)
-			entries.Add(new LocalizationEntry(6300249, $"{(int)skillPercent}", skillCurrentTitle)); /* You are {0:#0} percent above the level of {1}. */
-		else if (skillAchievedLevel > 0)
-			entries.Add(new LocalizationEntry(6300250, skillCurrentTitle)); /* You have achieved the level of {0}. */
-		else
-			entries.Add(new LocalizationEntry(6300251, skillCurrentTitle)); /* You are {0}. */
-
-		if (skillCurrent < skillAchieved)
-			entries.Add(new LocalizationEntry(6300252, skillAchievedTitle)); /* You are below your potential level of {0}. */
-
-		trainer.SayTo(source, entries.ToArray());
+		trainer.CritiqueTraining(source, Skill);
 	}
 }
