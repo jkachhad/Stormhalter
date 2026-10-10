@@ -173,7 +173,7 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 		}
 	}
 
-	public class TeachSpellInteraction : InteractionEntry
+	public class TeachSpellInteraction : VendorInteraction
 	{
 		private ProfessionSpell _spell;
 
@@ -182,77 +182,50 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 			_spell = spell;
 		}
 
-		public override void OnClick(PlayerEntity source, WorldEntity target)
+		protected override bool CanUse(PlayerEntity player, VendorEntity vendor)
 		{
-			if (source is null || target is not SpellTrainer trainer)
-				return;
+			return vendor is SpellTrainer trainer && trainer.CanTrain(player.Profession);
+		}
 
-			if (!trainer.CanTrain(source.Profession))
-				return;
+		protected override void OnClick(PlayerEntity source, VendorEntity vendor, Point2D counter)
+		{
+			var trainer = (SpellTrainer)vendor;
+			var skillLevel = source.GetSkillLevel(Skill.Magic);
+			var profession = source.Profession;
 
-			if (!source.CanPerformAction)
-				return;
+			var spells = profession.GetSpells();
+			var available = spells.Where(st => st.SkillLevel <= skillLevel && !st.IsTaught(source)).ToList();
 
-			if (source.Tranced && !source.IsSteering)
+			if (!available.Any())
 			{
-				source.SendLocalizedMessage(System.Drawing.Color.Red, 6300200); /* You can't do that while in a trance. */
+				trainer.SayTo(source, 6300323); /* There are no spells I can teach you. */
+				return;
+			}
+			
+			if (!available.Contains(_spell))
+			{
+				trainer.SayTo(source, 6300321); /* That spell is not yet available to you. */
 				return;
 			}
 
-			if (trainer.AtCounter(source, out var counter))
+			var spellCost = (uint)_spell.Cost;
+
+			if (trainer.CountOnCounter<Gold>(counter) is 0)
 			{
-				var skillLevel = source.GetSkillLevel(Skill.Magic);
-				var profession = source.Profession;
-
-				var spells = profession.GetSpells();
-				var available = spells.Where(st => st.SkillLevel <= skillLevel && !st.IsTaught(source)).ToList();
-
-				if (!available.Any())
-				{
-					trainer.SayTo(source, 6300323); /* There are no spells I can teach you. */
-					return;
-				}
-				
-				if (!available.Contains(_spell))
-				{
-					trainer.SayTo(source, 6300321); /* That spell is not yet available to you. */
-					return;
-				}
-
-				var segment = trainer.Segment;
-				var gold = segment.GetItemsAt(counter).OfType<Gold>().ToList();
-
-				if (!gold.Any())
-				{
-					if (trainer.Counters.Any())
-						trainer.SayTo(source, 6300246); /* Please put some coins on the counter. */
-					else
-						trainer.SayTo(source, 6300247); /* Please put some coins on the ground. */
-
-					return;
-				}
-
-				var totalGold = gold.Sum(g => g.Amount);
-				var spellCost = (uint)_spell.Cost;
-
-				if (totalGold < spellCost || !trainer.ConsumeFromLocation<Gold>(counter, spellCost))
-				{
-					trainer.SayTo(source, 6300243); /* Are you trying to be funny? */
-					return;
-				}
-
-				foreach (var spellType in _spell.Spells)
-					source.Spells.Learn(spellType);
-
-				trainer.SayTo(source, 6300325, _spell.Name); /* You have learned the {0} spell. */
+				trainer.SayPutCoins(source);
+				return;
 			}
-			else
+
+			if (!trainer.ConsumeFromCounter<Gold>(counter, spellCost))
 			{
-				if (trainer.Counters.Any())
-					trainer.SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					trainer.SayTo(source, 6300237); /* Please stand closer to me. */
+				trainer.SayTo(source, 6300243); /* Are you trying to be funny? */
+				return;
 			}
+
+			foreach (var spellType in _spell.Spells)
+				source.Spells.Learn(spellType);
+
+			trainer.SayTo(source, 6300325, _spell.Name); /* You have learned the {0} spell. */
 		}
 	}
 }
