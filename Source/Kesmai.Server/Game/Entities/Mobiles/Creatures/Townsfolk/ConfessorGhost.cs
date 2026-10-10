@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
 using Kesmai.Server.Spells;
 
@@ -18,46 +20,35 @@ public partial class ConfessorGhost : VendorEntity
 		IsInvulnerable = true;
 	}
 
-	public override void HandleOrder(OrderEventArgs args)
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
-		base.HandleOrder(args);
+		entries.Add(ForgiveInteraction.Instance);
+		entries.Add(InteractionSeparator.Instance);
 
-		if (args.Handled)
-			return;
+		base.GetInteractions(source, entries);
+	}
 
-		var source = args.Source;
-		var order = args.Order;
-			
-		if (order.Matches("forgive me", true))
+	/// <summary>
+	/// A silver dagger on the counter resets the player's alignment.
+	/// </summary>
+	private sealed class ForgiveInteraction : VendorInteraction
+	{
+		public static readonly ForgiveInteraction Instance = new ForgiveInteraction();
+
+		private ForgiveInteraction() : base("Ask forgiveness")
 		{
-			args.Handled = true;
-				
-			if (AtCounter(source, out var counter))
-			{
-				var silverDagger = Segment.GetItemsAt(Location).OfType<SilverDagger>();
+		}
 
-				if (silverDagger.Any())
-				{
-					if (ConsumeFromLocation<SilverDagger>(counter, 1))
-					{
-						source.Alignment = default(Alignment);
-						SayTo(source, 6300060); //A strange feeling comes over you.
-					}
-				}
-				else
-				{
-					SayTo(source, 6300243); //Are you trying to be funny? 
-				}
-			}
-			else
+		protected override void OnClick(PlayerEntity player, VendorEntity vendor, Point2D counter)
+		{
+			if (!vendor.ConsumeFromCounter<SilverDagger>(counter))
 			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
+				vendor.SayTo(player, 6300243); /* Are you trying to be funny? */
+				return;
 			}
-				
-			return;
+
+			player.Alignment = default(Alignment);
+			vendor.SayTo(player, 6300060); /* A strange feeling comes over you. */
 		}
 	}
 
