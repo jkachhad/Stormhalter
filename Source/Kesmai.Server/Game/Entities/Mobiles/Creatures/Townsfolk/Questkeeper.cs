@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Reflection;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -9,78 +12,69 @@ namespace Kesmai.Server.Game;
 
 public abstract partial class Questkeeper : VendorEntity
 {
-	private static Regex _teach = new Regex(@"^teach\s?([\w]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-		
 	protected Questkeeper()
 	{
 	}
 
-	public override void HandleOrder(OrderEventArgs args)
+	private static readonly ConcurrentDictionary<Type, (bool Teach, bool Accept, bool Decline)> _overrides = new();
+
+	private static readonly QuestInteraction _teachEntry = new QuestInteraction(QuestResponse.Teach, new LocalizationEntry("Teach"));
+	private static readonly QuestInteraction _acceptEntry = new QuestInteraction(QuestResponse.Accept, new LocalizationEntry("Yes"));
+	private static readonly QuestInteraction _declineEntry = new QuestInteraction(QuestResponse.Decline, new LocalizationEntry("No"));
+
+	/// <summary>
+	/// Adds Teach, Yes and No for the responses this questkeeper implements (overrides of <see cref="OnTeach"/>,
+	/// <see cref="OnAccept"/> and <see cref="OnDecline"/>), unless the subclass already listed an entry for
+	/// that response or with that title. These replace the "teach", "yes" and "no" speech.
+	/// </summary>
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
-		base.HandleOrder(args);
+		if (!ShowStockQuestEntries)
+		{
+			base.GetInteractions(source, entries);
+			return;
+		}
 
-		if (args.Handled)
-			return;
-			
-		var source = args.Source;
-		var order = args.Order;
-			
-		if (_teach.TryGetMatch(order, out var teachMatch))
-		{
-			args.Handled = true;
-				
-			if (AtCounter(source, out var counter))
-			{
-				OnTeach(source);
-			}
-			else
-			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
-			}
-				
-			return;
-		}
-			
-		if (order.Matches("yes", true))
-		{
-			args.Handled = true;
-				
-			if (AtCounter(source, out var counter))
-			{
-				OnAccept(source);
-			}
-			else
-			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
-			}
+		var (teach, accept, decline) = _overrides.GetOrAdd(GetType(), type => (
+			Overrides(type, nameof(OnTeach)), Overrides(type, nameof(OnAccept)), Overrides(type, nameof(OnDecline))));
 
-			return;
-		}
-			
-		if (order.Matches("no", true))
-		{
-			args.Handled = true;
-				
-			if (AtCounter(source, out var counter))
-			{
-				OnDecline(source);
-			}
-			else
-			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
-			}
-				
-			return;
-		}
+		var added = false;
+
+		if (teach) added |= AddStockEntry(source, entries, _teachEntry);
+		if (accept) added |= AddStockEntry(source, entries, _acceptEntry);
+		if (decline) added |= AddStockEntry(source, entries, _declineEntry);
+
+		if (added)
+			entries.Add(InteractionSeparator.Instance);
+
+		base.GetInteractions(source, entries);
+	}
+
+	/// <summary>
+	/// Gets whether the stock Teach, Yes and No entries are added. Questkeepers that list their own quest
+	/// entries for each stage return false.
+	/// </summary>
+	protected virtual bool ShowStockQuestEntries => true;
+
+	private static bool Overrides(Type type, string method)
+	{
+		var info = type.GetMethod(method, BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof(PlayerEntity) }, null);
+
+		return info != null && info.DeclaringType != typeof(Questkeeper);
+	}
+
+	private static bool AddStockEntry(PlayerEntity source, List<InteractionEntry> entries, QuestInteraction entry)
+	{
+		var title = entry.GetTitle(source).Arguments.FirstOrDefault();
+
+		var listed = entries.Any(existing => (existing is QuestInteraction quest && quest.Response == entry.Response)
+			|| (existing != null && !existing.IsSeparator && String.Equals(existing.GetTitle(source).Arguments.FirstOrDefault(), title, StringComparison.OrdinalIgnoreCase)));
+
+		if (listed)
+			return false;
+
+		entries.Add(entry);
+		return true;
 	}
 
 	/// <summary>
