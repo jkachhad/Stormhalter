@@ -13,9 +13,9 @@ namespace Kesmai.Server.Game;
 
 public abstract partial class TrainerEntity : VendorEntity
 {
-	private static Regex _train = new Regex(@"^train(\s?[\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-	private static Regex _critiqueSkill = new Regex(@"^critique\s(\w.*?)\sskill?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-	private static Regex _critiqueTraining = new Regex(@"^critique\s(\w.*?)\straining?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	/* Training a typed amount stays as speech until the input dialog (Kesmai #361). Full training and
+	   critiques are interaction entries. */
+	private static Regex _train = new Regex(@"^train\s([\d]+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		
 	protected Dictionary<Skill, TrainingEntry> _training;
 
@@ -52,7 +52,6 @@ public abstract partial class TrainerEntity : VendorEntity
 			return;
 		}
 			
-		/* example: train */
 		/* example: train (amount) */
 		if (_train.TryGetMatch(order, out var trainMatch) && CanTrain(source, out var skill, out var entry))
 		{
@@ -139,90 +138,78 @@ public abstract partial class TrainerEntity : VendorEntity
 
 			return;
 		}
+	}
 
-		/* example: critique (skill) skill */
-		if (_critiqueSkill.TryGetMatch(order, out var critiqueSkillMatch))
+	/// <summary>
+	/// Tells the player their level in the skill and whether they are below their potential.
+	/// </summary>
+	public void CritiqueSkill(PlayerEntity source, Skill critiqueSkill)
+	{
+		if (critiqueSkill is null || !CanTrain(critiqueSkill, out var _))
 		{
-			args.Handled = true;
-				
-			var skillName = critiqueSkillMatch.Groups[1].Value;
-			var critiqueSkill = Skill.All.FirstOrDefault(s => s.Name.Matches(skillName, true));
-
-			if (critiqueSkill != null && CanTrain(critiqueSkill, out var _))
-			{
-				var skillAchieved = source.Skills.GetAchievedLevel(critiqueSkill);
-				var skillAchievedLevel = (int)skillAchieved;
-				var skillPercent = (skillAchieved - skillAchievedLevel) * 100;
-				var skillAchievedTitle = critiqueSkill.GetTitle(source, skillAchievedLevel);
-
-				var skillCurrent = source.Skills.GetCurrentLevel(critiqueSkill);
-				var skillCurrentTitle = critiqueSkill.GetTitle(source, (int)skillCurrent);
-
-				var entries = new List<LocalizationEntry>();
-
-				if (skillPercent > 0)
-					entries.Add(new LocalizationEntry(6300249, $"{(int)skillPercent}", skillCurrentTitle)); /* You are {0:#0} percent above the level of {1}. */
-				else if (skillAchievedLevel > 0)
-					entries.Add(new LocalizationEntry(6300250, skillCurrentTitle)); /* You have achieved the level of {0}. */
-				else
-					entries.Add(new LocalizationEntry(6300251, skillCurrentTitle)); /* You are {0}. */
-
-				if (skillCurrent < skillAchieved)
-					entries.Add(new LocalizationEntry(6300252, skillAchievedTitle)); /* You are below your potential level of {0}. */
-
-				SayTo(source, entries.ToArray());
-			}
-			else
-			{
-				SayTo(source, 6300248); /* I am not qualified to critique that skill. */
-			}
-
+			SayTo(source, 6300248); /* I am not qualified to critique that skill. */
 			return;
 		}
-			
-		/* example: critique (skill) training */
-		if (_critiqueTraining.TryGetMatch(order, out var critiqueTrainingMatch))
+
+		var skillAchieved = source.Skills.GetAchievedLevel(critiqueSkill);
+		var skillAchievedLevel = (int)skillAchieved;
+		var skillPercent = (skillAchieved - skillAchievedLevel) * 100;
+		var skillAchievedTitle = critiqueSkill.GetTitle(source, skillAchievedLevel);
+
+		var skillCurrent = source.Skills.GetCurrentLevel(critiqueSkill);
+		var skillCurrentTitle = critiqueSkill.GetTitle(source, (int)skillCurrent);
+
+		var entries = new List<LocalizationEntry>();
+
+		if (skillPercent > 0)
+			entries.Add(new LocalizationEntry(6300249, $"{(int)skillPercent}", skillCurrentTitle)); /* You are {0:#0} percent above the level of {1}. */
+		else if (skillAchievedLevel > 0)
+			entries.Add(new LocalizationEntry(6300250, skillCurrentTitle)); /* You have achieved the level of {0}. */
+		else
+			entries.Add(new LocalizationEntry(6300251, skillCurrentTitle)); /* You are {0}. */
+
+		if (skillCurrent < skillAchieved)
+			entries.Add(new LocalizationEntry(6300252, skillAchievedTitle)); /* You are below your potential level of {0}. */
+
+		SayTo(source, entries.ToArray());
+	}
+
+	/// <summary>
+	/// Tells the player how far their training in the skill reaches.
+	/// </summary>
+	public void CritiqueTraining(PlayerEntity source, Skill critiqueSkill)
+	{
+		if (critiqueSkill is null || !CanTrain(critiqueSkill, out var _))
 		{
-			args.Handled = true;
-
-			var skillName = critiqueTrainingMatch.Groups[1].Value;
-			var critiqueSkill = Skill.All.FirstOrDefault(s => s.Name.Matches(skillName, true));
-
-			if (critiqueSkill != null && CanTrain(critiqueSkill, out var _))
-			{
-				var skillLevel = source.Skills.GetAchievedLevel(critiqueSkill);
-				var skillLevelNext = Math.Min((int)skillLevel + 1, 19);
-					
-				var skillExperience = source.Skills.GetAchievedExperience(critiqueSkill);
-
-				var trained = source.Skills.GetTraining(critiqueSkill);
-				var trainedSkill = skillExperience + (trained * 2);
-				var trainedLevel = Skill.GetLevel(trainedSkill);
-					
-				var skillCurrentTitle = critiqueSkill.GetTitle(source, (int)skillLevel);
-				var skillNextTitle = critiqueSkill.GetTitle(source, (int)skillLevelNext);
-
-				if (trainedLevel > skillLevelNext)
-				{
-					SayTo(source, 6300371, skillCurrentTitle,
-						((int)((trainedLevel - skillLevelNext) * 100)).ToString(), skillNextTitle); /* You are fully trained in the level of {0}. You are trained to {1}% in the level of {2}. */
-				}
-				else if (trainedLevel < skillLevelNext)
-				{
-					SayTo(source, 6300370, 
-						((int)((trainedLevel - Math.Truncate(trainedLevel)) * 100)).ToString(), skillCurrentTitle); /* You are trained to {0}% in the level of {1}. */
-				}
-				else
-				{
-					SayTo(source, 6300369, skillCurrentTitle); /* You are fully trained in the level of {0}. */
-				}
-			}
-			else
-			{
-				SayTo(source, 6300248); /* I am not qualified to critique that skill. */
-			}
-				
+			SayTo(source, 6300248); /* I am not qualified to critique that skill. */
 			return;
+		}
+
+		var skillLevel = source.Skills.GetAchievedLevel(critiqueSkill);
+		var skillLevelNext = Math.Min((int)skillLevel + 1, 19);
+			
+		var skillExperience = source.Skills.GetAchievedExperience(critiqueSkill);
+
+		var trained = source.Skills.GetTraining(critiqueSkill);
+		var trainedSkill = skillExperience + (trained * 2);
+		var trainedLevel = Skill.GetLevel(trainedSkill);
+			
+		var skillCurrentTitle = critiqueSkill.GetTitle(source, (int)skillLevel);
+		var skillNextTitle = critiqueSkill.GetTitle(source, (int)skillLevelNext);
+
+		if (trainedLevel > skillLevelNext)
+		{
+			SayTo(source, 6300371, skillCurrentTitle,
+				((int)((trainedLevel - skillLevelNext) * 100)).ToString(), skillNextTitle); /* You are fully trained in the level of {0}. You are trained to {1}% in the level of {2}. */
+		}
+		else if (trainedLevel < skillLevelNext)
+		{
+			SayTo(source, 6300370, 
+				((int)((trainedLevel - Math.Truncate(trainedLevel)) * 100)).ToString(), skillCurrentTitle); /* You are trained to {0}% in the level of {1}. */
+		}
+		else
+		{
+			SayTo(source, 6300369, skillCurrentTitle); /* You are fully trained in the level of {0}. */
 		}
 	}
 

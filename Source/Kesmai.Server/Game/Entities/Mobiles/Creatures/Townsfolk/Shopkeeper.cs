@@ -60,10 +60,6 @@ public partial class StockEntry
 	
 public partial class Shopkeeper : VendorEntity
 {
-	private static Regex _buy = new Regex(@"^buy\s(\w.*?)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-	private static Regex _appraise = new Regex(@"^appraise\s(\w.*?)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-	private static Regex _showPrices = new Regex(@"^show\sprices$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
 	private List<StockEntry> _stock = new List<StockEntry>();
 	private Timer _restockTimer;
 
@@ -94,209 +90,55 @@ public partial class Shopkeeper : VendorEntity
 		entries.Add(AppraiseInteraction.Instance);
 
 		if (_stock.Any(s => !s.IsEmpty))
+		{
 			entries.Add(ShowPricesInteraction.Instance);
+
+			var sell = new InteractionSubmenu("Sell");
+
+			foreach (var stock in _stock.Where(s => !s.IsEmpty))
+				sell.Add(new SellStockInteraction(stock));
+
+			entries.Add(sell);
+		}
 
 		entries.Add(InteractionSeparator.Instance);
 		
 		base.GetInteractions(source, entries);
 	}
 
-	public override void HandleOrder(OrderEventArgs args)
+	/// <summary>
+	/// Sells one of the stock to the player for the gold on the counter.
+	/// </summary>
+	private void SellStock(PlayerEntity source, Point2D counter, StockEntry stock)
 	{
-		base.HandleOrder(args);
-
-		if (args.Handled)
+		if (stock is null || !_stock.Contains(stock) || stock.IsEmpty)
+		{
+			SayTo(source, 6300243); /* Are you trying to be funny? */
 			return;
-			
-		var source = args.Source;
-		var order = args.Order;
-			
-		var segment = Segment;
-			
-		/* example: buy all*/
-		/* example: buy (item) */
-		if (_buy.TryGetMatch(order, out var buyMatch))
-		{
-			args.Handled = true;
-				
-			if (AtCounter(source, out var counter))
-			{
-				var items = segment.GetItemsAt(counter, buyMatch.Groups[1].Value, (i) => i is Gold).ToList();
-				var totalValue = (uint)items.Sum(i => i.ActualPrice * i.Amount);
-
-				if (totalValue > 0)
-				{
-					foreach (var item in items)
-						item.Delete();
-
-					source.PlaySound(10007);
-
-					var gold = new Gold()
-					{
-						Amount = totalValue,
-					};
-					gold.Move(counter, true, Segment);
-						
-					SayTo(source, 6300350); /* Thank you for your business. */
-				}
-				else
-				{
-					SayTo(source, 6300264); /* There is nothing of value here. */
-				}
-			}
-			else
-			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
-			}
 		}
-		/* example: appraise gem */
-		else if (_appraise.TryGetMatch(order, out var appraiseMatch))
+
+		if (this.CountOnCounter<Gold>(counter) is 0)
 		{
-			args.Handled = true;
-				
-			if (AtCounter(source, out var counter))
-			{
-				var item = segment.GetItemAt(counter, appraiseMatch.Groups[1].Value, (i) => i is Gold);
-
-				if (item != default(ItemEntity))
-				{
-					item.Identified = true;
-
-					var entries = new List<LocalizationEntry>();
-
-					item.GetDescriptionPrefix(entries);
-					item.GetDescription(entries);
-					item.GetDescriptionSuffix(entries);
-
-					var grammar = Name.IsPlural() ? "are" : "is";
-					var actualPrice = item.ActualPrice;
-
-					if (actualPrice > 0)
-						entries.Add(new LocalizationEntry(6300261, item.Name, grammar, actualPrice.ToString()));
-					else
-						entries.Add(new LocalizationEntry(6300262, item.Name, grammar));
-
-					SayTo(source, entries.ToArray());
-				}
-				else
-				{
-					SayTo(source, 6300263); /* Please put the item on the counter. */
-				}
-			}
-			else
-			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
-			}
+			this.SayPutCoins(source);
+			return;
 		}
-		else if (_showPrices.TryGetMatch(order, out var _))
+
+		if (!this.ConsumeFromCounter<Gold>(counter, (uint)stock.Cost))
 		{
-			args.Handled = true;
-				
-			if (AtCounter(source, out var _))
-			{
-				/* We Iterate all the items in the stock to keep index values consistent with list. */
-				if (_stock.Any(s => !s.IsEmpty))
-				{
-					SayTo(source, 6300382); /* I will sell to you .. */
-						
-					for (int i = 0; i < _stock.Count; i++)
-					{
-						var stock = _stock[i];
-
-						/* Do not list empty entries. */
-						if (!stock.IsEmpty)
-							SayTo(source, 6300384, stock.Name.WithArticle(), stock.Cost.ToString(), (i + 1).ToString());
-					}
-				}
-				else
-				{
-					SayTo(source, 6300381); /* I don't have anything of interest. */
-
-					if (_stock.Any(s => !s.IsFull) && (_restockTimer == null || !_restockTimer.Running))
-						Log.Warn($"[{Segment.Name}] Shopkeeper '{Name}' at {Location} not restocking.");
-				}
-			}
-			else
-			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
-			}
+			SayTo(source, 6300243); /* Are you trying to be funny? */
+			return;
 		}
-		/* example: sell scales */
-		else if (_sell.TryGetMatch(order, out var sellMatch))
+
+		var item = Sell(stock, source);
+
+		if (item != null)
 		{
-			args.Handled = true;
+			source.PlaySound(10008);
 
-			if (AtCounter(source, out var counter))
-			{
-				/* Try to find the stock by name if index does not resolve. */
-				if (!int.TryParse(sellMatch.Groups[1].Value, out var index))
-				{
-					var stockName = sellMatch.Groups[1].Value;
-					var matchedStock = _stock.FirstOrDefault(st => st.RespondsTo(stockName));
-
-					if (matchedStock != null)
-						index = _stock.IndexOf(matchedStock) + 1;
-				}
-
-				var stock = default(StockEntry);
-
-				if (index > 0 && index <= _stock.Count)
-					stock = _stock[index - 1];
-
-				if (stock != null && stock.CurrentQuantity > 0)
-				{
-					var gold = Segment.GetItemsAt(counter).OfType<Gold>().ToList();
-
-					if (gold.Any())
-					{
-						if (ConsumeFromLocation<Gold>(counter, (uint)stock.Cost))
-						{
-							var item = Sell(stock, source);
-
-							if (item != null)
-							{
-								source.PlaySound(10008);
-
-								if (!item.Deleted)
-									item.Move(counter, true, Segment);
-									
-								SayTo(source, 6300350); /* Thank you for your business. */
-							}
-						}
-						else
-						{
-							SayTo(source, 6300243); /* Are you trying to be funny? */
-						}
-					}
-					else
-					{
-						if (_counters.Any())
-							SayTo(source, 6300246); /* Please put some coins on the counter. */
-						else
-							SayTo(source, 6300247); /* Please put some coins on the ground. */
-					}
-				}
-				else
-				{
-					SayTo(source, 6300243); /* Are you trying to be funny? */
-				}
-			}
-			else
-			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
-			}
+			if (!item.Deleted)
+				item.Move(counter, true, Segment);
+				
+			SayTo(source, 6300350); /* Thank you for your business. */
 		}
 	}
 
@@ -380,6 +222,22 @@ public partial class Shopkeeper : VendorEntity
 			stock.CurrentQuantity++;
 			
 		QueueRestockTimer();
+	}
+
+	private sealed class SellStockInteraction : VendorInteraction
+	{
+		private readonly StockEntry _stock;
+
+		public SellStockInteraction(StockEntry stock) : base(new LocalizationEntry(6500016, stock.Name, stock.Cost.ToString(), "gold"), range: 2) /* Sell: {0} ({1} {2}) */
+		{
+			_stock = stock;
+		}
+
+		protected override void OnClick(PlayerEntity source, VendorEntity vendor, Point2D counter)
+		{
+			if (vendor is Shopkeeper shopkeeper)
+				shopkeeper.SellStock(source, counter, _stock);
+		}
 	}
 
 	private sealed class ShowPricesInteraction : VendorInteraction
