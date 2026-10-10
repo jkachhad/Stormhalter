@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
 
@@ -10,10 +9,6 @@ namespace Kesmai.Server.Game;
 
 public partial class Banker : VendorEntity
 {
-	/* Typed amounts stay as speech until the input dialog (Kesmai #361). */
-	private static Regex _deposit = new Regex(@"^deposit\s([\d]+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-	private static Regex _withdraw = new Regex(@"^withdraw\s([\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-		
 	public Banker()
 	{
 	}
@@ -21,83 +16,38 @@ public partial class Banker : VendorEntity
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		entries.Add(DepositAllInteraction.Instance);
+		entries.Add(_depositAmount);
+		entries.Add(_withdrawAmount);
 		entries.Add(ShowBalanceInteraction.Instance);
 		entries.Add(InteractionSeparator.Instance);
 
 		base.GetInteractions(source, entries);
 	}
 
-	public override void HandleOrder(OrderEventArgs args)
+	private static readonly VendorInputInteraction _depositAmount = new VendorInputInteraction("Deposit…",
+		"How many coins do you want to deposit?",
+		(player, vendor, counter, text) => ((Banker)vendor).Deposit(player, counter, UInt32.Parse(text)),
+		InputKind.Number);
+
+	private static readonly VendorInputInteraction _withdrawAmount = new VendorInputInteraction("Withdraw…",
+		"How many coins do you want to withdraw?",
+		(player, vendor, counter, text) => ((Banker)vendor).Withdraw(player, counter, UInt32.Parse(text)),
+		InputKind.Number);
+
+	private void Withdraw(PlayerEntity source, Point2D counter, uint amount)
 	{
-		base.HandleOrder(args);
-
-		if (args.Handled)
-			return;
-			
-		var source = args.Source;
-		var order = args.Order;
-			
-		/* example: deposit (amount) */
-		if (_deposit.TryGetMatch(order, out var depositMatch))
+		if (amount > source.Gold)
 		{
-			args.Handled = true;
-				
-			if (!AtCounter(source, out var counter))
-			{
-				this.SayNotAtCounter(source);
-				return;
-			}
-
-			if (!long.TryParse(depositMatch.Groups[1].Value, out var requestedAmount) || requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
-			{
-				SayTo(source, 6300243); /* Are you trying to be funny? */
-				return;
-			}
-
-			Deposit(source, counter, (uint)requestedAmount);
+			SayTo(source, 6300258); /* You don't have that much in your account. */
 			return;
 		}
-			
-		/* example: withdraw (amount) */
-		if (_withdraw.TryGetMatch(order, out var withdrawMatch))
+
+		source.Gold -= amount;
+
+		new Gold()
 		{
-			args.Handled = true;
-				
-			if (AtCounter(source, out var counter))
-			{
-				if (withdrawMatch.Groups[1].Success && long.TryParse(withdrawMatch.Groups[1].Value, out var requestedAmount))
-				{
-					if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
-					{
-						SayTo(source, 6300243); /* Are you trying to be funny? */
-					}
-					else if (requestedAmount <= source.Gold)
-					{
-						source.Gold -= (uint)requestedAmount;
-
-						var gold = new Gold()
-						{
-							Amount = (uint)requestedAmount
-						};
-						gold.Move(counter, true, Segment);
-					}
-					else
-					{
-						SayTo(source, 6300258); /* You don't have that much in your account. */
-					}
-				}
-				else
-				{
-					SayTo(source, 6300257); /* Would you tell me the amount? */
-				}
-			}
-			else
-			{
-				this.SayNotAtCounter(source);
-			}
-
-			return;
-		}
+			Amount = amount
+		}.Move(counter, true, Segment);
 	}
 
 	/// <summary>
