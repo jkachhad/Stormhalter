@@ -321,6 +321,35 @@ public int Power
 
 Charges, Enchanted, Conjured and the owner already refresh the tooltip when they change. When you change charges, use the `ChargesCurrent` property, not the field behind it.
 
+## Badges on the Tooltip's Border
+
+A badge is a small icon on the tooltip's left or right border. Players see the icons at a glance and hold Shift to read a label next to each one. Some come with every item:
+
+- on the left, a shield for the owner of a bindable item: green when the player looking at it owns it, orange when someone else does, and gray when it's unbound;
+- on the right, the weapon's skill, and below it a blue star with a blue glow for a blue-glowing weapon.
+
+Add your own with `AddBadge`. A badge has a side, an icon, the icon's color, the color of the disc behind the icon, the color of a soft shadow or glow behind that, and a label:
+
+```csharp
+public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+{
+    base.GetTooltipEntries(beholder, tooltip);
+
+    var amber = Color.FromArgb(255, 190, 80);
+
+    // 6600101 is an entry you add, for example "Glows amber".
+    tooltip.AddBadge(TooltipBadgeSide.Right, TooltipBadgeIcons.Glow, amber, Color.FromArgb(230, 24, 24, 24), amber, 6600101);
+}
+```
+
+Things to know:
+
+- Pass `Color.Transparent` for the disc or the shadow to leave it out.
+- The label follows the same rules as tooltip lines: a localization entry, with numbers passed as text.
+- Badges on each side are listed from the top. Pass an order after the label number to place yours: higher numbers come first. The owner badge uses -30000.
+- `TooltipBadgeIcons` has `Owner`, `Skill`, and `Glow` for now; more icons will be added as the art is made.
+- Badges only appear once the item is identified, like tooltip lines.
+
 ## Sending Your Own Values
 
 Sometimes an item has a value the shared classes don't know about. If it already has a property ID, you can send it yourself by overriding `GetClientProperties`. Always call `base` first so the standard values stay on the tooltip. [Equipment Stat Modifiers](StatModifiers.md#client-item-properties) covers the full API and value types.
