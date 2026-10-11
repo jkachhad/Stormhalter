@@ -56,6 +56,12 @@ public class ChainmailArmor : Armor
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250022)); /* The armor appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200027)); /* a suit of chainmail. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

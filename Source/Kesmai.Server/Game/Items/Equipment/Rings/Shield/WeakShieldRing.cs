@@ -41,6 +41,12 @@ public class WeakShieldRing : ShieldRing
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250036)); /* The ring contains a weak spell of Shield. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200046)); /* a small iron ring with a large black stone. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

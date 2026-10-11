@@ -44,6 +44,12 @@ public class JadeAmulet : LocateAmulet
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250010)); /* The amulet contains the spell of Locate. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200068)); /* a gold chain with a jade pendant. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

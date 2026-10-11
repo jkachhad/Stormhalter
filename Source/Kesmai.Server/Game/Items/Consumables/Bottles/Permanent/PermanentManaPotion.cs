@@ -49,6 +49,12 @@ public class PermanentManaPotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200114)); /* a sky-blue porcelain bottle. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

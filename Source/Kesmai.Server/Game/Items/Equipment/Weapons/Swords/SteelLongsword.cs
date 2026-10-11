@@ -34,6 +34,12 @@ public class SteelLongsword : Longsword
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200154)); /* a shiny steel longsword. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

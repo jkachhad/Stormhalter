@@ -49,6 +49,12 @@ public class NitroPotion : Bottle
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200087)); /* a clear glass bottle. */
+	}
+
+	/// <inheritdoc />
 	public override ActionType GetAction()
 	{
 		/* This item can be thrown from either the hands, or top 5-slots of the backpack. */

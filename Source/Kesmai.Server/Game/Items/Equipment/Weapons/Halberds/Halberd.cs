@@ -66,6 +66,12 @@ public class Halberd : MeleeWeapon
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250016)); /* The halberd appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200017)); /* a halberd with a steel head. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

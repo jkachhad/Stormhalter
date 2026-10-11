@@ -39,6 +39,12 @@ public class ChristmasGift : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200335)); /* [You are looking at] [a beautifully wrapped gift box.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200335)); /* a beautifully wrapped gift box. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

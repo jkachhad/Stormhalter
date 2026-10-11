@@ -62,6 +62,12 @@ public class TrollVest : Armor, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250021)); /* The vest appears quite thick. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200025)); /* a vest made from a peculiar stone colored leather. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

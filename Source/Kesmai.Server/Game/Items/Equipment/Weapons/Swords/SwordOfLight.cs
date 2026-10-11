@@ -64,4 +64,10 @@ public class SwordOfLight : Sword, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6300426)); /* The combat adds for this weapon are +6. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200379)); /* a sword that shines as bright as the sun. */
+	}
 }

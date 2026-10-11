@@ -78,4 +78,10 @@ public class UnholyScepter : Mace
         if (Identified)
             entries.Add(new LocalizationEntry(6250134)); /* The scepter seems to have some magical properties. */
     }
+
+    /// <inheritdoc />
+    public override void GetTooltipDescription(List<LocalizationEntry> entries)
+    {
+        entries.Add(new LocalizationEntry(6200382)); /* an unholy scepter that has the markings of a king. The weapon emanates power. The weapon is lawful. */
+    }
 }

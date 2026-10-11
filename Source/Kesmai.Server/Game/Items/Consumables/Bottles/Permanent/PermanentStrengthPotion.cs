@@ -48,6 +48,12 @@ public class PermanentStrengthPotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200099)); /* a reddish clay bottle with three black concentric circles painted on one side. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

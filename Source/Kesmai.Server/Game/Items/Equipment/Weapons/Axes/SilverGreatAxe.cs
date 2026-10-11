@@ -66,6 +66,12 @@ public class SilverGreatAxe : Axe, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200145)); /* a huge battle axe with shining silver blades. The axe is emitting a faint blue glow. The weapon is lawful. */
+	}
 		
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

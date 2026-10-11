@@ -45,6 +45,12 @@ public class LeatherArmor : Armor
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200002)); /* [You are looking at] [a suit of leather armor.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200002)); /* a suit of leather armor. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

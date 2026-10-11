@@ -34,6 +34,12 @@ public class FieryRuby : Gem
 		entries.Add(new LocalizationEntry(6200000, 6200127)); /* [You are looking at] [a fiery ruby that smoulders like the eye of a salamander.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200127)); /* a fiery ruby that smoulders like the eye of a salamander. */
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

@@ -39,6 +39,12 @@ public class PetrifiedWood : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200328)); /* [You are looking at] [a piece of petrified wood.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200328)); /* a piece of petrified wood. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

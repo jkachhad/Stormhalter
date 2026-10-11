@@ -37,6 +37,12 @@ public class HyenaJacket : Jacket
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200194)); /* a jacket made from the skin of a hyena. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

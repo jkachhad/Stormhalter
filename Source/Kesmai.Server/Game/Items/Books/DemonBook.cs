@@ -28,4 +28,10 @@ public class DemonBook : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200311)); /* [You are looking at] [a dusty black book covered with strangely disturbing sigils.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200311)); /* a dusty black book covered with strangely disturbing sigils. */
+	}
 }

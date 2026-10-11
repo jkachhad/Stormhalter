@@ -100,6 +100,14 @@ public class Book : ItemEntity
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		if (Publication is not null)
+			entries.Add(new LocalizationEntry(
+				6200396, Publication.Title, Publication.Author)); /* a book entitled '{0}' written by {1}. */
+	}
+
+	/// <inheritdoc />
 	public override ActionType GetAction()
 	{
 		var parent = Parent;

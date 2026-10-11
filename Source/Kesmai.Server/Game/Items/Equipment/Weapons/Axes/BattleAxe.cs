@@ -47,6 +47,12 @@ public class BattleAxe : Axe
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250015)); /* The battle axe appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200016)); /* a large battle axe. */
+	}
 		
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

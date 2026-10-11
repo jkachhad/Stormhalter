@@ -46,6 +46,12 @@ public class RedRunesRobe : Robe, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250030)); /* The robe looks thick and heavy. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200187)); /* a heavy black robe with a border of red runes. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

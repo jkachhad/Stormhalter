@@ -45,6 +45,12 @@ public class VermeilRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200007)); /* a vermeil ring. */
+	}
+
+	/// <inheritdoc />
 	public override ActionType GetAction()
 	{
 		var parent = Parent;
