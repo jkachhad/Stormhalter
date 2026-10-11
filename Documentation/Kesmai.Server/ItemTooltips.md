@@ -209,6 +209,56 @@ Some things to know:
 - A line that the tooltip doesn't show anywhere else yet, such as a pet's level, can go in `GetTooltipDescription` for now, as a localization entry too. Values like these will move to their own tooltip lines later.
 - Text that has a property inside the same sentence, such as "a black broadsword. The weapon is lawful.", is shown as written.
 
+## Numbers for a Segment's Text
+
+Each segment has its own block of 1,000,000 numbers in `Enu.xml`, so text added for one segment can't collide with another segment or with the shared entries. A block starts at 100,000,000 plus the segment's ID times 1,000,000. The segment's ID is the `index` it has in its facet. The first entry in each block is the segment's name.
+
+| ID | Segment | Block |
+|---|---|---|
+| 1 | Kesmai | 101000000–101999999 |
+| 2 | Leng | 102000000–102999999 |
+| 3 | Axe Glacier | 103000000–103999999 |
+| 4 | Oakvael | 104000000–104999999 |
+| 5 | Underkingdom | 105000000–105999999 |
+| 11 | Annwn | 111000000–111999999 |
+| 15 | Mu | 115000000–115999999 |
+| 26 | Bloodlands | 126000000–126999999 |
+| 28 | Razalas Peak | 128000000–128999999 |
+| 29 | Blackburrow | 129000000–129999999 |
+| 30 | Keshma | 130000000–130999999 |
+
+Each block has the same sections. Here they are for Keshma:
+
+| Numbers | Section |
+|---|---|
+| 130000000 | The segment's name |
+| 130000001–130099999 | Item names |
+| 130100000–130199999 | Item text, as players see it when they look at the item |
+| 130200000–130299999 | Speech and quests |
+| 130300000–130399999 | Messages |
+| 130400000–130899999 | Reserved for later |
+| 130900000–130999999 | Tooltip descriptions |
+
+Add a new entry under its section's comment in `Enu.xml`, using the next free number in that section:
+
+```xml
+  <!-- Keshma: Tooltip Descriptions (130900000-130999999) -->
+  <entry index="130900000">a jagged Keshmian blade.</entry>
+```
+
+```csharp
+public override void GetTooltipDescription(List<LocalizationEntry> entries)
+{
+    entries.Add(new LocalizationEntry(130900000)); /* a jagged Keshmian blade. */
+}
+```
+
+Some things to know:
+
+- Write the number directly, as above. Don't work it out from the item's segment while the game runs, because an item that is inside a container may not have a segment.
+- Entries that segments added before these blocks existed keep their numbers.
+- A new segment gets its block when it is given an ID. Add its section comments to `Enu.xml` in the same layout.
+
 ## Adding Your Own Tooltip Lines
 
 For anything that isn't a stat, such as a special power, a recharge timer, or a set bonus, add your own line by overriding `GetTooltipEntries`. Always call `base` first, because it adds the standard lines:
