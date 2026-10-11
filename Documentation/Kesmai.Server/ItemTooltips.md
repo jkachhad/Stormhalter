@@ -65,7 +65,7 @@ public class StormBlade : Sword, ITreasure
 }
 ```
 
-The tooltip shows the sword skill (inherited from `Sword`), damage 2–10, attack bonus 3, the slashing and blue-glowing flags, and heavy shield penetration.
+The tooltip shows the sword skill (inherited from `Sword`), damage 2–10 with the slashing damage icon, attack bonus 3, and heavy shield penetration. Other flags, such as blue-glowing, aren't listed on the tooltip. If `Flags` includes `Lawful`, `Chaotic`, or `Neutral`, the tooltip shows that alignment in its color (cyan, yellow, or lime) just above the owner.
 
 ## Example: Armor With Damage Mitigation
 
