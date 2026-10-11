@@ -156,6 +156,12 @@ public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250050)); /* The amulet contains the spell of Protection from Fire and Ice. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200066)); /* a gold necklace with sparkling sapphires. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

@@ -64,6 +64,12 @@ public class WingedHelm : Helmet, ITreasure
 					: 6250033)); /* The helm appears quite ordinary. */
 		}
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200043)); /* a steel helm set with white wings. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

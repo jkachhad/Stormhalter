@@ -110,6 +110,12 @@ public class RecallRing : Ring
 		entries.Add(new LocalizationEntry(6200000, 6200030)); /* [You are looking at] [a small gold ring emitting a faint blue glow.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200030)); /* a small gold ring emitting a faint blue glow. */
+	}
+
 	/// <summary>
 	/// Determines whether this instance can be equipped.
 	/// </summary>

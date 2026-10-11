@@ -46,6 +46,12 @@ public class LeatherGauntlets : Gauntlets, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250008)); /* The combat adds for these gauntlets are +1. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200009)); /* a pair of leather gauntlets. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

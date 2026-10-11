@@ -65,6 +65,12 @@ public class SalamanderScales : Armor, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250098)); /* The vest appears to have some magical properties. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200176)); /* a vest made from the scales of a salamander. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

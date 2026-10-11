@@ -48,6 +48,12 @@ public class SwiftShield : Shield, ITreasure
 			entries.Add(new LocalizationEntry(6300429)); /* The shield contains the spell of Medium Shield. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200385)); /* a red and black shield adorned with a griffin. Magical properties are embued within. */
+	}
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwiftShield"/> class.
 	/// </summary>

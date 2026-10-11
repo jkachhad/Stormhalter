@@ -54,6 +54,12 @@ public class StrengthRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200044)); /* a gold ring with a large red gem set into it. */
+	}
+
+	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
 		var modifiers = base.GetStatModifiers(wearer);

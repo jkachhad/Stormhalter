@@ -68,6 +68,12 @@ public class DragonScaleArmor : Armor, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250096)); /* The armor appears to have some magical properties. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200173)); /* a vest made of dragon scales. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

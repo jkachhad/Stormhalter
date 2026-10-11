@@ -183,6 +183,12 @@ public class JewelerRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200344)); /* a light gold ring with a red ruby. Peering into the gem, you see it transmutate to pure gold. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

@@ -39,6 +39,12 @@ public class DeathResistanceBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250056)); /* The bracelet contains the spell of Death Resistance. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200080)); /* a silver bracelet set with violet carbuncles. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>

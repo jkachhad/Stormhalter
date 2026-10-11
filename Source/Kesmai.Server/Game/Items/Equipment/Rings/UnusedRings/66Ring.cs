@@ -43,6 +43,12 @@ public class SixtySixRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250041)); /* The ring contains the spell of Blind Resistance. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200062)); /* a gold ring with a dazzling diamond nestled in a rosette of rubies. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>

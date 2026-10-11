@@ -56,6 +56,12 @@ public class AlligatorVest : Armor
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250097)); /* The vest appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200175)); /* a vest made from the hide of a alligator. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

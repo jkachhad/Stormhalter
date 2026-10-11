@@ -53,6 +53,12 @@ public class CopperHalberd : Halberd, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250002)); /* The combat adds for this weapon are +5. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200160)); /* a heavy halberd.  The pole is perfect ash and the blade is forged from a golden copper colored alloy. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

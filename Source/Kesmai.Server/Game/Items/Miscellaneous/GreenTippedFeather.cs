@@ -35,6 +35,12 @@ public class GreenTippedFeather : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200305)); /* [You are looking at] [a large feather with a bright green tip.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200305)); /* a large feather with a bright green tip. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

@@ -48,6 +48,12 @@ public class PermanentWillpowerPotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200110)); /* a porcelain bottle with small irises in raised relief around its base. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

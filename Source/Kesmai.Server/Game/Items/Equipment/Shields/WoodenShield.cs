@@ -49,6 +49,12 @@ public class WoodenShield : Shield
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250023)); /* The shield appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200031)); /* a small wooden shield. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

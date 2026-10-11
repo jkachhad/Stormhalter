@@ -32,6 +32,12 @@ public class Diamond : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200122)); /* [You are looking at] [a large, flawless white diamond.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200122)); /* a large, flawless white diamond. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

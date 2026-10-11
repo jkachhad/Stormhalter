@@ -63,6 +63,12 @@ public class Rapier : Sword
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250012)); /* The rapier appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200013)); /* a shiny steel rapier. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

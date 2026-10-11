@@ -68,6 +68,12 @@ public class DrakeScaleArmor : Armor, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250096)); /* The armor appears to have some magical properties. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200182)); /* a vest made from the silvery scales of a drake. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

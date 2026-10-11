@@ -52,6 +52,12 @@ public class ShieldBracelet : Bracelet, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200074)); /* a silver bracelet made of scales. */
+	}
+
+	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
 		var modifiers = base.GetStatModifiers(wearer);

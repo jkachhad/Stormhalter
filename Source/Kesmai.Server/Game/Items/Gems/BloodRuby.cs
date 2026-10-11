@@ -29,6 +29,12 @@ public class BloodRuby : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200126)); /* [You are looking at] [a round, blood-red ruby.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200126)); /* a round, blood-red ruby. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

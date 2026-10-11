@@ -69,6 +69,12 @@ public class Crossbow : ProjectileWeapon
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250028)); /* The crossbow appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200036)); /* a crossbow. */
+	}
 		
 	/// <inheritdoc />
 	/// <remarks>

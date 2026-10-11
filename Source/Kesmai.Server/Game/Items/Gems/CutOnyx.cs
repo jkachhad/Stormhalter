@@ -29,6 +29,12 @@ public class CutOnyx : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200298)); /* [You are looking at] [an onyx, expertly cut.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200298)); /* an onyx, expertly cut. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

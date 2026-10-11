@@ -28,4 +28,10 @@ public class StarBook : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200310)); /* [You are looking at] [a small iron-bound book with a mysterious star-shaped emblem emblazoned on the cover.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200310)); /* a small iron-bound book with a mysterious star-shaped emblem emblazoned on the cover. */
+	}
 }

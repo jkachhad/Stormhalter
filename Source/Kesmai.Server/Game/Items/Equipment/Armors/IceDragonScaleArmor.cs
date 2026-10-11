@@ -72,6 +72,12 @@ public class IceDragonScaleArmor : Armor, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250096)); /* The armor appears to have some magical properties. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200181)); /* a vest made from the milky white scales of an ice dragon. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

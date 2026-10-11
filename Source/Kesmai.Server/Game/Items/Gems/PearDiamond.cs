@@ -33,6 +33,12 @@ public class PearDiamond : Gem
 		entries.Add(new LocalizationEntry(6200000, 6200123)); /* [You are looking at] [an enormous pear cut diamond of the purest blue-white radiance.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200123)); /* an enormous pear cut diamond of the purest blue-white radiance. */
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

@@ -39,6 +39,12 @@ public class Mirror : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200329)); /* [You are looking at] [a small metal mirror.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200329)); /* a small metal mirror. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

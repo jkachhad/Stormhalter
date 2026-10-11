@@ -171,6 +171,44 @@ That shows "+3 Strength" and "+10% Magic Damage Dealt". Some things to know:
 
 A bonus here is separate from the matching item member. A robe with `ManaRegeneration => 1` and an extra +2 in `GetStatModifiers` shows two regeneration lines.
 
+## The Description on the Tooltip
+
+The tooltip shows a short description of the item: just the item text, such as "an iron shortsword.". It leaves out "You are looking at" and the lines about the item's properties, such as "The combat adds for this weapon are +3.", because the tooltip already shows those values. It leaves out quality too, because the tooltip shows that on its own.
+
+Write it in `GetTooltipDescription`, next to `GetDescription`. `GetDescription` is still what players see when they look at the item. Keep the two separate: `GetTooltipDescription` must not call `GetDescription`.
+
+```csharp
+public override void GetDescription(List<LocalizationEntry> entries)
+{
+    entries.Add(new LocalizationEntry(6200000, 6200024)); /* [You are looking at] [an iron shortsword.] */
+
+    if (Identified)
+        entries.Add(new LocalizationEntry(6250020)); /* The shortsword appears quite ordinary. */
+}
+
+public override void GetTooltipDescription(List<LocalizationEntry> entries)
+{
+    entries.Add(new LocalizationEntry(6200024)); /* an iron shortsword. */
+}
+```
+
+Always use a localization entry from `Content/Localization/Enu.xml`, never text written in code such as `new LocalizationEntry("a ring that emits an aura of magic.")`. If the item text only exists in code, add an entry for it without "You are looking at". An entry can take values, such as a name:
+
+```xml
+<entry index="6200397">the body of {0}.</entry>
+```
+
+```csharp
+entries.Add(new LocalizationEntry(6200397, creature.Name.WithArticle())); /* the body of {0}. */
+```
+
+Some things to know:
+
+- An item without `GetTooltipDescription` uses its parent class's text. If neither has one, the tooltip shows no description.
+- If the text depends on the item's state, such as a stack amount or whether it has been repaired, use the same conditions as in `GetDescription`.
+- A line that the tooltip doesn't show anywhere else yet, such as a pet's level, can go in `GetTooltipDescription` for now, as a localization entry too. Values like these will move to their own tooltip lines later.
+- Text that has a property inside the same sentence, such as "a black broadsword. The weapon is lawful.", is shown as written.
+
 ## Adding Your Own Tooltip Lines
 
 For anything that isn't a stat, such as a special power, a recharge timer, or a set bonus, add your own line by overriding `GetTooltipEntries`. Always call `base` first, because it adds the standard lines:

@@ -49,6 +49,12 @@ public class RamSkull : Helmet, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250108)); /* The skull is rather fragile. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200213)); /* a ram skull. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

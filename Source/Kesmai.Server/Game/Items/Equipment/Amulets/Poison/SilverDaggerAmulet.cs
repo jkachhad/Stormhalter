@@ -89,6 +89,12 @@ public class SilverDaggerAmulet : Amulet, ITreasure, ICharged
 			entries.Add(new LocalizationEntry(6250051)); /* The amulet contains the spell of Protection from Poison. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200072)); /* a small silver dagger with an emerald blade hanging from a silver chain. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>

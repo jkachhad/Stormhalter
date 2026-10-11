@@ -47,6 +47,12 @@ public class LightningShield : Shield, ITreasure
 			entries.Add(new LocalizationEntry(6250109)); /* The shield contains the spell of Lightning Resist. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200215)); /* a steel shield adorned with a black lightning bolt. */
+	}
+
 	public override void OnWield(MobileEntity entity)
 	{
 		base.OnWield(entity);

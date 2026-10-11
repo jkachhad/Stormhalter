@@ -44,6 +44,12 @@ public class DeathResistanceRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250045)); /* The ring contains the spell of Death Resistance. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200057)); /* a shiny gold ring set with a tiny bejeweled scarab. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>

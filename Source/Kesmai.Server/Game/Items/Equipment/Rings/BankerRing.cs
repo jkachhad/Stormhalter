@@ -206,6 +206,12 @@ public class BankerRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200343)); /* a heavy gold ring with a faded inscription that reads "Pr..-rt. of .a-.er's G'.ld." */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

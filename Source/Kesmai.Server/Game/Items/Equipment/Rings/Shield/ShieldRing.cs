@@ -56,6 +56,12 @@ public class ShieldRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200046)); /* a small iron ring with a large black stone. */
+	}
+
+	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
 		var modifiers = base.GetStatModifiers(wearer);

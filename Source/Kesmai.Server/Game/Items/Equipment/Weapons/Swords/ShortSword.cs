@@ -57,6 +57,12 @@ public class ShortSword : Sword
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250020)); /* The shortsword appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200024)); /* an iron shortsword. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
