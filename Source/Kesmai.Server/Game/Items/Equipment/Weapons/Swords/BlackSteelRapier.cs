@@ -53,6 +53,12 @@ public class BlackSteelRapier : Rapier, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200280)); /* an impossibly thin black blade mounted on a silver hilt.  The rapier is emitting a faint blue glow. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

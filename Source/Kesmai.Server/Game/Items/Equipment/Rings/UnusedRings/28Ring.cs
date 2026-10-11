@@ -43,6 +43,12 @@ public class TwentyEightRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250041)); /* The ring contains the spell of Blind Resistance. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200059)); /* a ring made of a strange pink substance. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>

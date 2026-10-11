@@ -60,6 +60,12 @@ public class Spellbook : ItemEntity, ITreasure
 		if (Identified && Owner != null)
 			entries.Add(new LocalizationEntry(6300341, Profession.Info.Name.ToLower())); /* This book belongs to a {0}. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200216)); /* a small leather-bound book, with mystic runes engraved on the cover. */
+	}
 	
 	public override void Serialize(SpanWriter writer)
 	{

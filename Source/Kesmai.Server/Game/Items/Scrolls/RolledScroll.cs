@@ -35,6 +35,12 @@ public class RolledScroll : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200317)); /* [You are looking at] [a small leather scroll.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200317)); /* a small leather scroll. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

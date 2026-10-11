@@ -53,6 +53,12 @@ public class IronRodChaotic : Staff
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250007)); /* The combat adds for this weapon are +3. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200136)); /* a long black iron rod with glowing red gems arranged in a ring near the center. The rod is chaotic. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

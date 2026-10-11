@@ -126,6 +126,12 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 			entries.Add(new LocalizationEntry(6250051)); /* The amulet contains the spell of Neutralize. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200067)); /* a silver chain with a silver and onyx scorpion. */
+	}
+
 	private class InternalTarget : MobileTarget
 	{
 		private ScorpionAmulet _amulet;

@@ -35,6 +35,12 @@ public class AncientCoin : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200307)); /* [You are looking at] [an old piece of currency, the face of a forgotten monarch engraved upon it.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200307)); /* an old piece of currency, the face of a forgotten monarch engraved upon it. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

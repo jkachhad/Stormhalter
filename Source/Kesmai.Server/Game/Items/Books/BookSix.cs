@@ -28,4 +28,10 @@ public class BookSix : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200308)); /* [You are looking at] [a yellow book with a silver mark, 'VI', on its spine.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200308)); /* a yellow book with a silver mark, 'VI', on its spine. */
+	}
 }

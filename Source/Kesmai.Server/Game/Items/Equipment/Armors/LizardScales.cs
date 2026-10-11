@@ -65,6 +65,12 @@ public class LizardScales : Armor
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250097)); /* The vest appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200174)); /* a vest made from the scales of a lizard. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

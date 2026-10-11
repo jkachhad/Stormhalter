@@ -34,6 +34,12 @@ public class SmallBlackPearl : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200292)); /* [You are looking at] [a small black pearl.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200292)); /* a small black pearl. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

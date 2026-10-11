@@ -39,6 +39,12 @@ public class CandyCane : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200336)); /* [You are looking at] [a delicious candy cane.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200336)); /* a delicious candy cane. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

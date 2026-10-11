@@ -35,6 +35,12 @@ public class WebOrb : SpellOrb, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200279)); /* a glass ball filled with a milky fluid. */
+	}
+
+	/// <inheritdoc />
 	protected override void PlaceEffect(MobileEntity source, Point2D location)
 	{
 		var spell = new CreateWebSpell

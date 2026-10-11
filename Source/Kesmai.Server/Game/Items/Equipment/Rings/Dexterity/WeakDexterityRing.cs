@@ -36,6 +36,12 @@ public class WeakDexterityRing : DexterityRing, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250040)); /* The ring increases dexterity slightly. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200049)); /* a flexible ring of interwoven gold wire. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

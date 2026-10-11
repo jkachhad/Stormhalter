@@ -60,6 +60,12 @@ public class Longsword : Sword
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250013)); /* The longsword appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200014)); /* a fine longsword. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

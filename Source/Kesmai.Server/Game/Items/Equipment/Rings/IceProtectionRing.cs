@@ -42,6 +42,12 @@ public class IceProtectionRing : Ring, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250047)); /* The ring contains the spell of Protection from Ice. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200060)); /* a dazzling diamond. */
+	}
 		
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.

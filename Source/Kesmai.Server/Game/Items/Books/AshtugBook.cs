@@ -28,4 +28,10 @@ public class AshtugBook : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200309)); /* [You are looking at] [a small leather-bound book, with a title lettered on the cover. The book is slightly charred, and the title is faded beyond recognition.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200309)); /* a small leather-bound book, with a title lettered on the cover. The book is slightly charred, and the title is faded beyond recognition. */
+	}
 }

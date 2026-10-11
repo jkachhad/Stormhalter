@@ -39,6 +39,12 @@ public class PewterMug : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200115)); /* [You are looking at] [a pewter mug.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200115)); /* a pewter mug. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

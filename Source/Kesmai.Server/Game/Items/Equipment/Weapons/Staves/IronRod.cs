@@ -53,6 +53,12 @@ public class IronRod : Staff, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200008)); /* a long black iron rod with glowing red gems arranged in a ring near the center.  The weapon is lawful. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

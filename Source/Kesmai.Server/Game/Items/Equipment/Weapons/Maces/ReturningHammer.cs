@@ -62,6 +62,12 @@ public class ReturningHammer : Mace, IReturningWeapon, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200137)); /* a large steel throwing hammer. The hammer is emitting a soft blue glow. The weapon is lawful. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

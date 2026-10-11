@@ -40,6 +40,12 @@ public class GrizzlyJacket : Jacket, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200204)); /* a coat made from the skin of an enormous grizzly bear. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

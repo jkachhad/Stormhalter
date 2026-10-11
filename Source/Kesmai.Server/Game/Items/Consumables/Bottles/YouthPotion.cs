@@ -47,6 +47,12 @@ public class YouthPotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200101)); /* a large silver bottle encrusted with sapphires. */
+	}
 		
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

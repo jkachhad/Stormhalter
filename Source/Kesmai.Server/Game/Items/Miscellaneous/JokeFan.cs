@@ -39,6 +39,12 @@ public class JokeFan : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200330)); /* [You are looking at] [a fan with spinning blades. It goes "brrrrrrrr."] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200330)); /* a fan with spinning blades. It goes "brrrrrrrr." */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

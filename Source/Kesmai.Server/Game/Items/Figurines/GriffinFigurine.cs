@@ -35,6 +35,12 @@ public class GriffinFigurine : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200270)); /* [You are looking at] [a white porcelain figurine of a snarling griffin.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200270)); /* a white porcelain figurine of a snarling griffin. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

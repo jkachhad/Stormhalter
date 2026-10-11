@@ -34,6 +34,12 @@ public class TigerJacket : Jacket
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200191)); /* a coat made from the fur of a tiger. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

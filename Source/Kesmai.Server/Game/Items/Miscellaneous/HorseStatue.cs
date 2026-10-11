@@ -35,6 +35,12 @@ public class HorseStatue : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200332)); /* [You are looking at] [a small carved statue of a horse.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200332)); /* a small carved statue of a horse. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

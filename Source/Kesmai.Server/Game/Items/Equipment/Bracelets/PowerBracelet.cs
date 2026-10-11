@@ -41,6 +41,12 @@ public class PowerBracelet : Bracelet, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200377)); /* [You are looking at] [a golden bracelet embued with sapphires.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200377)); /* a golden bracelet embued with sapphires. */
+	}
+
 	public override ItemUseResult ValidateUse(MobileEntity entity)
 	{
 		var result = base.ValidateUse(entity);

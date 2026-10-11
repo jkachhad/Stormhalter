@@ -31,6 +31,12 @@ public class UncutDiamond : Gem
 		entries.Add(new LocalizationEntry(6200000, 6200124)); /* [You are looking at] [a large uncut diamond.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200124)); /* a large uncut diamond. */
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

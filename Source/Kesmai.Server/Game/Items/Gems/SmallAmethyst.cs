@@ -32,6 +32,12 @@ public class SmallAmethyst : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200133)); /* [You are looking at] [an intensely violet amethyst.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200133)); /* an intensely violet amethyst. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

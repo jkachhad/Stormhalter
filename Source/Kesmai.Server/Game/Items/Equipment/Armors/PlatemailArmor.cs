@@ -62,6 +62,12 @@ public class PlatemailArmor : Armor
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250022)); /* The armor appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200026)); /* an iron breastplate and greaves. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
