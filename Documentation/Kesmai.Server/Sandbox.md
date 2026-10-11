@@ -11,6 +11,17 @@ Ask a server administrator to confirm that:
 
 The Sandbox is normally managed through Discord slash commands. Type `/sandbox` in the configured Discord server to see the available commands.
 
+## First-time setup
+
+A new sandbox has no server content until it has been reset once. Until then, `/sandbox start` and `/sandbox module` both ask you to run a reset first.
+
+1. Select the server version with `/sandbox version`.
+2. Create the sandbox content with `/sandbox reset`.
+3. Optionally, select module branches with `/sandbox module`, then run `/sandbox reset` again to apply them.
+4. Start the instance with `/sandbox start`.
+
+After this, follow the normal workflow.
+
 ## Normal workflow
 
 1. Select the server version with `/sandbox version`.
@@ -77,7 +88,7 @@ If the selected and running versions differ, stop and start the sandbox to apply
 
 ## Suggested development loop
 
-For a server or module change, use this sequence:
+For a server or module change on a sandbox that has already been set up, use this sequence:
 
 ```text
 /sandbox module       # choose the branch to test
@@ -90,6 +101,10 @@ For a server or module change, use this sequence:
 After making another change, stop the sandbox if necessary, follow the normal project workflow, reset the sandbox, and start it again.
 
 ## Troubleshooting
+
+### “Sandbox content has not been created yet.”
+
+Your sandbox has a version selected but has never been reset. Run `/sandbox reset`, then repeat the command. See [First-time setup](#first-time-setup).
 
 ### “No installed sandbox server versions are available.”
 
