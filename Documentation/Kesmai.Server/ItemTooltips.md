@@ -206,6 +206,7 @@ Some things to know:
 
 - An item without `GetTooltipDescription` uses its parent class's text. If neither has one, the tooltip shows no description.
 - If the text depends on the item's state, such as a stack amount or whether it has been repaired, use the same conditions as in `GetDescription`.
+- Pass numbers you want shown as text, such as `Level.ToString()`. A plain number argument is read as a reference to another localization entry, so `new LocalizationEntry(130900110, 130900050, ...)` puts entry 130900050's text in place of `{0}`.
 - A line that the tooltip doesn't show anywhere else yet, such as a pet's level, can go in `GetTooltipDescription` for now, as a localization entry too. Values like these will move to their own tooltip lines later.
 - Text that has a property inside the same sentence, such as "a black broadsword. The weapon is lawful.", is shown as written.
 
