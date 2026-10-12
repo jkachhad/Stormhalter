@@ -65,7 +65,7 @@ public class StormBlade : Sword, ITreasure
 }
 ```
 
-The tooltip shows the sword skill (inherited from `Sword`), damage 2–10 with the slashing damage icon, attack bonus 3, and heavy shield penetration. Other flags, such as blue-glowing, aren't listed on the tooltip. If `Flags` includes `Lawful`, `Chaotic`, or `Neutral`, the tooltip shows that alignment in its color (cyan, yellow, or lime) just above the owner.
+The tooltip shows the sword skill (inherited from `Sword`), damage 2–10 with the slashing damage icon, attack bonus 3, and heavy shield penetration. Its blue glow appears as a badge on the tooltip's right border. If `Flags` includes `Lawful`, `Chaotic`, or `Neutral`, the tooltip shows that alignment in its color (cyan, yellow, or lime) just above the owner.
 
 ## Example: Armor With Damage Mitigation
 
@@ -326,7 +326,7 @@ Charges, Enchanted, Conjured and the owner already refresh the tooltip when they
 A badge is a small icon on the tooltip's left or right border. Players see the icons at a glance and hold Shift to read a label next to each one. Some come with every item:
 
 - on the left, two chained links for the owner of a bindable item, labeled with the owner's name or "Unbound";
-- on the right, the weapon's skill, and below it a star for a blue-glowing weapon.
+- on the right, the weapon's skill, and below it one badge for each of these weapon flags: two-handed, silver, blue glowing, throwable, returning, must throw, quick throw, snake staff, and the alignment (lawful, chaotic, or neutral). The weapon type and damage type flags get no badge, because the skill badge and the damage icon already show them.
 
 Add your own with `AddBadge`. A badge has a side, an icon, and a label:
 
