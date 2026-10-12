@@ -325,7 +325,7 @@ Charges, Enchanted, Conjured and the owner already refresh the tooltip when they
 
 A badge is a small icon on the tooltip's left or right border. Players see the icons at a glance and hold Shift to read a label next to each one. Some come with every item:
 
-- on the left, a shield for the owner of a bindable item, labeled with the owner's name or "Unbound";
+- on the left, two chained links for the owner of a bindable item, labeled with the owner's name or "Unbound";
 - on the right, the weapon's skill, and below it a star for a blue-glowing weapon.
 
 Add your own with `AddBadge`. A badge has a side, an icon, and a label:
