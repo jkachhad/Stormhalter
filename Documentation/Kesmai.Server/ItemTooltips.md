@@ -274,16 +274,16 @@ For anything that isn't a stat, such as a special power, a recharge timer, or a 
 - charges ("Charges: 2 / 5");
 - poison on a poisoned weapon or gauntlets, with its potency ("Poisoned (+3)");
 - swing delay on a weapon or gauntlets that swing faster or slower than once a round ("Swing Delay: 0.5 rounds", or in red when it is over 1 round). It comes from your `GetSwingDelay` override, so you don't need to do anything. If the delay changes while the item exists, call `InvalidateTooltip()` when it does;
-- Enchanted and Conjured. On an enchanted weapon, the line includes the attack bonus the enchantment gives the player looking at it ("Enchanted (+2 Attack Bonus)"), from `GetEnchantedAttackBonus`. If your weapon changes how enchantment adds attack bonus, override `GetEnchantedAttackBonus` and use it in `GetAttackBonus`, so the tooltip matches;
+- Enchanted and Conjured. On an enchanted weapon, the line includes the attack bonus the enchantment gives the player holding it, or the player looking at it when nobody carries it ("Enchanted (+2 Attack Bonus)"), from `GetEnchantedAttackBonus`. If your weapon changes how enchantment adds attack bonus, override `GetEnchantedAttackBonus` and use it in `GetAttackBonus`, so the tooltip matches;
 - the item values that aren't shown as icons or badges: hindrance ("+2 Hindrance", in red because it is a penalty), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting";
 - the level requirement ("Requires Level 22"), last. See [Level Requirements](#level-requirements).
 
 The weapon skill, the alignment of a lawful, chaotic, or neutral weapon, and the owner of a bindable item have no lines; they appear only as badges (see [Badges on the Tooltip's Border](#badges-on-the-tooltips-border)).
 
 ```csharp
-public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 {
-    base.GetTooltipEntries(beholder, tooltip);
+    base.GetTooltipEntries(context, tooltip);
 
     // 6600100 is an entry you add, for example "Power: {0}".
     tooltip.AddLocalizedText(6600100, Color.Cyan, TooltipTextStyle.Passive, 0, Power.ToString());
@@ -294,7 +294,7 @@ Things to know:
 
 - Put the wording in the Tooltips section of `Content/Localization/Enu.xml`, using a free number in the 66xxxxx range, and pass only the changing values as arguments.
 - Pass numbers you want shown as text (`Power.ToString()`). A plain number argument is read as a reference to another localization entry, which is how the stored spell's name is shown.
-- `beholder` is the player looking at the item. You can use it to show different lines to different players, but don't change the item or send messages while building the tooltip.
+- `context.Observer` is the player looking at the item, and `context.Wearer` is the player or creature carrying it. When someone looks at another player's equipment, the tooltip is calculated for the wearer and shown to the observer, with an "Equipped by" line naming the wearer. For an item nobody carries, the wearer is the observer. Use `Wearer` for what the item does for whoever holds it, and `Observer` for what the viewer is allowed to know. Don't change the item or send messages while building the tooltip.
 - The last argument before your values is the line's order: higher numbers appear first, and lines with the same number keep the order you add them in.
 - Below the bonus lines, the tooltip shows its extra lines in three groups, each after a separator: the effect lines ("Use:", "Hit:" and so on), then the level and experience bars, then your other lines. Your text lines always go in the last group, whatever their order.
 - The style sets how the line looks: each line gets a small bullet and a default color for its style.
@@ -341,8 +341,8 @@ public override int GetRequiredLevel(PlayerEntity player) => 22;
 ```
 
 - The game stops players below that level from using the item and tells them "You must be level 22 to use this."
-- The tooltip shows "Requires Level 22". The line is red for a player below the level and white for everyone else, and it updates when the player levels up. Like the other extra lines, it only appears once the item is identified.
-- The player is passed in, so the level can depend on them. For example, `player.Profession == Profession.Thief ? 21 : 18` lets thieves use the item from level 21 and everyone else from level 18. Each player sees their own number.
+- The tooltip shows "Requires Level 22". The line is red when the player holding the item is below the level and white otherwise, and it updates when that player levels up. For an item nobody carries, such as one on the ground, that is the player looking at it. Like the other extra lines, it only appears once the item is identified.
+- The player is passed in, so the level can depend on them. For example, `player.Profession == Profession.Thief ? 21 : 18` lets thieves use the item from level 21 and everyone else from level 18. The tooltip shows the number for the player holding the item.
 - Keep any other conditions, such as "wizards only", in `ValidateUse`, after calling `base`, which checks the level:
 
 ```csharp
@@ -370,9 +370,9 @@ public override ItemUseResult ValidateUse(MobileEntity entity)
 An item that gains experience and levels up shows its level as a progress bar ("Level 3", the bar, and how far along it is, such as 45%). Don't write the level or the experience into the tooltip description; add the bar in `GetTooltipEntries`:
 
 ```csharp
-public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 {
-    base.GetTooltipEntries(beholder, tooltip);
+    base.GetTooltipEntries(context, tooltip);
 
     // the experience gained since this level, out of what the next level takes.
     tooltip.AddLevelProgress(Level, ExperienceIntoLevel, ExperienceForNextLevel, Level >= MaximumLevel);
@@ -420,9 +420,9 @@ When an item does something that no value, bonus or other line shows, describe i
 Add it in `GetTooltipEntries` with `tooltip.AddEffect`. Write only the description; the prefix is added for you:
 
 ```csharp
-public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 {
-    base.GetTooltipEntries(beholder, tooltip);
+    base.GetTooltipEntries(context, tooltip);
 
     tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 514); /* Grants Feather Fall. */
 }
@@ -456,9 +456,9 @@ Conditions on the wearer (a profession, a level) belong in the wording ("Grants 
 **Weapon hit effects.** Describe what your `OnHit` override does with `Hit` lines, one per effect, with the text in your segment's Tooltip Descriptions block. Work the numbers out from the item the same way `OnHit` does, and pass them as text:
 
 ```csharp
-public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 {
-    base.GetTooltipEntries(beholder, tooltip);
+    base.GetTooltipEntries(context, tooltip);
 
     // OnHit rolls 1 in 10 at Legendary.
     if (Quality == ItemQuality.Legendary)
@@ -478,9 +478,9 @@ public override void OnCriticalHit(MobileEntity attacker, MobileEntity defender)
     defender.Stun(2);
 }
 
-public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 {
-    base.GetTooltipEntries(beholder, tooltip);
+    base.GetTooltipEntries(context, tooltip);
 
     tooltip.AddEffect(TooltipEffectTrigger.CriticalHit, 111900111); /* Stuns the target for 2 rounds. */
 }
@@ -507,9 +507,9 @@ A badge is a small icon on the tooltip's left or right border. Players see the i
 Add your own with `AddBadge`. A badge has a side, an icon, an optional color, and a label:
 
 ```csharp
-public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 {
-    base.GetTooltipEntries(beholder, tooltip);
+    base.GetTooltipEntries(context, tooltip);
 
     // 6600101 is an entry you add, for example "Glows amber".
     tooltip.AddBadge(TooltipBadgeSide.Right, TooltipBadgeIcons.Glow, Color.Orange, 6600101);
