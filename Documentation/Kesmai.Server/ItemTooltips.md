@@ -344,18 +344,7 @@ Things to know:
 
 - The label follows the same rules as tooltip lines: a localization entry, with numbers passed as text.
 - Badges on each side are listed from the top. Pass an order after the label number to place yours: higher numbers come first. The owner badge uses -30000.
-- `TooltipBadgeIcons` has `Owner`, `Skill`, and `Glow`. Every skill and every weapon flag also has its own icon: get it with `TooltipBadgeIcons.ForSkill(Skill.Sword)` or `TooltipBadgeIcons.ForFlag(WeaponFlags.Silver)`.
-- For the standard skill and flag badges, with their usual labels, use the shortcuts instead of `AddBadge`:
-
-```csharp
-// "Skill: Greatsword" with the greatsword icon, on the right.
-tooltip.AddSkillBadge(Skill.Greatsword);
-
-// "Silver" with the silver icon, on the left.
-tooltip.AddFlagBadge(WeaponFlags.Silver, TooltipBadgeSide.Left);
-```
-
-  `AddFlagBadge` takes a single flag. Combined flags such as `WeaponFlags.Lawful | WeaponFlags.Silver` have no icon, so add one badge per flag.
+- `TooltipBadgeIcons` has `Owner`, `Skill`, and `Glow` for now; more icons will be added as the art is made.
 - Badges only appear once the item is identified, like tooltip lines.
 
 ## Sending Your Own Values
