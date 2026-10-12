@@ -270,18 +270,18 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	}
 
 	/// <inheritdoc />
-	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 	{
-		base.GetTooltipEntries(beholder, tooltip);
+		base.GetTooltipEntries(context, tooltip);
 
 		if (Poison is { } poison)
 			poison.AddTooltipEntry(tooltip);
 	}
 
 	/// <inheritdoc />
-	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	public override void GetClientProperties(TooltipContext context, ItemPropertySet properties)
 	{
-		base.GetClientProperties(observer, properties);
+		base.GetClientProperties(context, properties);
 
 		if (!Identified)
 			return;
