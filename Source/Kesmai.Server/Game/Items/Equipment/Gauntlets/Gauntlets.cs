@@ -78,7 +78,22 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int MaxRange => 0;
 
-	public Poison Poison { get; set; }
+	private Poison _poison;
+
+	/// <summary>
+	/// Gets or sets the poison applied to these <see cref="Gauntlets"/>.
+	/// </summary>
+	public Poison Poison
+	{
+		get => _poison;
+		set
+		{
+			if (_poison != value)
+				InvalidateTooltip();
+
+			_poison = value;
+		}
+	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gauntlets"/> class.
@@ -173,6 +188,15 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 			return ItemUseResult.Denied();
 			
 		return ItemUseResult.Allowed;
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		if (Poison is { } poison)
+			poison.AddTooltipEntry(tooltip);
 	}
 
 	/// <inheritdoc />
