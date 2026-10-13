@@ -25,16 +25,13 @@ public class SwordsRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwordsRobe"/> class.
 	/// </summary>
-	public SwordsRobe() : base(295)
+	public SwordsRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 295)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwordsRobe"/> class.
 	/// </summary>
-	public SwordsRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public SwordsRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -34,16 +34,13 @@ public class TrollVest : Armor, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TrollVest"/> class.
 	/// </summary>
-	public TrollVest() : base(251)
+	public TrollVest(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 251)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TrollVest"/> class.
 	/// </summary>
-	public TrollVest(Serial serial) : base(serial)
-	{
-	}
 
 	public TrollVest(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

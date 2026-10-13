@@ -19,7 +19,7 @@ public class LargePinkPearl : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LargePinkPearl"/> class.
 	/// </summary>
-	public LargePinkPearl(uint basePrice) : base(351, basePrice)
+	public LargePinkPearl(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 351, basePrice)
 	{
 	}
 	

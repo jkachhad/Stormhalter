@@ -8,7 +8,7 @@ public partial class Dog : AnimalEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Dog"/> class.
 	/// </summary>
-	public Dog()
+	public Dog(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "dog";
 		Body = 21;
@@ -33,6 +33,6 @@ public partial class Dog : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new DogJacket();
+		return new DogJacket(_entityProvider, _entityDependencies);
 	}
 }

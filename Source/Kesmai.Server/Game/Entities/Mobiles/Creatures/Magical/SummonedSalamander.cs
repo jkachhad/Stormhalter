@@ -12,7 +12,8 @@ public partial class SummonedSalamander : Salamander
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SummonedSalamander"/> class.
 	/// </summary>
-	public SummonedSalamander(ICreatureSpell spell)
+	public SummonedSalamander(IEntityProvider entityProvider, EntityDependencies entityDependencies, ICreatureSpell spell)
+		: base(entityProvider, entityDependencies)
 	{
 		Summoned = true;
 			

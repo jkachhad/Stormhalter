@@ -41,14 +41,11 @@ public class Spellbook : ItemEntity, ITreasure
 		}
 	}
 		
-	public Spellbook(PlayerEntity owner) : base(152)
+	public Spellbook(IEntityProvider entityProvider, EntityDependencies entityDependencies, PlayerEntity owner) : base(entityProvider, entityDependencies, 152)
 	{
 		Bind(owner);
 	}
 	
-	public Spellbook(Serial serial) : base(serial)
-	{
-	}
 
 	public Spellbook(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

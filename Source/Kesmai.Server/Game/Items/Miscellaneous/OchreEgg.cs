@@ -23,7 +23,7 @@ public class OchreEgg : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OchreEgg"/> class.
 	/// </summary>
-	public OchreEgg() : base(169)
+	public OchreEgg(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 169)
 	{
 	}
 	

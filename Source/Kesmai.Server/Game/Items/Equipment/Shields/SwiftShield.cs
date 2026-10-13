@@ -35,7 +35,7 @@ public class SwiftShield : Shield, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwiftShield"/> class.
 	/// </summary>
-	public SwiftShield() : base(979)
+	public SwiftShield(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 979)
 	{
 	}
 
@@ -51,9 +51,6 @@ public class SwiftShield : Shield, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwiftShield"/> class.
 	/// </summary>
-	public SwiftShield(Serial serial) : base(serial)
-	{
-	}
 
 	public SwiftShield(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

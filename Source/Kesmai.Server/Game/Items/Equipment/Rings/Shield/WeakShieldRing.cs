@@ -21,16 +21,13 @@ public class WeakShieldRing : ShieldRing
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WeakShieldRing"/> class.
 	/// </summary>
-	public WeakShieldRing() : base(987)
+	public WeakShieldRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 987)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WeakShieldRing"/> class.
 	/// </summary>
-	public WeakShieldRing(Serial serial) : base(serial)
-	{
-	}
 
 	public WeakShieldRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

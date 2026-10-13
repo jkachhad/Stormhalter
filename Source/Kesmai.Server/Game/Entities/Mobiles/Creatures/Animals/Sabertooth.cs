@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Sabertooth : AnimalEntity
 {
-	public Sabertooth()
+	public Sabertooth(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "sabertooth";
 		Body = 59;
@@ -27,6 +27,6 @@ public partial class Sabertooth : AnimalEntity
 
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new TigerJacket();
+		return new TigerJacket(_entityProvider, _entityDependencies);
 	}
 }

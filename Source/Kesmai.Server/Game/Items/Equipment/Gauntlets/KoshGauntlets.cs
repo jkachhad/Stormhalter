@@ -40,16 +40,13 @@ public class KoshGauntlets : Gauntlets, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="KoshGauntlets"/> class.
 	/// </summary>
-	public KoshGauntlets() : base(69)
+	public KoshGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 69)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="KoshGauntlets"/> class.
 	/// </summary>
-	public KoshGauntlets(Serial serial) : base(serial)
-	{
-	}
 
 	public KoshGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Rockwyrm : AnimalEntity
 {
-	public Rockwyrm()
+	public Rockwyrm(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "rockwyrm";
 		Body = 95;

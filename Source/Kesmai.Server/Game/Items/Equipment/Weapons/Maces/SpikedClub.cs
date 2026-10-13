@@ -34,16 +34,13 @@ public class SpikedClub : Mace
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SpikedClub"/> class.
 	/// </summary>
-	public SpikedClub() : base(86)
+	public SpikedClub(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 86)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SpikedClub"/> class.
 	/// </summary>
-	public SpikedClub(Serial serial) : base(serial)
-	{
-	}
 
 	public SpikedClub(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

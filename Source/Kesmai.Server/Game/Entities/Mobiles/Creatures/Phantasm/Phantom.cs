@@ -14,7 +14,7 @@ public partial class Phantom : CreatureEntity, IPhantasm
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Phantom"/> class.
 	/// </summary>
-	public Phantom()
+	public Phantom(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "phantom";
 		Body = 5;

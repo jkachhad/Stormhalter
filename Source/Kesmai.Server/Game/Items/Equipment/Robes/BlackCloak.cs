@@ -26,16 +26,13 @@ public class BlackCloak : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackCloak"/> class.
 	/// </summary>
-	public BlackCloak() : base(253)
+	public BlackCloak(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 253)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackCloak"/> class.
 	/// </summary>
-	public BlackCloak(Serial serial) : base(serial)
-	{
-	}
 
 	public BlackCloak(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

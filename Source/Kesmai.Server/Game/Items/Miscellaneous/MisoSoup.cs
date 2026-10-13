@@ -19,7 +19,7 @@ public class MisoSoup : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MisoSoup"/> class.
 	/// </summary>
-	public MisoSoup() : base(24)
+	public MisoSoup(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 24)
 	{
 	}
 		

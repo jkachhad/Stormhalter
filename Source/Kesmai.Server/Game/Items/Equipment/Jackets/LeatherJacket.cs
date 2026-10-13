@@ -19,16 +19,13 @@ public class LeatherJacket : Jacket
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LeatherJacket"/> class.
 	/// </summary>
-	public LeatherJacket() : base(244)
+	public LeatherJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 244)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LeatherJacket"/> class.
 	/// </summary>
-	public LeatherJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public LeatherJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

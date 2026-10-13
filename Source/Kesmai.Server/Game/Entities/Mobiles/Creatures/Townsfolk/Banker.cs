@@ -12,7 +12,7 @@ public partial class Banker : VendorEntity
 	private static Regex _withdraw = new Regex(@"^withdraw\s([\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 	private static Regex _showBalance = new Regex(@"^show\sbalance$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		
-	public Banker()
+	public Banker(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 	}
 
@@ -95,7 +95,7 @@ public partial class Banker : VendorEntity
 					{
 						source.Gold -= (uint)requestedAmount;
 
-						var gold = new Gold()
+						var gold = new Gold(_entityProvider, _entityDependencies)
 						{
 							Amount = (uint)requestedAmount
 						};

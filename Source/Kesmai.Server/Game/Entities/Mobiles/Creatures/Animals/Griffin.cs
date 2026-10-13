@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Griffin : AnimalEntity
 {
-	public Griffin()
+	public Griffin(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "griffin";
 		Body = 25;
@@ -28,6 +28,6 @@ public partial class Griffin : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new GriffinJacket();
+		return new GriffinJacket(_entityProvider, _entityDependencies);
 	}
 }

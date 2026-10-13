@@ -28,16 +28,13 @@ public class BattleAxe : Axe
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BattleAxe"/> class.
 	/// </summary>
-	public BattleAxe() : base(146)
+	public BattleAxe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 146)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BattleAxe"/> class.
 	/// </summary>
-	public BattleAxe(Serial serial) : base(serial)
-	{
-	}
 
 	public BattleAxe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -25,16 +25,13 @@ public class BirchWand : Wand, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BirchWand"/> class.
 	/// </summary>
-	public BirchWand() : base(206)
+	public BirchWand(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 206)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BirchWand"/> class.
 	/// </summary>
-	public BirchWand(Serial serial) : base(serial)
-	{
-	}
 
 	public BirchWand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

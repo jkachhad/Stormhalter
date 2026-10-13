@@ -9,7 +9,7 @@ public partial class Banshee : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Banshee"/> class.
 	/// </summary>
-	public Banshee()
+	public Banshee(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "banshee";
 		Body = 12;

@@ -16,16 +16,13 @@ public class SteelDagger : Dagger
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelDagger"/> class.
 	/// </summary>
-	public SteelDagger() : base(101)
+	public SteelDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 101)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelDagger"/> class.
 	/// </summary>
-	public SteelDagger(Serial serial) : base(serial)
-	{
-	}
 
 	public SteelDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

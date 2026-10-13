@@ -21,16 +21,13 @@ public class ThreeFiftyThreeRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ThreeFiftyThreeRing"/> class.
 	/// </summary>
-	public ThreeFiftyThreeRing() : base(353)
+	public ThreeFiftyThreeRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 353)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ThreeFiftyThreeRing"/> class.
 	/// </summary>
-	public ThreeFiftyThreeRing(Serial serial) : base(serial)
-	{
-	}
 
 	public ThreeFiftyThreeRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -18,16 +18,13 @@ public class GlassWand : Wand, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GlassWand"/> class.
 	/// </summary>
-	public GlassWand() : base(189)
+	public GlassWand(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 189)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GlassWand"/> class.
 	/// </summary>
-	public GlassWand(Serial serial) : base(serial)
-	{
-	}
 
 	public GlassWand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

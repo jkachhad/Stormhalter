@@ -43,16 +43,13 @@ public class EbonyStaff : Staff, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="EbonyStaff"/> class.
 	/// </summary>
-	public EbonyStaff() : base(307)
+	public EbonyStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 307)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="EbonyStaff"/> class.
 	/// </summary>
-	public EbonyStaff(Serial serial) : base(serial)
-	{
-	}
 
 	public EbonyStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

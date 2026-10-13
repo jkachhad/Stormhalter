@@ -23,16 +23,13 @@ public class HummingbirdSword : ShortSword, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HummingbirdSword"/> class.
 	/// </summary>
-	public HummingbirdSword() : base(306)
+	public HummingbirdSword(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 306)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HummingbirdSword"/> class.
 	/// </summary>
-	public HummingbirdSword(Serial serial) : base(serial)
-	{
-	}
 
 	public HummingbirdSword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

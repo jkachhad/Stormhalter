@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Apatosaur : AnimalEntity
 {
-	public Apatosaur()
+	public Apatosaur(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "apatosaur";
 		Body = 74;
@@ -31,6 +31,6 @@ public partial class Apatosaur : AnimalEntity
 
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

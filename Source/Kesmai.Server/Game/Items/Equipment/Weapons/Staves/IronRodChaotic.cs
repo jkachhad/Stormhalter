@@ -34,16 +34,13 @@ public class IronRodChaotic : Staff
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IronRodChaotic"/> class.
 	/// </summary>
-	public IronRodChaotic() : base(72)
+	public IronRodChaotic(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 72)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IronRodChaotic"/> class.
 	/// </summary>
-	public IronRodChaotic(Serial serial) : base(serial)
-	{
-	}
 
 	public IronRodChaotic(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

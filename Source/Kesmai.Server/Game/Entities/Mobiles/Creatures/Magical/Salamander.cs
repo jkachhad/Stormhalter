@@ -11,7 +11,7 @@ public partial class Salamander : AnimalEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Salamander"/> class.
 	/// </summary>
-	public Salamander()
+	public Salamander(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "salamander";
 		Body = 40;
@@ -46,7 +46,7 @@ public partial class Salamander : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new SalamanderScales();
+		return new SalamanderScales(_entityProvider, _entityDependencies);
 	}
 		
 	public override void OnSpellTarget(Target target, MobileEntity combatant)

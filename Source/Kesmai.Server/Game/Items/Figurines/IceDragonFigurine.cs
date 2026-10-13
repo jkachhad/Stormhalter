@@ -19,16 +19,13 @@ public class IceDragonFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceDragonFigurine"/> class.
 	/// </summary>
-	public IceDragonFigurine() : base(375)
+	public IceDragonFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 375)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceDragonFigurine"/> class.
 	/// </summary>
-	public IceDragonFigurine(Serial serial) : base(serial)
-	{
-	}
 
 	public IceDragonFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

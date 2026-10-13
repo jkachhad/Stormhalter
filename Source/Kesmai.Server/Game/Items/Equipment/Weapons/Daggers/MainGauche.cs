@@ -39,16 +39,13 @@ public class MainGauche : Dagger, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MainGauche"/> class.
 	/// </summary>
-	public MainGauche() : base(900)
+	public MainGauche(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 900)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MainGauche"/> class.
 	/// </summary>
-	public MainGauche(Serial serial) : base(serial)
-	{
-	}
 
 	public MainGauche(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

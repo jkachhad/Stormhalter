@@ -20,16 +20,13 @@ public class FeatherFallBoots : Boots, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FeatherFallBoots"/> class.
 	/// </summary>
-	public FeatherFallBoots() : base(131)
+	public FeatherFallBoots(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 131)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FeatherFallBoots"/> class.
 	/// </summary>
-	public FeatherFallBoots(Serial serial) : base(serial)
-	{
-	}
 
 	public FeatherFallBoots(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

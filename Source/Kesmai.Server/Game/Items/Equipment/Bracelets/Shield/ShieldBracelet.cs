@@ -24,23 +24,20 @@ public class ShieldBracelet : Bracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShieldBracelet"/> class.
 	/// </summary>
-	public ShieldBracelet() : this(7)
+	public ShieldBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 7)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShieldBracelet"/> class.
 	/// </summary>
-	public ShieldBracelet(int braceletId) : base(braceletId)
+	public ShieldBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int braceletId) : base(entityProvider, entityDependencies, braceletId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShieldBracelet"/> class.
 	/// </summary>
-	public ShieldBracelet(Serial serial) : base(serial)
-	{
-	}
 
 	public ShieldBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

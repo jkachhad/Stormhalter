@@ -8,7 +8,7 @@ namespace Kesmai.Server.Game;
 
 public partial class BLAlchemist : VendorEntity
 {
-	public BLAlchemist()
+	public BLAlchemist(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "Alchemist";
 		Body = 75;
@@ -47,7 +47,7 @@ public partial class BLAlchemist : VendorEntity
 				{
 					if (ConsumeFromLocation<IronOre>(counter, 1) && ConsumeFromLocation<Yttril>(counter, 1))
 					{
-						new BlackBroadsword().Move(counter, true, Segment);
+						new BlackBroadsword(_entityProvider, _entityDependencies).Move(counter, true, Segment);
 
 						SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
 					}

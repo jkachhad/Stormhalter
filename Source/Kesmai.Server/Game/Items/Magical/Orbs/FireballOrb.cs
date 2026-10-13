@@ -14,16 +14,13 @@ public class FireballOrb : SpellOrb, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FireballOrb"/> class.
 	/// </summary>
-	public FireballOrb() : base(200)
+	public FireballOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 200)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FireballOrb"/> class.
 	/// </summary>
-	public FireballOrb(Serial serial) : base(serial)
-	{
-	}
 
 	public FireballOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

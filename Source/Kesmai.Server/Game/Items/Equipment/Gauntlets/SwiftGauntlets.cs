@@ -29,13 +29,10 @@ public class SwiftGauntlets : Gauntlets, ITreasure
 	/// <inheritdoc />
 	public override int ProjectileProtection => 1;
 		
-	public SwiftGauntlets() : base(396)
+	public SwiftGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 396)
 	{
 	}
 	
-	public SwiftGauntlets(Serial serial) : base(serial)
-	{
-	}
 
 	public SwiftGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -8,7 +8,7 @@ public partial class Yeti : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Yeti"/> class.
 	/// </summary>
-	public Yeti()
+	public Yeti(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "yeti";
 		Body = 67;
@@ -39,6 +39,6 @@ public partial class Yeti : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new PolarBearJacket();
+		return new PolarBearJacket(_entityProvider, _entityDependencies);
 	}
 }

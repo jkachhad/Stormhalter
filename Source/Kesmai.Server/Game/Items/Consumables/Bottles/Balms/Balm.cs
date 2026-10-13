@@ -13,9 +13,6 @@ public abstract class Balm : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Balm"/> class.
 	/// </summary>
-	protected Balm(int closedId, int openId) : base(closedId)
-	{
-	}
 
 	protected Balm(IEntityProvider entityProvider, EntityDependencies entityDependencies, int closedId, int openId)
 		: base(entityProvider, entityDependencies, closedId)
@@ -25,7 +22,7 @@ public abstract class Balm : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Balm"/> class.
 	/// </summary>
-	protected Balm(Serial serial) : base(serial)
+	protected Balm(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

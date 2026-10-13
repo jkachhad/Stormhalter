@@ -23,7 +23,7 @@ public class JokeFan : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="JokeFan"/> class.
 	/// </summary>
-	public JokeFan() : base(194)
+	public JokeFan(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 194)
 	{
 	}
 		

@@ -16,16 +16,13 @@ public class SteelLongsword : Longsword
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelLongsword"/> class.
 	/// </summary>
-	public SteelLongsword() : base(170)
+	public SteelLongsword(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 170)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelLongsword"/> class.
 	/// </summary>
-	public SteelLongsword(Serial serial) : base(serial)
-	{
-	}
 
 	public SteelLongsword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

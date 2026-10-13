@@ -19,16 +19,13 @@ public class HyenaJacket : Jacket
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HyenaJacket"/> class.
 	/// </summary>
-	public HyenaJacket() : base(258)
+	public HyenaJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 258)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HyenaJacket"/> class.
 	/// </summary>
-	public HyenaJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public HyenaJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

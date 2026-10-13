@@ -14,7 +14,7 @@ public class OvalRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OvalRuby"/> class.
 	/// </summary>
-	public OvalRuby(uint basePrice) : base(63, basePrice)
+	public OvalRuby(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 63, basePrice)
 	{
 	}
 	

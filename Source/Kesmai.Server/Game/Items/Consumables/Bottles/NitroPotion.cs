@@ -20,9 +20,6 @@ public class NitroPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="NitroPotion"/> class.
 	/// </summary>
-	public NitroPotion() : base(209)
-	{
-	}
 
 	public NitroPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 209)
@@ -32,7 +29,7 @@ public class NitroPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="NitroPotion"/> class.
 	/// </summary>
-	public NitroPotion(Serial serial) : base(serial)
+	public NitroPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

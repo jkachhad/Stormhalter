@@ -43,23 +43,20 @@ public class Crossbow : ProjectileWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Crossbow"/> class.
 	/// </summary>
-	public Crossbow() : base(230)
+	public Crossbow(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 230)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Crossbow"/> class.
 	/// </summary>
-	public Crossbow(int crossbowId) : base(crossbowId)
+	public Crossbow(IEntityProvider entityProvider, EntityDependencies entityDependencies, int crossbowId) : base(entityProvider, entityDependencies, crossbowId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Crossbow"/> class.
 	/// </summary>
-	public Crossbow(Serial serial) : base(serial)
-	{
-	}
 
 	public Crossbow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

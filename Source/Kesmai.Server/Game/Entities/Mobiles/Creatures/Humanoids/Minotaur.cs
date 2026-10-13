@@ -8,7 +8,7 @@ public partial class Minotaur : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Minotaur"/> class.
 	/// </summary>
-	public Minotaur()
+	public Minotaur(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "minotaur";
 		Body = 52;
@@ -41,6 +41,6 @@ public partial class Minotaur : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

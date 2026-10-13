@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Sandwyrm : AnimalEntity
 {
-	public Sandwyrm()
+	public Sandwyrm(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "sandwyrm";
 		Body = 86;
@@ -29,6 +29,6 @@ public partial class Sandwyrm : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

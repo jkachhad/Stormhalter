@@ -22,16 +22,13 @@ public class PolarBearJacket : Jacket, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PolarBearJacket"/> class.
 	/// </summary>
-	public PolarBearJacket() : base(256)
+	public PolarBearJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 256)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PolarBearJacket"/> class.
 	/// </summary>
-	public PolarBearJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public PolarBearJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

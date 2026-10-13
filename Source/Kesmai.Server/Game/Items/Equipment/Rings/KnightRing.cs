@@ -23,16 +23,13 @@ public class KnightRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="KnightRing"/> class.
 	/// </summary>
-	public KnightRing(int ringID = 107) : base(ringID)
+	public KnightRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, int ringID = 107) : base(entityProvider, entityDependencies, ringID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="KnightRing"/> class.
 	/// </summary>
-	public KnightRing(Serial serial) : base(serial)
-	{
-	}
 
 	public KnightRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

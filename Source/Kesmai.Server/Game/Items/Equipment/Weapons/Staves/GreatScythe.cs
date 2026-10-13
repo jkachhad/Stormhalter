@@ -40,16 +40,13 @@ public class GreatScythe : Staff
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GreatScythe"/> class.
 	/// </summary>
-	public GreatScythe() : base(339)
+	public GreatScythe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 339)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GreatScythe"/> class.
 	/// </summary>
-	public GreatScythe(Serial serial) : base(serial)
-	{
-	}
 
 	public GreatScythe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

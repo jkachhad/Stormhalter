@@ -17,16 +17,13 @@ public class BreatheWaterBracelet : Bracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BreatheWaterBracelet"/> class.
 	/// </summary>
-	public BreatheWaterBracelet() : base(11)
+	public BreatheWaterBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 11)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BreatheWaterBracelet"/> class.
 	/// </summary>
-	public BreatheWaterBracelet(Serial serial) : base(serial)
-	{
-	}
 
 	public BreatheWaterBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

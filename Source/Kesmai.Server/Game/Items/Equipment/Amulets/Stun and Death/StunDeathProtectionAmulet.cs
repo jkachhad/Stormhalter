@@ -29,7 +29,7 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StunDeathProtectionAmulet"/> class.
 	/// </summary>
-	protected StunDeathProtectionAmulet(int amuletId, int charges = 3) : base(amuletId)
+	protected StunDeathProtectionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int amuletId, int charges = 3) : base(entityProvider, entityDependencies, amuletId)
 	{
 		_chargesCurrent = charges;
 		_chargesMax = charges;
@@ -38,9 +38,6 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StunDeathProtectionAmulet"/> class.
 	/// </summary>
-	protected StunDeathProtectionAmulet(Serial serial) : base(serial)
-	{
-	}
 
 	protected StunDeathProtectionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

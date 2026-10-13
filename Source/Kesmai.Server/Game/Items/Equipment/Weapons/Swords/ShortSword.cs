@@ -31,23 +31,20 @@ public class ShortSword : Sword
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShortSword"/> class.
 	/// </summary>
-	public ShortSword() : this(88)
+	public ShortSword(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 88)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShortSword"/> class.
 	/// </summary>
-	public ShortSword(int swordId) : base(swordId)
+	public ShortSword(IEntityProvider entityProvider, EntityDependencies entityDependencies, int swordId) : base(entityProvider, entityDependencies, swordId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShortSword"/> class.
 	/// </summary>
-	public ShortSword(Serial serial) : base(serial)
-	{
-	}
 
 	public ShortSword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

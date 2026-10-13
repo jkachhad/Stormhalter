@@ -14,16 +14,13 @@ public class IceStormOrb : SpellOrb, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceStormOrb"/> class.
 	/// </summary>
-	public IceStormOrb() : base(117)
+	public IceStormOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 117)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceStormOrb"/> class.
 	/// </summary>
-	public IceStormOrb(Serial serial) : base(serial)
-	{
-	}
 
 	public IceStormOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -26,16 +26,13 @@ public class LeatherArmor : Armor
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LeatherArmor"/> class.
 	/// </summary>
-	public LeatherArmor() : base(242)
+	public LeatherArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 242)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LeatherArmor"/> class.
 	/// </summary>
-	public LeatherArmor(Serial serial) : base(serial)
-	{
-	}
 
 	public LeatherArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

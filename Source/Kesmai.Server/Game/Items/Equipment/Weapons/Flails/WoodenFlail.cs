@@ -25,16 +25,13 @@ public class WoodenFlail : Flail
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WoodenFlail"/> class.
 	/// </summary>
-	public WoodenFlail() : base(183)
+	public WoodenFlail(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 183)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WoodenFlail"/> class.
 	/// </summary>
-	public WoodenFlail(Serial serial) : base(serial)
-	{
-	}
 
 	public WoodenFlail(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

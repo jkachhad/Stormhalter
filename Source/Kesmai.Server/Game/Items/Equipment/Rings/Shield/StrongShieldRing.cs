@@ -20,16 +20,13 @@ public class StrongShieldRing : ShieldRing
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrongShieldRing"/> class.
 	/// </summary>
-	public StrongShieldRing() : base(501)
+	public StrongShieldRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 501)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrongShieldRing"/> class.
 	/// </summary>
-	public StrongShieldRing(Serial serial) : base(serial)
-	{
-	}
 
 	public StrongShieldRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

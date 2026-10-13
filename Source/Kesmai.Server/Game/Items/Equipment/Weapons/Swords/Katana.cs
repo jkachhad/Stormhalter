@@ -37,16 +37,13 @@ public class Katana : Sword
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Katana"/> class.
 	/// </summary>
-	public Katana() : base(148)
+	public Katana(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 148)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Katana"/> class.
 	/// </summary>
-	public Katana(Serial serial) : base(serial)
-	{
-	}
 
 	public Katana(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -31,16 +31,13 @@ public class ChainmailArmor : Armor
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ChainmailArmor"/> class.
 	/// </summary>
-	public ChainmailArmor() : base(239)
+	public ChainmailArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 239)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ChainmailArmor"/> class.
 	/// </summary>
-	public ChainmailArmor(Serial serial) : base(serial)
-	{
-	}
 
 	public ChainmailArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

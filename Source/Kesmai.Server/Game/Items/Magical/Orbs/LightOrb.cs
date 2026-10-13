@@ -14,16 +14,13 @@ public class LightOrb : SpellOrb, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LightOrb"/> class.
 	/// </summary>
-	public LightOrb() : base(201)
+	public LightOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 201)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LightOrb"/> class.
 	/// </summary>
-	public LightOrb(Serial serial) : base(serial)
-	{
-	}
 
 	public LightOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

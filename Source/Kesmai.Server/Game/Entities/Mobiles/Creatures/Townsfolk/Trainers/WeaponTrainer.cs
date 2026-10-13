@@ -13,7 +13,7 @@ public partial class WeaponTrainer : TrainerEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WeaponTrainer"/> class.
 	/// </summary>
-	public WeaponTrainer()
+	public WeaponTrainer(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 	}
 	

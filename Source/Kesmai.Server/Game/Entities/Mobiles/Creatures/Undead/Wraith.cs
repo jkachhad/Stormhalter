@@ -8,7 +8,7 @@ public partial class Wraith : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Wraith"/> class.
 	/// </summary>
-	public Wraith()
+	public Wraith(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "wraith";
 		Body = 50;

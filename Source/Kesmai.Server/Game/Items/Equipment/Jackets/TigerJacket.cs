@@ -16,16 +16,13 @@ public class TigerJacket : Jacket
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerJacket"/> class.
 	/// </summary>
-	public TigerJacket() : base(255)
+	public TigerJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 255)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerJacket"/> class.
 	/// </summary>
-	public TigerJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public TigerJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

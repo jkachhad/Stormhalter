@@ -19,7 +19,7 @@ public class Conch : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Conch"/> class.
 	/// </summary>
-	public Conch() : base(156)
+	public Conch(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 156)
 	{
 	}
 	

@@ -9,7 +9,7 @@ public partial class Wight : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Wight"/> class.
 	/// </summary>
-	public Wight()
+	public Wight(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "wight";
 		Body = 61;

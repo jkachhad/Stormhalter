@@ -17,16 +17,13 @@ public class MoonstoneRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MoonstoneRing"/> class.
 	/// </summary>
-	public MoonstoneRing() : base(57)
+	public MoonstoneRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 57)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MoonstoneRing"/> class.
 	/// </summary>
-	public MoonstoneRing(Serial serial) : base(serial)
-	{
-	}
 
 	public MoonstoneRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

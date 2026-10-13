@@ -66,9 +66,6 @@ public abstract class Bottle : Consumable
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Bottle"/> class.
 	/// </summary>
-	public Bottle(int closedId) : base(closedId)
-	{
-	}
 
 	public Bottle(IEntityProvider entityProvider, EntityDependencies entityDependencies, int closedId)
 		: base(entityProvider, entityDependencies, closedId)
@@ -78,7 +75,7 @@ public abstract class Bottle : Consumable
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Bottle"/> class.
 	/// </summary>
-	public Bottle(Serial serial) : base(serial)
+	public Bottle(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

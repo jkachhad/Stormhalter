@@ -45,14 +45,14 @@ public abstract class Wand : MeleeWeapon, IEmpowered, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Wand"/> class.
 	/// </summary>
-	protected Wand(int wandId) : this(wandId, 5)
+	protected Wand(IEntityProvider entityProvider, EntityDependencies entityDependencies, int wandId) : this(entityProvider, entityDependencies, wandId, 5)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Wand"/> class.
 	/// </summary>
-	protected Wand(int wandId, int charges) : base(wandId)
+	protected Wand(IEntityProvider entityProvider, EntityDependencies entityDependencies, int wandId, int charges) : base(entityProvider, entityDependencies, wandId)
 	{
 		_chargesCurrent = _chargesMax = charges;
 	}
@@ -60,9 +60,6 @@ public abstract class Wand : MeleeWeapon, IEmpowered, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Wand"/> class.
 	/// </summary>
-	protected Wand(Serial serial) : base(serial)
-	{
-	}
 
 	protected Wand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

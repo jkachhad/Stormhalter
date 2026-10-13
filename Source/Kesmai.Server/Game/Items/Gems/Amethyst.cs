@@ -14,16 +14,13 @@ public class Amethyst : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Amethyst"/> class.
 	/// </summary>
-	public Amethyst(uint basePrice) : base(179, basePrice)
+	public Amethyst(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 179, basePrice)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Amethyst"/> class.
 	/// </summary>
-	public Amethyst(Serial serial) : base(serial)
-	{
-	}
 
 	public Amethyst(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

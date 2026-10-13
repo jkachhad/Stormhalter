@@ -40,14 +40,14 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 	/// </summary>
 	public override int Weight => 100;
 
-	public ScorpionAmulet() : this(3)
+	public ScorpionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 3)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ScorpionAmulet"/> class.
 	/// </summary>
-	public ScorpionAmulet(int charges = 3) : base(118)
+	public ScorpionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges = 3) : base(entityProvider, entityDependencies, 118)
 	{
 		_chargesCurrent = charges;
 		_chargesMax = charges;
@@ -56,9 +56,6 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ScorpionAmulet"/> class.
 	/// </summary>
-	public ScorpionAmulet(Serial serial) : base(serial)
-	{
-	}
 
 	public ScorpionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

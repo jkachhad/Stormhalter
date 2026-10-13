@@ -9,7 +9,7 @@ public partial class Stalker : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Stalker"/> class.
 	/// </summary>
-	public Stalker()
+	public Stalker(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "stalker";
 		Body = 57;

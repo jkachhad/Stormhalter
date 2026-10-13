@@ -25,16 +25,13 @@ public class TornStripsRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TornStripsRobe"/> class.
 	/// </summary>
-	public TornStripsRobe() : base(237)
+	public TornStripsRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 237)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TornStripsRobe"/> class.
 	/// </summary>
-	public TornStripsRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public TornStripsRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -21,9 +21,6 @@ public class NaphthaPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="NaphthaPotion"/> class.
 	/// </summary>
-	public NaphthaPotion() : base(209)
-	{
-	}
 
 	public NaphthaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 209)
@@ -33,7 +30,7 @@ public class NaphthaPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="NaphthaPotion"/> class.
 	/// </summary>
-	public NaphthaPotion(Serial serial) : base(serial)
+	public NaphthaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

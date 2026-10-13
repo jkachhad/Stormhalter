@@ -8,7 +8,7 @@ public partial class Statue : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Statue"/> class.
 	/// </summary>
-	public Statue()
+	public Statue(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "statue";
 		Body = 99;

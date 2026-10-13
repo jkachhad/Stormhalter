@@ -19,7 +19,7 @@ public class BookSix : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BookSix"/> class.
 	/// </summary>
-	public BookSix() : base(78)
+	public BookSix(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 78)
 	{
 	}
 

@@ -14,16 +14,13 @@ public class WebOrb : SpellOrb, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WebOrb"/> class.
 	/// </summary>
-	public WebOrb() : base(181)
+	public WebOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 181)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WebOrb"/> class.
 	/// </summary>
-	public WebOrb(Serial serial) : base(serial)
-	{
-	}
 
 	public WebOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

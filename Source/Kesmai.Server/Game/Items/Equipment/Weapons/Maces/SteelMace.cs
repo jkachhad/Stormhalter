@@ -34,16 +34,13 @@ public class SteelMace : Mace
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelMace"/> class.
 	/// </summary>
-	public SteelMace() : base(89)
+	public SteelMace(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 89)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelMace"/> class.
 	/// </summary>
-	public SteelMace(Serial serial) : base(serial)
-	{
-	}
 
 	public SteelMace(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

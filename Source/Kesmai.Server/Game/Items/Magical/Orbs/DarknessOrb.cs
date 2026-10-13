@@ -14,16 +14,13 @@ public class DarknessOrb : SpellOrb, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DarknessOrb"/> class.
 	/// </summary>
-	public DarknessOrb() : base(202)
+	public DarknessOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 202)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DarknessOrb"/> class.
 	/// </summary>
-	public DarknessOrb(Serial serial) : base(serial)
-	{
-	}
 
 	public DarknessOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

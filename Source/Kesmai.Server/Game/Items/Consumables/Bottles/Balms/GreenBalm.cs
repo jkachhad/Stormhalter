@@ -9,9 +9,6 @@ public class GreenBalm : Balm
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GreenBalm"/> class.
 	/// </summary>
-	public GreenBalm() : base(247, 94)
-	{
-	}
 
 	public GreenBalm(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 247, 94)
@@ -21,7 +18,7 @@ public class GreenBalm : Balm
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GreenBalm"/> class.
 	/// </summary>
-	public GreenBalm(Serial serial) : base(serial)
+	public GreenBalm(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

@@ -12,7 +12,7 @@ public partial class Kobold : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Kobold"/> class.
 	/// </summary>
-	public Kobold()
+	public Kobold(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "kobold";
 		Body = 20;
@@ -37,6 +37,6 @@ public partial class Kobold : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

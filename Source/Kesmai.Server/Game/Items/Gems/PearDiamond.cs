@@ -15,7 +15,7 @@ public class PearDiamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PearDiamond"/> class.
 	/// </summary>
-	public PearDiamond(uint basePrice) : base(153, basePrice)
+	public PearDiamond(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 153, basePrice)
 	{
 	}
 

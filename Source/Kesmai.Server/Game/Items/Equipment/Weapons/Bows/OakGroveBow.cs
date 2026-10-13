@@ -47,7 +47,7 @@ public class OakGroveBow : Bow, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OakGroveBow"/> class.
 	/// </summary>
-	public OakGroveBow() : base(229)
+	public OakGroveBow(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 229)
 	{
 		Hue = Color.Yellow;
 	}
@@ -55,9 +55,6 @@ public class OakGroveBow : Bow, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OakGroveBow"/> class.
 	/// </summary>
-	public OakGroveBow(Serial serial) : base(serial)
-	{
-	}
 
 	public OakGroveBow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

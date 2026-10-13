@@ -31,16 +31,13 @@ public class Javelin : Staff
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Javelin"/> class.
 	/// </summary>
-	public Javelin() : base(190)
+	public Javelin(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 190)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Javelin"/> class.
 	/// </summary>
-	public Javelin(Serial serial) : base(serial)
-	{
-	}
 
 	public Javelin(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

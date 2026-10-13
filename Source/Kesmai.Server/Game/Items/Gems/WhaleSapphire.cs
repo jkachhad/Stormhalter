@@ -14,7 +14,7 @@ public class WhaleSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WhaleSapphire"/> class.
 	/// </summary>
-	public WhaleSapphire(uint basePrice) : base(176, basePrice)
+	public WhaleSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 176, basePrice)
 	{
 	}
 	

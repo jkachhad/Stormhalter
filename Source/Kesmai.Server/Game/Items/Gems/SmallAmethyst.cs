@@ -15,16 +15,13 @@ public class SmallAmethyst : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallAmethyst"/> class.
 	/// </summary>
-	public SmallAmethyst(uint basePrice) : base(151, basePrice)
+	public SmallAmethyst(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 151, basePrice)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallAmethyst"/> class.
 	/// </summary>
-	public SmallAmethyst(Serial serial) : base(serial)
-	{
-	}
 
 	public SmallAmethyst(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

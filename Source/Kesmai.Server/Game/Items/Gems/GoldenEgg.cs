@@ -17,7 +17,7 @@ public class GoldenEgg : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldenEgg"/> class.
 	/// </summary>
-	public GoldenEgg(uint basePrice) : base(191, basePrice)
+	public GoldenEgg(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 191, basePrice)
 	{
 	}
 		

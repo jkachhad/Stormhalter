@@ -15,7 +15,7 @@ public class SmallTopaz : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallTopaz"/> class.
 	/// </summary>
-	public SmallTopaz(uint basePrice) : base(150, basePrice)
+	public SmallTopaz(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 150, basePrice)
 	{
 	}
 

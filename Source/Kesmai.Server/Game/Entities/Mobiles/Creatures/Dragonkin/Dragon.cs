@@ -11,7 +11,7 @@ public partial class Dragon : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Dragon"/> class.
 	/// </summary>
-	public Dragon()
+	public Dragon(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "dragon";
 		Body = 92;
@@ -50,7 +50,7 @@ public partial class Dragon : CreatureEntity
 
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new DragonScaleArmor();
+		return new DragonScaleArmor(_entityProvider, _entityDependencies);
 	}
 
 	public override void OnSpellTarget(Target target, MobileEntity combatant)

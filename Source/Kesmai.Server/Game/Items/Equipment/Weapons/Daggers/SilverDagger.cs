@@ -22,16 +22,13 @@ public class SilverDagger : Dagger, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SilverDagger"/> class.
 	/// </summary>
-	public SilverDagger() : base(172)
+	public SilverDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 172)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SilverDagger"/> class.
 	/// </summary>
-	public SilverDagger(Serial serial) : base(serial)
-	{
-	}
 
 	public SilverDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

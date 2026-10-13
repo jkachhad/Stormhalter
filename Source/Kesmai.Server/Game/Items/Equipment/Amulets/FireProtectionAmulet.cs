@@ -22,16 +22,13 @@ public class FireProtectionAmulet : Amulet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FireProtectionAmulet"/> class.
 	/// </summary>
-	public FireProtectionAmulet() : base(4)
+	public FireProtectionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 4)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FireProtectionAmulet"/> class.
 	/// </summary>
-	public FireProtectionAmulet(Serial serial) : base(serial)
-	{
-	}
 
 	public FireProtectionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

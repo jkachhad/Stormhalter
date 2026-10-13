@@ -24,23 +24,20 @@ public class StrengthRing : Ring, ITreasure
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int StrengthBonus => 3;
 
-	public StrengthRing() : this(43)
+	public StrengthRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 43)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrengthRing"/> class.
 	/// </summary>
-	public StrengthRing(int itemId) : base(itemId)
+	public StrengthRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, int itemId) : base(entityProvider, entityDependencies, itemId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrengthRing"/> class.
 	/// </summary>
-	public StrengthRing(Serial serial) : base(serial)
-	{
-	}
 
 	public StrengthRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

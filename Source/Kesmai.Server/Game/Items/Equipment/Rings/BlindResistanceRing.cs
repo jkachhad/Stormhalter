@@ -21,16 +21,13 @@ public class BlindResistanceRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlindResistanceRing"/> class.
 	/// </summary>
-	public BlindResistanceRing() : base(17)
+	public BlindResistanceRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 17)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlindResistanceRing"/> class.
 	/// </summary>
-	public BlindResistanceRing(Serial serial) : base(serial)
-	{
-	}
 
 	public BlindResistanceRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

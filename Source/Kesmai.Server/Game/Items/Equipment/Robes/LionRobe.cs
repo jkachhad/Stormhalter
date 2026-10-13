@@ -25,16 +25,13 @@ public class LionRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LionRobe"/> class.
 	/// </summary>
-	public LionRobe() : base(264)
+	public LionRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 264)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LionRobe"/> class.
 	/// </summary>
-	public LionRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public LionRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

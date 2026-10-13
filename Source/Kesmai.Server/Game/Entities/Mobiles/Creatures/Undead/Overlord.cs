@@ -8,7 +8,7 @@ public partial class Overlord : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Overlord"/> class.
 	/// </summary>
-	public Overlord()
+	public Overlord(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "overlord";
 		Body = 90;

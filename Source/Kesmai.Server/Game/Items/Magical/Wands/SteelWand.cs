@@ -21,16 +21,13 @@ public class SteelWand : Wand, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelWand"/> class.
 	/// </summary>
-	public SteelWand() : base(204)
+	public SteelWand(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 204)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelWand"/> class.
 	/// </summary>
-	public SteelWand(Serial serial) : base(serial)
-	{
-	}
 
 	public SteelWand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

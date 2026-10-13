@@ -25,16 +25,13 @@ public class PurpleSilkRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PurpleSilkRobe"/> class.
 	/// </summary>
-	public PurpleSilkRobe() : base(286)
+	public PurpleSilkRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 286)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PurpleSilkRobe"/> class.
 	/// </summary>
-	public PurpleSilkRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public PurpleSilkRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

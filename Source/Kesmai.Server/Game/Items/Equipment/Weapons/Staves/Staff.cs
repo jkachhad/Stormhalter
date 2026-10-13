@@ -20,16 +20,13 @@ public abstract class Staff : MeleeWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Staff"/> class.
 	/// </summary>
-	protected Staff(int staffID) : base(staffID)
+	protected Staff(IEntityProvider entityProvider, EntityDependencies entityDependencies, int staffID) : base(entityProvider, entityDependencies, staffID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Staff"/> class.
 	/// </summary>
-	protected Staff(Serial serial) : base(serial)
-	{
-	}
 
 	protected Staff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

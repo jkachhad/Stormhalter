@@ -31,7 +31,7 @@ public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LocateAmulet"/> class.
 	/// </summary>
-	protected LocateAmulet(int amuletId, int charges = 3) : base(amuletId)
+	protected LocateAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int amuletId, int charges = 3) : base(entityProvider, entityDependencies, amuletId)
 	{
 		_chargesCurrent = charges;
 		_chargesMax = charges;
@@ -40,9 +40,6 @@ public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LocateAmulet"/> class.
 	/// </summary>
-	protected LocateAmulet(Serial serial) : base(serial)
-	{
-	}
 
 	protected LocateAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

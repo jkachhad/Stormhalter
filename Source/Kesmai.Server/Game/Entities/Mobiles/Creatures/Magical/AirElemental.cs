@@ -7,7 +7,7 @@ public partial class AirElemental : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AirElemental"/> class.
 	/// </summary>
-	public AirElemental()
+	public AirElemental(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "elemental";
 		Body = 26;

@@ -19,16 +19,13 @@ public class ToriiBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ToriiBook"/> class.
 	/// </summary>
-	public ToriiBook() : base(297)
+	public ToriiBook(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 297)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ToriiBook"/> class.
 	/// </summary>
-	public ToriiBook(Serial serial) : base(serial)
-	{
-	}
 
 	public ToriiBook(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

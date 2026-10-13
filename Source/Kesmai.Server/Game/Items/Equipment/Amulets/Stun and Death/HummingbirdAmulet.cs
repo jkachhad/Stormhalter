@@ -17,23 +17,20 @@ public class HummingbirdAmulet : StunDeathProtectionAmulet
 	/// </summary>
 	public override int Weight => 100;
 		
-	public HummingbirdAmulet() : this(1)
+	public HummingbirdAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 1)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HummingbirdAmulet"/> class.
 	/// </summary>
-	public HummingbirdAmulet(int charges = 1) : base(305, charges)
+	public HummingbirdAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges = 1) : base(entityProvider, entityDependencies, 305, charges)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HummingbirdAmulet"/> class.
 	/// </summary>
-	public HummingbirdAmulet(Serial serial) : base(serial)
-	{
-	}
 
 	public HummingbirdAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

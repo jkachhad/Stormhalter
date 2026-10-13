@@ -22,16 +22,13 @@ public class GrizzlyJacket : Jacket, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GrizzlyJacket"/> class.
 	/// </summary>
-	public GrizzlyJacket() : base(273)
+	public GrizzlyJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 273)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GrizzlyJacket"/> class.
 	/// </summary>
-	public GrizzlyJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public GrizzlyJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

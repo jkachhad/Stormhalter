@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class BlackWolf : AnimalEntity
 {
-	public BlackWolf()
+	public BlackWolf(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "wolf";
 		Body = 4;
@@ -30,6 +30,6 @@ public partial class BlackWolf : AnimalEntity
 	public override ItemEntity OnCorpseTanned()
 	{
 		// TODO: Does this wolf produce a different type of jacket?
-		return new WolfJacket();
+		return new WolfJacket(_entityProvider, _entityDependencies);
 	}
 }

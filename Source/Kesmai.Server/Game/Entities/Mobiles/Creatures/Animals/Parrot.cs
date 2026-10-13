@@ -7,7 +7,7 @@ public partial class Parrot : AnimalEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Parrot"/> class.
 	/// </summary>
-	public Parrot()
+	public Parrot(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "parrot";
 		Body = 73;

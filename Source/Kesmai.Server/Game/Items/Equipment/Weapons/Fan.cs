@@ -43,16 +43,13 @@ public class Fan : Weapon, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Fan"/> class.
 	/// </summary>
-	public Fan() : base(126)
+	public Fan(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 126)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Fan"/> class.
 	/// </summary>
-	public Fan(Serial serial) : base(serial)
-	{
-	}
 
 	public Fan(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -33,16 +33,13 @@ public class WingedHelm : Helmet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WingedHelm"/> class.
 	/// </summary>
-	public WingedHelm() : this(true)
+	public WingedHelm(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, true)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WingedHelm"/> class.
 	/// </summary>
-	public WingedHelm(Serial serial) : base(serial)
-	{
-	}
 
 	public WingedHelm(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)
@@ -52,7 +49,7 @@ public class WingedHelm : Helmet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WingedHelm"/> class.
 	/// </summary>
-	public WingedHelm(bool provideNightVision) : base(33)
+	public WingedHelm(IEntityProvider entityProvider, EntityDependencies entityDependencies, bool provideNightVision) : base(entityProvider, entityDependencies, 33)
 	{
 		_provideNightVision = provideNightVision;
 	}

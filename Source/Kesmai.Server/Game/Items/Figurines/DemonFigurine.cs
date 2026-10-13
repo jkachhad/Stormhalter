@@ -19,16 +19,13 @@ public class DemonFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DemonFigurine"/> class.
 	/// </summary>
-	public DemonFigurine() : base(376)
+	public DemonFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 376)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DemonFigurine"/> class.
 	/// </summary>
-	public DemonFigurine(Serial serial) : base(serial)
-	{
-	}
 
 	public DemonFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

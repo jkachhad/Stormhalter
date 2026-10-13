@@ -9,7 +9,7 @@ public partial class Spectre : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Spectre"/> class.
 	/// </summary>
-	public Spectre()
+	public Spectre(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "spectre";
 		Body = 62;

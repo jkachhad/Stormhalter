@@ -16,9 +16,6 @@ public class ManaPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ManaPotion"/> class.
 	/// </summary>
-	public ManaPotion() : this(6, 24)
-	{
-	}
 
 	public ManaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: this(entityProvider, entityDependencies, 6, 24)
@@ -28,9 +25,6 @@ public class ManaPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ManaPotion"/> class.
 	/// </summary>
-	public ManaPotion(int closedId, int openId) : base(closedId)
-	{
-	}
 
 	public ManaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, int closedId, int openId)
 		: base(entityProvider, entityDependencies, closedId)
@@ -40,7 +34,7 @@ public class ManaPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ManaPotion"/> class.
 	/// </summary>
-	public ManaPotion(Serial serial) : base(serial)
+	public ManaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

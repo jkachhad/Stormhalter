@@ -19,7 +19,7 @@ public class RawConch : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RawConch"/> class.
 	/// </summary>
-	public RawConch() : base(104)
+	public RawConch(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 104)
 	{
 	}
 

@@ -19,7 +19,7 @@ public class Tourmaline : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Tourmaline"/> class.
 	/// </summary>
-	public Tourmaline(uint basePrice) : base(62, basePrice)
+	public Tourmaline(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 62, basePrice)
 	{
 	}
 

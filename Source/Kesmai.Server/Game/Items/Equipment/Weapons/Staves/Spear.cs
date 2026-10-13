@@ -31,16 +31,13 @@ public class Spear : Staff
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Spear"/> class.
 	/// </summary>
-	public Spear() : base(124)
+	public Spear(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 124)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Spear"/> class.
 	/// </summary>
-	public Spear(Serial serial) : base(serial)
-	{
-	}
 
 	public Spear(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

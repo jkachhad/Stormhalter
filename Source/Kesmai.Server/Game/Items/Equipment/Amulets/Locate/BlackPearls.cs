@@ -18,23 +18,20 @@ public class BlackPearls : LocateAmulet
 	/// </summary>
 	public override int Weight => 100;
 		
-	public BlackPearls() : this(3)
+	public BlackPearls(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 3)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackPearls"/> class.
 	/// </summary>
-	public BlackPearls(int charges) : base(120, charges)
+	public BlackPearls(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges) : base(entityProvider, entityDependencies, 120, charges)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackPearls"/> class.
 	/// </summary>
-	public BlackPearls(Serial serial) : base(serial)
-	{
-	}
 
 	public BlackPearls(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

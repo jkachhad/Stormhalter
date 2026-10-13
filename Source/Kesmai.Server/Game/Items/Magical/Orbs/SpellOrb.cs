@@ -20,16 +20,13 @@ public abstract class SpellOrb : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SpellOrb"/> class.
 	/// </summary>
-	protected SpellOrb(int orbId) : base(orbId)
+	protected SpellOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies, int orbId) : base(entityProvider, entityDependencies, orbId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SpellOrb"/> class.
 	/// </summary>
-	protected SpellOrb(Serial serial) : base(serial)
-	{
-	}
 
 	protected SpellOrb(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

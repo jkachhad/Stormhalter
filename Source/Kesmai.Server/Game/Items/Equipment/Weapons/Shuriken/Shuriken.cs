@@ -53,16 +53,13 @@ public class Shuriken : Weapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Shuriken"/> class.
 	/// </summary>
-	public Shuriken() : base(245)
+	public Shuriken(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 245)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Shuriken"/> class.
 	/// </summary>
-	public Shuriken(Serial serial) : base(serial)
-	{
-	}
 
 	public Shuriken(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

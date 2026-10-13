@@ -28,16 +28,13 @@ public class WoodenStaff : Staff
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WoodenStaff"/> class.
 	/// </summary>
-	public WoodenStaff() : base(102)
+	public WoodenStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 102)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WoodenStaff"/> class.
 	/// </summary>
-	public WoodenStaff(Serial serial) : base(serial)
-	{
-	}
 
 	public WoodenStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

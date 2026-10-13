@@ -45,16 +45,13 @@ public class SwordOfLight : Sword, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwordOfLight"/> class.
 	/// </summary>
-	public SwordOfLight() : base(331)
+	public SwordOfLight(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 331)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwordOfLight"/> class.
 	/// </summary>
-	public SwordOfLight(Serial serial) : base(serial)
-	{
-	}
 
 	public SwordOfLight(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -19,7 +19,7 @@ public class DemonBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DemonBook"/> class.
 	/// </summary>
-	public DemonBook() : base(192)
+	public DemonBook(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 192)
 	{
 	}
 

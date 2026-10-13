@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Manticora : AnimalEntity
 {
-	public Manticora()
+	public Manticora(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "manticora";
 		Body = 2;
@@ -27,6 +27,6 @@ public partial class Manticora : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new ManticoraJacket();
+		return new ManticoraJacket(_entityProvider, _entityDependencies);
 	}
 }

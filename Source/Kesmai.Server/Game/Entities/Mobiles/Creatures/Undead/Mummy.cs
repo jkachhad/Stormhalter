@@ -8,7 +8,7 @@ public partial class Mummy : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Mummy"/> class.
 	/// </summary>
-	public Mummy()
+	public Mummy(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "mummy";
 		Body = 146;

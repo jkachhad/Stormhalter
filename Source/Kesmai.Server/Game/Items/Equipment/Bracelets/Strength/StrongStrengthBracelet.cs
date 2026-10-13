@@ -21,16 +21,13 @@ public class StrongStrengthBracelet : StrengthBracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrongStrengthBracelet"/> class.
 	/// </summary>
-	public StrongStrengthBracelet() : base(133)
+	public StrongStrengthBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 133)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrongStrengthBracelet"/> class.
 	/// </summary>
-	public StrongStrengthBracelet(Serial serial) : base(serial)
-	{
-	}
 
 	public StrongStrengthBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

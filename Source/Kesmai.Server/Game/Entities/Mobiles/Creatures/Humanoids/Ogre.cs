@@ -8,7 +8,7 @@ public partial class Ogre : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Ogre"/> class.
 	/// </summary>
-	public Ogre()
+	public Ogre(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "ogre";
 		Body = 11;
@@ -39,6 +39,6 @@ public partial class Ogre : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

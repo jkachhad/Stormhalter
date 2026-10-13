@@ -34,23 +34,20 @@ public class Longsword : Sword
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Longsword"/> class.
 	/// </summary>
-	public Longsword() : this(85)
+	public Longsword(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 85)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Longsword"/> class.
 	/// </summary>
-	public Longsword(int itemId) : base(itemId)
+	public Longsword(IEntityProvider entityProvider, EntityDependencies entityDependencies, int itemId) : base(entityProvider, entityDependencies, itemId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Longsword"/> class.
 	/// </summary>
-	public Longsword(Serial serial) : base(serial)
-	{
-	}
 
 	public Longsword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -21,9 +21,6 @@ public class PermanentWillpowerPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentWillpowerPotion"/> class.
 	/// </summary>
-	public PermanentWillpowerPotion() : base(289)
-	{
-	}
 
 	public PermanentWillpowerPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 289)
@@ -33,7 +30,7 @@ public class PermanentWillpowerPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentWillpowerPotion"/> class.
 	/// </summary>
-	public PermanentWillpowerPotion(Serial serial) : base(serial)
+	public PermanentWillpowerPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

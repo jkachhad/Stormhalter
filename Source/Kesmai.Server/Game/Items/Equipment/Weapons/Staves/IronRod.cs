@@ -34,16 +34,13 @@ public class IronRod : Staff, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IronRod"/> class.
 	/// </summary>
-	public IronRod() : base(72)
+	public IronRod(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 72)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IronRod"/> class.
 	/// </summary>
-	public IronRod(Serial serial) : base(serial)
-	{
-	}
 
 	public IronRod(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

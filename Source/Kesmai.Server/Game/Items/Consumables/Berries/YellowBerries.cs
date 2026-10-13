@@ -18,9 +18,6 @@ public class YellowBerries : Food
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YellowBerries"/> class.
 	/// </summary>
-	public YellowBerries() : base(25)
-	{
-	}
 
 	public YellowBerries(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 25)
@@ -30,7 +27,7 @@ public class YellowBerries : Food
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YellowBerries"/> class.
 	/// </summary>
-	public YellowBerries(Serial serial) : base(serial)
+	public YellowBerries(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

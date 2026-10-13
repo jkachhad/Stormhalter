@@ -12,7 +12,7 @@ public partial class Demon : CreatureEntity, IDemon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Demon"/> class.
 	/// </summary>
-	public Demon()
+	public Demon(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "Demon";
 		Body = 63;

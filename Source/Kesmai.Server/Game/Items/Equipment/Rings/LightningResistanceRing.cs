@@ -18,16 +18,13 @@ public class LightningResistanceRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LightningResistanceRing"/> class.
 	/// </summary>
-	public LightningResistanceRing() : base(27)
+	public LightningResistanceRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 27)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LightningResistanceRing"/> class.
 	/// </summary>
-	public LightningResistanceRing(Serial serial) : base(serial)
-	{
-	}
 
 	public LightningResistanceRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

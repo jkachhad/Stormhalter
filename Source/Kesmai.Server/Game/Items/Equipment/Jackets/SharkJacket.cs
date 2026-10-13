@@ -20,16 +20,13 @@ public class SharkJacket : Jacket, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SharkJacket"/> class.
 	/// </summary>
-	public SharkJacket() : base(270)
+	public SharkJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 270)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SharkJacket"/> class.
 	/// </summary>
-	public SharkJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public SharkJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

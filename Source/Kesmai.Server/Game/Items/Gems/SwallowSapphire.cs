@@ -14,7 +14,7 @@ public class SwallowSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwallowSapphire"/> class.
 	/// </summary>
-	public SwallowSapphire(uint basePrice) : base(282, basePrice)
+	public SwallowSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 282, basePrice)
 	{
 	}
 

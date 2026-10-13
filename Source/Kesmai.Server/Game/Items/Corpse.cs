@@ -44,10 +44,6 @@ public class Corpse : ItemEntity
 		}
 	}
 
-	public Corpse(MobileEntity owner, int body) : base(body)
-	{
-		Owner = owner;
-	}
 
 	public Corpse(IEntityProvider entityProvider, EntityDependencies entityDependencies, MobileEntity owner, int body)
 		: base(entityProvider, entityDependencies, body)

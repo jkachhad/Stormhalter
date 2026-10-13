@@ -23,7 +23,7 @@ public abstract class Gem : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gem"/> class.
 	/// </summary>
-	protected Gem(int gemID, uint basePrice) : base(gemID)
+	protected Gem(IEntityProvider entityProvider, EntityDependencies entityDependencies, int gemID, uint basePrice) : base(entityProvider, entityDependencies, gemID)
 	{
 		_basePrice = basePrice;
 	}
@@ -31,9 +31,6 @@ public abstract class Gem : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gem"/> class.
 	/// </summary>
-	protected Gem(Serial serial) : base(serial)
-	{
-	}
 
 	protected Gem(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

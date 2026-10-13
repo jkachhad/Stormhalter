@@ -12,7 +12,7 @@ public partial class Orc : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Orc"/> class.
 	/// </summary>
-	public Orc()
+	public Orc(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "orc";
 		Body = 17;
@@ -42,6 +42,6 @@ public partial class Orc : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

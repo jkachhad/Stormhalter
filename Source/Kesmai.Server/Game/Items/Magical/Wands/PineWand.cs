@@ -21,16 +21,13 @@ public class PineWand : Wand, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PineWand"/> class.
 	/// </summary>
-	public PineWand() : base(281)
+	public PineWand(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 281)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PineWand"/> class.
 	/// </summary>
-	public PineWand(Serial serial) : base(serial)
-	{
-	}
 
 	public PineWand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

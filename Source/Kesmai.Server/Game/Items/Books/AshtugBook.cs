@@ -19,7 +19,7 @@ public class AshtugBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AshtugBook"/> class.
 	/// </summary>
-	public AshtugBook() : base(155)
+	public AshtugBook(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 155)
 	{
 	}
 

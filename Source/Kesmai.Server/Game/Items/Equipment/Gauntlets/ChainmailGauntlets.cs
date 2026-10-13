@@ -25,16 +25,13 @@ public class ChainmailGauntlets : Gauntlets, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ChainmailGauntlets"/> class.
 	/// </summary>
-	public ChainmailGauntlets() : base(23)
+	public ChainmailGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 23)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ChainmailGauntlets"/> class.
 	/// </summary>
-	public ChainmailGauntlets(Serial serial) : base(serial)
-	{
-	}
 
 	public ChainmailGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

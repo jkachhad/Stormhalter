@@ -24,23 +24,20 @@ public class DexterityRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DexterityRing"/> class.
 	/// </summary>
-	public DexterityRing() : this(19)
+	public DexterityRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 19)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DexterityRing"/> class.
 	/// </summary>
-	public DexterityRing(int ringId) : base(ringId)
+	public DexterityRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, int ringId) : base(entityProvider, entityDependencies, ringId)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DexterityRing"/> class.
 	/// </summary>
-	public DexterityRing(Serial serial) : base(serial)
-	{
-	}
 
 	public DexterityRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

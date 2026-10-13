@@ -9,7 +9,7 @@ public partial class Shark : AnimalEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Shark"/> class.
 	/// </summary>
-	public Shark()
+	public Shark(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "shark";
 		Body = 54;
@@ -35,6 +35,6 @@ public partial class Shark : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new SharkJacket();
+		return new SharkJacket(_entityProvider, _entityDependencies);
 	}
 }

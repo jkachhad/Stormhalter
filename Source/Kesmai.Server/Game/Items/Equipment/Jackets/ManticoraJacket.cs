@@ -19,16 +19,13 @@ public class ManticoraJacket : Jacket
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ManticoraJacket"/> class.
 	/// </summary>
-	public ManticoraJacket() : base(272)
+	public ManticoraJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 272)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ManticoraJacket"/> class.
 	/// </summary>
-	public ManticoraJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public ManticoraJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

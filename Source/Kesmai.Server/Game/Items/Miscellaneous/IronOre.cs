@@ -31,7 +31,7 @@ public class IronOre : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IronOre"/> class.
 	/// </summary>
-	public IronOre() : base(97)
+	public IronOre(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 97)
 	{
 	}
 	

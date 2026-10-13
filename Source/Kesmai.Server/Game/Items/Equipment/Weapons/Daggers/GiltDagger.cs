@@ -28,16 +28,13 @@ public class GiltDagger : Dagger
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GiltDagger"/> class.
 	/// </summary>
-	public GiltDagger() : base(171)
+	public GiltDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 171)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GiltDagger"/> class.
 	/// </summary>
-	public GiltDagger(Serial serial) : base(serial)
-	{
-	}
 
 	public GiltDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

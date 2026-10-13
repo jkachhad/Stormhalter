@@ -27,16 +27,13 @@ public class SteelShield : Shield
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelShield"/> class.
 	/// </summary>
-	public SteelShield() : base(188)
+	public SteelShield(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 188)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelShield"/> class.
 	/// </summary>
-	public SteelShield(Serial serial) : base(serial)
-	{
-	}
 
 	public SteelShield(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -23,7 +23,7 @@ public class PewterMug : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PewterMug"/> class.
 	/// </summary>
-	public PewterMug() : base(283)
+	public PewterMug(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 283)
 	{
 	}
 		

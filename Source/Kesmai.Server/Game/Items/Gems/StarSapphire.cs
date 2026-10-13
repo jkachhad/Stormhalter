@@ -14,16 +14,13 @@ public class StarSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarSapphire"/> class.
 	/// </summary>
-	public StarSapphire(uint basePrice) : base(166, basePrice)
+	public StarSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 166, basePrice)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarSapphire"/> class.
 	/// </summary>
-	public StarSapphire(Serial serial) : base(serial)
-	{
-	}
 
 	public StarSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

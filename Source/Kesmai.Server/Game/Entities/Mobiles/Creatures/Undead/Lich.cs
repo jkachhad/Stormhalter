@@ -12,7 +12,7 @@ public partial class Lich : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Lich"/> class.
 	/// </summary>
-	public Lich()
+	public Lich(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "lich";
 		Body = 83;

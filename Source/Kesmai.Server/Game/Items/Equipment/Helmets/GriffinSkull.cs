@@ -31,16 +31,13 @@ public class GriffinSkull : Helmet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GriffinSkull"/> class.
 	/// </summary>
-	public GriffinSkull() : base(35)
+	public GriffinSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 35)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GriffinSkull"/> class.
 	/// </summary>
-	public GriffinSkull(Serial serial) : base(serial)
-	{
-	}
 
 	public GriffinSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

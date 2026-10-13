@@ -8,7 +8,7 @@ public partial class Waft : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Waft"/> class.
 	/// </summary>
-	public Waft()
+	public Waft(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "waft";
 		Body = 41;

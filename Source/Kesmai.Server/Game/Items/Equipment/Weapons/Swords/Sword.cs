@@ -21,16 +21,13 @@ public abstract class Sword : MeleeWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Sword" /> class.
 	/// </summary>
-	protected Sword(int swordID) : base(swordID)
+	protected Sword(IEntityProvider entityProvider, EntityDependencies entityDependencies, int swordID) : base(entityProvider, entityDependencies, swordID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Sword" /> class.
 	/// </summary>
-	protected Sword(Serial serial) : base(serial)
-	{
-	}
 
 	protected Sword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

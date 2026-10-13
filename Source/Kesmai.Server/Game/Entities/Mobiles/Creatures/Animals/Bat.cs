@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Bat : AnimalEntity
 {
-	public Bat()
+	public Bat(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "bat";
 		Body = 222;
@@ -27,6 +27,6 @@ public partial class Bat : AnimalEntity
 
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

@@ -19,7 +19,7 @@ public class ClamShell : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ClamShell"/> class.
 	/// </summary>
-	public ClamShell() : base(65)
+	public ClamShell(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 65)
 	{
 	}
 	

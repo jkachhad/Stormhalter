@@ -37,13 +37,10 @@ public class Football : Mace
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Football"/> class.
 	/// </summary>
-	public Football() : base(162)
+	public Football(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 162)
 	{
 	}
 	
-	public Football(Serial serial) : base(serial)
-	{
-	}
 
 	public Football(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

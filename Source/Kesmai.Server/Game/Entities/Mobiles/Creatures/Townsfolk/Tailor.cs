@@ -9,7 +9,7 @@ public partial class Tailor : VendorEntity
 {
 	private InternalTimer _timer;
 		
-	public Tailor()
+	public Tailor(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 	}
 

@@ -19,17 +19,13 @@ public class AnnwnBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AnnwnBook"/> class.
 	/// </summary>
-	public AnnwnBook() : base(298)
+	public AnnwnBook(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 298)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AnnwnBook"/> class.
 	/// </summary>
-	public AnnwnBook(Serial serial) : base(serial)
-	{
-	}
-
 	public AnnwnBook(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)
 	{

@@ -41,16 +41,13 @@ public class ReturningHammer : Mace, IReturningWeapon, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ReturningHammer"/> class.
 	/// </summary>
-	public ReturningHammer() : base(75)
+	public ReturningHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 75)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ReturningHammer"/> class.
 	/// </summary>
-	public ReturningHammer(Serial serial) : base(serial)
-	{
-	}
 
 	public ReturningHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

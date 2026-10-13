@@ -34,16 +34,13 @@ public class WarHammer : Mace
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WarHammer"/> class.
 	/// </summary>
-	public WarHammer() : base(112)
+	public WarHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 112)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WarHammer"/> class.
 	/// </summary>
-	public WarHammer(Serial serial) : base(serial)
-	{
-	}
 
 	public WarHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

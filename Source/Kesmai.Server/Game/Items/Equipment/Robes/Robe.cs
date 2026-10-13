@@ -28,16 +28,13 @@ public abstract class Robe : Equipment
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Robe"/> class.
 	/// </summary>
-	protected Robe(int robeID) : base(robeID)
+	protected Robe(IEntityProvider entityProvider, EntityDependencies entityDependencies, int robeID) : base(entityProvider, entityDependencies, robeID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Robe"/> class.
 	/// </summary>
-	protected Robe(Serial serial) : base(serial)
-	{
-	}
 
 	protected Robe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

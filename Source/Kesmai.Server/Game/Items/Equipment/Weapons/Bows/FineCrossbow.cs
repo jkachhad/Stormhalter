@@ -19,16 +19,13 @@ public class FineCrossbow : Crossbow
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FineCrossbow"/> class.
 	/// </summary>
-	public FineCrossbow() : base(230)
+	public FineCrossbow(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 230)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FineCrossbow"/> class.
 	/// </summary>
-	public FineCrossbow(Serial serial) : base(serial)
-	{
-	}
 
 	public FineCrossbow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

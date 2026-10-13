@@ -34,16 +34,13 @@ public class BankerRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BankerRing"/> class.
 	/// </summary>
-	public BankerRing() : base(502)
+	public BankerRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 502)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BankerRing"/> class.
 	/// </summary>
-	public BankerRing(Serial serial) : base(serial)
-	{
-	}
 
 	public BankerRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)
@@ -101,7 +98,7 @@ public class BankerRing : Ring, ITreasure
 			return;
 
 		/* Move the created gold to the specified location. */
-		var gold = new Gold
+		var gold = new Gold(_entityProvider, _entityDependencies)
 		{
 			Amount = Consumed
 		};

@@ -37,16 +37,13 @@ public class ThrowingHammer : Mace
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ThrowingHammer"/> class.
 	/// </summary>
-	public ThrowingHammer() : base(75)
+	public ThrowingHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 75)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ThrowingHammer"/> class.
 	/// </summary>
-	public ThrowingHammer(Serial serial) : base(serial)
-	{
-	}
 
 	public ThrowingHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -37,16 +37,13 @@ public class MisericordeDagger : Dagger, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MisericordeDagger"/> class.
 	/// </summary>
-	public MisericordeDagger() : base(186)
+	public MisericordeDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 186)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MisericordeDagger"/> class.
 	/// </summary>
-	public MisericordeDagger(Serial serial) : base(serial)
-	{
-	}
 
 	public MisericordeDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -37,16 +37,13 @@ public class HeavyCrossbow : Crossbow, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HeavyCrossbow"/> class.
 	/// </summary>
-	public HeavyCrossbow() : base(232)
+	public HeavyCrossbow(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 232)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HeavyCrossbow"/> class.
 	/// </summary>
-	public HeavyCrossbow(Serial serial) : base(serial)
-	{
-	}
 
 	public HeavyCrossbow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

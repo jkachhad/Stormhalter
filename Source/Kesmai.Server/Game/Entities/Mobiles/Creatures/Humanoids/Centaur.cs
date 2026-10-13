@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Centaur : CreatureEntity
 {
-	public Centaur()
+	public Centaur(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "centaur";
 		Body = 3;
@@ -29,6 +29,6 @@ public partial class Centaur : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

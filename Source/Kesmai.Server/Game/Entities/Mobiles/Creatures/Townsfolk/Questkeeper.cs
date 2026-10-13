@@ -9,9 +9,6 @@ public abstract partial class Questkeeper : VendorEntity
 {
 	private static Regex _teach = new Regex(@"^teach\s?([\w]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		
-	protected Questkeeper()
-	{
-	}
 
 	public override void HandleOrder(OrderEventArgs args)
 	{

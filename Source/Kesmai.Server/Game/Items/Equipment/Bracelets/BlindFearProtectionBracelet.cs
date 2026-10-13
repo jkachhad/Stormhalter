@@ -19,16 +19,13 @@ public class BlindFearProtectionBracelet : Bracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlindFearProtectionBracelet"/> class.
 	/// </summary>
-	public BlindFearProtectionBracelet() : base(22)
+	public BlindFearProtectionBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 22)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlindFearProtectionBracelet"/> class.
 	/// </summary>
-	public BlindFearProtectionBracelet(Serial serial) : base(serial)
-	{
-	}
 
 	public BlindFearProtectionBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

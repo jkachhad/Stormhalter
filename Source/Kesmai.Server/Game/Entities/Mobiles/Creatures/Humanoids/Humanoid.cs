@@ -34,20 +34,13 @@ public partial class Humanoid : CreatureEntity
 	/// </remarks>
 	public List<GossipInteraction> Gossips { get; set; }
 	
-	public Humanoid()
-	{
-		Alignment = Alignment.Chaotic;
-		CanSwim = true;
-
-		AddStatus(new BreatheWaterStatus(this));
-	}
 		
 	public override int GetDeathSound() => (IsFemale ? 83 : 79);
 	public override int GetWarmSound() => (IsFemale ? 84 : 80);
 
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherJacket();
+		return new LeatherJacket(_entityProvider, _entityDependencies);
 	}
 
 	public override void OnSpawn()

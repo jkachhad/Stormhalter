@@ -23,7 +23,7 @@ public class JeweledKey : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="JeweledKey"/> class.
 	/// </summary>
-	public JeweledKey() : base(103)
+	public JeweledKey(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 103)
 	{
 	}
 		

@@ -23,7 +23,7 @@ public class ChristmasOrnament : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ChristmasOrnament"/> class.
 	/// </summary>
-	public ChristmasOrnament() : base(323)
+	public ChristmasOrnament(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 323)
 	{
 	}
 		

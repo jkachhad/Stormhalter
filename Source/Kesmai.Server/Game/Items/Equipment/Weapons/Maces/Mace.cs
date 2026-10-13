@@ -21,16 +21,13 @@ public abstract class Mace : MeleeWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Mace"/> class.
 	/// </summary>
-	protected Mace(int maceID) : base(maceID)
+	protected Mace(IEntityProvider entityProvider, EntityDependencies entityDependencies, int maceID) : base(entityProvider, entityDependencies, maceID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Mace"/> class.
 	/// </summary>
-	protected Mace(Serial serial) : base(serial)
-	{
-	}
 
 	protected Mace(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

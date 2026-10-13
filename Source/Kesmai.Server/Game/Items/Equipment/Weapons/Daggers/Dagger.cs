@@ -75,16 +75,13 @@ public abstract class Dagger : MeleeWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Dagger"/> class.
 	/// </summary>
-	protected Dagger(int daggerID) : base(daggerID)
+	protected Dagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, int daggerID) : base(entityProvider, entityDependencies, daggerID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Dagger"/> class.
 	/// </summary>
-	protected Dagger(Serial serial) : base(serial)
-	{
-	}
 
 	protected Dagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

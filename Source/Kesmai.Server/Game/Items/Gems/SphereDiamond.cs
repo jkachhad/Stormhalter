@@ -14,7 +14,7 @@ public class SphereDiamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SphereDiamond"/> class.
 	/// </summary>
-	public SphereDiamond(uint basePrice) : base(163, basePrice)
+	public SphereDiamond(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 163, basePrice)
 	{
 	}
 

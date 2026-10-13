@@ -6,7 +6,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Lurker : AnimalEntity
 {
-	public Lurker()
+	public Lurker(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "lurker";
 		Body = 161;
@@ -36,6 +36,6 @@ public partial class Lurker : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

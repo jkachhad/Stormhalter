@@ -12,9 +12,6 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 {
 	private static Regex _teach = new Regex(@"^teach\s([\w\s\/]*?)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		
-	public SpellTrainer()
-	{
-	}
 	
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{

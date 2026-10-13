@@ -16,9 +16,6 @@ public class ClearBalm : Balm
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ClearBalm"/> class.
 	/// </summary>
-	public ClearBalm() : base(210, 93)
-	{
-	}
 
 	public ClearBalm(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 210, 93)
@@ -28,7 +25,7 @@ public class ClearBalm : Balm
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ClearBalm"/> class.
 	/// </summary>
-	public ClearBalm(Serial serial) : base(serial)
+	public ClearBalm(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

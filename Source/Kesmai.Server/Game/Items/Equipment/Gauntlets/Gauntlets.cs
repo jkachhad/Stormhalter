@@ -71,16 +71,13 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gauntlets"/> class.
 	/// </summary>
-	protected Gauntlets(int glovesID) : base(glovesID)
+	protected Gauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, int glovesID) : base(entityProvider, entityDependencies, glovesID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gauntlets"/> class.
 	/// </summary>
-	protected Gauntlets(Serial serial) : base(serial)
-	{
-	}
 
 	protected Gauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

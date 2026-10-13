@@ -9,7 +9,7 @@ public partial class Crocodile : AnimalEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Crocodile"/> class.
 	/// </summary>
-	public Crocodile()
+	public Crocodile(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "crocodile";
 		Body = 18;
@@ -38,6 +38,6 @@ public partial class Crocodile : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new CrocodileBoots();
+		return new CrocodileBoots(_entityProvider, _entityDependencies);
 	}
 }

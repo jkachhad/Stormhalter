@@ -8,7 +8,7 @@ public partial class Vampire : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Vampire"/> class.
 	/// </summary>
-	public Vampire()
+	public Vampire(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "vampire";
 		Body = 80;

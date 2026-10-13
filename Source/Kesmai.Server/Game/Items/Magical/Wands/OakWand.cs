@@ -25,16 +25,13 @@ public class OakWand : Wand, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OakWand"/> class.
 	/// </summary>
-	public OakWand() : base(205)
+	public OakWand(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 205)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OakWand"/> class.
 	/// </summary>
-	public OakWand(Serial serial) : base(serial)
-	{
-	}
 
 	public OakWand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

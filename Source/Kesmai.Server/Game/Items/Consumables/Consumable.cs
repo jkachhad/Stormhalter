@@ -25,9 +25,6 @@ public abstract class Consumable : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Consumable"/> class.
 	/// </summary>
-	protected Consumable(int consumableID) : base(consumableID)
-	{
-	}
 
 	protected Consumable(IEntityProvider entityProvider, EntityDependencies entityDependencies, int consumableID)
 		: base(entityProvider, entityDependencies, consumableID)
@@ -37,7 +34,7 @@ public abstract class Consumable : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Consumable"/> class.
 	/// </summary>
-	protected Consumable(Serial serial) : base(serial)
+	protected Consumable(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

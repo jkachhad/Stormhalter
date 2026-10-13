@@ -40,23 +40,20 @@ public class Halberd : MeleeWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Halberd" /> class.
 	/// </summary>
-	public Halberd() : this(158)
+	public Halberd(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 158)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Halberd" /> class.
 	/// </summary>
-	public Halberd(int halberdID) : base(halberdID)
+	public Halberd(IEntityProvider entityProvider, EntityDependencies entityDependencies, int halberdID) : base(entityProvider, entityDependencies, halberdID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Halberd" /> class.
 	/// </summary>
-	public Halberd(Serial serial) : base(serial)
-	{
-	}
 
 	public Halberd(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -22,16 +22,13 @@ public class BreatheWaterRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BreatheWaterRing"/> class.
 	/// </summary>
-	public BreatheWaterRing() : base(44)
+	public BreatheWaterRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 44)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BreatheWaterRing"/> class.
 	/// </summary>
-	public BreatheWaterRing(Serial serial) : base(serial)
-	{
-	}
 
 	public BreatheWaterRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

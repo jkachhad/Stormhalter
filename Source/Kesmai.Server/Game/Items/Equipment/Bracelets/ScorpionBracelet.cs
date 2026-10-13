@@ -18,16 +18,13 @@ public class ScorpionBracelet : Bracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ScorpionBracelet"/> class.
 	/// </summary>
-	public ScorpionBracelet() : base(21)
+	public ScorpionBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 21)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ScorpionBracelet"/> class.
 	/// </summary>
-	public ScorpionBracelet(Serial serial) : base(serial)
-	{
-	}
 
 	public ScorpionBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

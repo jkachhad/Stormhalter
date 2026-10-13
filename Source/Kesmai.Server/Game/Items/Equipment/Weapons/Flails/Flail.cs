@@ -27,16 +27,13 @@ public abstract class Flail : MeleeWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Flail"/> class.
 	/// </summary>
-	protected Flail(int flailID) : base(flailID)
+	protected Flail(IEntityProvider entityProvider, EntityDependencies entityDependencies, int flailID) : base(entityProvider, entityDependencies, flailID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Flail"/> class.
 	/// </summary>
-	protected Flail(Serial serial) : base(serial)
-	{
-	}
 
 	protected Flail(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

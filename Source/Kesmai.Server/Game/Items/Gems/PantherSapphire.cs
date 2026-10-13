@@ -14,7 +14,7 @@ public class PantherSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PantherSapphire"/> class.
 	/// </summary>
-	public PantherSapphire(uint basePrice) : base(167, basePrice)
+	public PantherSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 167, basePrice)
 	{
 	}
 

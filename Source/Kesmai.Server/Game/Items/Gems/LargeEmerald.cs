@@ -15,7 +15,7 @@ public class LargeEmerald : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LargeEmerald"/> class.
 	/// </summary>
-	public LargeEmerald(uint basePrice) : base(61, basePrice)
+	public LargeEmerald(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 61, basePrice)
 	{
 	}
 

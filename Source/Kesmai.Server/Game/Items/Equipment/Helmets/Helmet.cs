@@ -27,16 +27,13 @@ public abstract class Helmet : Equipment
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Helmet"/> class.
 	/// </summary>
-	protected Helmet(int helmetID) : base(helmetID)
+	protected Helmet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int helmetID) : base(entityProvider, entityDependencies, helmetID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Helmet"/> class.
 	/// </summary>
-	protected Helmet(Serial serial) : base(serial)
-	{
-	}
 
 	protected Helmet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

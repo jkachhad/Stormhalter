@@ -34,16 +34,13 @@ public class CopperHalberd : Halberd, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CopperHalberd"/> class.
 	/// </summary>
-	public CopperHalberd() : base(187)
+	public CopperHalberd(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 187)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CopperHalberd"/> class.
 	/// </summary>
-	public CopperHalberd(Serial serial) : base(serial)
-	{
-	}
 
 	public CopperHalberd(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

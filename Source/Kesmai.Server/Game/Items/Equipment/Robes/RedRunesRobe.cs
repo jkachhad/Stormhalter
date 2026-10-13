@@ -28,16 +28,13 @@ public class RedRunesRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RedRunesRobe"/> class.
 	/// </summary>
-	public RedRunesRobe() : base(240)
+	public RedRunesRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 240)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RedRunesRobe"/> class.
 	/// </summary>
-	public RedRunesRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public RedRunesRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

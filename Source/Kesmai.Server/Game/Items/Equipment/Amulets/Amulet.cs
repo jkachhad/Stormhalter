@@ -18,16 +18,13 @@ public abstract class Amulet : Equipment
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Amulet"/> class.
 	/// </summary>
-	protected Amulet(int amuletId) : base(amuletId)
+	protected Amulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int amuletId) : base(entityProvider, entityDependencies, amuletId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Amulet"/> class.
 	/// </summary>
-	protected Amulet(Serial serial) : base(serial)
-	{
-	}
 
 	protected Amulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

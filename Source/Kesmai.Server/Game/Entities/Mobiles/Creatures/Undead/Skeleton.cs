@@ -15,7 +15,7 @@ public partial class Skeleton : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Skeleton"/> class.
 	/// </summary>
-	public Skeleton()
+	public Skeleton(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "skeleton";
 		Body = 51;

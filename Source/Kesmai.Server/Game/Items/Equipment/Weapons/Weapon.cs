@@ -125,16 +125,13 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Weapon"/> class.
 	/// </summary>
-	protected Weapon(int weaponID) : base(weaponID)
+	protected Weapon(IEntityProvider entityProvider, EntityDependencies entityDependencies, int weaponID) : base(entityProvider, entityDependencies, weaponID)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Weapon"/> class.
 	/// </summary>
-	protected Weapon(Serial serial) : base(serial)
-	{
-	}
 
 	protected Weapon(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

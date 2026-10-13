@@ -10,7 +10,8 @@ public partial class SummonedDemon : Demon
 	public override bool CanOrderAttack => true;
 	public override bool CanOrderCarry => true;
 
-	public SummonedDemon(ICreatureSpell spell)
+	public SummonedDemon(IEntityProvider entityProvider, EntityDependencies entityDependencies, ICreatureSpell spell)
+		: base(entityProvider, entityDependencies)
 	{
 		Summoned = true;
 			

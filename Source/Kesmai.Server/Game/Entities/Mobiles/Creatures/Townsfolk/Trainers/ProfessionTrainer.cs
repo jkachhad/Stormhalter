@@ -13,9 +13,6 @@ public abstract partial class ProfessionTrainer : TrainerEntity
 {
 	public abstract Profession Profession { get; }
 		
-	public ProfessionTrainer()
-	{
-	}
 		
 	public override void HandleOrder(OrderEventArgs args)
 	{
@@ -44,7 +41,7 @@ public abstract partial class ProfessionTrainer : TrainerEntity
 				{
 					if (ConsumeFromLocation<Gold>(counter, cost))
 					{
-						new Spellbook(source)
+						new Spellbook(source.EntityProvider, source.Dependencies, source)
 							.Move(counter, true, segment);
 
 						SayTo(source, 6300340); /* Don't go losing it again. */
@@ -103,6 +100,6 @@ public abstract partial class ProfessionTrainer : TrainerEntity
 			=> (uint)(((int)player.GetSkillLevel(Skill.Magic) + 1) * 100);
 
 		protected override ItemEntity CreateItem(PlayerEntity player, VendorEntity vendor) 
-			=> new Spellbook(player);
+			=> new Spellbook(player.EntityProvider, player.Dependencies, player);
 	}
 }

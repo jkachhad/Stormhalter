@@ -23,9 +23,6 @@ public abstract partial class TrainerEntity : VendorEntity
 	public override bool CanPerformMovement => false;
 
 	/// <inheritdoc />
-	protected TrainerEntity()
-	{
-	}
 
 	protected override void OnCreate()
 	{

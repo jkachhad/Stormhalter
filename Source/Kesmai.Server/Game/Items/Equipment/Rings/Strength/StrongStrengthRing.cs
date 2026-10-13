@@ -24,16 +24,13 @@ public class StrongStrengthRing : StrengthRing
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrongStrengthRing"/> class.
 	/// </summary>
-	public StrongStrengthRing() : base(53)
+	public StrongStrengthRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 53)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrongStrengthRing"/> class.
 	/// </summary>
-	public StrongStrengthRing(Serial serial) : base(serial)
-	{
-	}
 
 	public StrongStrengthRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

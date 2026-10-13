@@ -29,16 +29,13 @@ public class WoodenShield : Shield
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WoodenShield"/> class.
 	/// </summary>
-	public WoodenShield() : base(100)
+	public WoodenShield(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 100)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WoodenShield"/> class.
 	/// </summary>
-	public WoodenShield(Serial serial) : base(serial)
-	{
-	}
 
 	public WoodenShield(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

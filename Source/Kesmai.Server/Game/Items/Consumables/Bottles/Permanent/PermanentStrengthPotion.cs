@@ -21,9 +21,6 @@ public class PermanentStrengthPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentStrengthPotion"/> class.
 	/// </summary>
-	public PermanentStrengthPotion() : base(225)
-	{
-	}
 
 	public PermanentStrengthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 225)
@@ -33,7 +30,7 @@ public class PermanentStrengthPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentStrengthPotion"/> class.
 	/// </summary>
-	public PermanentStrengthPotion(Serial serial) : base(serial)
+	public PermanentStrengthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

@@ -16,7 +16,7 @@ public class OysterPearl : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OysterPearl"/> class.
 	/// </summary>
-	public OysterPearl(uint basePrice) : base(143, basePrice)
+	public OysterPearl(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 143, basePrice)
 	{
 	}
 

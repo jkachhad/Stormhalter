@@ -54,19 +54,19 @@ public class SummonPhantasmSpell : DelayedSpell
 
 				switch (intensity)
 				{
-					case int value when value <= 5: phantasm = new SummonedPhantom(); break; 
-					case 6: phantasm = new SummonedDjinn(new CreatureSpell<IceStormSpell>(10)); break;
-					case 7: phantasm = new SummonedDjinn(new CreatureSpell<ConcussionSpell>(10)); break;
-					case 8: phantasm = new SummonedSalamander(new CreatureSpell<FirewallSpell>(8)); break;
+					case int value when value <= 5: phantasm = new SummonedPhantom(_caster.EntityProvider, _caster.Dependencies); break; 
+					case 6: phantasm = new SummonedDjinn(_caster.EntityProvider, _caster.Dependencies, new CreatureSpell<IceStormSpell>(10)); break;
+					case 7: phantasm = new SummonedDjinn(_caster.EntityProvider, _caster.Dependencies, new CreatureSpell<ConcussionSpell>(10)); break;
+					case 8: phantasm = new SummonedSalamander(_caster.EntityProvider, _caster.Dependencies, new CreatureSpell<FirewallSpell>(8)); break;
 					case 9:
 					{
-						phantasm = new SummonedEfreet(new CreatureSpell<WhirlwindSpell>(10, 20)
+						phantasm = new SummonedEfreet(_caster.EntityProvider, _caster.Dependencies, new CreatureSpell<WhirlwindSpell>(10, 20)
 						{
 							OnConstructed = (spell) => { spell.Strength = 2; }
 						});
 						break;
 					}
-					case 10: phantasm = new SummonedEfreet(new CreatureSpell<DragonBreathFireSpell>(10)); break;
+					case 10: phantasm = new SummonedEfreet(_caster.EntityProvider, _caster.Dependencies, new CreatureSpell<DragonBreathFireSpell>(10)); break;
 				}
 
 				if (phantasm != default(CreatureEntity))

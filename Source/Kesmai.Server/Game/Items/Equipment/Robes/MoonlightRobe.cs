@@ -25,16 +25,13 @@ public class MoonlightRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MoonlightRobe"/> class.
 	/// </summary>
-	public MoonlightRobe() : base(257)
+	public MoonlightRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 257)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MoonlightRobe"/> class.
 	/// </summary>
-	public MoonlightRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public MoonlightRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

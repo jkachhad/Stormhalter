@@ -30,16 +30,13 @@ public class RamSkull : Helmet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RamSkull"/> class.
 	/// </summary>
-	public RamSkull() : base(46)
+	public RamSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 46)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RamSkull"/> class.
 	/// </summary>
-	public RamSkull(Serial serial) : base(serial)
-	{
-	}
 
 	public RamSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

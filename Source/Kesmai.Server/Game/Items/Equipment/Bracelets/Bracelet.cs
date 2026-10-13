@@ -14,16 +14,13 @@ public abstract class Bracelet : Equipment
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Bracelet"/> class.
 	/// </summary>
-	protected Bracelet(int braceletID) : base(braceletID)
+	protected Bracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int braceletID) : base(entityProvider, entityDependencies, braceletID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Bracelet"/> class.
 	/// </summary>
-	protected Bracelet(Serial serial) : base(serial)
-	{
-	}
 
 	protected Bracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

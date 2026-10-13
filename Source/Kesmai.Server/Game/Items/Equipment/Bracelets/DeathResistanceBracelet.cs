@@ -19,16 +19,13 @@ public class DeathResistanceBracelet : Bracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DeathResistanceBracelet"/> class.
 	/// </summary>
-	public DeathResistanceBracelet() : base(108)
+	public DeathResistanceBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 108)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DeathResistanceBracelet"/> class.
 	/// </summary>
-	public DeathResistanceBracelet(Serial serial) : base(serial)
-	{
-	}
 
 	public DeathResistanceBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

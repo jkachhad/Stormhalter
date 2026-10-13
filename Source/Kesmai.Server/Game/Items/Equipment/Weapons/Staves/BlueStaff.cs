@@ -28,16 +28,13 @@ public class BlueStaff : Staff, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaff"/> class.
 	/// </summary>
-	public BlueStaff() : base(38)
+	public BlueStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 38)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaff"/> class.
 	/// </summary>
-	public BlueStaff(Serial serial) : base(serial)
-	{
-	}
 
 	public BlueStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

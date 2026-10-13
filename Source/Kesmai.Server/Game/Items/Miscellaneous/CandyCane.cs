@@ -23,7 +23,7 @@ public class CandyCane : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CandyCane"/> class.
 	/// </summary>
-	public CandyCane() : base(322)
+	public CandyCane(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 322)
 	{
 	}
 		

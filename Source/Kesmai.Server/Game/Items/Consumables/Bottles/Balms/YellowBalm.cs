@@ -9,9 +9,6 @@ public class YellowBalm : Balm
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YellowBalm"/> class.
 	/// </summary>
-	public YellowBalm() : base(211, 41)
-	{
-	}
 
 	public YellowBalm(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 211, 41)
@@ -21,7 +18,7 @@ public class YellowBalm : Balm
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YellowBalm"/> class.
 	/// </summary>
-	public YellowBalm(Serial serial) : base(serial)
+	public YellowBalm(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

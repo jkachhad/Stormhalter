@@ -25,16 +25,13 @@ public class BrownRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BrownRobe"/> class.
 	/// </summary>
-	public BrownRobe() : base(265)
+	public BrownRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 265)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BrownRobe"/> class.
 	/// </summary>
-	public BrownRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public BrownRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

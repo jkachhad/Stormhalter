@@ -22,16 +22,13 @@ public class VermeilRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="VermeilRing"/> class.
 	/// </summary>
-	public VermeilRing() : base(218)
+	public VermeilRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 218)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="VermeilRing"/> class.
 	/// </summary>
-	public VermeilRing(Serial serial) : base(serial)
-	{
-	}
 
 	public VermeilRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

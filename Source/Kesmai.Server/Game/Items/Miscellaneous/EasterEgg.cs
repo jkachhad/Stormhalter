@@ -23,7 +23,7 @@ public class EasterEgg : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="EasterEgg"/> class.
 	/// </summary>
-	public EasterEgg() : base(319)
+	public EasterEgg(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 319)
 	{
 	}
 		

@@ -38,16 +38,13 @@ public class ReturningAxe : Axe, IReturningWeapon, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ReturningAxe"/> class.
 	/// </summary>
-	public ReturningAxe() : base(77)
+	public ReturningAxe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 77)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ReturningAxe"/> class.
 	/// </summary>
-	public ReturningAxe(Serial serial) : base(serial)
-	{
-	}
 
 	public ReturningAxe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

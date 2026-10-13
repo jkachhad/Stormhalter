@@ -37,16 +37,13 @@ public class JewelerRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="JewelerRing"/> class.
 	/// </summary>
-	public JewelerRing() : base(503)
+	public JewelerRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 503)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="JewelerRing"/> class.
 	/// </summary>
-	public JewelerRing(Serial serial) : base(serial)
-	{
-	}
 
 	public JewelerRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)
@@ -141,7 +138,7 @@ public class JewelerRing : Ring, ITreasure
 			if (backpack is null)
 				return;
 
-			var gold = new Gold
+			var gold = new Gold(source.EntityProvider, source.Dependencies)
 			{
 				Amount = gem.ActualPrice,
 			};

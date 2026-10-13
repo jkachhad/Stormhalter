@@ -31,16 +31,13 @@ public class AlligatorVest : Armor
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AlligatorVest"/> class.
 	/// </summary>
-	public AlligatorVest() : base(249)
+	public AlligatorVest(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 249)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AlligatorVest"/> class.
 	/// </summary>
-	public AlligatorVest(Serial serial) : base(serial)
-	{
-	}
 
 	public AlligatorVest(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

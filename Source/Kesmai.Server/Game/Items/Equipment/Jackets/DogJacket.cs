@@ -16,16 +16,13 @@ public class DogJacket : Jacket
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DogJacket"/> class.
 	/// </summary>
-	public DogJacket() : base(254)
+	public DogJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 254)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DogJacket"/> class.
 	/// </summary>
-	public DogJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public DogJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -19,16 +19,13 @@ public class StunDeathProtectionBracelet : Bracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StunDeathProtectionBracelet"/> class.
 	/// </summary>
-	public StunDeathProtectionBracelet() : base(132)
+	public StunDeathProtectionBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 132)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StunDeathProtectionBracelet"/> class.
 	/// </summary>
-	public StunDeathProtectionBracelet(Serial serial) : base(serial)
-	{
-	}
 
 	public StunDeathProtectionBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

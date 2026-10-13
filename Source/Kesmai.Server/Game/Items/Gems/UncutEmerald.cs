@@ -13,7 +13,7 @@ public class UncutEmerald : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UncutEmerald"/> class.
 	/// </summary>
-	public UncutEmerald(uint basePrice) : base(178, basePrice)
+	public UncutEmerald(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 178, basePrice)
 	{
 	}
 	

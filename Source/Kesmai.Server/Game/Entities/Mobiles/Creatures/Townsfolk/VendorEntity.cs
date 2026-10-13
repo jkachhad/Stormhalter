@@ -19,12 +19,6 @@ public partial class VendorEntity : Humanoid
 		set => _counters = value;
 	}
 
-	protected VendorEntity()
-	{
-		Alignment = Alignment.Lawful;
-
-		CanLoot = false;
-	}
 
 	protected override void OnCreate()
 	{

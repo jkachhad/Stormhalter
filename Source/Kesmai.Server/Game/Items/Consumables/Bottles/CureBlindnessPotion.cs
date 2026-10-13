@@ -18,9 +18,6 @@ public class CureBlindnessPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CureBlindnessPotion"/> class.
 	/// </summary>
-	public CureBlindnessPotion() : base(212)
-	{
-	}
 
 	public CureBlindnessPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 212)
@@ -30,7 +27,7 @@ public class CureBlindnessPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CureBlindnessPotion"/> class.
 	/// </summary>
-	public CureBlindnessPotion(Serial serial) : base(serial)
+	public CureBlindnessPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

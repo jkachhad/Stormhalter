@@ -19,16 +19,13 @@ public class DragonFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DragonFigurine"/> class.
 	/// </summary>
-	public DragonFigurine() : base(48)
+	public DragonFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 48)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DragonFigurine"/> class.
 	/// </summary>
-	public DragonFigurine(Serial serial) : base(serial)
-	{
-	}
 
 	public DragonFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

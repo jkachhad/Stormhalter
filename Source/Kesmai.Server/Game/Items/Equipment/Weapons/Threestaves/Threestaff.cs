@@ -22,16 +22,13 @@ public abstract class Threestaff : MeleeWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Threestaff"/> class.
 	/// </summary>
-	protected Threestaff(int threeStaffId) : base(threeStaffId)
+	protected Threestaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, int threeStaffId) : base(entityProvider, entityDependencies, threeStaffId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Threestaff" /> class.
 	/// </summary>
-	protected Threestaff(Serial serial) : base(serial)
-	{
-	}
 
 	protected Threestaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -16,16 +16,13 @@ public class BearJacket : Jacket
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BearJacket"/> class.
 	/// </summary>
-	public BearJacket() : base(271)
+	public BearJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 271)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BearJacket"/> class.
 	/// </summary>
-	public BearJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public BearJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

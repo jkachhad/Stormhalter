@@ -16,14 +16,14 @@ public class PowerBracelet : Bracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PowerBracelet"/> class.
 	/// </summary>
-	public PowerBracelet() : this(ItemQuality.Common)
+	public PowerBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, ItemQuality.Common)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PowerBracelet"/> class.
 	/// </summary>
-	public PowerBracelet(ItemQuality quality) : base(135)
+	public PowerBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, ItemQuality quality) : base(entityProvider, entityDependencies, 135)
 	{
 		Quality = quality;
 	}
@@ -31,9 +31,6 @@ public class PowerBracelet : Bracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PowerBracelet"/> class.
 	/// </summary>
-	public PowerBracelet(Serial serial) : base(serial)
-	{
-	}
 
 	public PowerBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

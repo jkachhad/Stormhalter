@@ -31,16 +31,13 @@ public class YasnakiDagger : Dagger, IReturningWeapon, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YasnakiDagger"/> class.
 	/// </summary>
-	public YasnakiDagger() : base(308)
+	public YasnakiDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 308)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="YasnakiDagger"/> class.
 	/// </summary>
-	public YasnakiDagger(Serial serial) : base(serial)
-	{
-	}
 
 	public YasnakiDagger(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

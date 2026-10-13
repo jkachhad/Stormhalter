@@ -9,7 +9,7 @@ public partial class Ghoul : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Ghoul"/> class.
 	/// </summary>
-	public Ghoul()
+	public Ghoul(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "ghoul";
 		Body = 77;

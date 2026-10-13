@@ -27,16 +27,13 @@ public class LightningShield : Shield, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LightningShield"/> class.
 	/// </summary>
-	public LightningShield() : base(280)
+	public LightningShield(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 280)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LightningShield"/> class.
 	/// </summary>
-	public LightningShield(Serial serial) : base(serial)
-	{
-	}
 
 	public LightningShield(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

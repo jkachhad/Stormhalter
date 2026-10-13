@@ -54,16 +54,13 @@ public abstract class ProjectileWeapon : Weapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ProjectileWeapon"/> class.
 	/// </summary>
-	protected ProjectileWeapon(int projectileWeaponID) : base(projectileWeaponID)
+	protected ProjectileWeapon(IEntityProvider entityProvider, EntityDependencies entityDependencies, int projectileWeaponID) : base(entityProvider, entityDependencies, projectileWeaponID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ProjectileWeapon"/> class.
 	/// </summary>
-	protected ProjectileWeapon(Serial serial) : base(serial)
-	{
-	}
 
 	protected ProjectileWeapon(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

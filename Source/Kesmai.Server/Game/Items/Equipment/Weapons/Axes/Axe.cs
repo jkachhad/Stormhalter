@@ -21,16 +21,13 @@ public abstract class Axe : MeleeWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Axe"/> class.
 	/// </summary>
-	protected Axe(int axeID) : base(axeID)
+	protected Axe(IEntityProvider entityProvider, EntityDependencies entityDependencies, int axeID) : base(entityProvider, entityDependencies, axeID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Axe"/> class.
 	/// </summary>
-	protected Axe(Serial serial) : base(serial)
-	{
-	}
 
 	protected Axe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

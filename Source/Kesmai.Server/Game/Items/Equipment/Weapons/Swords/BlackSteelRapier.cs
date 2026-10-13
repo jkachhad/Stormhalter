@@ -33,16 +33,13 @@ public class BlackSteelRapier : Rapier, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackSteelRapier"/> class.
 	/// </summary>
-	public BlackSteelRapier() : base(309)
+	public BlackSteelRapier(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 309)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackSteelRapier"/> class.
 	/// </summary>
-	public BlackSteelRapier(Serial serial) : base(serial)
-	{
-	}
 
 	public BlackSteelRapier(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

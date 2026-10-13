@@ -31,16 +31,13 @@ public class BearSkull : Helmet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BearSkull"/> class.
 	/// </summary>
-	public BearSkull() : base(34)
+	public BearSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 34)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BearSkull"/> class.
 	/// </summary>
-	public BearSkull(Serial serial) : base(serial)
-	{
-	}
 
 	public BearSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

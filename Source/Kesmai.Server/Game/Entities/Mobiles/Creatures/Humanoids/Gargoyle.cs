@@ -9,7 +9,7 @@ public partial class Gargoyle : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gargoyle"/> class.
 	/// </summary>
-	public Gargoyle()
+	public Gargoyle(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "gargoyle";
 		Body = 76;
@@ -42,6 +42,6 @@ public partial class Gargoyle : CreatureEntity
 
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

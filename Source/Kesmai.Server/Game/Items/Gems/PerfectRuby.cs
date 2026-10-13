@@ -14,7 +14,7 @@ public class PerfectRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PerfectRuby"/> class.
 	/// </summary>
-	public PerfectRuby(uint basePrice) : base(359, basePrice)
+	public PerfectRuby(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 359, basePrice)
 	{
 	}
 

@@ -17,7 +17,7 @@ public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaffHeal"/> class.
 	/// </summary>
-	public BlueStaffHeal() : this(5)
+	public BlueStaffHeal(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 5)
 	{
 		Hue = Color.Yellow;
 	}
@@ -25,7 +25,7 @@ public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaffHeal"/> class.
 	/// </summary>
-	public BlueStaffHeal(int charges)
+	public BlueStaffHeal(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges) : base(entityProvider, entityDependencies)
 	{
 		_chargesCurrent = _chargesMax = charges;
 	}
@@ -33,9 +33,6 @@ public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaffHeal"/> class.
 	/// </summary>
-	public BlueStaffHeal(Serial serial) : base(serial)
-	{
-	}
 
 	public BlueStaffHeal(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

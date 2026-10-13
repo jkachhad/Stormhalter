@@ -11,9 +11,6 @@ public abstract class Food : Consumable
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Food"/> class.
 	/// </summary>
-	public Food(int foodId) : base(foodId)
-	{
-	}
 
 	public Food(IEntityProvider entityProvider, EntityDependencies entityDependencies, int foodId)
 		: base(entityProvider, entityDependencies, foodId)
@@ -23,7 +20,7 @@ public abstract class Food : Consumable
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Food"/> class.
 	/// </summary>
-	public Food(Serial serial) : base(serial)
+	public Food(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 	

@@ -9,7 +9,7 @@ public partial class Drake : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Drake"/> class.
 	/// </summary>
-	public Drake()
+	public Drake(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "drake";
 		Body = 93;
@@ -52,6 +52,6 @@ public partial class Drake : CreatureEntity
 
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new DrakeScaleArmor();
+		return new DrakeScaleArmor(_entityProvider, _entityDependencies);
 	}
 }

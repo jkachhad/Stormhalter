@@ -18,9 +18,6 @@ public class RedBerries : Food
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RedBerries"/> class.
 	/// </summary>
-	public RedBerries() : base(26)
-	{
-	}
 
 	public RedBerries(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 26)
@@ -30,7 +27,7 @@ public class RedBerries : Food
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RedBerries"/> class.
 	/// </summary>
-	public RedBerries(Serial serial) : base(serial)
+	public RedBerries(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

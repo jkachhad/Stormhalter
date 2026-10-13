@@ -26,24 +26,20 @@ public class Gold : Currency
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gold" /> class.
 	/// </summary>
-	public Gold() : this(1U)
+	public Gold(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 1U)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gold" /> class.
 	/// </summary>
-	public Gold(int amount) : this((uint)amount)
+	public Gold(IEntityProvider entityProvider, EntityDependencies entityDependencies, int amount) : this(entityProvider, entityDependencies, (uint)amount)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gold"/> class.
 	/// </summary>
-	public Gold(uint amount = 1) : base(73)
-	{
-		Amount = amount;
-	}
 
 	public Gold(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint amount = 1)
 		: base(entityProvider, entityDependencies, 73)
@@ -54,7 +50,7 @@ public class Gold : Currency
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gold"/> class.
 	/// </summary>
-	public Gold(Serial serial) : base(serial)
+	public Gold(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

@@ -23,16 +23,13 @@ public class CrashingWavesRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CrashingWavesRing"/> class.
 	/// </summary>
-	public CrashingWavesRing() : base(395)
+	public CrashingWavesRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 395)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CrashingWavesRing"/> class.
 	/// </summary>
-	public CrashingWavesRing(Serial serial) : base(serial)
-	{
-	}
 
 	public CrashingWavesRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

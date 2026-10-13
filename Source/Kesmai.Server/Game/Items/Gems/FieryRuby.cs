@@ -16,7 +16,7 @@ public class FieryRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FieryRuby"/> class.
 	/// </summary>
-	public FieryRuby(uint basePrice) : base(165, basePrice)
+	public FieryRuby(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 165, basePrice)
 	{
 	}
 

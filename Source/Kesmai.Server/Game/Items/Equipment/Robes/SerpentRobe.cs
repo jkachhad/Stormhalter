@@ -25,16 +25,13 @@ public class SerpentRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SerpentRobe"/> class.
 	/// </summary>
-	public SerpentRobe() : base(235)
+	public SerpentRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 235)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SerpentRobe"/> class.
 	/// </summary>
-	public SerpentRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public SerpentRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

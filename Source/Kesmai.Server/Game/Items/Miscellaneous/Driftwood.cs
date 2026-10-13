@@ -23,7 +23,7 @@ public class PetrifiedWood : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PetrifiedWood"/> class.
 	/// </summary>
-	public PetrifiedWood() : base(13)
+	public PetrifiedWood(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 13)
 	{
 	}
 		

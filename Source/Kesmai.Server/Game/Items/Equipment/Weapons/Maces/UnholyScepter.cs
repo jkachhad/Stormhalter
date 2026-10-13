@@ -47,11 +47,7 @@ public class UnholyScepter : Mace
     /// <summary>
     /// Initializes a new instance of the <see cref="UnholyScepter"/> class.
     /// </summary>
-    public UnholyScepter() : base(965)
-    {
-    }
-
-    public UnholyScepter(Serial serial) : base(serial)
+    public UnholyScepter(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 965)
     {
     }
 

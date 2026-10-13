@@ -44,16 +44,13 @@ public class IceDragonScaleArmor : Armor, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceDragonScaleArmor"/> class.
 	/// </summary>
-	public IceDragonScaleArmor() : base(219)
+	public IceDragonScaleArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 219)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceDragonScaleArmor"/> class.
 	/// </summary>
-	public IceDragonScaleArmor(Serial serial) : base(serial)
-	{
-	}
 
 	public IceDragonScaleArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

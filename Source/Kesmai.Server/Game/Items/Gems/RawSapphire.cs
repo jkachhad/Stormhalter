@@ -14,7 +14,7 @@ public class RawSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RawSapphire"/> class.
 	/// </summary>
-	public RawSapphire(uint basePrice) : base(361, basePrice)
+	public RawSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 361, basePrice)
 	{
 	}
 	

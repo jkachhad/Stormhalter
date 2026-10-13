@@ -24,16 +24,13 @@ public class SpectreCloak : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SpectreCloak"/> class.
 	/// </summary>
-	public SpectreCloak() : base(252)
+	public SpectreCloak(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 252)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SpectreCloak"/> class.
 	/// </summary>
-	public SpectreCloak(Serial serial) : base(serial)
-	{
-	}
 
 	public SpectreCloak(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -11,16 +11,13 @@ public abstract class Jacket : Robe
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Jacket"/> class.
 	/// </summary>
-	protected Jacket(int jacketId) : base(jacketId)
+	protected Jacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, int jacketId) : base(entityProvider, entityDependencies, jacketId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Jacket"/> class.
 	/// </summary>
-	protected Jacket(Serial serial) : base(serial)
-	{
-	}
 
 	protected Jacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

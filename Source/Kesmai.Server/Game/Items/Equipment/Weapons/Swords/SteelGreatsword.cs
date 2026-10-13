@@ -16,10 +16,7 @@ public class SteelGreatsword : Greatsword
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelGreatsword"/> class and serializes it.
 	/// </summary>
-	public SteelGreatsword() : base(161)
-	{
-	}
-	public SteelGreatsword(Serial serial) : base(serial)
+	public SteelGreatsword(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 161)
 	{
 	}
 

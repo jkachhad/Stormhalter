@@ -43,16 +43,13 @@ public class RamStaff : Staff, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RamStaff"/> class.
 	/// </summary>
-	public RamStaff() : base(902)
+	public RamStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 902)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RamStaff"/> class.
 	/// </summary>
-	public RamStaff(Serial serial) : base(serial)
-	{
-	}
 
 	public RamStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

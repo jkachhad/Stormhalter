@@ -15,16 +15,13 @@ public class Diamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Diamond"/> class.
 	/// </summary>
-	public Diamond(uint basePrice) : base(136, basePrice)
+	public Diamond(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 136, basePrice)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Diamond"/> class.
 	/// </summary>
-	public Diamond(Serial serial) : base(serial)
-	{
-	}
 
 	public Diamond(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

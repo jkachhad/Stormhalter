@@ -8,7 +8,7 @@ public partial class Giant : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Giant"/> class.
 	/// </summary>
-	public Giant()
+	public Giant(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "giant";
 		Body = 82;
@@ -39,6 +39,6 @@ public partial class Giant : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherJacket();
+		return new LeatherJacket(_entityProvider, _entityDependencies);
 	}
 }

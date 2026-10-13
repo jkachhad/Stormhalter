@@ -25,16 +25,13 @@ public class WaveRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WaveRobe"/> class.
 	/// </summary>
-	public WaveRobe() : base(263)
+	public WaveRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 263)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WaveRobe"/> class.
 	/// </summary>
-	public WaveRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public WaveRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

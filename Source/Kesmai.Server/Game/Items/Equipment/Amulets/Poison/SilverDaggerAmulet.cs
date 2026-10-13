@@ -38,14 +38,14 @@ public class SilverDaggerAmulet : Amulet, ITreasure, ICharged
 	/// </summary>
 	public override int Weight => 100;
 		
-	public SilverDaggerAmulet() : this(20)
+	public SilverDaggerAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 20)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SilverDaggerAmulet"/> class.
 	/// </summary>
-	public SilverDaggerAmulet(int charges = 20) : base(304)
+	public SilverDaggerAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges = 20) : base(entityProvider, entityDependencies, 304)
 	{
 		_chargesCurrent = charges;
 		_chargesMax = charges;
@@ -54,9 +54,6 @@ public class SilverDaggerAmulet : Amulet, ITreasure, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SilverDaggerAmulet"/> class.
 	/// </summary>
-	public SilverDaggerAmulet(Serial serial) : base(serial)
-	{
-	}
 
 	public SilverDaggerAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

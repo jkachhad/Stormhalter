@@ -14,7 +14,7 @@ public class TigerEye : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerEye"/> class.
 	/// </summary>
-	public TigerEye(uint basePrice) : base(196, basePrice)
+	public TigerEye(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 196, basePrice)
 	{
 	}
 

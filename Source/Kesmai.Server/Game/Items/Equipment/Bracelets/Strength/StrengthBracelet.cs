@@ -24,23 +24,20 @@ public class StrengthBracelet : Bracelet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrengthBracelet"/> class.
 	/// </summary>
-	public StrengthBracelet() : this(133)
+	public StrengthBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 133)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrengthBracelet"/> class.
 	/// </summary>
-	public StrengthBracelet(int itemId) : base(itemId)
+	public StrengthBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int itemId) : base(entityProvider, entityDependencies, itemId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StrengthBracelet"/> class.
 	/// </summary>
-	public StrengthBracelet(Serial serial) : base(serial)
-	{
-	}
 
 	public StrengthBracelet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

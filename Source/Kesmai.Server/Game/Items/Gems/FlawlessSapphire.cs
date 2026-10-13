@@ -14,7 +14,7 @@ public class FlawlessSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FlawlessSapphire"/> class.
 	/// </summary>
-	public FlawlessSapphire(uint basePrice) : base(177, basePrice)
+	public FlawlessSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 177, basePrice)
 	{
 	}
 

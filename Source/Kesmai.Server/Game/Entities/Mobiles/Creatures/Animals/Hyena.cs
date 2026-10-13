@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Hyena : AnimalEntity
 {
-	public Hyena()
+	public Hyena(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "hyena";
 		Body = 27;
@@ -26,6 +26,6 @@ public partial class Hyena : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new HyenaJacket();
+		return new HyenaJacket(_entityProvider, _entityDependencies);
 	}
 }

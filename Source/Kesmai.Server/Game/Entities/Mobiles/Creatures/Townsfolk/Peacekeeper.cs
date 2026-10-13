@@ -6,7 +6,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Peacekeeper : Humanoid
 {
-	public Peacekeeper()
+	public Peacekeeper(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Alignment = Alignment.Lawful;
 			

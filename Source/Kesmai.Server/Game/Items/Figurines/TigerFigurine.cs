@@ -19,16 +19,13 @@ public class TigerFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerFigurine"/> class.
 	/// </summary>
-	public TigerFigurine() : base(49)
+	public TigerFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 49)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerFigurine"/> class.
 	/// </summary>
-	public TigerFigurine(Serial serial) : base(serial)
-	{
-	}
 
 	public TigerFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

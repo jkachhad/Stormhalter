@@ -79,10 +79,6 @@ public class Book : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Book"/> class.
 	/// </summary>
-	public Book(uint publicationId) : base(152)
-	{
-		PublicationId = publicationId;
-	}
 
 	public Book(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint publicationId)
 		: base(entityProvider, entityDependencies, 152)
@@ -93,9 +89,6 @@ public class Book : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Book"/> class.
 	/// </summary>
-	public Book(Serial serial) : base(serial)
-	{
-	}
 
 	public Book(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

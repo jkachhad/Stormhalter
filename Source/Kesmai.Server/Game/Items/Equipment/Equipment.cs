@@ -59,23 +59,20 @@ public abstract class Equipment : ItemEntity
 	/// result in an uninitialized instance. This constructor is primarily
 	/// provided to facilitate deserialization processes.
 	/// </remarks>
-	public Equipment() : base(0)
+	public Equipment(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 0)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Equipment"/> class.
 	/// </summary>
-	protected Equipment(int equipmentId) : base(equipmentId)
+	protected Equipment(IEntityProvider entityProvider, EntityDependencies entityDependencies, int equipmentId) : base(entityProvider, entityDependencies, equipmentId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Equipment"/> class.
 	/// </summary>
-	protected Equipment(Serial serial) : base(serial)
-	{
-	}
 
 	protected Equipment(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

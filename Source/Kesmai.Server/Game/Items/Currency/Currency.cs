@@ -19,9 +19,6 @@ public abstract class Currency : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Currency"/> class.
 	/// </summary>
-	protected Currency(int currencyID) : base(currencyID)
-	{
-	}
 
 	protected Currency(IEntityProvider entityProvider, EntityDependencies entityDependencies, int currencyID)
 		: base(entityProvider, entityDependencies, currencyID)
@@ -31,7 +28,7 @@ public abstract class Currency : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Currency"/> class.
 	/// </summary>
-	protected Currency(Serial serial) : base(serial)
+	protected Currency(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

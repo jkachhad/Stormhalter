@@ -25,9 +25,6 @@ public class Mugwort : Food
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Mugwort"/> class.
 	/// </summary>
-	public Mugwort() : base(138)
-	{
-	}
 
 	public Mugwort(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 138)
@@ -37,7 +34,7 @@ public class Mugwort : Food
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Mugwort"/> class.
 	/// </summary>
-	public Mugwort(Serial serial) : base(serial)
+	public Mugwort(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

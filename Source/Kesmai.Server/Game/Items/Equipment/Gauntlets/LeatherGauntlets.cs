@@ -28,16 +28,13 @@ public class LeatherGauntlets : Gauntlets, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LeatherGauntlets"/> class.
 	/// </summary>
-	public LeatherGauntlets() : base(1)
+	public LeatherGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 1)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LeatherGauntlets"/> class.
 	/// </summary>
-	public LeatherGauntlets(Serial serial) : base(serial)
-	{
-	}
 
 	public LeatherGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -18,16 +18,13 @@ public class Boots : Equipment
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Boots"/> class.
 	/// </summary>
-	public Boots(int bootsID) : base(bootsID)
+	public Boots(IEntityProvider entityProvider, EntityDependencies entityDependencies, int bootsID) : base(entityProvider, entityDependencies, bootsID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Boots"/> class.
 	/// </summary>
-	public Boots(Serial serial) : base(serial)
-	{
-	}
 
 	public Boots(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

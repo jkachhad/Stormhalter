@@ -31,16 +31,13 @@ public class DragonSkull : Helmet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DragonSkull"/> class.
 	/// </summary>
-	public DragonSkull() : base(47)
+	public DragonSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 47)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DragonSkull"/> class.
 	/// </summary>
-	public DragonSkull(Serial serial) : base(serial)
-	{
-	}
 
 	public DragonSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

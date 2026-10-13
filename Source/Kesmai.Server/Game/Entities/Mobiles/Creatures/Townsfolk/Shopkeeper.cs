@@ -73,7 +73,7 @@ public partial class Shopkeeper : VendorEntity
 	[CommandProperty(AccessLevel.GameMaster)]
 	public Timer RestockTimer => _restockTimer;
 
-	public Shopkeeper()
+	public Shopkeeper(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 	}
 
@@ -131,7 +131,7 @@ public partial class Shopkeeper : VendorEntity
 
 					source.PlaySound(10007);
 
-					var gold = new Gold()
+					var gold = new Gold(_entityProvider, _entityDependencies)
 					{
 						Amount = totalValue,
 					};
@@ -503,7 +503,7 @@ public partial class Shopkeeper : VendorEntity
 
 				source.PlaySound(10007);
 
-				var gold = new Gold
+				var gold = new Gold(source.EntityProvider, source.Dependencies)
 				{
 					Amount = totalValue,
 				};
@@ -574,7 +574,7 @@ public partial class Shopkeeper : VendorEntity
 				
 				player.PlaySound(10007);
 
-				var gold = new Gold
+			var gold = new Gold(player.EntityProvider, player.Dependencies)
 				{
 					Amount = totalValue,
 				};

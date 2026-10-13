@@ -37,23 +37,20 @@ public class Greatsword : Sword
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Greatsword"/> class.
 	/// </summary>
-	public Greatsword() : base(98)
+	public Greatsword(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 98)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Greatsword"/> class.
 	/// </summary>
-	public Greatsword(int itemId) : base(itemId)
+	public Greatsword(IEntityProvider entityProvider, EntityDependencies entityDependencies, int itemId) : base(entityProvider, entityDependencies, itemId)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Greatsword"/> class.
 	/// </summary>
-	public Greatsword(Serial serial) : base(serial)
-	{
-	}
 
 	public Greatsword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -23,23 +23,20 @@ public class GoldenTorc : StunDeathProtectionAmulet
 	/// </summary>
 	public override int Weight => 150;
 		
-	public GoldenTorc() : this(4)
+	public GoldenTorc(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 4)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldenTorc"/> class.
 	/// </summary>
-	public GoldenTorc(int charges = 4) : base(300, charges)
+	public GoldenTorc(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges = 4) : base(entityProvider, entityDependencies, 300, charges)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldenTorc"/> class.
 	/// </summary>
-	public GoldenTorc(Serial serial) : base(serial)
-	{
-	}
 
 	public GoldenTorc(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

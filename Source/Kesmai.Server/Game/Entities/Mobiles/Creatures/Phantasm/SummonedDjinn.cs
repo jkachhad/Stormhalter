@@ -13,7 +13,8 @@ public partial class SummonedDjinn : Djinn
 	public override bool CanOrderCarry => true;
 	private double _focusLevelModifier = 0.0;
 
-	public SummonedDjinn(ICreatureSpell spell, double focusLevelModifier = 0.0)
+	public SummonedDjinn(IEntityProvider entityProvider, EntityDependencies entityDependencies, ICreatureSpell spell, double focusLevelModifier = 0.0)
+		: base(entityProvider, entityDependencies)
 	{
 		_focusLevelModifier = focusLevelModifier;
 		Summoned = true;

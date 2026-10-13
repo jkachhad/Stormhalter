@@ -8,7 +8,7 @@ public partial class Panda : AnimalEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Panda"/> class.
 	/// </summary>
-	public Panda()
+	public Panda(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "panda";
 		Body = 29;
@@ -30,6 +30,6 @@ public partial class Panda : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new BearJacket();
+		return new BearJacket(_entityProvider, _entityDependencies);
 	}
 }

@@ -47,16 +47,13 @@ public class SilverGreatAxe : Axe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SilverGreatAxe"/> class.
 	/// </summary>
-	public SilverGreatAxe() : base(125)
+	public SilverGreatAxe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 125)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SilverGreatAxe"/> class.
 	/// </summary>
-	public SilverGreatAxe(Serial serial) : base(serial)
-	{
-	}
 
 	public SilverGreatAxe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -19,9 +19,6 @@ public class WaterPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WaterPotion"/> class.
 	/// </summary>
-	public WaterPotion() : base(210)
-	{
-	}
 
 	public WaterPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 210)
@@ -31,7 +28,7 @@ public class WaterPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WaterPotion"/> class.
 	/// </summary>
-	public WaterPotion(Serial serial) : base(serial)
+	public WaterPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

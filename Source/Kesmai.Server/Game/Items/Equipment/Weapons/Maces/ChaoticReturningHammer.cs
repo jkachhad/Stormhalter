@@ -41,10 +41,7 @@ public class ChaoticReturningHammer : Mace, IReturningWeapon, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ReturningHammer"/> class.
 	/// </summary>
-	public ChaoticReturningHammer() : base(75)
-	{
-	}
-	public ChaoticReturningHammer(Serial serial) : base(serial)
+	public ChaoticReturningHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 75)
 	{
 	}
 

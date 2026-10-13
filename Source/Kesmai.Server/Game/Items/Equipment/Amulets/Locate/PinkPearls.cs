@@ -17,23 +17,20 @@ public class PinkPearls : LocateAmulet
 	/// </summary>
 	public override int Weight => 100;
 		
-	public PinkPearls() : this(3)
+	public PinkPearls(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 3)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PinkPearls"/> class.
 	/// </summary>
-	public PinkPearls(int charges = 3) : base(3, charges)
+	public PinkPearls(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges = 3) : base(entityProvider, entityDependencies, 3, charges)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PinkPearls"/> class.
 	/// </summary>
-	public PinkPearls(Serial serial) : base(serial)
-	{
-	}
 
 	public PinkPearls(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -19,7 +19,7 @@ public class OysterShell : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OysterShell"/> class.
 	/// </summary>
-	public OysterShell() : base(52)
+	public OysterShell(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 52)
 	{
 	}
 

@@ -14,7 +14,7 @@ public class BloodRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BloodRuby"/> class.
 	/// </summary>
-	public BloodRuby(uint basePrice) : base(164, basePrice)
+	public BloodRuby(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 164, basePrice)
 	{
 	}
 	

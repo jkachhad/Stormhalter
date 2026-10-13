@@ -34,16 +34,13 @@ public class BlackStaff : Staff
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackStaff"/> class.
 	/// </summary>
-	public BlackStaff() : base(144)
+	public BlackStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 144)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackStaff"/> class.
 	/// </summary>
-	public BlackStaff(Serial serial) : base(serial)
-	{
-	}
 
 	public BlackStaff(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

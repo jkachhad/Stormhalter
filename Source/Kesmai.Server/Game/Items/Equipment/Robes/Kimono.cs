@@ -29,16 +29,13 @@ public class Kimono : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Kimono"/> class.
 	/// </summary>
-	public Kimono() : base(269)
+	public Kimono(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 269)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Kimono"/> class.
 	/// </summary>
-	public Kimono(Serial serial) : base(serial)
-	{
-	}
 
 	public Kimono(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

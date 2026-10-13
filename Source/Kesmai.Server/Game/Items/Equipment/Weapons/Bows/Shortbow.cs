@@ -31,16 +31,13 @@ public class Shortbow : Bow
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Shortbow"/> class.
 	/// </summary>
-	public Shortbow() : base(228)
+	public Shortbow(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 228)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Shortbow"/> class.
 	/// </summary>
-	public Shortbow(Serial serial) : base(serial)
-	{
-	}
 
 	public Shortbow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

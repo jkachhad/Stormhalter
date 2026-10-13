@@ -60,16 +60,13 @@ public class BlackBroadsword : Sword, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackBroadsword"/> class.
 	/// </summary>
-	public BlackBroadsword() : base(195)
+	public BlackBroadsword(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 195)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlackBroadsword"/> class.
 	/// </summary>
-	public BlackBroadsword(Serial serial) : base(serial)
-	{
-	}
 
 	public BlackBroadsword(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

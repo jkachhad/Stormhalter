@@ -8,7 +8,7 @@ public partial class Efreet : CreatureEntity, IPhantasm
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Efreet"/> class.
 	/// </summary>
-	public Efreet()
+	public Efreet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "efreet";
 		Body = 1;

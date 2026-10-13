@@ -21,16 +21,13 @@ public class TwentyEightRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TwentyEightRing"/> class.
 	/// </summary>
-	public TwentyEightRing() : base(28)
+	public TwentyEightRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 28)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TwentyEightRing"/> class.
 	/// </summary>
-	public TwentyEightRing(Serial serial) : base(serial)
-	{
-	}
 
 	public TwentyEightRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

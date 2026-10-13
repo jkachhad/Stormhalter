@@ -57,23 +57,20 @@ public abstract class Armor : Equipment, IArmored
 	/// result in an uninitialized instance. This constructor is primarily
 	/// provided to facilitate deserialization processes.
 	/// </remarks>
-	protected Armor()
+	protected Armor(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Armor"/> class.
 	/// </summary>
-	protected Armor(int armorID) : base(armorID)
+	protected Armor(IEntityProvider entityProvider, EntityDependencies entityDependencies, int armorID) : base(entityProvider, entityDependencies, armorID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Armor"/> class.
 	/// </summary>
-	protected Armor(Serial serial) : base(serial)
-	{
-	}
 
 	protected Armor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

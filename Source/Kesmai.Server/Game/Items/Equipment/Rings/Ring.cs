@@ -21,16 +21,13 @@ public abstract class Ring : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Ring"/> class.
 	/// </summary>
-	protected Ring(int ringID) : base(ringID)
+	protected Ring(IEntityProvider entityProvider, EntityDependencies entityDependencies, int ringID) : base(entityProvider, entityDependencies, ringID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Ring"/> class.
 	/// </summary>
-	protected Ring(Serial serial) : base(serial)
-	{
-	}
 
 	protected Ring(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

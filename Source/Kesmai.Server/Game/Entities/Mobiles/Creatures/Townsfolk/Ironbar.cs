@@ -10,7 +10,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Ironbar : VendorEntity
 {
-	public Ironbar()
+	public Ironbar(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "Ironbar";
 		Body = 98;
@@ -57,7 +57,7 @@ public partial class Ironbar : VendorEntity
 				{
 					if (ConsumeFromLocation<IronOre>(counter, 1) && ConsumeFromLocation<Yttril>(counter, 1))
 					{
-						new BlackBroadsword().Move(counter, true, Segment);
+						new BlackBroadsword(source.EntityProvider, source.Dependencies).Move(counter, true, Segment);
 
 						SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
 					}
@@ -95,7 +95,7 @@ public partial class Ironbar : VendorEntity
 
 		protected override IEnumerable<ItemEntity> GetCraftedItems(PlayerEntity player)
 		{
-			yield return new BlackBroadsword();
+			yield return new BlackBroadsword(player.EntityProvider, player.Dependencies);
 		}
 
 		protected override void OnCrafted(PlayerEntity player, VendorEntity vendor)

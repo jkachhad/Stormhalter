@@ -37,23 +37,20 @@ public class Rapier : Sword
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Rapier"/> class.
 	/// </summary>
-	public Rapier() : this(157)
+	public Rapier(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 157)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Rapier"/> class.
 	/// </summary>
-	public Rapier(int rapierId) : base(rapierId)
+	public Rapier(IEntityProvider entityProvider, EntityDependencies entityDependencies, int rapierId) : base(entityProvider, entityDependencies, rapierId)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Rapier"/> class.
 	/// </summary>
-	public Rapier(Serial serial) : base(serial)
-	{
-	}
 
 	public Rapier(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

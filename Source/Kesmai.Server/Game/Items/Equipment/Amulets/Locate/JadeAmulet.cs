@@ -17,23 +17,20 @@ public class JadeAmulet : LocateAmulet
 	/// </summary>
 	public override int Weight => 100;
 		
-	public JadeAmulet() : this(3)
+	public JadeAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 3)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="JadeAmulet"/> class.
 	/// </summary>
-	public JadeAmulet(int charges = 3) : base(119, charges)
+	public JadeAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges = 3) : base(entityProvider, entityDependencies, 119, charges)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="JadeAmulet"/> class.
 	/// </summary>
-	public JadeAmulet(Serial serial) : base(serial)
-	{
-	}
 
 	public JadeAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

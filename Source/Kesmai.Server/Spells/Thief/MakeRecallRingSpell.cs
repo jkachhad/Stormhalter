@@ -28,7 +28,7 @@ public class MakeRecallRingSpell : DelayedSpell
 		{
 			base.OnCast();
 				
-			var recallRing = new RecallRing(_intensity)
+			var recallRing = new RecallRing(_caster.EntityProvider, _caster.Dependencies, _intensity)
 			{
 				IsConjured = true,
 			};

@@ -16,7 +16,8 @@ public partial class Merchant<T> : VendorEntity, IMerchant where T : ItemEntity,
 
 	public Type ItemType { get; } = typeof(T);
 		
-	public Merchant(uint cost, int minimum = 1, int maximum = int.MaxValue)
+	public Merchant(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint cost, int minimum = 1, int maximum = int.MaxValue)
+		: base(entityProvider, entityDependencies)
 	{
 		Cost = cost;
 

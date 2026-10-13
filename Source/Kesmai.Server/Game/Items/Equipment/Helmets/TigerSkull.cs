@@ -30,16 +30,13 @@ public class TigerSkull : Helmet, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerSkull"/> class.
 	/// </summary>
-	public TigerSkull() : base(36)
+	public TigerSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 36)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerSkull"/> class.
 	/// </summary>
-	public TigerSkull(Serial serial) : base(serial)
-	{
-	}
 
 	public TigerSkull(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

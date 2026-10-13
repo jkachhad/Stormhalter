@@ -9,7 +9,7 @@ public partial class Hippopotamus : AnimalEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Hippopotamus"/> class.
 	/// </summary>
-	public Hippopotamus()
+	public Hippopotamus(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "hippopotamus";
 		Body = 44;
@@ -37,6 +37,6 @@ public partial class Hippopotamus : AnimalEntity
 
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

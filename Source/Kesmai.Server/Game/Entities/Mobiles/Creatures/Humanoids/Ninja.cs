@@ -8,7 +8,7 @@ public partial class Ninja : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Ninja"/> class.
 	/// </summary>
-	public Ninja()
+	public Ninja(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "ninja";
 		Body = 81;

@@ -19,7 +19,7 @@ public class GreenTippedFeather : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GreenTippedFeather"/> class.
 	/// </summary>
-	public GreenTippedFeather() : base(39)
+	public GreenTippedFeather(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 39)
 	{
 	}
 		

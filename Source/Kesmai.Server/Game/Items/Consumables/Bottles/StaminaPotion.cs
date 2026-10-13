@@ -15,9 +15,6 @@ public class StaminaPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StaminaPotion"/> class.
 	/// </summary>
-	public StaminaPotion() : base(214)
-	{
-	}
 
 	public StaminaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 214)
@@ -27,7 +24,7 @@ public class StaminaPotion : Bottle
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StaminaPotion"/> class.
 	/// </summary>
-	public StaminaPotion(Serial serial) : base(serial)
+	public StaminaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

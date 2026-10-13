@@ -8,7 +8,7 @@ public partial class ElderTroll : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ElderTroll"/> class.
 	/// </summary>
-	public ElderTroll()
+	public ElderTroll(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "elder.troll";
 		Body = 79;
@@ -36,6 +36,6 @@ public partial class ElderTroll : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new TrollVest();
+		return new TrollVest(_entityProvider, _entityDependencies);
 	}
 }

@@ -22,9 +22,6 @@ public class PermanentManaPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentManaPotion"/> class.
 	/// </summary>
-	public PermanentManaPotion() : base(316)
-	{
-	}
 
 	public PermanentManaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 316)
@@ -34,7 +31,7 @@ public class PermanentManaPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentManaPotion"/> class.
 	/// </summary>
-	public PermanentManaPotion(Serial serial) : base(serial)
+	public PermanentManaPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

@@ -31,16 +31,13 @@ public class SteelGauntlets : Gauntlets, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelGauntlets"/> class.
 	/// </summary>
-	public SteelGauntlets() : base(69)
+	public SteelGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 69)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SteelGauntlets"/> class.
 	/// </summary>
-	public SteelGauntlets(Serial serial) : base(serial)
-	{
-	}
 
 	public SteelGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

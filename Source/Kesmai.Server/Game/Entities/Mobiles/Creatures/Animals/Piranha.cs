@@ -6,7 +6,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Piranha : AnimalEntity
 {
-	public Piranha()
+	public Piranha(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "piranha";
 		Body = 13;

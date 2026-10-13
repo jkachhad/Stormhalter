@@ -9,7 +9,7 @@ public partial class Hobgoblin : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Hobgoblin"/> class.
 	/// </summary>
-	public Hobgoblin()
+	public Hobgoblin(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "hobgoblin";
 		Body = 78;
@@ -40,6 +40,6 @@ public partial class Hobgoblin : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

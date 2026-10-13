@@ -8,7 +8,7 @@ public partial class WaterElemental : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WaterElemental"/> class.
 	/// </summary>
-	public WaterElemental()
+	public WaterElemental(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "elemental";
 		Body = 85;

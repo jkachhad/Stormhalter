@@ -13,14 +13,14 @@ public class StarRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarRuby"/> class.
 	/// </summary>
-	public StarRuby() : this(500u)
+	public StarRuby(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 500u)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarRuby"/> class.
 	/// </summary>
-	public StarRuby(uint basePrice) : base(90, basePrice)
+	public StarRuby(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 90, basePrice)
 	{
 	}
 

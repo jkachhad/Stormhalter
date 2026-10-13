@@ -18,16 +18,13 @@ public class WeakDexterityRing : DexterityRing, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WeakDexterityRing"/> class.
 	/// </summary>
-	public WeakDexterityRing() : base(55)
+	public WeakDexterityRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 55)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WeakDexterityRing"/> class.
 	/// </summary>
-	public WeakDexterityRing(Serial serial) : base(serial)
-	{
-	}
 
 	public WeakDexterityRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

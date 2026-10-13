@@ -34,16 +34,13 @@ public class Longbow : Bow
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Longbow"/> class.
 	/// </summary>
-	public Longbow() : base(229)
+	public Longbow(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 229)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Longbow"/> class.
 	/// </summary>
-	public Longbow(Serial serial) : base(serial)
-	{
-	}
 
 	public Longbow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

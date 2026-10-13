@@ -24,16 +24,13 @@ public abstract class Bow : ProjectileWeapon
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Bow"/> class.
 	/// </summary>
-	protected Bow(int bowID) : base(bowID)
+	protected Bow(IEntityProvider entityProvider, EntityDependencies entityDependencies, int bowID) : base(entityProvider, entityDependencies, bowID)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Bow"/> class.
 	/// </summary>
-	protected Bow(Serial serial) : base(serial)
-	{
-	}
 
 	protected Bow(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

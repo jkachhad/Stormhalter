@@ -26,23 +26,20 @@ public class ShieldRing : Ring, ITreasure
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int Shield => 3;
 
-	public ShieldRing() : this(45)
+	public ShieldRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 45)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShieldRing"/> class.
 	/// </summary>
-	public ShieldRing(int ringId) : base(ringId)
+	public ShieldRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, int ringId) : base(entityProvider, entityDependencies, ringId)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ShieldRing"/> class.
 	/// </summary>
-	public ShieldRing(Serial serial) : base(serial)
-	{
-	}
 
 	public ShieldRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

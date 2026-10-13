@@ -8,7 +8,7 @@ public partial class Cat : AnimalEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Cat"/> class.
 	/// </summary>
-	public Cat()
+	public Cat(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "cat";
 		Body = 28;

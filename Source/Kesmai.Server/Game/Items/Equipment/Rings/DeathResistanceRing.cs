@@ -22,16 +22,13 @@ public class DeathResistanceRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DeathResistanceRing"/> class.
 	/// </summary>
-	public DeathResistanceRing() : base(18)
+	public DeathResistanceRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 18)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DeathResistanceRing"/> class.
 	/// </summary>
-	public DeathResistanceRing(Serial serial) : base(serial)
-	{
-	}
 
 	public DeathResistanceRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

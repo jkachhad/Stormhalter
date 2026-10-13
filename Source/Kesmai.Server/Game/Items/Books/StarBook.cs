@@ -19,7 +19,7 @@ public class StarBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarBook"/> class.
 	/// </summary>
-	public StarBook() : base(192)
+	public StarBook(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 192)
 	{
 	}
 

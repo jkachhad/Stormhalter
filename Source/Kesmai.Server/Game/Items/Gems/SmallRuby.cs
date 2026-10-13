@@ -15,7 +15,7 @@ public class SmallRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallRuby"/> class.
 	/// </summary>
-	public SmallRuby(uint basePrice) : base(140, basePrice)
+	public SmallRuby(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 140, basePrice)
 	{
 	}
 	

@@ -45,16 +45,13 @@ public abstract class Shield : ItemEntity, IArmored, IWieldable
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Shield"/> class.
 	/// </summary>
-	protected Shield(int shieldID) : base(shieldID)
+	protected Shield(IEntityProvider entityProvider, EntityDependencies entityDependencies, int shieldID) : base(entityProvider, entityDependencies, shieldID)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Shield"/> class.
 	/// </summary>
-	protected Shield(Serial serial) : base(serial)
-	{
-	}
 
 	protected Shield(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

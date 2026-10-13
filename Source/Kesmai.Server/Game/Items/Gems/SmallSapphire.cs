@@ -15,16 +15,13 @@ public class SmallSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallSapphire"/> class.
 	/// </summary>
-	public SmallSapphire(uint basePrice) : base(60, basePrice)
+	public SmallSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 60, basePrice)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallSapphire"/> class.
 	/// </summary>
-	public SmallSapphire(Serial serial) : base(serial)
-	{
-	}
 
 	public SmallSapphire(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

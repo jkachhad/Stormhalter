@@ -34,16 +34,13 @@ public class BayonetHammer : Mace
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BayonetHammer"/> class.
 	/// </summary>
-	public BayonetHammer() : base(147)
+	public BayonetHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 147)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BayonetHammer"/> class.
 	/// </summary>
-	public BayonetHammer(Serial serial) : base(serial)
-	{
-	}
 
 	public BayonetHammer(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

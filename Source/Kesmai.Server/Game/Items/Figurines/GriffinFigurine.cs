@@ -19,16 +19,13 @@ public class GriffinFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GriffinFigurine"/> class.
 	/// </summary>
-	public GriffinFigurine() : base(180)
+	public GriffinFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 180)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GriffinFigurine"/> class.
 	/// </summary>
-	public GriffinFigurine(Serial serial) : base(serial)
-	{
-	}
 
 	public GriffinFigurine(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

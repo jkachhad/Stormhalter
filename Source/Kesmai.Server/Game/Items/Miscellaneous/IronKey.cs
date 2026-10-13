@@ -23,7 +23,7 @@ public class IronKey : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IronKey"/> class.
 	/// </summary>
-	public IronKey() : base(284)
+	public IronKey(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 284)
 	{
 	}
 		

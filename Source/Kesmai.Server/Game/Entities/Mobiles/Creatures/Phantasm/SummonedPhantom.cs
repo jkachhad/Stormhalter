@@ -13,7 +13,8 @@ public partial class SummonedPhantom : Phantom
 	public override bool CanOrderCarry => true;
 	private double _focusLevelModifier = 0.0;
 
-	public SummonedPhantom(double focusLevelModifier = 0.0)
+	public SummonedPhantom(IEntityProvider entityProvider, EntityDependencies entityDependencies, double focusLevelModifier = 0.0)
+    : base(entityProvider, entityDependencies)
     {
 		_focusLevelModifier = focusLevelModifier;
         Summoned = true;

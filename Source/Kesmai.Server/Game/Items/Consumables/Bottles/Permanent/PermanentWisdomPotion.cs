@@ -21,9 +21,6 @@ public class PermanentWisdomPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentWisdomPotion"/> class.
 	/// </summary>
-	public PermanentWisdomPotion() : base(274)
-	{
-	}
 
 	public PermanentWisdomPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 274)
@@ -33,7 +30,7 @@ public class PermanentWisdomPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentWisdomPotion"/> class.
 	/// </summary>
-	public PermanentWisdomPotion(Serial serial) : base(serial)
+	public PermanentWisdomPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 		

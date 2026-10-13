@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Beetle : AnimalEntity
 {
-	public Beetle()
+	public Beetle(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "beetle";
 		Body = 43;

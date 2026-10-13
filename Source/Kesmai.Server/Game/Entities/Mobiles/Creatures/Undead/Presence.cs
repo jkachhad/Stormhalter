@@ -8,7 +8,7 @@ public partial class Presence : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Presence"/> class.
 	/// </summary>
-	public Presence()
+	public Presence(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "presence";
 		Body = 41;

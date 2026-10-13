@@ -14,7 +14,8 @@ public partial class SummonedEfreet : Efreet
 	public override bool CanOrderCarry => true;
 	private double _focusLevelModifier = 0.0;
 		
-	public SummonedEfreet(ICreatureSpell spell, double focusLevelModifier = 0.0)
+	public SummonedEfreet(IEntityProvider entityProvider, EntityDependencies entityDependencies, ICreatureSpell spell, double focusLevelModifier = 0.0)
+		: base(entityProvider, entityDependencies)
 	{
 		_focusLevelModifier = focusLevelModifier;
 		Summoned = true;

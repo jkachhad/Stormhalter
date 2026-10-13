@@ -27,16 +27,13 @@ public class StarsRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarsRobe"/> class.
 	/// </summary>
-	public StarsRobe() : base(238)
+	public StarsRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 238)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarsRobe"/> class.
 	/// </summary>
-	public StarsRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public StarsRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -6,7 +6,7 @@ namespace Kesmai.Server.Game;
 
 public partial class SeaSerpent : AnimalEntity
 {
-	public SeaSerpent()
+	public SeaSerpent(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "serpent";
 		Body = 8;
@@ -33,6 +33,6 @@ public partial class SeaSerpent : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

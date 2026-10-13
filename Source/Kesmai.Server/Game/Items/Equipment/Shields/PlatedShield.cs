@@ -27,16 +27,13 @@ public class PlatedShield : Shield
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PlatedShield"/> class.
 	/// </summary>
-	public PlatedShield() : base(76)
+	public PlatedShield(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 76)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PlatedShield"/> class.
 	/// </summary>
-	public PlatedShield(Serial serial) : base(serial)
-	{
-	}
 
 	public PlatedShield(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

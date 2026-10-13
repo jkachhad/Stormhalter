@@ -37,16 +37,13 @@ public class SalamanderScales : Armor, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SalamanderScales"/> class.
 	/// </summary>
-	public SalamanderScales() : base(250)
+	public SalamanderScales(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 250)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SalamanderScales"/> class.
 	/// </summary>
-	public SalamanderScales(Serial serial) : base(serial)
-	{
-	}
 
 	public SalamanderScales(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

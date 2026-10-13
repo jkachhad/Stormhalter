@@ -19,16 +19,13 @@ public class DungeonBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DungeonBook"/> class.
 	/// </summary>
-	public DungeonBook() : base(296)
+	public DungeonBook(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 296)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AnnwnBook"/> class.
 	/// </summary>
-	public DungeonBook(Serial serial) : base(serial)
-	{
-	}
 
 	public DungeonBook(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

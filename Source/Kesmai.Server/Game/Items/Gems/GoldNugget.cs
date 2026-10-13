@@ -17,7 +17,7 @@ public class GoldNugget : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldNugget"/> class.
 	/// </summary>
-	public GoldNugget(uint basePrice) : base(84, basePrice)
+	public GoldNugget(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 84, basePrice)
 	{
 	}
 

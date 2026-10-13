@@ -25,16 +25,13 @@ public class BoxingGauntlets : Gauntlets, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BoxingGauntlets"/> class.
 	/// </summary>
-	public BoxingGauntlets() : base(70)
+	public BoxingGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 70)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BoxingGauntlets"/> class.
 	/// </summary>
-	public BoxingGauntlets(Serial serial) : base(serial)
-	{
-	}
 
 	public BoxingGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -9,7 +9,7 @@ public partial class Wyvern : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Wyvern"/> class.
 	/// </summary>
-	public Wyvern()
+	public Wyvern(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "wyvern";
 		Body = 65;
@@ -34,6 +34,6 @@ public partial class Wyvern : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new WyvernScales();
+		return new WyvernScales(_entityProvider, _entityDependencies);
 	}
 }

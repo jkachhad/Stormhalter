@@ -28,16 +28,13 @@ public class SpikedFlail : Flail
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SpikedFlail"/> class.
 	/// </summary>
-	public SpikedFlail() : base(197)
+	public SpikedFlail(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 197)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SpikedFlail"/> class.
 	/// </summary>
-	public SpikedFlail(Serial serial) : base(serial)
-	{
-	}
 
 	public SpikedFlail(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

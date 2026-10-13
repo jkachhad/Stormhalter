@@ -41,14 +41,14 @@ public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FireIceProtectionAmulet"/> class.
 	/// </summary>
-	public FireIceProtectionAmulet() : this(3)
+	public FireIceProtectionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 3)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FireIceProtectionAmulet"/> class.
 	/// </summary>
-	public FireIceProtectionAmulet(int charges) : base(5)
+	public FireIceProtectionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges) : base(entityProvider, entityDependencies, 5)
 	{
 		_chargesCurrent = charges;
 		_chargesMax = charges;
@@ -57,9 +57,6 @@ public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FireIceProtectionAmulet"/> class.
 	/// </summary>
-	public FireIceProtectionAmulet(Serial serial) : base(serial)
-	{
-	}
 
 	public FireIceProtectionAmulet(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

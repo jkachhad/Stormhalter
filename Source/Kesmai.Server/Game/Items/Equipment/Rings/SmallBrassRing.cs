@@ -15,16 +15,13 @@ public class SmallBrassRing : Ring
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallBrassRing"/> class.
 	/// </summary>
-	public SmallBrassRing() : base(95)
+	public SmallBrassRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 95)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallBrassRing"/> class.
 	/// </summary>
-	public SmallBrassRing(Serial serial) : base(serial)
-	{
-	}
 
 	public SmallBrassRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

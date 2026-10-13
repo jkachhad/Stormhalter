@@ -19,7 +19,7 @@ public class TigerStatuette : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerStatuette"/> class.
 	/// </summary>
-	public TigerStatuette() : base(50)
+	public TigerStatuette(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 50)
 	{
 	}
 		

@@ -8,7 +8,7 @@ public partial class Troll : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Troll"/> class.
 	/// </summary>
-	public Troll()
+	public Troll(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "troll";
 		Body = 64;
@@ -39,6 +39,6 @@ public partial class Troll : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

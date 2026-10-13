@@ -24,16 +24,13 @@ public class WeakStrengthRing : StrengthRing
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WeakStrengthRing"/> class.
 	/// </summary>
-	public WeakStrengthRing() : base(2)
+	public WeakStrengthRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 2)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WeakStrengthRing"/> class.
 	/// </summary>
-	public WeakStrengthRing(Serial serial) : base(serial)
-	{
-	}
 
 	public WeakStrengthRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

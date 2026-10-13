@@ -83,14 +83,14 @@ public class RecallRing : Ring
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RecallRing"/> class.
 	/// </summary>
-	public RecallRing() : this(1)
+	public RecallRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 1)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RecallRing"/> class.
 	/// </summary>
-	public RecallRing(int power) : base((power > 1 ? 393 : 246))
+	public RecallRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, int power) : base(entityProvider, entityDependencies, (power > 1 ? 393 : 246))
 	{
 		_power = power;
 	}
@@ -98,9 +98,6 @@ public class RecallRing : Ring
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RecallRing"/> class.
 	/// </summary>
-	public RecallRing(Serial serial) : base(serial)
-	{
-	}
 
 	public RecallRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

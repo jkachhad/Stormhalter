@@ -22,9 +22,6 @@ public class PermanentConstitutionPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentConstitutionPotion"/> class.
 	/// </summary>
-	public PermanentConstitutionPotion() : base(303)
-	{
-	}
 
 	public PermanentConstitutionPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies)
 		: base(entityProvider, entityDependencies, 303)
@@ -34,7 +31,7 @@ public class PermanentConstitutionPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentConstitutionPotion"/> class.
 	/// </summary>
-	public PermanentConstitutionPotion(Serial serial) : base(serial)
+	public PermanentConstitutionPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

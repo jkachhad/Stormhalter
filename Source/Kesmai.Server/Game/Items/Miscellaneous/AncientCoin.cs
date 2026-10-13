@@ -19,7 +19,7 @@ public class AncientCoin : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AncientCoin"/> class.
 	/// </summary>
-	public AncientCoin() : base(73)
+	public AncientCoin(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 73)
 	{
 	}
 		

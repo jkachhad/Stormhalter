@@ -14,7 +14,7 @@ public class HeartShapedRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HeartShapedRuby"/> class.
 	/// </summary>
-	public HeartShapedRuby(uint basePrice) : base(321, basePrice)
+	public HeartShapedRuby(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 321, basePrice)
 	{
 	}
 

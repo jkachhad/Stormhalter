@@ -16,14 +16,14 @@ public class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaffRaiseDead"/> class.
 	/// </summary>
-	public BlueStaffRaiseDead() : this(5)
+	public BlueStaffRaiseDead(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 5)
 	{
 	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaffRaiseDead"/> class.
 	/// </summary>
-	public BlueStaffRaiseDead(int charges)
+	public BlueStaffRaiseDead(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges) : base(entityProvider, entityDependencies)
 	{
 		_chargesCurrent = _chargesMax = charges;
 	}
@@ -31,9 +31,6 @@ public class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaffRaiseDead"/> class.
 	/// </summary>
-	public BlueStaffRaiseDead(Serial serial) : base(serial)
-	{
-	}
 
 	public BlueStaffRaiseDead(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

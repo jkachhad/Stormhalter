@@ -37,16 +37,13 @@ public class LizardScales : Armor
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LizardScales"/> class.
 	/// </summary>
-	public LizardScales() : base(248)
+	public LizardScales(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 248)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LizardScales"/> class.
 	/// </summary>
-	public LizardScales(Serial serial) : base(serial)
-	{
-	}
 
 	public LizardScales(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

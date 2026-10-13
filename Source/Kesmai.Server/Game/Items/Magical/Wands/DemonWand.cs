@@ -25,16 +25,13 @@ public class DemonWand : Wand, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DemonWand"/> class.
 	/// </summary>
-	public DemonWand() : base(207)
+	public DemonWand(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 207)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DemonWand"/> class.
 	/// </summary>
-	public DemonWand(Serial serial) : base(serial)
-	{
-	}
 
 	public DemonWand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

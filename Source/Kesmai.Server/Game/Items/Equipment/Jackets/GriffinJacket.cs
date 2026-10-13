@@ -21,16 +21,13 @@ public class GriffinJacket : Jacket, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GriffinJacket"/> class.
 	/// </summary>
-	public GriffinJacket() : base(260)
+	public GriffinJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 260)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GriffinJacket"/> class.
 	/// </summary>
-	public GriffinJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public GriffinJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

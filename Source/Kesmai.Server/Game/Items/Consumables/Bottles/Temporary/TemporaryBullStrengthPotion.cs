@@ -19,16 +19,10 @@ public class TemporaryBullStrengthPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
 	/// </summary>
-	public TemporaryBullStrengthPotion() : this(234, 109)
-	{
-	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
 	/// </summary>
-	public TemporaryBullStrengthPotion(int closedId, int openId) : base(closedId)
-	{
-	}
 
 	public TemporaryBullStrengthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, int closedId, int openId)
 		: base(entityProvider, entityDependencies, closedId)
@@ -43,7 +37,7 @@ public class TemporaryBullStrengthPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
 	/// </summary>
-	public TemporaryBullStrengthPotion(Serial serial) : base(serial)
+	public TemporaryBullStrengthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

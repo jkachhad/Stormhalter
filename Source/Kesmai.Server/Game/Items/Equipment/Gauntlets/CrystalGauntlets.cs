@@ -40,16 +40,13 @@ public class CrystalGauntlets : Gauntlets, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CrystalGauntlets"/> class.
 	/// </summary>
-	public CrystalGauntlets() : base(71)
+	public CrystalGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 71)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CrystalGauntlets"/> class.
 	/// </summary>
-	public CrystalGauntlets(Serial serial) : base(serial)
-	{
-	}
 
 	public CrystalGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

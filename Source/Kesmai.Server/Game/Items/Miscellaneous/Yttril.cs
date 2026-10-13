@@ -30,7 +30,7 @@ public class Yttril : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Yttril"/> class.
 	/// </summary>
-	public Yttril() : base(110)
+	public Yttril(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 110)
 	{
 	}
 

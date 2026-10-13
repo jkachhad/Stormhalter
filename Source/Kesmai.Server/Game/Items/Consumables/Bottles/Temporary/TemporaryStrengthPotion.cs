@@ -19,16 +19,10 @@ public class TemporaryStrengthPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TemporaryStrengthPotion"/> class.
 	/// </summary>
-	public TemporaryStrengthPotion() : this(211, 41)
-	{
-	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TemporaryStrengthPotion"/> class.
 	/// </summary>
-	public TemporaryStrengthPotion(int closedId, int openId) : base(closedId)
-	{
-	}
 
 	public TemporaryStrengthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, int closedId, int openId)
 		: base(entityProvider, entityDependencies, closedId)
@@ -43,7 +37,7 @@ public class TemporaryStrengthPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TemporaryStrengthPotion"/> class.
 	/// </summary>
-	public TemporaryStrengthPotion(Serial serial) : base(serial)
+	public TemporaryStrengthPotion(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial) : base(entityProvider, entityDependencies, serial)
 	{
 	}
 

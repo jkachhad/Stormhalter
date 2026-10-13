@@ -19,16 +19,13 @@ public class WolfJacket : Jacket
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WolfJacket"/> class.
 	/// </summary>
-	public WolfJacket() : base(259)
+	public WolfJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 259)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WolfJacket"/> class.
 	/// </summary>
-	public WolfJacket(Serial serial) : base(serial)
-	{
-	}
 
 	public WolfJacket(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

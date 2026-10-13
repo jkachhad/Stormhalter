@@ -19,7 +19,7 @@ public class HorseStatue : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HorseStatue"/> class.
 	/// </summary>
-	public HorseStatue() : base(12)
+	public HorseStatue(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 12)
 	{
 	}
 		

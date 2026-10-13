@@ -13,7 +13,7 @@ public class UncutDiamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UncutDiamond"/> class.
 	/// </summary>
-	public UncutDiamond(uint basePrice) : base(154, basePrice)
+	public UncutDiamond(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 154, basePrice)
 	{
 	}
 

@@ -15,7 +15,7 @@ public partial class Swordmaster : CreatureEntity, IUndead
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Swordmaster"/> class.
 	/// </summary>
-	public Swordmaster()
+	public Swordmaster(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "swordmaster";
 		Body = 163;

@@ -20,16 +20,13 @@ public class CrocodileBoots : Boots, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CrocodileBoots"/> class.
 	/// </summary>
-	public CrocodileBoots() : base(122)
+	public CrocodileBoots(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 122)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CrocodileBoots"/> class.
 	/// </summary>
-	public CrocodileBoots(Serial serial) : base(serial)
-	{
-	}
 
 	public CrocodileBoots(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

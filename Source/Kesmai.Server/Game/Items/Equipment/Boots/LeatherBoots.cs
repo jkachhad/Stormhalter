@@ -19,16 +19,13 @@ public class LeatherBoots : Boots
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LeatherBoots"/> class.
 	/// </summary>
-	public LeatherBoots() : base(121)
+	public LeatherBoots(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 121)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LeatherBoots"/> class.
 	/// </summary>
-	public LeatherBoots(Serial serial) : base(serial)
-	{
-	}
 
 	public LeatherBoots(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

@@ -12,7 +12,7 @@ public partial class Goblin : CreatureEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Goblin"/> class.
 	/// </summary>
-	public Goblin()
+	public Goblin(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "goblin";
 		Body = 31;
@@ -40,6 +40,6 @@ public partial class Goblin : CreatureEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LeatherArmor();
+		return new LeatherArmor(_entityProvider, _entityDependencies);
 	}
 }

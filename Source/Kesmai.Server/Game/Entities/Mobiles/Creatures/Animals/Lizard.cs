@@ -5,7 +5,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Lizard : AnimalEntity
 {
-	public Lizard()
+	public Lizard(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "lizard";
 		Body = 56;
@@ -30,6 +30,6 @@ public partial class Lizard : AnimalEntity
 		
 	public override ItemEntity OnCorpseTanned()
 	{
-		return new LizardScales();
+		return new LizardScales(_entityProvider, _entityDependencies);
 	}
 }

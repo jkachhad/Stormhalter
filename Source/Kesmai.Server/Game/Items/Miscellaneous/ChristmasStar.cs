@@ -23,7 +23,7 @@ public class ChristmasStarGem : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ChristmasTreeGem"/> class.
 	/// </summary>
-	public ChristmasStarGem() : base(324)
+	public ChristmasStarGem(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 324)
 	{
 	}
 		

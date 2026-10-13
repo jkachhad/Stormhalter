@@ -25,16 +25,13 @@ public class PlatemailGauntlets : Gauntlets, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PlatemailGauntlets"/> class.
 	/// </summary>
-	public PlatemailGauntlets() : base(37)
+	public PlatemailGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 37)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PlatemailGauntlets"/> class.
 	/// </summary>
-	public PlatemailGauntlets(Serial serial) : base(serial)
-	{
-	}
 
 	public PlatemailGauntlets(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

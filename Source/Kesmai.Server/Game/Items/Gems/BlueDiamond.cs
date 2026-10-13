@@ -14,7 +14,7 @@ public class BlueDiamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueDiamond"/> class.
 	/// </summary>
-	public BlueDiamond(uint basePrice) : base(335, basePrice)
+	public BlueDiamond(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 335, basePrice)
 	{
 	}
 	

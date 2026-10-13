@@ -19,7 +19,7 @@ public class BrightFeather : ItemEntity, ITreasure
 	/// <inheritdoc />
 	public override bool CanBind => true;
 
-	public BrightFeather() : base(397)
+	public BrightFeather(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 397)
 	{
 	}
 	

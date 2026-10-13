@@ -8,7 +8,7 @@ namespace Kesmai.Server.Game;
 
 public partial class ConfessorGhost : VendorEntity
 {
-	public ConfessorGhost()
+	public ConfessorGhost(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies)
 	{
 		Name = "ghost";
 		Body = 66;

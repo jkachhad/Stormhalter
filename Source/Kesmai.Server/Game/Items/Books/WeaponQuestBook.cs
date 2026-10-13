@@ -19,7 +19,7 @@ public class WeaponBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WeaponBook"/> class.
 	/// </summary>
-	public WeaponBook() : base(299)
+	public WeaponBook(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 299)
 	{
 	}
 

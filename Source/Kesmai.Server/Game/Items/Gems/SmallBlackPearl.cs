@@ -19,7 +19,7 @@ public class SmallBlackPearl : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallBlackPearl"/> class.
 	/// </summary>
-	public SmallBlackPearl(uint basePrice) : base(347, basePrice)
+	public SmallBlackPearl(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 347, basePrice)
 	{
 	}
 	

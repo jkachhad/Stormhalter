@@ -22,16 +22,13 @@ public class IvoryBrooch : StunDeathProtectionAmulet
 	/// </summary>
 	public override int Weight => 100;
 		
-	public IvoryBrooch() : this(3)
+	public IvoryBrooch(IEntityProvider entityProvider, EntityDependencies entityDependencies) : this(entityProvider, entityDependencies, 3)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IvoryBrooch"/> class.
 	/// </summary>
-	public IvoryBrooch(Serial serial) : base(serial)
-	{
-	}
 
 	public IvoryBrooch(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)
@@ -41,7 +38,7 @@ public class IvoryBrooch : StunDeathProtectionAmulet
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IvoryBrooch"/> class.
 	/// </summary>
-	public IvoryBrooch(int charges = 3) : base(301, charges)
+	public IvoryBrooch(IEntityProvider entityProvider, EntityDependencies entityDependencies, int charges = 3) : base(entityProvider, entityDependencies, 301, charges)
 	{
 	}
 		

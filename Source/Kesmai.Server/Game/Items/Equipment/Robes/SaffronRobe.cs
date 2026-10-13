@@ -29,16 +29,13 @@ public class SaffronRobe : Robe, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SaffronRobe"/> class.
 	/// </summary>
-	public SaffronRobe() : base(236)
+	public SaffronRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 236)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SaffronRobe"/> class.
 	/// </summary>
-	public SaffronRobe(Serial serial) : base(serial)
-	{
-	}
 
 	public SaffronRobe(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

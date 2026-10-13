@@ -14,7 +14,7 @@ public class CutOnyx : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CutOnyx"/> class.
 	/// </summary>
-	public CutOnyx(uint basePrice) : base(358, basePrice)
+	public CutOnyx(IEntityProvider entityProvider, EntityDependencies entityDependencies, uint basePrice) : base(entityProvider, entityDependencies, 358, basePrice)
 	{
 	}
 	

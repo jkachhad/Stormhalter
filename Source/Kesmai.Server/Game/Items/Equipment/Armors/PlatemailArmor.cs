@@ -34,16 +34,13 @@ public class PlatemailArmor : Armor
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PlatemailArmor"/> class.
 	/// </summary>
-	public PlatemailArmor() : base(241)
+	public PlatemailArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 241)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PlatemailArmor"/> class.
 	/// </summary>
-	public PlatemailArmor(Serial serial) : base(serial)
-	{
-	}
 
 	public PlatemailArmor(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

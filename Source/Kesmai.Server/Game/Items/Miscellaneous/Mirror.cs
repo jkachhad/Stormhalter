@@ -23,7 +23,7 @@ public class Mirror : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Mirror"/> class.
 	/// </summary>
-	public Mirror() : base(149)
+	public Mirror(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 149)
 	{
 	}
 		

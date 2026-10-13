@@ -21,16 +21,13 @@ public class IceProtectionRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceProtectionRing"/> class.
 	/// </summary>
-	public IceProtectionRing() : base(30)
+	public IceProtectionRing(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 30)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceProtectionRing"/> class.
 	/// </summary>
-	public IceProtectionRing(Serial serial) : base(serial)
-	{
-	}
 
 	public IceProtectionRing(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

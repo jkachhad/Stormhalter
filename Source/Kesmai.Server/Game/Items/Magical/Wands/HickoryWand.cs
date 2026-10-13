@@ -21,16 +21,13 @@ public class HickoryWand : Wand, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HickoryWand"/> class.
 	/// </summary>
-	public HickoryWand() : base(208)
+	public HickoryWand(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 208)
 	{
 	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HickoryWand"/> class.
 	/// </summary>
-	public HickoryWand(Serial serial) : base(serial)
-	{
-	}
 
 	public HickoryWand(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)

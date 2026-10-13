@@ -31,16 +31,13 @@ public class WyvernScales : Armor, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WyvernScales"/> class.
 	/// </summary>
-	public WyvernScales() : base(248)
+	public WyvernScales(IEntityProvider entityProvider, EntityDependencies entityDependencies) : base(entityProvider, entityDependencies, 248)
 	{
 	}
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WyvernScales"/> class.
 	/// </summary>
-	public WyvernScales(Serial serial) : base(serial)
-	{
-	}
 
 	public WyvernScales(IEntityProvider entityProvider, EntityDependencies entityDependencies, Serial serial)
 		: base(entityProvider, entityDependencies, serial)
