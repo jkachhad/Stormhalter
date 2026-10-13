@@ -28,16 +28,16 @@ namespace Kesmai.Shared
 	    }
 	    
 	    /* Do not ever change the index values, can cause items to deserialize into wrong quality. */
-	    public static ItemQuality Poor			= new (-1,	6301049,	"Poor",			FromArgb(0xFF, 0x9D, 0x9D, 0x9D));
-		public static ItemQuality Common		= new (0,	6301050,	"Common",		FromArgb(0xFF, 0xFF, 0xFF, 0x00));
-		public static ItemQuality Uncommon		= new (1,	6301051,	"Uncommon",		FromArgb(0xFF, 0x1E, 0xFF, 0x00));
-		public static ItemQuality Rare			= new (2,	6301052,	"Rare",			FromArgb(0xFF, 0x00, 0x70, 0xDD));
-		public static ItemQuality Epic			= new (3,	6301053,	"Epic",			FromArgb(0xFF, 0xA3, 0x35, 0xEE));
-		public static ItemQuality Legendary		= new (4,	6301054,	"Legendary",	FromArgb(0xFF, 0xFF, 0x80, 0x00));
-		public static ItemQuality Artifact		= new (5,	6301055,	"Artifact",		FromArgb(0xFF, 0xE6, 0xCC, 0x80));
-		public static ItemQuality Mythical 		= new (6,	6301056,	"Mythical",		FromArgb(0xFF, 0xF9, 0x29, 0x07));
+	    public static readonly ItemQuality Poor			= new (-1,	6301049,	"Poor",			FromArgb(0xFF, 0x9D, 0x9D, 0x9D));
+		public static readonly ItemQuality Common		= new (0,	6301050,	"Common",		FromArgb(0xFF, 0xFF, 0xFF, 0x00));
+		public static readonly ItemQuality Uncommon		= new (1,	6301051,	"Uncommon",		FromArgb(0xFF, 0x1E, 0xFF, 0x00));
+		public static readonly ItemQuality Rare			= new (2,	6301052,	"Rare",			FromArgb(0xFF, 0x00, 0x70, 0xDD));
+		public static readonly ItemQuality Epic			= new (3,	6301053,	"Epic",			FromArgb(0xFF, 0xA3, 0x35, 0xEE));
+		public static readonly ItemQuality Legendary		= new (4,	6301054,	"Legendary",	FromArgb(0xFF, 0xFF, 0x80, 0x00));
+		public static readonly ItemQuality Artifact		= new (5,	6301055,	"Artifact",		FromArgb(0xFF, 0xE6, 0xCC, 0x80));
+		public static readonly ItemQuality Mythical 		= new (6,	6301056,	"Mythical",		FromArgb(0xFF, 0xF9, 0x29, 0x07));
 
-		public static Dictionary<int, ItemQuality> Qualities = new Dictionary<int, ItemQuality>()
+		public static readonly IReadOnlyDictionary<int, ItemQuality> Qualities = new Dictionary<int, ItemQuality>()
 		{
 			[-1]	=	Poor,
 			[0]		=	Common,
@@ -51,14 +51,30 @@ namespace Kesmai.Shared
 
 		public static ItemQuality GetQuality(int value)
 		{
-			if (Qualities.TryGetValue(value, out var quality))
+			if (TryGetQuality(value, out var quality))
 				return quality;
 
 			return ItemQuality.Poor;
 		}
 		
-		public static ItemQuality GetQuality(string value) 
-			=> Qualities.Values.FirstOrDefault(q => q.Name.Matches(value)) ?? ItemQuality.Poor;
+		public static ItemQuality GetQuality(string value)
+		{
+			if (TryGetQuality(value, out var quality))
+				return quality;
+
+			return ItemQuality.Poor;
+		}
+
+		public static bool TryGetQuality(int value, out ItemQuality quality)
+			=> Qualities.TryGetValue(value, out quality);
+
+		/* Matches the quality name, ignoring case. */
+		public static bool TryGetQuality(string value, out ItemQuality quality)
+		{
+			quality = Qualities.Values.FirstOrDefault(q => String.Equals(q.Name, value, StringComparison.OrdinalIgnoreCase));
+
+			return (quality != null);
+		}
 
 		public static bool operator <(ItemQuality a, ItemQuality b)
 		{
