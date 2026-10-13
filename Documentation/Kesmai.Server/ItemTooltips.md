@@ -266,6 +266,7 @@ For anything that isn't a stat, such as a special power, a recharge timer, or a 
 
 - the stored spell on wands and staves ("Spell: Fireball");
 - charges ("Charges: 2 / 5");
+- poison on a poisoned weapon or gauntlets, with its potency ("Poisoned (+3)");
 - Enchanted and Conjured;
 - the item values that aren't shown as icons or badges: hindrance ("+2 Hindrance", in red because it is a penalty), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting";
 - the alignment of a lawful, chaotic, or neutral weapon, last.
