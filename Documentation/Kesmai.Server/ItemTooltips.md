@@ -65,7 +65,7 @@ public class StormBlade : Sword, ITreasure
 }
 ```
 
-The tooltip shows the sword skill (inherited from `Sword`), damage 2–10 with the slashing damage icon, attack bonus 3, and heavy shield penetration. Its blue glow appears as a badge on the tooltip's right border. If `Flags` includes `Lawful`, `Chaotic`, or `Neutral`, the tooltip shows that alignment in its color (cyan, yellow, or lime) just above the owner.
+The tooltip shows damage 2–10 with the slashing damage icon, attack bonus 3, and heavy shield penetration. The sword skill (inherited from `Sword`) and the blue glow appear as badges on the tooltip's right border. If `Flags` includes `Lawful`, `Chaotic`, or `Neutral`, the tooltip shows that alignment in its color (cyan, yellow, or lime) after the other standard lines.
 
 ## Example: Armor With Damage Mitigation
 
@@ -267,8 +267,10 @@ For anything that isn't a stat, such as a special power, a recharge timer, or a 
 - the stored spell on wands and staves ("Spell: Fireball");
 - charges ("Charges: 2 / 5");
 - Enchanted and Conjured;
-- the item values that aren't shown as icons: the weapon skill ("Skill: Sword"), hindrance ("Hindrance: 2"), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting";
-- Owner or Unbound for bindable items, last.
+- the item values that aren't shown as icons or badges: hindrance ("Hindrance: 2"), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting";
+- the alignment of a lawful, chaotic, or neutral weapon, last.
+
+The weapon skill and the owner of a bindable item have no lines; they appear only as badges (see [Badges on the Tooltip's Border](#badges-on-the-tooltips-border)).
 
 ```csharp
 public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
@@ -328,7 +330,7 @@ A badge is a small icon on the tooltip's left or right border. Players see the i
 - on the left, two chained links for the owner of a bindable item, labeled with the owner's name or "Unbound";
 - on the right, the weapon's skill, and below it one badge for each of these weapon flags: two-handed, silver, blue glowing, throwable, returning, must throw, quick throw, snake staff, and the alignment (lawful, chaotic, or neutral). The weapon type and damage type flags get no badge, because the skill badge and the damage icon already show them. These come from the weapon's `Skill` and `Flags` automatically, so you don't add them yourself.
 
-Add your own with `AddBadge`. A badge has a side, an icon, and a label:
+Add your own with `AddBadge`. A badge has a side, an icon, an optional color, and a label:
 
 ```csharp
 public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
@@ -336,13 +338,14 @@ public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
     base.GetTooltipEntries(beholder, tooltip);
 
     // 6600101 is an entry you add, for example "Glows amber".
-    tooltip.AddBadge(TooltipBadgeSide.Right, TooltipBadgeIcons.Glow, 6600101);
+    tooltip.AddBadge(TooltipBadgeSide.Right, TooltipBadgeIcons.Glow, Color.Orange, 6600101);
 }
 ```
 
 Things to know:
 
 - The label follows the same rules as tooltip lines: a localization entry, with numbers passed as text.
+- The color tints the icon; the round background behind it keeps its own look. Leave the color out to show the icon in white.
 - Badges on each side are listed from the top. Pass an order after the label number to place yours: higher numbers come first. The owner badge uses -30000.
 - `TooltipBadgeIcons` has `Owner`, `Skill`, and `Glow` for now; more icons will be added as the art is made.
 - Badges only appear once the item is identified, like tooltip lines.
