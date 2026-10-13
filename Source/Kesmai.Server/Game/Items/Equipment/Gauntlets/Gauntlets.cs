@@ -176,9 +176,9 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	}
 
 	/// <inheritdoc />
-	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+	public override void GetClientProperties(TooltipContext context, ItemPropertySet properties)
 	{
-		base.GetClientProperties(observer, properties);
+		base.GetClientProperties(context, properties);
 
 		if (!Identified)
 			return;

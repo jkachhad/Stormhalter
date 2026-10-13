@@ -273,9 +273,9 @@ For anything that isn't a stat, such as a special power, a recharge timer, or a 
 The weapon skill and the owner of a bindable item have no lines; they appear only as badges (see [Badges on the Tooltip's Border](#badges-on-the-tooltips-border)).
 
 ```csharp
-public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 {
-    base.GetTooltipEntries(beholder, tooltip);
+    base.GetTooltipEntries(context, tooltip);
 
     // 6600100 is an entry you add, for example "Power: {0}".
     tooltip.AddLocalizedText(6600100, Color.Cyan, TooltipTextStyle.Passive, 0, Power.ToString());
@@ -286,7 +286,7 @@ Things to know:
 
 - Put the wording in the Tooltips section of `Content/Localization/Enu.xml`, using a free number in the 66xxxxx range, and pass only the changing values as arguments.
 - Pass numbers you want shown as text (`Power.ToString()`). A plain number argument is read as a reference to another localization entry, which is how the stored spell's name is shown.
-- `beholder` is the player looking at the item. You can use it to show different lines to different players, but don't change the item or send messages while building the tooltip.
+- `context.Observer` is the player looking at the item, and `context.Wearer` is the player or creature carrying it. When someone looks at another player's equipment, the tooltip is calculated for the wearer and shown to the observer, with an "Equipped by" line naming the wearer. For an item nobody carries, the wearer is the observer. Use `Wearer` for what the item does for whoever holds it, and `Observer` for what the viewer is allowed to know. Don't change the item or send messages while building the tooltip.
 - The last argument before your values is the line's order: higher numbers appear first, and lines with the same number keep the order you add them in.
 - The style sets how the line looks: each line gets a small bullet and a default color for its style.
 
@@ -333,9 +333,9 @@ A badge is a small icon on the tooltip's left or right border. Players see the i
 Add your own with `AddBadge`. A badge has a side, an icon, an optional color, and a label:
 
 ```csharp
-public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 {
-    base.GetTooltipEntries(beholder, tooltip);
+    base.GetTooltipEntries(context, tooltip);
 
     // 6600101 is an entry you add, for example "Glows amber".
     tooltip.AddBadge(TooltipBadgeSide.Right, TooltipBadgeIcons.Glow, Color.Orange, 6600101);
