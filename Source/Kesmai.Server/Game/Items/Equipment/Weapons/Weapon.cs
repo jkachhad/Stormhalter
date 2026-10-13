@@ -113,7 +113,10 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		set
 		{
 			if (_poison != value)
+			{
 				Delta(ItemDelta.UpdateIcon);
+				InvalidateTooltip();
+			}
 
 			_poison = value;
 		}
@@ -255,6 +258,15 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 			AutoRevenom = false;
 			RevenomPotency = 0;
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		if (Poison is { } poison)
+			poison.AddTooltipEntry(tooltip);
 	}
 
 	/// <inheritdoc />
