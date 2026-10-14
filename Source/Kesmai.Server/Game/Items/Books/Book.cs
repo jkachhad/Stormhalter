@@ -123,38 +123,7 @@ public class Book : ItemEntity
 		
 		if (entity is PlayerEntity player)
 		{
-			var account = player.Account;
-			var client = player.Client;
-
-			if (!publication.IsOwned(account, out var record))
-			{
-				publication.Own(account, record = new PublicationRecord(account, publication));
-				
-				player.SendServerMessage($"A book titled '{publication.Title}' has been added to your library.");
-
-				if (client.UpdateLibrary)
-					client.SendPacket(new LibraryUpdatePacket(record));
-			}
-			
-			if (publication is PublishedBook book)
-			{
-#if (DEBUG)
-				book.Refresh();
-#endif
-				entity.CloseGumps<BookGump>();
-				entity.SendGump(new BookGump(player, book));
-			}
-			else if (publication is PublishedScroll scroll)
-			{
-#if (DEBUG)
-				scroll.Refresh();
-#endif
-				entity.CloseGumps<ScrollGump>();
-				entity.SendGump(new ScrollGump(player, scroll));
-				
-				// scrolls are marked as complete when read.
-				record.Complete();
-			}
+			Library.Read(player, publication);
 
 			Delete();
 		}
@@ -209,7 +178,7 @@ public class BookGump : Gump
 		_player = player;
 		_publication = publication;
 
-		_record = record ?? publication.GetRecord(player.Account);
+		_record = record ?? Library.GetRecord(player, publication);
 
 		if (_record is not null)
 		{
