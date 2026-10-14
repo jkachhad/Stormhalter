@@ -157,6 +157,16 @@ Some entries show details that differ between players, such as how old a dragon 
 - **Calculated details:** override `GetOwnerProperties(player, entry, owned)` and return properties built from `owned.Acquired` (when the player got the entry). Nothing extra is saved.
 - **Saved details:** give the entry a state when it's added (`CreateState`, or the last argument of `TryAdd`), and change it later with `collection.UpdateState(player, entryId, state)`. Write and read it with `CollectionState.Write` and `CollectionState.Read`, and start it with a version number so you can change its format later.
 
+## Examples in this repository
+
+| Collection | Built from | Scope | Visibility | Items |
+| --- | --- | --- | --- | --- |
+| `RareCoins` (`Game/Collections/RareCoins.cs`) | `Content/Data/Collections/Coins.xml` | Account | Hidden | `RareCoin`, used up when added |
+| `DragonEggs` (`Game/Collections/DragonEggs.cs`) | code (`Build`) | Player | Public | `DragonEgg`, used up; saves a growth rate and shows the egg's age, growth and stage |
+| `TrophySkulls` (`Game/Collections/TrophySkulls.cs`) | every `TrophySkull` class | Account | Secret | `SkullTrophy`, kept by the player |
+
+Staff can create them with `add RareCoin 3`, `add DragonEgg 2` and `add SkullTrophy 5`.
+
 ## Opening an entry
 
 Players can click an entry the client view makes clickable, which asks the server to open it. Override `OnAccess(player, entry, owned)` in the collection to respond, for example by showing a gump. Players can only open entries they own.
