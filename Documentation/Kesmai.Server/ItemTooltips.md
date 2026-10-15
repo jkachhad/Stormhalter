@@ -173,7 +173,7 @@ A bonus here is separate from the matching item member. A robe with `ManaRegener
 
 ## The Description on the Tooltip
 
-The tooltip shows a short description of the item: just the item text, such as "an iron shortsword.". It leaves out "You are looking at" and the lines about the item's properties, such as "The combat adds for this weapon are +3.", because the tooltip already shows those values. It leaves out quality too, because the tooltip shows that on its own.
+The tooltip shows a short description of the item: just the item text, such as "an iron shortsword.", which the tooltip shows with a capital letter: "An iron shortsword.". Keep the entry in lowercase, since "You are looking at" uses the same text. It leaves out "You are looking at" and the lines about the item's properties, such as "The combat adds for this weapon are +3.", because the tooltip already shows those values. It leaves out quality too, because the tooltip shows that on its own.
 
 Write it in `GetTooltipDescription`, next to `GetDescription`. `GetDescription` is still what players see when they look at the item. Keep the two separate: `GetTooltipDescription` must not call `GetDescription`.
 
