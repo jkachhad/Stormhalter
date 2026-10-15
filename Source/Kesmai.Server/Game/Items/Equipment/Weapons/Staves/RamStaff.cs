@@ -66,6 +66,6 @@ public class RamStaff : Staff, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200353)); /* a staff large gnarled staff with a ram skull attached. */
+		entries.Add(new LocalizationEntry(6290013)); /* a large gnarled staff with a ram skull attached. */
 	}
 }

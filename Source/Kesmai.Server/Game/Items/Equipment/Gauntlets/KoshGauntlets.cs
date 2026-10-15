@@ -63,7 +63,7 @@ public class KoshGauntlets : Gauntlets, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200342)); /* a pair of gauntlets made from leathery dragon skin with shiny blue-steel plates. The Gauntlets emit a Blue Glow. */
+		entries.Add(new LocalizationEntry(6290012)); /* a pair of gauntlets made from leathery dragon skin with shiny blue-steel plates. */
 	}
 		
 	/// <inheritdoc />

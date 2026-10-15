@@ -83,7 +83,7 @@ public class BlackBroadsword : Sword, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200004)); /* a black broadsword. The sword is emitting a faint blue glow. The weapon is lawful. */
+		entries.Add(new LocalizationEntry(6290001)); /* a black broadsword. */
 	}
 
 

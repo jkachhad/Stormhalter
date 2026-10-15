@@ -208,7 +208,7 @@ Some things to know:
 - If the text depends on the item's state, such as a stack amount or whether it has been repaired, use the same conditions as in `GetDescription`.
 - Pass numbers you want shown as text, such as `Level.ToString()`. A plain number argument is read as a reference to another localization entry, so `new LocalizationEntry(130900110, 130900050, ...)` puts entry 130900050's text in place of `{0}`.
 - A line that the tooltip doesn't show anywhere else yet, such as a pet's level, can go in `GetTooltipDescription` for now, as a localization entry too. Values like these will move to their own tooltip lines later.
-- Text that has a property inside the same sentence, such as "a black broadsword. The weapon is lawful.", is shown as written.
+- Leave out sentences about a blue glow or the weapon's alignment, such as "The sword is emitting a faint blue glow. The weapon is lawful.", when the weapon has the `BlueGlowing`, `Lawful`, `Chaotic`, or `Neutral` flag, because the tooltip shows those as badges. If the item's look text has them, add a separate entry for the tooltip without them. Entries for the shared items go under `Tooltip Descriptions (6290000-6299999)` in `Enu.xml`; segment items use their segment's tooltip descriptions section (see below). Keep the sentence if the weapon doesn't have the flag, since no badge shows it.
 
 ## Numbers for a Segment's Text
 
