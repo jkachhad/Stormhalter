@@ -57,7 +57,7 @@ public class IronRod : Staff, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200008)); /* a long black iron rod with glowing red gems arranged in a ring near the center.  The weapon is lawful. */
+		entries.Add(new LocalizationEntry(6290002)); /* a long black iron rod with glowing red gems arranged in a ring near the center. */
 	}
 	
 	/// <inheritdoc />

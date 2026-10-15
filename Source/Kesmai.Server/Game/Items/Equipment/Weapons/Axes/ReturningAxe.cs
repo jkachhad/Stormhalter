@@ -61,7 +61,7 @@ public class ReturningAxe : Axe, IReturningWeapon, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200003)); /* a heavy battle axe with gleaming steel blades. The axe is emitting a faint blue glow. The weapon is lawful. */
+		entries.Add(new LocalizationEntry(6290000)); /* a heavy battle axe with gleaming steel blades. */
 	}
 
 	/// <inheritdoc />

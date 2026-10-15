@@ -66,7 +66,7 @@ public class EbonyStaff : Staff, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200163)); /* an ebony staff encrusted with diamonds. The weapon emanates power. The weapon is lawful. */
+		entries.Add(new LocalizationEntry(6290008)); /* an ebony staff encrusted with diamonds. The weapon emanates power. */
 	}
 	
 	/// <inheritdoc />

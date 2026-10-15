@@ -70,7 +70,7 @@ public class SilverGreatAxe : Axe, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200145)); /* a huge battle axe with shining silver blades. The axe is emitting a faint blue glow. The weapon is lawful. */
+		entries.Add(new LocalizationEntry(6290006)); /* a huge battle axe with shining silver blades. */
 	}
 		
 	/// <inheritdoc />

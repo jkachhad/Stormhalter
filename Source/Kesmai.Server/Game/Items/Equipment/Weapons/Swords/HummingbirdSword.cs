@@ -46,7 +46,7 @@ public class HummingbirdSword : ShortSword, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200281)); /* a fine sword made of an otherworldly metal. Looking at the blade makes you dizzy, as if you were looking at the wings of a hummingbird. The longsword is emitting a faint blue glow. */
+		entries.Add(new LocalizationEntry(6290010)); /* a fine sword made of an otherworldly metal. Looking at the blade makes you dizzy, as if you were looking at the wings of a hummingbird. */
 	}
 
 #if (Alpha)

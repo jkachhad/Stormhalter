@@ -57,7 +57,7 @@ public class IronRodChaotic : Staff
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200136)); /* a long black iron rod with glowing red gems arranged in a ring near the center. The rod is chaotic. */
+		entries.Add(new LocalizationEntry(6290004)); /* a long black iron rod with glowing red gems arranged in a ring near the center. */
 	}
 	
 	/// <inheritdoc />
