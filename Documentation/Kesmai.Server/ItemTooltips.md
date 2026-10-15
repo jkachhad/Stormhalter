@@ -65,7 +65,7 @@ public class StormBlade : Sword, ITreasure
 }
 ```
 
-The tooltip shows damage 2–10 with the slashing damage icon, attack bonus 3, and heavy shield penetration. The sword skill (inherited from `Sword`) and the blue glow appear as badges on the tooltip's right border. If `Flags` includes `Lawful`, `Chaotic`, or `Neutral`, the tooltip shows that alignment in its color (cyan, yellow, or lime) after the other standard lines.
+The tooltip shows damage 2–10 with the slashing damage icon, attack bonus 3, and heavy shield penetration. The sword skill (inherited from `Sword`) and the blue glow appear as badges on the tooltip's right border. If `Flags` includes `Lawful`, `Chaotic`, or `Neutral`, that alignment appears as a badge too.
 
 ## Example: Armor With Damage Mitigation
 
@@ -268,10 +268,9 @@ For anything that isn't a stat, such as a special power, a recharge timer, or a 
 - charges ("Charges: 2 / 5");
 - poison on a poisoned weapon or gauntlets, with its potency ("Poisoned (+3)");
 - Enchanted and Conjured;
-- the item values that aren't shown as icons or badges: hindrance ("+2 Hindrance", in red because it is a penalty), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting";
-- the alignment of a lawful, chaotic, or neutral weapon, last.
+- the item values that aren't shown as icons or badges: hindrance ("+2 Hindrance", in red because it is a penalty), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting", last.
 
-The weapon skill and the owner of a bindable item have no lines; they appear only as badges (see [Badges on the Tooltip's Border](#badges-on-the-tooltips-border)).
+The weapon skill, the alignment of a lawful, chaotic, or neutral weapon, and the owner of a bindable item have no lines; they appear only as badges (see [Badges on the Tooltip's Border](#badges-on-the-tooltips-border)).
 
 ```csharp
 public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
