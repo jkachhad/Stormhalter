@@ -62,7 +62,7 @@ public class MainGauche : Dagger, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200341)); /* an antique Lengian parrying dagger with a gold heron inscribed in the smooth blue gilted metal. The weapon feels exceptionally well balanced. The weapon is neutral. */
+		entries.Add(new LocalizationEntry(6290011)); /* an antique Lengian parrying dagger with a gold heron inscribed in the smooth blue gilted metal. The weapon feels exceptionally well balanced. */
 	}
 		
 	/// <inheritdoc />

@@ -82,6 +82,6 @@ public class UnholyScepter : Mace
     /// <inheritdoc />
     public override void GetTooltipDescription(List<LocalizationEntry> entries)
     {
-        entries.Add(new LocalizationEntry(6200382)); /* an unholy scepter that has the markings of a king. The weapon emanates power. The weapon is lawful. */
+        entries.Add(new LocalizationEntry(6290014)); /* an unholy scepter that has the markings of a corrupted queen. The weapon emanates power. */
     }
 }

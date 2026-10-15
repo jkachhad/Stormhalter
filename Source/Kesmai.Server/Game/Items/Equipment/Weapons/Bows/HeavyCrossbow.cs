@@ -60,7 +60,7 @@ public class HeavyCrossbow : Crossbow, ITreasure
 	/// <inheritdoc />
 	public override void GetTooltipDescription(List<LocalizationEntry> entries)
 	{
-		entries.Add(new LocalizationEntry(6200038)); /* a heavy crossbow with an ornately carved tiller and a peculiar black steel bow. The crossbow is emitting a soft blue glow. */
+		entries.Add(new LocalizationEntry(6290003)); /* a heavy crossbow with an ornately carved tiller and a peculiar black steel bow. */
 	}
 	
 	/// <inheritdoc />
