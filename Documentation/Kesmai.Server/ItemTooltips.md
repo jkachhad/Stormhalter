@@ -267,6 +267,7 @@ For anything that isn't a stat, such as a special power, a recharge timer, or a 
 - the stored spell on wands and staves ("Spell: Fireball");
 - charges ("Charges: 2 / 5");
 - poison on a poisoned weapon or gauntlets, with its potency ("Poisoned (+3)");
+- swing delay on a weapon or gauntlets that swing faster or slower than once a round ("Swing Delay: 0.5 rounds", or in red when it is over 1 round). It comes from your `GetSwingDelay` override, so you don't need to do anything. If the delay changes while the item exists, call `InvalidateTooltip()` when it does;
 - Enchanted and Conjured;
 - the item values that aren't shown as icons or badges: hindrance ("+2 Hindrance", in red because it is a penalty), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting", last.
 
