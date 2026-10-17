@@ -32,6 +32,9 @@
       <PackageReference Include="Dirkster.AvalonDock" Version="4.50.2" />
       <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
       <PackageReference Include="MonoGame.Framework.WindowsDX" Version="$(MonoGameVersion)" />
+      <!-- DigitalRune.Graphics.Interop (D3D11Image) shares its surface with WPF through Direct3D 9, and MonoGame
+           doesn't bring SharpDX.Direct3D9 in. Same version as MonoGame's SharpDX. -->
+      <PackageReference Include="SharpDX.Direct3D9" Version="4.2.0" />
       <PackageReference Include="NuGet.Frameworks" Version="6.14.0" />
       <PackageReference Include="NuGet.Resolver" Version="6.14.0" />
       <PackageReference Include="RoslynPad.Editor.Windows" Version="4.12.1" />
