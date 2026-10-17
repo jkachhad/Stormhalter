@@ -21,6 +21,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
@@ -46,6 +48,9 @@ public class ApplicationPresenter : ObservableRecipient
 	private ISegmentObject _activeContent;
 	private string _tileCoordinateDisplay = "(-, -)";
 
+	private bool _isModified;
+	private byte[] _savedFingerprint;
+
 	public Selection Selection
 	{
 		get => _selection;
@@ -60,9 +65,52 @@ public class ApplicationPresenter : ObservableRecipient
 		set
 		{
 			if (SetProperty(ref _segment, value, true))
+			{
+				// edits to the previous segment can't be undone in this one.
+				History.Clear();
+
+				OnPropertyChanged(nameof(WindowTitle));
+				
 				WeakReferenceMessenger.Default.Send(new ActiveSegmentChanged(Segment));
+			}
 		}
 	}
+
+	/// <summary>
+	/// Gets the undo and redo history for edits to region tiles.
+	/// </summary>
+	public MapEditHistory History { get; } = new MapEditHistory();
+
+	/// <summary>
+	/// Gets a value indicating whether the segment may have changed since it was opened or saved. This drives
+	/// the title marker; <see cref="ConfirmDiscardChanges"/> compares the segment itself before prompting.
+	/// </summary>
+	public bool IsModified
+	{
+		get => _isModified;
+		private set
+		{
+			if (SetProperty(ref _isModified, value))
+				OnPropertyChanged(nameof(WindowTitle));
+		}
+	}
+
+	public string WindowTitle
+	{
+		get
+		{
+			if (_segment is null)
+				return "WorldForge";
+
+			return $"WorldForge - {_segment.Name}{(_isModified ? " *" : String.Empty)}";
+		}
+	}
+
+	public RelayCommand UndoCommand { get; }
+	public RelayCommand RedoCommand { get; }
+
+	public string UndoMenuHeader => History.CanUndo ? $"_Undo {History.UndoDescription}" : "_Undo";
+	public string RedoMenuHeader => History.CanRedo ? $"_Redo {History.RedoDescription}" : "_Redo";
 
 	public RelayCommand CreateSegmentCommand { get; set; }
 	public RelayCommand CloseSegmentCommand { get; set; }
@@ -144,7 +192,48 @@ public class ApplicationPresenter : ObservableRecipient
 			}); 
 		});
 		
-		ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
+		// close the main window rather than shutting down, so its closing check can offer to save changes.
+		ExitApplicationCommand = new RelayCommand(() => Application.Current.MainWindow?.Close());
+
+		UndoCommand = new RelayCommand(Undo, () => History.CanUndo);
+		RedoCommand = new RelayCommand(Redo, () => History.CanRedo);
+
+		History.Changed += (_, _) =>
+		{
+			UndoCommand.NotifyCanExecuteChanged();
+			RedoCommand.NotifyCanExecuteChanged();
+
+			OnPropertyChanged(nameof(UndoMenuHeader));
+			OnPropertyChanged(nameof(RedoMenuHeader));
+
+			MarkModified();
+		};
+
+		// changes to segment data other than tiles mark the segment as modified.
+		void markModifiedOn<TMessage>() where TMessage : class
+		{
+			messenger.Register<ApplicationPresenter, TMessage>(this, static (r, _) => r.MarkModified());
+		}
+
+		markModifiedOn<SegmentChanged>();
+		markModifiedOn<SegmentRegionsChanged>();
+		markModifiedOn<SegmentRegionChanged>();
+		markModifiedOn<SegmentSubregionsChanged>();
+		markModifiedOn<SegmentSubregionChanged>();
+		markModifiedOn<SegmentLocationsChanged>();
+		markModifiedOn<SegmentLocationChanged>();
+		markModifiedOn<SegmentEntitiesChanged>();
+		markModifiedOn<SegmentEntityChanged>();
+		markModifiedOn<SegmentSpawnsChanged>();
+		markModifiedOn<SegmentSpawnChanged>();
+		markModifiedOn<SegmentTreasuresChanged>();
+		markModifiedOn<SegmentTreasureChanged>();
+		markModifiedOn<SegmentBrushesChanged>();
+		markModifiedOn<SegmentBrushChanged>();
+		markModifiedOn<SegmentComponentsChanged>();
+		markModifiedOn<SegmentComponentChanged>();
+		markModifiedOn<SegmentTemplatesChanged>();
+		markModifiedOn<SegmentTemplateChanged>();
 
 		Selection = new Selection();
 
@@ -226,6 +315,8 @@ public class ApplicationPresenter : ObservableRecipient
 		};
 
 		Segment = segment;
+
+		MarkSaved();
 	}
 
 	private void CloseSegment()
@@ -233,24 +324,20 @@ public class ApplicationPresenter : ObservableRecipient
 		if (_segment == null)
 			throw new InvalidOperationException("Attempt to close a segment when an active segment does not exist.");
 
+		if (!ConfirmDiscardChanges("closing it"))
+			return;
+		
 		Segment = null;
 
 		Documents.Clear();
+
+		_savedFingerprint = null;
+		IsModified = false;
 	}
 	
 	private void OpenSegment()
 	{
-		var overwrite = true;
-
-		if (Segment != null)
-		{
-			var overwriteResult = MessageBox.Show("You may lose changes to the existing segment project, continue?", "Open Segment", MessageBoxButton.YesNo);
-
-			if (overwriteResult != MessageBoxResult.Yes)
-				overwrite = false;
-		}
-
-		if (!overwrite)
+		if (Segment != null && !ConfirmDiscardChanges("opening another segment"))
 			return;
 		
 		// show dialog for folder selection
@@ -341,9 +428,18 @@ public class ApplicationPresenter : ObservableRecipient
 			(root, version) => segment.Treasures.Load(root, version));
 
 		Segment.UpdateTiles();
+
+		// loading raised change messages; the segment as loaded is the saved state.
+		MarkSaved();
 	}
 
 	private void SaveSegment(bool queryPath)
+	{
+		TrySaveSegment(queryPath);
+	}
+
+	/// <returns>True if the segment was saved.</returns>
+	private bool TrySaveSegment(bool queryPath)
 	{
 		var targetPath = String.Empty;
 		
@@ -360,7 +456,7 @@ public class ApplicationPresenter : ObservableRecipient
 			var saveResult = dialog.ShowDialog();
 
 			if (!saveResult.HasValue || saveResult != true)
-				return;
+				return false;
 
 			targetPath = dialog.FolderName;
 		}
@@ -370,6 +466,8 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 
 		WeakReferenceMessenger.Default.Send(new SegmentSerialize(_segment));
+
+		var saved = false;
 		
 		try
 		{
@@ -387,29 +485,10 @@ public class ApplicationPresenter : ObservableRecipient
 					existingFile.Delete();
 			}
 			
-			foreach (var region in _segment.Regions)
-				region.GetSerializingElement().Save(Path.Combine(regionsDirectory.FullName, $"{region.ID}.xml"));
-			
-			void write(Action<XElement> saveAction, string elementName, string fileName)
-			{
-				var element = new XElement(elementName);
-				saveAction(element);
-				element.Save(Path.Combine(targetPath, fileName));
-			}
+			var documents = GetSegmentDocuments().ToList();
 
-			write((element) => element.Add(
-					new XAttribute("name", _segment.Name),
-					new XAttribute("version", Core.Version.ToString())),
-				"segment", "Segment.xml");
-
-			write(_segment.Locations.Save, "locations", "Locations.xml");
-			write(_segment.Subregions.Save, "subregions", "Subregions.xml");
-			write(_segment.Entities.Save, "entities", "Entities.xml");
-			write(_segment.Spawns.Save, "spawns", "Spawns.xml");
-			write(_segment.Treasures.Save, "treasures", "Treasures.xml");
-			write(_segment.Brushes.Save, "brushes", "Brushes.xml");
-			write(_segment.Components.Save, "components", "Components.xml");
-			write(_segment.Templates.Save, "templates", "Templates.xml");
+			foreach (var (relativePath, element) in documents)
+				element.Save(Path.Combine(targetPath, relativePath));
 			
 			// find the project file and save it
 			var segmentProject = new FileInfo(Path.Combine(targetPath, $"{_segment.Name}.csproj"));
@@ -459,6 +538,11 @@ public class ApplicationPresenter : ObservableRecipient
 				
 				new XDocument(projectRoot).Save(segmentProject.FullName);
 			}
+
+			_savedFingerprint = ComputeFingerprint(documents);
+			IsModified = false;
+
+			saved = true;
 		}
 		catch (Exception ex)
 		{
@@ -466,6 +550,115 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 		
 		WeakReferenceMessenger.Default.Send(new SegmentSerialized(_segment));
+
+		return saved;
+	}
+
+	/// <summary>
+	/// Gets the files a save writes, as paths relative to the segment folder. Scripts are saved separately.
+	/// </summary>
+	private IEnumerable<(string RelativePath, XElement Element)> GetSegmentDocuments()
+	{
+		foreach (var region in _segment.Regions)
+			yield return (Path.Combine("Regions", $"{region.ID}.xml"), region.GetSerializingElement());
+
+		yield return ("Segment.xml", new XElement("segment",
+			new XAttribute("name", _segment.Name),
+			new XAttribute("version", Core.Version.ToString())));
+
+		XElement build(Action<XElement> saveAction, string elementName)
+		{
+			var element = new XElement(elementName);
+			saveAction(element);
+			return element;
+		}
+
+		yield return ("Locations.xml", build(_segment.Locations.Save, "locations"));
+		yield return ("Subregions.xml", build(_segment.Subregions.Save, "subregions"));
+		yield return ("Entities.xml", build(_segment.Entities.Save, "entities"));
+		yield return ("Spawns.xml", build(_segment.Spawns.Save, "spawns"));
+		yield return ("Treasures.xml", build(_segment.Treasures.Save, "treasures"));
+		yield return ("Brushes.xml", build(_segment.Brushes.Save, "brushes"));
+		yield return ("Components.xml", build(_segment.Components.Save, "components"));
+		yield return ("Templates.xml", build(_segment.Templates.Save, "templates"));
+	}
+
+	/// <summary>
+	/// Hashes the documents a save would write, to tell whether the segment differs from its saved state.
+	/// </summary>
+	private static byte[] ComputeFingerprint(IEnumerable<(string RelativePath, XElement Element)> documents)
+	{
+		using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+
+		foreach (var (relativePath, element) in documents)
+		{
+			hash.AppendData(Encoding.UTF8.GetBytes(relativePath));
+			hash.AppendData(new byte[] { 0 });
+			hash.AppendData(Encoding.UTF8.GetBytes(element.ToString(SaveOptions.DisableFormatting)));
+			hash.AppendData(new byte[] { 0 });
+		}
+
+		return hash.GetHashAndReset();
+	}
+
+	/// <summary>
+	/// Records the segment's current state as saved.
+	/// </summary>
+	private void MarkSaved()
+	{
+		_savedFingerprint = (_segment != null) ? ComputeFingerprint(GetSegmentDocuments()) : null;
+		IsModified = false;
+	}
+
+	private void MarkModified()
+	{
+		if (_segment != null)
+			IsModified = true;
+	}
+
+	/// <summary>
+	/// Determines whether the segment differs from its saved state, by comparing what a save would write.
+	/// </summary>
+	public bool HasUnsavedChanges()
+	{
+		if (_segment is null)
+			return false;
+
+		if (_savedFingerprint is null)
+			return true;
+
+		return !ComputeFingerprint(GetSegmentDocuments()).AsSpan().SequenceEqual(_savedFingerprint);
+	}
+
+	/// <summary>
+	/// Offers to save unsaved changes before an action that would discard them.
+	/// </summary>
+	/// <param name="action">What is about to happen, e.g. "closing it".</param>
+	/// <returns>True if the action can continue.</returns>
+	public bool ConfirmDiscardChanges(string action)
+	{
+		if (!HasUnsavedChanges())
+			return true;
+
+		var result = MessageBox.Show($"Save changes to segment '{_segment.Name}' before {action}?",
+			"Unsaved Changes", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
+		return result switch
+		{
+			MessageBoxResult.Yes => TrySaveSegment(false),
+			MessageBoxResult.No => true,
+			_ => false,
+		};
+	}
+
+	public void Undo()
+	{
+		History.Undo(_segment);
+	}
+
+	public void Redo()
+	{
+		History.Redo(_segment);
 	}
 	
 	private void CreateRegion()
