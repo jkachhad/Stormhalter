@@ -198,16 +198,7 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// </remarks>
 	public virtual double GetAttackBonus(MobileEntity attacker, MobileEntity defender)
 	{
-		var attackBonus = BaseAttackBonus;
-
-		/* Enchanted weapons from a Knight have additional attack bonus based on the level of the knight. */
-		if (IsEnchanted)
-		{
-			if (attacker is PlayerEntity player)
-				attackBonus += ((player.Level - 5) / 3).Clamp(1, 5);
-			else
-				attackBonus += 1;
-		}
+		var attackBonus = BaseAttackBonus + GetEnchantedAttackBonus(attacker);
 
 		/*
 		 * "The Black Broadsword (BBS for short) is the best weapon in the game. It hits hard and blocks well.
@@ -221,6 +212,24 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 				attackBonus += 1;
 
 		return attackBonus;
+	}
+
+	/// <summary>
+	/// Gets the attack bonus an enchantment adds for the attacker, or 0 when this weapon is not enchanted. The tooltip
+	/// shows it on the Enchanted line.
+	/// </summary>
+	/// <remarks>
+	/// Enchanted weapons from a Knight have additional attack bonus based on the level of the knight.
+	/// </remarks>
+	public virtual int GetEnchantedAttackBonus(MobileEntity attacker)
+	{
+		if (!IsEnchanted)
+			return 0;
+
+		if (attacker is PlayerEntity player)
+			return ((player.Level - 5) / 3).Clamp(1, 5);
+
+		return 1;
 	}
 
 	/// <inheritdoc/>
