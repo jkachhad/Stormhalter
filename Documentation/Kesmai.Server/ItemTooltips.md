@@ -65,7 +65,7 @@ public class StormBlade : Sword, ITreasure
 }
 ```
 
-The tooltip shows damage 2–10 with the slashing damage icon, attack bonus 3, and heavy shield penetration. The sword skill (inherited from `Sword`) and the blue glow appear as badges on the tooltip's right border. If `Flags` includes `Lawful`, `Chaotic`, or `Neutral`, that alignment appears as a badge too.
+The tooltip shows damage 2–10 with the slashing damage icon, attack bonus 3, and heavy shield penetration. The sword skill (inherited from `Sword`) and the blue glow appear as badges on the tooltip's right border. If `Flags` includes `Lawful`, `Chaotic`, or `Neutral`, that alignment appears as a badge too. On a weapon, the Lawful badge's label (shown while Shift is held) also says it gives +1 attack bonus against evil.
 
 ## Example: Armor With Damage Mitigation
 
@@ -268,7 +268,7 @@ For anything that isn't a stat, such as a special power, a recharge timer, or a 
 - charges ("Charges: 2 / 5");
 - poison on a poisoned weapon or gauntlets, with its potency ("Poisoned (+3)");
 - swing delay on a weapon or gauntlets that swing faster or slower than once a round ("Swing Delay: 0.5 rounds", or in red when it is over 1 round). It comes from your `GetSwingDelay` override, so you don't need to do anything. If the delay changes while the item exists, call `InvalidateTooltip()` when it does;
-- Enchanted and Conjured;
+- Enchanted and Conjured. On an enchanted weapon, the line includes the attack bonus the enchantment gives the player looking at it ("Enchanted (+2 Attack Bonus)"), from `GetEnchantedAttackBonus`. If your weapon changes how enchantment adds attack bonus, override `GetEnchantedAttackBonus` and use it in `GetAttackBonus`, so the tooltip matches;
 - the item values that aren't shown as icons or badges: hindrance ("+2 Hindrance", in red because it is a penalty), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting", last.
 
 The weapon skill, the alignment of a lawful, chaotic, or neutral weapon, and the owner of a bindable item have no lines; they appear only as badges (see [Badges on the Tooltip's Border](#badges-on-the-tooltips-border)).
