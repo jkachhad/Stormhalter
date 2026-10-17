@@ -49,6 +49,12 @@ public class BearSkull : Helmet, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250105)); /* The skull is very thick and contains the spell of Night Vision. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200210)); /* a bear skull. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

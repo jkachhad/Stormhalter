@@ -53,6 +53,12 @@ public class Longbow : Bow
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250027)); /* The longbow appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200035)); /* a yew longbow. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

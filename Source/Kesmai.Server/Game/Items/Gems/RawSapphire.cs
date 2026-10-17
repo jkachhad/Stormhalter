@@ -29,6 +29,12 @@ public class RawSapphire : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200300)); /* [You are looking at] [an enormous raw sapphire. A good jeweler could cut this into something exquisite.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200300)); /* an enormous raw sapphire. A good jeweler could cut this into something exquisite. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

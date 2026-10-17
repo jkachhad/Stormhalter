@@ -40,6 +40,12 @@ public class WeakStrengthBracelet : StrengthBracelet, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250059)); /* The bracelet contains a weak spell of Strength. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200083)); /* a leather armband studded with nodules. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

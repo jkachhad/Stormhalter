@@ -45,6 +45,12 @@ public class PlatedShield : Shield
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250024)); /* The shield provides fairly good protection. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200032)); /* a wooden shield faced with thin steel plates. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

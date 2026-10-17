@@ -42,4 +42,10 @@ public class FalconStaminaPotion : Bottle
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200383)); /* a burnished steel bottle with the icon of a falcon.] [Inside is a clear jade-colored liquid that smells of jasmine. */
+	}
 }

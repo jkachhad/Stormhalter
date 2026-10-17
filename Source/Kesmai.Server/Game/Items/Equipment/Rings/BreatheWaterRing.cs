@@ -44,6 +44,12 @@ public class BreatheWaterRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250005)); /* The ring contains the spell of Breathe Water. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200006)); /* a small silver ring with a shiny black stone. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>

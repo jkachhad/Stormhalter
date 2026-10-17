@@ -34,6 +34,12 @@ public class DogJacket : Jacket
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200190)); /* a jacket made from the fur of a dog. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

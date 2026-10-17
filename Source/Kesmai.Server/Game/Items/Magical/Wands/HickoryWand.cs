@@ -41,6 +41,12 @@ public class HickoryWand : Wand, ITreasure
 			entries.Add(new LocalizationEntry(6250116)); /* The wand contains the spell of Create Portal. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200227)); /* a hickory wand with gold and silver inlay. */
+	}
+
 	public override Spell GetSpell()
 	{
 		return new CreatePortalSpell

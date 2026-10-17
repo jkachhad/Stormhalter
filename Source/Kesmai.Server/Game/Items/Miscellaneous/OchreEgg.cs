@@ -39,6 +39,12 @@ public class OchreEgg : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200219)); /* [You are looking at] [a large ochre egg mottled with dark brown spots.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200219)); /* a large ochre egg mottled with dark brown spots. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

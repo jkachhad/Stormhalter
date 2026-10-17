@@ -16,14 +16,34 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 	public int ChargesCurrent
 	{
 		get => _chargesCurrent;
-		set => _chargesCurrent = value.Clamp(0, _chargesMax);
+		set
+		{
+			var charges = value.Clamp(0, _chargesMax);
+
+			if (_chargesCurrent == charges)
+				return;
+
+			_chargesCurrent = charges;
+
+			// the rich tooltip shows the remaining charges.
+			InvalidateTooltip();
+		}
 	}
 		
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{
 		get => _chargesMax;
-		set => _chargesMax = value;
+		set
+		{
+			if (_chargesMax == value)
+				return;
+
+			_chargesMax = value;
+
+			// the rich tooltip shows the maximum charges.
+			InvalidateTooltip();
+		}
 	}
 
 	/// <summary>
@@ -85,7 +105,7 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 		if (Container is EquipmentContainer)
 		{
 			if (_chargesCurrent > 0)
-				_chargesCurrent--;
+				ChargesCurrent--;
 		}
 	}
 		

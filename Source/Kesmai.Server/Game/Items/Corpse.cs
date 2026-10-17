@@ -99,6 +99,17 @@ public class Corpse : ItemEntity
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		var owner = Owner;
+
+		if (owner is CreatureEntity creature)
+			entries.Add(new LocalizationEntry(6200397, creature.Name.WithArticle())); /* the body of {0}. */
+		else if (owner is PlayerEntity player)
+			entries.Add(new LocalizationEntry(6200397, $"a {player.Profession.Info.Name}")); /* the body of {0}. */
+	}
+
+	/// <inheritdoc />
 	public override ActionType GetAction()
 	{
 		var parent = Parent;

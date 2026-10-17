@@ -35,6 +35,12 @@ public class SmallBrassRing : Ring
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250042)); /* The ring appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200051)); /* a small brass ring. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

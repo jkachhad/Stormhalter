@@ -50,6 +50,12 @@ public class Spear : Staff
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250019)); /* The spear appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200020)); /* a wooden spear with an iron tip. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

@@ -35,6 +35,12 @@ public class ClamShell : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200286)); /* [You are looking at] [a clam shell.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200286)); /* a clam shell. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

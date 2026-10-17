@@ -31,6 +31,15 @@ public class TrollVest : Armor, ITreasure
 	/// <inheritdoc />
 	public override int ProjectileProtection => 2;
 
+	/// <inheritdoc />
+	public override int MeleeDamageMitigation => 2;
+
+	/// <inheritdoc />
+	public override int RangedDamageMitigation => 2;
+
+	/// <inheritdoc />
+	public override int ProjectileDamageMitigation => 2;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TrollVest"/> class.
 	/// </summary>
@@ -46,26 +55,18 @@ public class TrollVest : Armor, ITreasure
 	}
 	
 	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
-	{
-		var modifiers = base.GetStatModifiers(wearer);
-
-		modifiers.Add(EntityStat.MeleeDamageMitigation, 2);
-		modifiers.Add(EntityStat.RangedDamageMitigation, 2);
-		modifiers.Add(EntityStat.ProjectileDamageMitigation, 2);
-
-		return modifiers;
-	}
-
-
-
-	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200025)); /* [You are looking at] [a vest made from a peculiar stone colored leather.] */
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250021)); /* The vest appears quite thick. */
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200025)); /* a vest made from a peculiar stone colored leather. */
 	}
 	
 	/// <inheritdoc />

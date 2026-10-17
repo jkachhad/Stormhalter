@@ -49,6 +49,12 @@ public class PermanentConstitutionPotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200113)); /* a small porcelain vial. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

@@ -58,6 +58,12 @@ public class MainGauche : Dagger, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6290011)); /* an antique Lengian parrying dagger with a gold heron inscribed in the smooth blue gilted metal. The weapon feels exceptionally well balanced. */
+	}
 		
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

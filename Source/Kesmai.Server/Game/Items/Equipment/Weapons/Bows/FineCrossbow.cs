@@ -37,6 +37,12 @@ public class FineCrossbow : Crossbow
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200282)); /* a fine crossbow. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

@@ -40,6 +40,12 @@ public class StrongShieldRing : ShieldRing
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250037)); /* The ring contains a strong spell of Shield. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200046)); /* a small iron ring with a large black stone. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

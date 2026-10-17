@@ -59,4 +59,10 @@ public class GreatScythe : Staff
 		if (Identified)
 			entries.Add(new LocalizationEntry(6300426)); /* The combat adds for this weapon are +6. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200376)); /* a bloodied great scythe with magical runes embued within. */
+	}
 }

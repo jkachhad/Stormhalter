@@ -22,6 +22,9 @@ public class LeatherArmor : Armor
 
 	/// <inheritdoc />
 	public override int BashingProtection => 1;
+
+	/// <inheritdoc />
+	public override int MeleeDamageMitigation => 1;
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LeatherArmor"/> class.
@@ -38,21 +41,15 @@ public class LeatherArmor : Armor
 	}
 	
 	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
-	{
-		var modifiers = base.GetStatModifiers(wearer);
-
-		modifiers.Add(EntityStat.MeleeDamageMitigation, 1);
-
-		return modifiers;
-	}
-
-
-		
-	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200002)); /* [You are looking at] [a suit of leather armor.] */
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200002)); /* a suit of leather armor. */
 	}
 	
 	/// <inheritdoc />

@@ -62,6 +62,12 @@ public class EbonyStaff : Staff, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250092)); /* The staff seems to have some magical properties. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6290008)); /* an ebony staff encrusted with diamonds. The weapon emanates power. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

@@ -38,6 +38,12 @@ public class GlassWand : Wand, ITreasure
 			entries.Add(new LocalizationEntry(6250111)); /* The wand contains the spell of Ice Storm. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200222)); /* a glass wand. */
+	}
+
 	public override Spell GetSpell()
 	{
 		return new IceStormSpell
