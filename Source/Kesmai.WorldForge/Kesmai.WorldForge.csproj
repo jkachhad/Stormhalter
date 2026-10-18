@@ -24,6 +24,19 @@
         <Optimize>true</Optimize>
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
+
+    <!-- WorldForge ships to players with the client through Kesmai.Update, as one framework-dependent
+         Kesmai.WorldForge.exe (players install the client's Desktop Runtime). A publish for a runtime,
+         dotnet publish -c Release -r win-x64, bundles every assembly and native library into the exe and writes it to
+         Build/Kesmai.WorldForge/Publish, where Kesmai's Build-Stage-Publish.ps1 stages it next to the client. Only the
+         content archives (*.bin) stay beside it. Kesmai.Client.Package lists only the folder's own files, so the
+         publish must not need anything else. -->
+    <PropertyGroup Condition="'$(RuntimeIdentifier)' != ''">
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>false</SelfContained>
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+        <PublishDir>$(BuildRoot)Kesmai.WorldForge\Publish\</PublishDir>
+    </PropertyGroup>
     
     <ItemGroup>
       <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
@@ -132,7 +145,7 @@
     </Target>
 
     <Target Name="CleanupAfterPublish" AfterTargets="Publish">
-        <!-- Clean-up -->
+        <!-- Clean-up: the single-file publish has bundled the references; remove any copy left beside the exe. -->
         <Message Text="Deleting reference: @(ReferenceCopyLocalPaths->'$(PublishDir)%(Filename)%(Extension)')" />
         <Delete Files="@(ReferenceCopyLocalPaths->'$(PublishDir)%(Filename)%(Extension)')" ContinueOnError="WarnAndContinue" />
     </Target>
