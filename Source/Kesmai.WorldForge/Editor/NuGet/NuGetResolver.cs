@@ -33,19 +33,18 @@ public static class NuGetResolver
 
     private static readonly ConditionalWeakTable<PackageFolderReader, PackageContext> _packageContexts = new();
 
-    public static async Task<PackageFolderReader> Resolve(string packageId, string targetFrameworkMoniker, CancellationToken ct = default)
+    /// <summary>
+    /// Resolves the latest version of a package (stable before prerelease). Its references are the package's highest
+    /// framework, so no target framework has to be kept in step with the package.
+    /// </summary>
+    public static async Task<PackageFolderReader> Resolve(string packageId, CancellationToken ct = default)
     {
         if (string.IsNullOrWhiteSpace(packageId))
             throw new ArgumentException("Package identifier must be provided.", nameof(packageId));
 
-        if (string.IsNullOrWhiteSpace(targetFrameworkMoniker))
-            throw new ArgumentException("Target framework moniker must be provided.", nameof(targetFrameworkMoniker));
-
         ct.ThrowIfCancellationRequested();
 
-        var targetFramework = NuGetFramework.ParseFolder(targetFrameworkMoniker);
-        if (targetFramework.IsUnsupported)
-            throw new ArgumentException($"Unsupported target framework '{targetFrameworkMoniker}'.", nameof(targetFrameworkMoniker));
+        var targetFramework = NuGetFramework.AnyFramework;
 
         var settingsRoot = LocateSettingsRoot();
         var settings = Settings.LoadDefaultSettings(settingsRoot);
@@ -57,9 +56,9 @@ public static class NuGetResolver
 
         using var cacheContext = new SourceCacheContext();
 
-        var version = await ResolveVersionAsync(repositories, packageId, targetFramework, cacheContext, logger, ct).ConfigureAwait(false);
+        var version = await ResolveVersionAsync(repositories, packageId, cacheContext, logger, ct).ConfigureAwait(false);
         if (version is null)
-            throw new InvalidOperationException($"Unable to locate a compatible version of '{packageId}' for '{targetFrameworkMoniker}'.");
+            throw new InvalidOperationException($"Unable to locate a version of '{packageId}'.");
 
         var packagesRoot = GetPackagesRoot(settingsRoot, settings);
         Directory.CreateDirectory(packagesRoot);
@@ -330,13 +329,10 @@ public static class NuGetResolver
     private static async Task<NuGetVersion?> ResolveVersionAsync(
         IEnumerable<SourceRepository> repositories,
         string packageId,
-        NuGetFramework targetFramework,
         SourceCacheContext cacheContext,
         ILogger logger,
         CancellationToken token)
     {
-        var compatibility = DefaultCompatibilityProvider.Instance;
-
         foreach (var repository in repositories)
         {
             token.ThrowIfCancellationRequested();
@@ -353,57 +349,18 @@ public static class NuGetResolver
                     logger,
                     token).ConfigureAwait(false);
 
-            var orderedMetadata = metadata
+            var latest = metadata
                 .Where(m => m is not null)
-                .OrderByDescending(m => m.Identity.Version)
-                .ToList();
+                .Select(m => m.Identity.Version)
+                .OrderBy(v => v.IsPrerelease)
+                .ThenByDescending(v => v)
+                .FirstOrDefault();
 
-            if (orderedMetadata.Count == 0)
-                continue;
-
-            var stableCandidate = SelectCompatible(orderedMetadata.Where(m => !m.Identity.Version.IsPrerelease));
-            if (stableCandidate is not null)
-                return stableCandidate.Identity.Version;
-
-            var anyCandidate = SelectCompatible(orderedMetadata);
-            if (anyCandidate is not null)
-                return anyCandidate.Identity.Version;
+            if (latest is not null)
+                return latest;
         }
 
         return null;
-
-        IPackageSearchMetadata? SelectCompatible(IEnumerable<IPackageSearchMetadata> candidates)
-        {
-            IPackageSearchMetadata? fallback = null;
-
-            foreach (var metadata in candidates)
-            {
-                token.ThrowIfCancellationRequested();
-
-                if (metadata is null)
-                    continue;
-
-                var dependencyGroups = metadata.DependencySets?.ToList();
-                if (dependencyGroups is null || dependencyGroups.Count == 0)
-                {
-                    fallback ??= metadata;
-                    continue;
-                }
-
-                if (dependencyGroups.Any(group =>
-                        group is null ||
-                        group.TargetFramework is null ||
-                        group.TargetFramework.IsAny ||
-                        compatibility.IsCompatible(targetFramework, group.TargetFramework)))
-                {
-                    return metadata;
-                }
-
-                fallback ??= metadata;
-            }
-
-            return fallback;
-        }
     }
 
     private static FrameworkSpecificGroup? SelectNearestGroup(IEnumerable<FrameworkSpecificGroup>? groups, NuGetFramework targetFramework)

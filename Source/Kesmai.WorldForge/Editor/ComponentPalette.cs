@@ -120,7 +120,7 @@ public class ComponentPalette : ObservableRecipient
 
 		Task.Run(async () =>
 		{
-			var packageReader = await NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0");
+			var packageReader = await NuGetResolver.Resolve("Kesmai.Server.Reference");
 			var documentStream = await NuGetResolver.ResolveStream(packageReader, "Components.xml");
 			var document = XDocument.Load(documentStream);
 
