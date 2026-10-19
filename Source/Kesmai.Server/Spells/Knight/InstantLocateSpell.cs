@@ -197,12 +197,7 @@ public class LocateSpellGump : LocalizedGump
 		var client = args.Client;
 
 		if (args.Texts.TryGetValue("locateQuery", out var query))
-		{
 			_spell.Query(query);
-
-			if (_spell.Item is ICharged charged)
-				charged.ChargesCurrent--;
-		}
 
 		client.CloseGump<LocateSpellGump>();
 	}
