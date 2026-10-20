@@ -8,6 +8,9 @@ namespace Kesmai.Server.Items;
 public class Greatsword : Sword
 {
 	/// <inheritdoc />
+	public override bool RequiresIdentification => false;
+
+	/// <inheritdoc />
 	public override int LabelNumber => 6000045;
 
 	/// <inheritdoc />

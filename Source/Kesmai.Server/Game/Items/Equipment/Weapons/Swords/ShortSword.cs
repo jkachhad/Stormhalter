@@ -8,6 +8,9 @@ namespace Kesmai.Server.Items;
 public class ShortSword : Sword
 {
 	/// <inheritdoc />
+	public override bool RequiresIdentification => false;
+
+	/// <inheritdoc />
 	public override uint BasePrice => 20;
 
 	/// <inheritdoc />

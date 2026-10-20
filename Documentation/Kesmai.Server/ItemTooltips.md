@@ -122,13 +122,19 @@ You don't need to call it in these cases, because they're already handled:
 
 Every item needs to be identified before the values above are sent; until then, the client is only told that the item is unidentified and how much it weighs. Once someone identifies it, the values appear without any extra code.
 
-Items bought from a merchant count as identified, and a new character's starting gear is identified, so players see those stats right away. Currency is also an exception: it never needs identifying. If you write an item that players should always see in full, override `RequiresIdentification`:
+Items bought from a merchant count as identified, and a new character's starting gear is identified, so players see those stats right away. Currency is also an exception: it never needs identifying. So are the plain swords: `Greatsword`, `Katana`, `Longsword`, `Rapier` and `ShortSword` never need identifying, and neither do the Stormhalter swords built on them (`SteelGreatsword`, `SteelLongsword`, `BlackSteelRapier` and `HummingbirdSword`). `BlackBroadsword` and `SwordOfLight` still do. If you write an item that players should always see in full, override `RequiresIdentification`:
 
 ```csharp
 public override bool RequiresIdentification => false;
 ```
 
 Such an item always counts as identified, including for any description text that checks `Identified`.
+
+The setting is inherited. If your item derives from one of those plain swords but should still be identified, such as a segment's special sword, set it back:
+
+```csharp
+public override bool RequiresIdentification => true;
+```
 
 ## Things to Avoid
 
