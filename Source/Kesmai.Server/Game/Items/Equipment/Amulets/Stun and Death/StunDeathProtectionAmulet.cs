@@ -4,6 +4,7 @@ using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Spells;
+using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
@@ -144,5 +145,13 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610001, 545); /* Grants Protection from Stun and Death while it has charges. */
 	}
 }

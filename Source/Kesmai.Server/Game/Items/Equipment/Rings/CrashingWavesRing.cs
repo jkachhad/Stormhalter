@@ -109,6 +109,14 @@ public class CrashingWavesRing : Ring, ITreasure
 			}
 		}
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610004); /* Lets you walk on water. */
+	}
 }
 	
 public class WaterWalkingStatus : SpellStatus

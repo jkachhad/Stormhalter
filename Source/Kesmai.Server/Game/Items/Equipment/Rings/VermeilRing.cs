@@ -125,4 +125,12 @@ public class VermeilRing : Ring, ITreasure
 			}
 		}
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610052); /* Identifies the item in your right hand. Use it from your left hand. */
+	}
 }

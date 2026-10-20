@@ -3,6 +3,7 @@ using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Spells;
+using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
@@ -104,5 +105,15 @@ public abstract class Helmet : Equipment
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		// helmets with night vision grant it while worn.
+		if (ProvidesNightVision)
+			tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 536); /* Grants Night Vision. */
 	}
 }

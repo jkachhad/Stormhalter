@@ -241,4 +241,12 @@ public class BankerRing : Ring, ITreasure
 		if (_consumed > _carryLimit)
 			_consumed = _carryLimit;
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610050); /* Holds gold dropped onto it, and sets it down near you again. */
+	}
 }
