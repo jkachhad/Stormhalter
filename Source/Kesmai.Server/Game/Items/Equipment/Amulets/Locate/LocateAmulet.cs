@@ -6,6 +6,7 @@ using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 using Kesmai.Server.Spells;
+using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
@@ -146,5 +147,13 @@ public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610002, 515); /* Casts Locate. */
 	}
 }

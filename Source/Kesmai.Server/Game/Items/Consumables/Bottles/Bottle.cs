@@ -106,6 +106,7 @@ public abstract class Bottle : Consumable
 		OnSpill();
 
 		_content = null;
+		InvalidateTooltip();
 	}
 
 	/// <summary>

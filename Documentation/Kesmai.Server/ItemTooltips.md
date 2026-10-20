@@ -330,6 +330,67 @@ public int Power
 
 Charges, Enchanted, Conjured and the owner already refresh the tooltip when they change. When you change charges, use the `ChargesCurrent` property, not the field behind it.
 
+## "Use:", "Equip:" and Other Effect Lines
+
+When an item does something that no value, bonus or other line shows, describe it with an effect line. The line starts with what sets the effect off:
+
+| Trigger | Shown as | Use it for |
+| --- | --- | --- |
+| `Use` | Use: … (green) | what happens when the player uses, drinks or activates the item |
+| `Equip` | Equip: … (orange) | an always-on effect while the item is worn or wielded, such as a spell it grants |
+| `LuckyHit` | Lucky Hit: … | a chance effect on a successful hit (a weapon proc) |
+| `CriticalHit` | Critical Hit: … | an effect when the weapon lands a critical strike |
+| `Block` | Block: … | an effect when the shield blocks |
+| `Parry` | Parry: … | an effect when the wielder parries |
+| `Miss` | Miss: … | an effect when an attack misses |
+
+Add it in `GetTooltipEntries` with `tooltip.AddEffect`. Write only the description; the prefix is added for you:
+
+```csharp
+public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+{
+    base.GetTooltipEntries(beholder, tooltip);
+
+    tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 514); /* Grants Feather Fall. */
+}
+```
+
+Effect lines always appear together after the other lines, grouped in the order of the table, so you don't pass an order or a style.
+
+**Shared wording.** These entries in the `Tooltip Effects (6610000-6619999)` section of `Enu.xml` cover most items:
+
+| Entry | Text | Argument |
+| --- | --- | --- |
+| 6610000 | Grants {0}. | the spell |
+| 6610001 | Grants {0} while it has charges. | the spell |
+| 6610002 | Casts {0}. | the spell |
+| 6610003 | Casts {0} on a target. | the spell |
+| 6610004 | Lets you walk on water. | |
+| 6610005–6610010 | Grants {0} to Fighters (Thieves, Wizards, Thaumaturges, Knights, Martial Artists). | the spell |
+
+Name a spell by passing `500 +` its spell id as a number, the same id your item puts in the status's `SpellInscription` (Feather Fall is spell 14, so pass `514`). This only works for the standard spells; a spell defined in a segment may have an id whose entry is something else, so write that line's text out in your segment's block instead.
+
+**Match what the item really does.** Check the same conditions your effect code checks, using the item's own state, so the tooltip never promises more than the item gives:
+
+```csharp
+// rare boots also grant feather fall.
+if (Quality >= ItemQuality.Rare)
+    tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 514); /* Grants Feather Fall. */
+```
+
+Conditions on the wearer (a profession, a level) belong in the wording ("Grants Strength to Martial Artists."), not in whether the line appears, because other players see the tooltip too. If the condition can change while the item exists, refresh the tooltip when it does.
+
+**Potions and other consumables.** A bottle's or food's effect comes from its content. Each content type describes itself in `GetTooltipEffects`, so a new potion that uses an existing content type needs nothing extra. A new content type adds it:
+
+```csharp
+public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+{
+    tooltip.AddEffect(TooltipEffectTrigger.Use, 6610020, _amount.ToString()); /* Restores {0} health. */
+}
+```
+
+The line disappears once the bottle is empty.
+
 ## Badges on the Tooltip's Border
 
 A badge is a small icon on the tooltip's left or right border. Players see the icons at a glance and hold Shift to read a label next to each one. Some come with every item:

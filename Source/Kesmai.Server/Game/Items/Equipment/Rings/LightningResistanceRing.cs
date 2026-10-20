@@ -101,4 +101,12 @@ public class LightningResistanceRing : Ring, ITreasure
 			}
 		}
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 550); /* Grants Lightning Resistance. */
+	}
 }

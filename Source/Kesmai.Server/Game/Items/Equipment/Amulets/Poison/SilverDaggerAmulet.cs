@@ -178,4 +178,12 @@ public class SilverDaggerAmulet : Amulet, ITreasure, ICharged
 			}
 		}
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610001, 584); /* Grants Protection from Poison while it has charges. */
+	}
 }

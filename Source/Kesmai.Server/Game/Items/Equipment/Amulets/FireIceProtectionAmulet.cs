@@ -199,4 +199,13 @@ public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 			}
 		}
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610001, 543); /* Grants Protection from Fire while it has charges. */
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610001, 542); /* Grants Protection from Ice while it has charges. */
+	}
 }
