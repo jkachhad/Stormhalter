@@ -330,6 +330,25 @@ public int Power
 
 Charges, Enchanted, Conjured and the owner already refresh the tooltip when they change. When you change charges, use the `ChargesCurrent` property, not the field behind it.
 
+## Levels and Experience
+
+An item that gains experience and levels up shows its level as a progress bar ("Level 3", the bar, and how far along it is, such as 45%). Don't write the level or the experience into the tooltip description; add the bar in `GetTooltipEntries`:
+
+```csharp
+public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+{
+    base.GetTooltipEntries(beholder, tooltip);
+
+    // the experience gained since this level, out of what the next level takes.
+    tooltip.AddLevelProgress(Level, ExperienceIntoLevel, ExperienceForNextLevel, Level >= MaximumLevel);
+}
+```
+
+- The second and third values are the progress within the current level, not totals. If your item stores total experience against cumulative thresholds, subtract the current level's threshold from both.
+- At the last level, pass `true` as the last argument: the bar is full and reads "Level 10 (maximum)".
+- The bar is part of the tooltip's extra lines, so call `InvalidateTooltip()` whenever the experience or level changes. The shared leveling helpers in AG Mu, NG Keshma and Blackburrow already do.
+- For other kinds of progress, such as charge-up or a quest count, use `tooltip.AddProgressBar(number, value, maximum)` with your own label entry.
+
 ## "Use:", "Equip:" and Other Effect Lines
 
 When an item does something that no value, bonus or other line shows, describe it with an effect line. The line starts with what sets the effect off:
