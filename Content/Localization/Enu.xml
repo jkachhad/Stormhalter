@@ -1513,6 +1513,10 @@
   <entry index="6610051">Turns a gem into gold, then recharges for 60 rounds.</entry>
   <entry index="6610052">Identifies the item in your right hand. Use it from your left hand.</entry>
   <entry index="6610053">Remembers where you put it on. Taking it off returns you there and destroys the ring.</entry>
+  <!-- Progress bars -->
+  <entry index="6610060">Level {0}</entry>
+  <entry index="6610061">Level {0} (maximum)</entry>
+  <entry index="6610062">Experience</entry>
 
   <!-- Segments: 100000000 + segment id * 1000000. Each segment has a block of 1000000 entries. -->
 
@@ -1702,14 +1706,6 @@
   <entry index="115900036">Nightpiercer, a narrow blackened dagger whose edge seems to drink the light around it.</entry>
   <entry index="115900037">Astralynx, a silent celestial bow whose arrows hunt with the eyes of a star-born predator.</entry>
   <entry index="115900038">A brutal battle axe forged from darkened iron and oath-bound steel, its heavy crescent blade bears the scars of countless broken vows. The haft is wrapped in aged black leather, worn smooth by warriors who chose victory over honor. Faint crimson lines run through the metal like old blood trapped beneath the surface. Etched near the axe head is a single word... 'Oathbreaker'.</entry>
-  <entry index="115900039">The armor</entry>
-  <entry index="115900040">The rapier</entry>
-  <entry index="115900041">The glaive</entry>
-  <entry index="115900042">Nightpiercer</entry>
-  <entry index="115900043">Astralynx</entry>
-  <entry index="115900044">The battle axe</entry>
-  <entry index="115900045"><![CDATA[<text color="#00FF00">{0} has reached its final level: {1}.</text>]]></entry>
-  <entry index="115900046"><![CDATA[<text color="#00FF00">{0} is level {1} and is {2}% toward level {3}.</text>]]></entry>
   <entry index="115900047">Turns you into a bunny during the Easter season.</entry>
 
   <!-- Segment 26: Bloodlands (126000000-126999999) -->
@@ -1871,7 +1867,7 @@ Bound to the soul of its bearer. Refuses to be worn by anyone deemed unworthy.</
   <entry index="129900008">a toad's foot. It has been mangled from detachment.</entry>
   <entry index="129900009">a carapace made from the skin of a Scorpion.</entry>
   <entry index="129900010">a small silver silver necklace with a lightning bolt charm.</entry>
-  <entry index="129900011">a golden amulet with an ornate red gem. It currently contains {0} experience points out of the required {1} points to advance. Currently the amulet is level {2}.</entry>
+  <entry index="129900011">a golden amulet with an ornate red gem.</entry>
   <entry index="129900012">.. known as Keshma.</entry>
   <entry index="129900013">a polished silver ring with a large pearl setting. When you touch the ring you begin to get a faint whiff of something swampy and full of decay.</entry>
   <entry index="129900014">a pair of frogs boots. Feeling Froggy? Leap!</entry>
@@ -1879,12 +1875,12 @@ Bound to the soul of its bearer. Refuses to be worn by anyone deemed unworthy.</
   <entry index="129900016">A sharpening plate made of fine diamond cement. This will get your weapon very sharp. This stone can be used {0} more time(s).</entry>
   <entry index="129900017">something you shouldn't have.</entry>
   <entry index="129900018">a scroll with the description {0}.</entry>
-  <entry index="129900019">a finely crafted two handed sword that was forged from the finest umbral steel in the land. It contains {0} xp points towards the required {1}.</entry>
-  <entry index="129900020">a pair of gauntlets made from the claws of a poison dart frog. It contains {0} xp points towards the required {1}.</entry>
-  <entry index="129900021">an ornate pair of cardinal red gloves made from the finest silk in the land. They have phantom claws protruding from the knuckles. They contain {0} experience, you need {1} to level.</entry>
-  <entry index="129900022">a small but heavy Javelin, made from the finest metal and wood in the land. It has {0} experience towards the required {1} xp for the next level.</entry>
+  <entry index="129900019">a finely crafted two handed sword that was forged from the finest umbral steel in the land.</entry>
+  <entry index="129900020">a pair of gauntlets made from the claws of a poison dart frog.</entry>
+  <entry index="129900021">an ornate pair of cardinal red gloves made from the finest silk in the land. They have phantom claws protruding from the knuckles.</entry>
+  <entry index="129900022">a small but heavy Javelin, made from the finest metal and wood in the land.</entry>
   <entry index="129900023">a crude hunting bow. It is carved with an insignia of a ranger. It is very light. It contains {0} towards the required {1}. </entry>
-  <entry index="129900024">a very long pike with a silver point that glistens with sharpness. They contain {0} experience, you need {1} to level.</entry>
+  <entry index="129900024">a very long pike with a silver point that glistens with sharpness.</entry>
 
   <!-- Segment 30: Keshma (130000000-130999999) -->
   <entry index="130000000">Keshma</entry>
@@ -1992,7 +1988,6 @@ Bound to the soul of its bearer. Refuses to be worn by anyone deemed unworthy.</
   <entry index="130900095">Total Elf Kills: {0}.</entry>
   <entry index="130900096">a skeleton key, I wonder where this fits? - halloween {0}</entry>
   <entry index="130900097">a {0} egg. Happy Holidays from the devs. It contains {1} experience.</entry>
-  <entry index="130900098">The figurine is currently level {0} with {1} left to {2}.</entry>
   <entry index="130900099">a {0} pet. Happy Holidays from the devs. It contains {1} experience.</entry>
   <entry index="130900100">a gold and black figurine of a snarling tiger. It contains {0} experience.</entry>
   <entry index="130900101">a Griffin Fig. It contains {0} experience.</entry>
@@ -2000,11 +1995,10 @@ Bound to the soul of its bearer. Refuses to be worn by anyone deemed unworthy.</
   <entry index="130900103">a figurine of a Ferocious Ice Dragon. It contains {0} experience.</entry>
   <entry index="130900104">a scroll with {0} kills for {1}</entry>
   <entry index="130900105">a scroll with the description {0}.</entry>
-  <entry index="130900106">a elaborate longsword covered in magical runes. It is currently level {0}, with {1} experience. You have {2} to go. </entry>
+  <entry index="130900106">an elaborate longsword covered in magical runes.</entry>
   <entry index="130900107">This bad boy is for killing bosses on sandbox</entry>
-  <entry index="130900108">a boring old testing Scythe. It is currently level {0}, with {1} experience. You have {2} to go. </entry>
+  <entry index="130900108">a boring old testing Scythe.</entry>
   <entry index="130900109">Your scythe has {0} pet focus points.</entry>
-  <entry index="130900110">{0} It is currently level {1}, with {2} experience. You have {3} to go.</entry>
   <entry index="130900111">a simple longsword that rattles when you shake it.</entry>
   <entry index="130900112">a basic iron longsword. The hilt is made from wood that seems to glow with power. The blade seems to emanate a weak aura.</entry>
   <entry index="130900113">a ornate steel longsword. It is embedded with beautiful gems cut in the shape of mystical symbols. It vibrates with power.</entry>
