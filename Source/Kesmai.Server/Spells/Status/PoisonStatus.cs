@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Spells;
@@ -124,16 +126,20 @@ public partial class PoisonStatus : SpellStatus
 	
 public class Poison
 {
+	/* weapons save only the potency, so the delay and whether the poison is direct are read-only. */
+	[CommandProperty(AccessLevel.GameMaster, true)]
 	public TimeSpan Delay { get; set; }
 
 	private int _potency;
 		
+	[CommandProperty(AccessLevel.GameMaster)]
 	public int Potency
 	{
 		get => _potency;
 		set => _potency = Math.Max(0, value);
 	}
 
+	[CommandProperty(AccessLevel.GameMaster, true)]
 	public bool IsDirect { get; set; }
 
 	public Poison(TimeSpan delay, int potency, bool isDirect = false)
