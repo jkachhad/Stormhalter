@@ -380,6 +380,7 @@ public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
 
 - The second and third values are the progress within the current level, not totals. If your item stores total experience against cumulative thresholds, subtract the current level's threshold from both.
 - At the last level, pass `true` as the last argument: the bar is full and reads "Level 10 (maximum)".
+- If the level has no progress toward the next one, such as a level set by another item or a quest stage, use `tooltip.AddLevel(level)` instead: a "Level 3" line in the same place, without a bar.
 - The bar is part of the tooltip's extra lines, so call `InvalidateTooltip()` whenever the experience or level changes. The simplest place is the experience property's setter, which also lets a game master view and set the experience with `props`:
 
   ```csharp
