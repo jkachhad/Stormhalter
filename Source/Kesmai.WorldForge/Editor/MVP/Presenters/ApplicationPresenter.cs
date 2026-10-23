@@ -420,7 +420,7 @@ public class ApplicationPresenter : ObservableRecipient
 					new XAttribute("Sdk", "Microsoft.NET.Sdk"),
 					new XElement("PropertyGroup",
 						new XElement("OutputType", "Library"),
-						new XElement("TargetFramework", "net8.0-windows8.0"),
+						new XElement("TargetFramework", "net11.0"),
 						new XElement("RootNamespace", _segment.Name),
 						new XElement("AssemblyName", _segment.Name),
 						new XElement("EnableDefaultItems", false)
@@ -671,7 +671,7 @@ public class ApplicationPresenter : ObservableRecipient
 			new XAttribute("Sdk", "Microsoft.NET.Sdk"),
 			new XElement("PropertyGroup",
 				new XElement("OutputType", "Library"),
-				new XElement("TargetFramework", "net8.0-windows8.0"),
+				new XElement("TargetFramework", "net11.0"),
 				new XElement("RootNamespace", segmentName),
 				new XElement("AssemblyName", segmentName),
 				new XElement("EnableDefaultItems", false),

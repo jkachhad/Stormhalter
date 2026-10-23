@@ -43,7 +43,7 @@ public class SegmentWorkspace
 	{
 		var generation = ++_startGeneration;
 		
-		var packageReader = await NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0");
+		var packageReader = await NuGetResolver.Resolve("Kesmai.Server.Reference");
 		var packageReferences = await NuGetResolver.ResolveMetadataReferences(packageReader);
 
 		// a newer start or reset happened while resolving (e.g. another segment was opened);
