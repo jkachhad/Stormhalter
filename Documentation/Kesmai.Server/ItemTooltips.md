@@ -275,7 +275,8 @@ For anything that isn't a stat, such as a special power, a recharge timer, or a 
 - poison on a poisoned weapon or gauntlets, with its potency ("Poisoned (+3)");
 - swing delay on a weapon or gauntlets that swing faster or slower than once a round ("Swing Delay: 0.5 rounds", or in red when it is over 1 round). It comes from your `GetSwingDelay` override, so you don't need to do anything. If the delay changes while the item exists, call `InvalidateTooltip()` when it does;
 - Enchanted and Conjured. On an enchanted weapon, the line includes the attack bonus the enchantment gives the player looking at it ("Enchanted (+2 Attack Bonus)"), from `GetEnchantedAttackBonus`. If your weapon changes how enchantment adds attack bonus, override `GetEnchantedAttackBonus` and use it in `GetAttackBonus`, so the tooltip matches;
-- the item values that aren't shown as icons or badges: hindrance ("+2 Hindrance", in red because it is a penalty), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting", last.
+- the item values that aren't shown as icons or badges: hindrance ("+2 Hindrance", in red because it is a penalty), regeneration ("+1 Mana Regeneration"), and "Restricts spellcasting";
+- the level requirement ("Requires Level 22"), last. See [Level Requirements](#level-requirements).
 
 The weapon skill, the alignment of a lawful, chaotic, or neutral weapon, and the owner of a bindable item have no lines; they appear only as badges (see [Badges on the Tooltip's Border](#badges-on-the-tooltips-border)).
 
@@ -329,6 +330,39 @@ public int Power
 ```
 
 Charges, Enchanted, Conjured and the owner already refresh the tooltip when they change. When you change charges, use the `ChargesCurrent` property, not the field behind it.
+
+## Level Requirements
+
+If players must reach a level before they can use an item, override `GetRequiredLevel` and return the level. Don't compare `player.Level` in `ValidateUse`:
+
+```csharp
+public override int GetRequiredLevel(PlayerEntity player) => 22;
+```
+
+- The game stops players below that level from using the item and tells them "You must be level 22 to use this."
+- The tooltip shows "Requires Level 22". The line is red for a player below the level and white for everyone else, and it updates when the player levels up. Like the other extra lines, it only appears once the item is identified.
+- The player is passed in, so the level can depend on them. For example, `player.Profession == Profession.Thief ? 21 : 18` lets thieves use the item from level 21 and everyone else from level 18. Each player sees their own number.
+- Keep any other conditions, such as "wizards only", in `ValidateUse`, after calling `base`, which checks the level:
+
+```csharp
+public override int GetRequiredLevel(PlayerEntity player) => 24;
+
+public override ItemUseResult ValidateUse(MobileEntity entity)
+{
+    var baseResult = base.ValidateUse(entity);
+
+    if (!baseResult.IsAllowed)
+        return baseResult;
+
+    // the base checks the level.
+    if (entity is PlayerEntity player && player.Profession == Profession.Wizard)
+        return ItemUseResult.Allowed;
+
+    return ItemUseResult.Denied();
+}
+```
+
+- Armor that players can't even put on below the level can use the same number in `CanEquip`: `return entity is PlayerEntity player && player.Level >= GetRequiredLevel(player);`.
 
 ## Levels and Experience
 
