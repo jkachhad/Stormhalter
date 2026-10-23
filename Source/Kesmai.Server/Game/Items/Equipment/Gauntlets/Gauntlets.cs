@@ -162,6 +162,16 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	public virtual void OnHit(MobileEntity attacker, MobileEntity defender)
 	{
 	}
+
+	/// <inheritdoc />
+	public virtual void OnCriticalHit(MobileEntity attacker, MobileEntity defender)
+	{
+	}
+
+	/// <inheritdoc />
+	public virtual void OnMiss(MobileEntity attacker, MobileEntity defender)
+	{
+	}
 	
 	/// <inheritdoc />
 	public virtual void OnBlock(MobileEntity attacker)
