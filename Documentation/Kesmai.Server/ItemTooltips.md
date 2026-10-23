@@ -380,7 +380,25 @@ public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
 
 - The second and third values are the progress within the current level, not totals. If your item stores total experience against cumulative thresholds, subtract the current level's threshold from both.
 - At the last level, pass `true` as the last argument: the bar is full and reads "Level 10 (maximum)".
-- The bar is part of the tooltip's extra lines, so call `InvalidateTooltip()` whenever the experience or level changes. The shared leveling helpers in AG Mu, NG Keshma and Blackburrow already do.
+- The bar is part of the tooltip's extra lines, so call `InvalidateTooltip()` whenever the experience or level changes. The simplest place is the experience property's setter, which also lets a game master view and set the experience with `props`:
+
+  ```csharp
+  [CommandProperty(AccessLevel.GameMaster)]
+  public long ItemExperience
+  {
+      get => _itemExperience;
+      set
+      {
+          _itemExperience = value;
+
+          // the tooltip's level bar shows the experience, so refresh it; the value is saved.
+          InvalidateTooltip();
+          Invalidate();
+      }
+  }
+  ```
+
+  The Keshma, Blackburrow and Mu leveling items do this; Mu, which stores the level separately, makes `ItemLevel` a game master property the same way. Changing an item's `Quality` refreshes the tooltip too, so an item whose level is its quality, as in Blackburrow, needs nothing more.
 - For other kinds of progress, such as charge-up or a quest count, use `tooltip.AddProgressBar(number, value, maximum)` with your own label entry.
 
 ## "Use:", "Equip:" and Other Effect Lines
