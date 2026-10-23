@@ -410,7 +410,7 @@ When an item does something that no value, bonus or other line shows, describe i
 | --- | --- | --- |
 | `Use` | Use: … (green) | what happens when the player uses, drinks or activates the item |
 | `Equip` | Equip: … (orange) | an always-on effect while the item is worn or wielded, such as a spell it grants |
-| `LuckyHit` | Lucky Hit: … | a chance effect on a successful hit (a weapon proc) |
+| `Hit` | Hit: … | an effect on a successful hit with the weapon; write a chance into the text ("10% chance to …") |
 | `CriticalHit` | Critical Hit: … | an effect when the weapon lands a critical strike |
 | `Block` | Block: … | an effect when the shield blocks |
 | `Parry` | Parry: … | an effect when the wielder parries |
@@ -451,6 +451,21 @@ if (Quality >= ItemQuality.Rare)
 ```
 
 Conditions on the wearer (a profession, a level) belong in the wording ("Grants Strength to Martial Artists."), not in whether the line appears, because other players see the tooltip too. If the condition can change while the item exists, refresh the tooltip when it does.
+
+**Weapon hit effects.** Describe what your `OnHit` override does with `Hit` lines, one per effect, with the text in your segment's Tooltip Descriptions block. Work the numbers out from the item the same way `OnHit` does, and pass them as text:
+
+```csharp
+public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+{
+    base.GetTooltipEntries(beholder, tooltip);
+
+    // OnHit rolls 1 in 10 at Legendary.
+    if (Quality == ItemQuality.Legendary)
+        tooltip.AddEffect(TooltipEffectTrigger.Hit, 111900083, "10"); /* {0}% chance to strike a hostile creature again for 130% damage. */
+}
+```
+
+Keep the line in step with `OnHit`: if a change there alters the chance or the effect, change the line too.
 
 **Potions and other consumables.** A bottle's or food's effect comes from its content. Each content type describes itself in `GetTooltipEffects`, so a new potion that uses an existing content type needs nothing extra. A new content type adds it:
 
