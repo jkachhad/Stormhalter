@@ -510,6 +510,16 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		}
 	}
 
+	/// <inheritdoc />
+	public virtual void OnCriticalHit(MobileEntity attacker, MobileEntity defender)
+	{
+	}
+
+	/// <inheritdoc />
+	public virtual void OnMiss(MobileEntity attacker, MobileEntity defender)
+	{
+	}
+
 	public override bool DropToLocation(Point2D location)
 	{
 		/* Remove enchantment if dropped to the world (death, moved, etc.) */

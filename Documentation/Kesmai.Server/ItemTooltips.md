@@ -411,10 +411,10 @@ When an item does something that no value, bonus or other line shows, describe i
 | `Use` | Use: … (green) | what happens when the player uses, drinks or activates the item |
 | `Equip` | Equip: … (orange) | an always-on effect while the item is worn or wielded, such as a spell it grants |
 | `Hit` | Hit: … | an effect on a successful hit with the weapon; write a chance into the text ("10% chance to …") |
-| `CriticalHit` | Critical Hit: … | an effect when the weapon lands a critical strike (no item hook calls one yet) |
+| `CriticalHit` | Critical Hit: … | an effect when the weapon lands a critical strike (its `OnCriticalHit`) |
 | `Block` | Block: … | an effect when a shield, gauntlets or armor blocks an attack (their `OnBlock`) |
 | `Parry` | Parry: … | an effect when the weapon in hand blocks an attack (a weapon's `OnBlock`) |
-| `Miss` | Miss: … | an effect when an attack misses (no item hook calls one yet) |
+| `Miss` | Miss: … | an effect when an attack with the weapon misses (its `OnMiss`) |
 
 Add it in `GetTooltipEntries` with `tooltip.AddEffect`. Write only the description; the prefix is added for you:
 
@@ -466,6 +466,24 @@ public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
 ```
 
 Keep the line in step with `OnHit`: if a change there alters the chance or the effect, change the line too. Describe an `OnBlock` override the same way, with `Parry` on a weapon (the server calls it when the attack is "blocked by your" weapon) and `Block` on a shield, gauntlets or armor.
+
+Weapons and gauntlets have two more hooks to override: `OnCriticalHit(attacker, defender)`, called right after `OnHit` when the swing was a critical strike, and `OnMiss(attacker, defender)`, called when the swing misses (the target dodged or blocked it). Describe them with `CriticalHit` and `Miss` lines:
+
+```csharp
+public override void OnCriticalHit(MobileEntity attacker, MobileEntity defender)
+{
+    base.OnCriticalHit(attacker, defender);
+
+    defender.Stun(2);
+}
+
+public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+{
+    base.GetTooltipEntries(beholder, tooltip);
+
+    tooltip.AddEffect(TooltipEffectTrigger.CriticalHit, 111900111); /* Stuns the target for 2 rounds. */
+}
+```
 
 **Potions and other consumables.** A bottle's or food's effect comes from its content. Each content type describes itself in `GetTooltipEffects`, so a new potion that uses an existing content type needs nothing extra. A new content type adds it:
 
