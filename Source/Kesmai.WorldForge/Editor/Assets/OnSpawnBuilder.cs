@@ -74,6 +74,7 @@ public partial class OnSpawnBuilder : ObservableObject
 	private string _gold = String.Empty;
 	private string _spellChance = String.Empty;
 	private string _targetChangeInterval = String.Empty;
+	private string _weaknessDamage = String.Empty;
 	private string _codeBefore = String.Empty;
 	private string _otherInitializers = String.Empty;
 	private string _otherStatements = String.Empty;
@@ -117,6 +118,14 @@ public partial class OnSpawnBuilder : ObservableObject
 	public string Boots { get => _boots; set => Set(ref _boots, value); }
 	public string Brain { get => _brain; set => Set(ref _brain, value); }
 	public string Gold { get => _gold; set => Set(ref _gold, value); }
+
+	private const string WeaknessDamageStat = "MagicDamageTakenIncrease";
+
+	/// <summary>
+	/// Extra magic damage the creature takes, in percent: <c>Stats[EntityStat.MagicDamageTakenIncrease].Add(value,
+	/// ModifierType.Constant)</c>. It applies to all magic damage, not only its weaknesses. Empty writes nothing.
+	/// </summary>
+	public string WeaknessDamage { get => _weaknessDamage; set => Set(ref _weaknessDamage, value); }
 
 	/// <summary><c>CombatantChangeInterval</c>, for example <c>TimeSpan.FromSeconds(5)</c>.</summary>
 	public string TargetChangeInterval { get => _targetChangeInterval; set => Set(ref _targetChangeInterval, value); }
@@ -420,6 +429,9 @@ public partial class OnSpawnBuilder : ObservableObject
 		setup.AddRange(Stats.Where(s => Has(s.Stat) && Has(s.Value)).Select(s => Has(s.Modifier) && s.Modifier.Trim() != StatRow.Base
 			? $"{v}.Stats[EntityStat.{s.Stat.Trim()}].Add({s.Value.Trim()}, ModifierType.{s.Modifier.Trim()});"
 			: $"{v}.Stats[EntityStat.{s.Stat.Trim()}].Base = {s.Value.Trim()};"));
+
+		if (Has(WeaknessDamage))
+			setup.Add($"{v}.Stats[EntityStat.{WeaknessDamageStat}].Add({WeaknessDamage.Trim()}, ModifierType.Constant);");
 
 		if (Has(TargetChangeInterval))
 			setup.Add($"{v}.CombatantChangeInterval = {TargetChangeInterval.Trim()};");
@@ -1006,6 +1018,13 @@ public partial class OnSpawnBuilder : ObservableObject
 		    && Member(modifiedStat.Expression, "EntityStat") is string modified
 		    && Member(kind.Expression, "ModifierType") is string modifier && StatRow.Modifiers.Contains(modifier))
 		{
+			// the first constant magic damage increase is what the Weakness damage box shows
+			if (modified == WeaknessDamageStat && modifier == "Constant" && !Has(WeaknessDamage))
+			{
+				WeaknessDamage = amount.Expression.ToString();
+				return Done();
+			}
+
 			Stats.Add(new StatRow { Stat = modified, Value = amount.Expression.ToString(), Modifier = modifier });
 			return Done();
 		}
