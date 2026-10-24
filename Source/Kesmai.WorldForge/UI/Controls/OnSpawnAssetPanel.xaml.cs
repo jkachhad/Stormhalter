@@ -27,6 +27,7 @@ public partial class OnSpawnAssetPanel : UserControl
 	private AssetCatalog? _catalog;
 	private OnSpawnBuilder _builder = new();
 	private string? _pendingScript;
+	private bool _unreadScript;
 	private readonly MediaPlayer _player = new();
 	private int _optionRow;
 
@@ -52,22 +53,52 @@ public partial class OnSpawnAssetPanel : UserControl
 	}
 
 	/// <summary>Fills the builder from a script, for example when another creature is selected.</summary>
-	public void ShowScript(string? script)
+	public OnSpawnParseResult? ShowScript(string? script)
 	{
 		if (_catalog is null)
 		{
 			_pendingScript = script;
-			return;
+			return null;
 		}
 
 		var builder = new OnSpawnBuilder();
+		OnSpawnParseResult? result = null;
 
 		builder.SetEnumChoices(_catalog.Immunities, _catalog.Weaknesses);
 
 		if (!String.IsNullOrWhiteSpace(script))
-			builder.Parse(script, _catalog.Shields, _catalog.Armor, _catalog.Helmets, _catalog.Gauntlets, _catalog.Boots);
+			result = builder.Parse(script, _catalog.Shields, _catalog.Armor, _catalog.Helmets, _catalog.Gauntlets, _catalog.Boots);
 
-		SetBuilder(builder);
+		// a script the builder couldn't read starts the form empty; writing it would replace that script
+		_unreadScript = result is { Succeeded: false };
+		SetBuilder(_unreadScript ? NewBuilder() : builder);
+
+		return result;
+	}
+
+	private OnSpawnBuilder NewBuilder()
+	{
+		var builder = new OnSpawnBuilder();
+
+		if (_catalog is not null)
+			builder.SetEnumChoices(_catalog.Immunities, _catalog.Weaknesses);
+
+		return builder;
+	}
+
+	private static string Describe(OnSpawnParseResult? result)
+	{
+		if (result is null)
+			return "OnSpawn is empty, so the builder starts blank.";
+
+		if (!result.Succeeded)
+			return result.Problem!;
+
+		var kept = result.KeptInitializers + result.KeptStatements;
+
+		return kept == 0
+			? $"Filled the builder from OnSpawn ({result.Filled} fields and lists)."
+			: $"Filled the builder from OnSpawn ({result.Filled} fields and lists). {kept} line{(kept == 1 ? " has" : "s have")} no field and {(kept == 1 ? "is" : "are")} kept as typed under Kept code.";
 	}
 
 	private void SetBuilder(OnSpawnBuilder builder)
@@ -95,15 +126,21 @@ public partial class OnSpawnAssetPanel : UserControl
 			return;
 		}
 
-		ShowScript(script);
-		_status.Text = "Filled the builder from OnSpawn.";
+		_status.Text = Describe(ShowScript(script));
 	}
 
 	private void OnBuilderWrite(object sender, RoutedEventArgs e)
 	{
+		if (_unreadScript && !String.IsNullOrWhiteSpace(ReadScript?.Invoke())
+		    && MessageBox.Show(Window.GetWindow(this)!,
+			    "The builder couldn't read this creature's OnSpawn, so writing replaces the whole script with the builder's code. Replace it?",
+			    "Write to OnSpawn", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) != MessageBoxResult.Yes)
+			return;
+
 		var body = _builder.Generate();
 
 		EditRequested?.Invoke(_ => body);
+		_unreadScript = false;
 		_status.Text = "Wrote the builder to OnSpawn.";
 	}
 
@@ -137,6 +174,13 @@ public partial class OnSpawnAssetPanel : UserControl
 		_bAttackType.ItemsSource = OnSpawnBuilder.AttackTypes;
 		_bAttackEffect.ItemsSource = new[] { String.Empty }.Concat(catalog.AttackComponents).ToList();
 		_bSpell.ItemsSource = catalog.Spells;
+		_bStatus.ItemsSource = catalog.Statuses;
+		_bStat.ItemsSource = catalog.EntityStats;
+		_bSpellImmunity.ItemsSource = catalog.Spells;
+		_bSpellWeakness.ItemsSource = catalog.Spells;
+
+		foreach (var sound in new[] { _bNearbySound, _bAttackSound, _bDeathSound, _bWarmSound })
+			sound.ItemsSource = catalog.Sounds;
 	}
 
 	private async void OnLoaded(object sender, RoutedEventArgs e)
@@ -156,11 +200,11 @@ public partial class OnSpawnAssetPanel : UserControl
 		_hueMode.ItemsSource = new[] { NoHue, CustomHue }.Concat(_catalog.NamedColors).ToList();
 		_hueSwatches.ItemsSource = _swatches;
 
-		ShowScript(_pendingScript ?? ReadScript?.Invoke());
+		var initial = ShowScript(_pendingScript ?? ReadScript?.Invoke());
 
 		_status.Text = _catalog.Warnings.Count > 0
 			? String.Join(Environment.NewLine, _catalog.Warnings)
-			: $"{_catalog.Creatures.Count} creatures, {_catalog.Bodies.Count} bodies, {_catalog.Sounds.Count} sounds.";
+			: $"{_catalog.Creatures.Count} creatures, {_catalog.Bodies.Count} bodies, {_catalog.Sounds.Count} sounds. {Describe(initial)}";
 	}
 
 	private void BuildOptions(AssetCatalog catalog)
@@ -185,14 +229,10 @@ public partial class OnSpawnAssetPanel : UserControl
 		AddOption("Weakness", catalog.Weaknesses,
 			(body, value) => OnSpawnEdits.SetInitializer(body, "Weakness", $"CreatureWeakness.{value}"));
 
+		// scripts set this as a factory: (attacker) => new RandomSearchStrategy()
 		AddOption("Target strategy", catalog.SearchStrategies, (body, value) =>
-		{
-			var variable = OnSpawnEdits.GetVariable(body);
-			var argument = value is "ClosestSearchStrategy" or "FarthestSearchStrategy" ? $"{variable}.Location" : String.Empty;
-
-			return OnSpawnEdits.SetStatement(body, @"\w+\.CombatantSearchStrategy\s*=",
-				$"{variable}.CombatantSearchStrategy = new {value}({argument});");
-		});
+			OnSpawnEdits.SetStatement(body, @"\w+\.CombatantSearchStrategy\s*=",
+				$"{OnSpawnEdits.GetVariable(body)}.CombatantSearchStrategy = (attacker) => new {value}();"));
 
 		AddOption("Wield weapon", catalog.Weapons, Wield);
 		AddOption("Wield shield", catalog.Shields, Wield);
@@ -206,7 +246,7 @@ public partial class OnSpawnAssetPanel : UserControl
 		{
 			var variable = OnSpawnEdits.GetVariable(body);
 			return OnSpawnEdits.SetStatement(body, @"\w+\.Spells\s*=",
-				$"{variable}.Spells = new CreatureSpellCollection() {{ {{ new CreatureSpellEntry(new CreatureSpell<{value}>(10), 100, TimeSpan.FromSeconds(3)) }} }};");
+				$"{variable}.Spells = new CreatureSpellCollection() {{ {{ new CreatureSpell<{value}>(10), 100, TimeSpan.FromSeconds(3) }} }};");
 		});
 	}
 

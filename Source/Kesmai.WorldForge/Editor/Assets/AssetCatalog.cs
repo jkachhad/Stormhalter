@@ -44,6 +44,12 @@ public class AssetCatalog
 	public IReadOnlyList<string> Immunities { get; private set; } = [];
 	public IReadOnlyList<string> Weaknesses { get; private set; } = [];
 
+	/// <summary>Status classes for AddStatus, such as NightVisionStatus.</summary>
+	public IReadOnlyList<string> Statuses { get; private set; } = [];
+
+	/// <summary>EntityStat members for Stats[EntityStat.X].Base.</summary>
+	public IReadOnlyList<string> EntityStats { get; private set; } = [];
+
 	public IReadOnlyList<string> Alignments { get; } = ["Lawful", "Neutral", "Chaotic", "Evil"];
 
 	public IReadOnlyList<string> NamedColors { get; } = typeof(System.Drawing.Color)
@@ -141,6 +147,15 @@ public class AssetCatalog
 		ShieldPenetration = penetration;
 		Immunities = EnumMembers("CreatureImmunity");
 		Weaknesses = EnumMembers("CreatureWeakness");
+		EntityStats = EnumMembers("EntityStat");
+
+		Statuses = types
+			.Where(t => !t.IsAbstract && !t.IsGenericType && t.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public)
+			.Where(t => t.Name.EndsWith("Status") && t.TypeKind == TypeKind.Class)
+			.Select(t => t.Name)
+			.Distinct()
+			.OrderBy(n => n)
+			.ToList();
 	}
 
 	private static void CollectTypes(INamespaceSymbol ns, List<INamedTypeSymbol> types)

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:wpfToolkit="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+             xmlns:local="clr-namespace:Kesmai.WorldForge.UI"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="340"
              FontFamily="Tahoma" FontSize="13">
@@ -37,6 +38,24 @@
             <Setter Property="Margin" Value="4,3,0,3" />
             <Setter Property="Padding" Value="8,1" />
         </Style>
+        <Style TargetType="TextBox" x:Key="CodeBox">
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="AcceptsReturn" Value="True" />
+            <Setter Property="AcceptsTab" Value="True" />
+            <Setter Property="MinHeight" Value="40" />
+            <Setter Property="MaxHeight" Value="200" />
+            <Setter Property="Margin" Value="0,0,0,4" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        </Style>
+        <!-- a sound in the builder's dropdowns: its id, which is what gets written, then its name -->
+        <DataTemplate x:Key="SoundChoice">
+            <TextBlock>
+                <Run Text="{Binding Id, Mode=OneWay}" FontFamily="Consolas" />
+                <Run Text="{Binding Name, Mode=OneWay}" />
+            </TextBlock>
+        </DataTemplate>
     </UserControl.Resources>
 
     <DockPanel>
@@ -66,17 +85,22 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Text="Class" Style="{StaticResource FieldLabel}" />
                                     <ComboBox Grid.Row="0" Grid.Column="1" x:Name="_bCreature" Text="{Binding CreatureType, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Grid.Row="1" Text="Variable" Style="{StaticResource FieldLabel}" />
-                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="0,3" Text="{Binding Variable, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Grid.Row="2" Text="Name" Style="{StaticResource FieldLabel}" />
-                                    <TextBox Grid.Row="2" Grid.Column="1" Margin="0,3" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Grid.Row="3" Text="Alignment" Style="{StaticResource FieldLabel}" />
-                                    <ComboBox Grid.Row="3" Grid.Column="1" x:Name="_bAlignment" Text="{Binding Alignment, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="1" Text="Class arguments" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="0,3" Text="{Binding ConstructorArguments, UpdateSourceTrigger=PropertyChanged}"
+                                             ToolTip="What goes in new Class(...), for example creatureDTO, true" />
+                                    <TextBlock Grid.Row="2" Text="Variable" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="2" Grid.Column="1" Margin="0,3" Text="{Binding Variable, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="3" Text="Name" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="3" Grid.Column="1" Margin="0,3" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="4" Text="Alignment" Style="{StaticResource FieldLabel}" />
+                                    <ComboBox Grid.Row="4" Grid.Column="1" x:Name="_bAlignment" Text="{Binding Alignment, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="5" Text="Level" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="5" Grid.Column="1" Margin="0,3" Text="{Binding Level, UpdateSourceTrigger=PropertyChanged}" />
                                 </Grid>
                             </Expander>
 
@@ -121,19 +145,61 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Text="Max health" Style="{StaticResource FieldLabel}" />
                                     <TextBox Grid.Row="0" Grid.Column="1" Margin="0,3" Text="{Binding MaxHealth, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Grid.Row="1" Text="Base dodge" Style="{StaticResource FieldLabel}" />
-                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="0,3" Text="{Binding BaseDodge, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Grid.Row="2" Text="Experience" Style="{StaticResource FieldLabel}" />
-                                    <TextBox Grid.Row="2" Grid.Column="1" Margin="0,3" Text="{Binding Experience, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Grid.Row="3" Text="Movement" Style="{StaticResource FieldLabel}" />
-                                    <TextBox Grid.Row="3" Grid.Column="1" Margin="0,3" Text="{Binding Movement, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Grid.Row="4" Text="Shield penetration" Style="{StaticResource FieldLabel}" />
-                                    <ComboBox Grid.Row="4" Grid.Column="1" x:Name="_bPenetration" Text="{Binding Penetration, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Grid.Row="5" Text="Target strategy" Style="{StaticResource FieldLabel}" />
-                                    <ComboBox Grid.Row="5" Grid.Column="1" x:Name="_bSearch" Text="{Binding SearchStrategy, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="1" Text="Max mana" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="0,3" Text="{Binding MaxMana, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="2" Text="Base dodge" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="2" Grid.Column="1" Margin="0,3" Text="{Binding BaseDodge, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="3" Text="Experience" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="3" Grid.Column="1" Margin="0,3" Text="{Binding Experience, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="4" Text="Movement" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="4" Grid.Column="1" Margin="0,3" Text="{Binding Movement, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="5" Text="Hide detection" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="5" Grid.Column="1" Margin="0,3" Text="{Binding HideDetection, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="6" Text="Visibility distance" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="6" Grid.Column="1" Margin="0,3" Text="{Binding VisibilityDistance, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="7" Text="Vision range" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="7" Grid.Column="1" Margin="0,3" Text="{Binding VisionRange, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="8" Text="Range perception" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="8" Grid.Column="1" Margin="0,3" Text="{Binding RangePerception, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="9" Text="Shield penetration" Style="{StaticResource FieldLabel}" />
+                                    <ComboBox Grid.Row="9" Grid.Column="1" x:Name="_bPenetration" Text="{Binding Penetration, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="10" Text="Target strategy" Style="{StaticResource FieldLabel}" />
+                                    <ComboBox Grid.Row="10" Grid.Column="1" x:Name="_bSearch" Text="{Binding SearchStrategy, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="11" Text="Target change interval" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="11" Grid.Column="1" Margin="0,3" Text="{Binding TargetChangeInterval, UpdateSourceTrigger=PropertyChanged}"
+                                             ToolTip="CombatantChangeInterval, for example TimeSpan.FromSeconds(5)" />
+                                </Grid>
+                            </Expander>
+
+                            <Expander Header="Sounds">
+                                <Grid Margin="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="Nearby" Style="{StaticResource FieldLabel}" />
+                                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="_bNearbySound" TextSearch.TextPath="Id" ItemTemplate="{StaticResource SoundChoice}"
+                                              Text="{Binding NearbySound, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="1" Text="Attack" Style="{StaticResource FieldLabel}" />
+                                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="_bAttackSound" TextSearch.TextPath="Id" ItemTemplate="{StaticResource SoundChoice}"
+                                              Text="{Binding AttackSound, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="2" Text="Death" Style="{StaticResource FieldLabel}" />
+                                    <ComboBox Grid.Row="2" Grid.Column="1" x:Name="_bDeathSound" TextSearch.TextPath="Id" ItemTemplate="{StaticResource SoundChoice}"
+                                              Text="{Binding DeathSound, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="3" Text="Warm" Style="{StaticResource FieldLabel}" />
+                                    <ComboBox Grid.Row="3" Grid.Column="1" x:Name="_bWarmSound" TextSearch.TextPath="Id" ItemTemplate="{StaticResource SoundChoice}"
+                                              Text="{Binding WarmSound, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="Pick from the repo's sound list or type an id. The Sounds tab plays them."
+                                               Foreground="DimGray" FontSize="11" TextWrapping="Wrap" />
                                 </Grid>
                             </Expander>
 
@@ -163,23 +229,59 @@
                                 </StackPanel>
                             </Expander>
 
+                            <Expander Header="Statuses, stat bonuses and spell immunity">
+                                <StackPanel Margin="4">
+                                    <TextBlock Text="Statuses (AddStatus)" FontWeight="Bold" />
+                                    <DataGrid ItemsSource="{Binding Statuses}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
+                                              HeadersVisibility="Column" MinHeight="40">
+                                        <DataGrid.Columns>
+                                            <local:ChoiceColumn x:Name="_bStatus" Header="Status" Binding="{Binding Name}" Width="*" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <TextBlock Text="Stat bonuses (Stats[...].Base)" FontWeight="Bold" Margin="0,6,0,0" />
+                                    <DataGrid ItemsSource="{Binding Stats}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
+                                              HeadersVisibility="Column" MinHeight="40">
+                                        <DataGrid.Columns>
+                                            <local:ChoiceColumn x:Name="_bStat" Header="Stat" Binding="{Binding Stat}" Width="*" />
+                                            <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <TextBlock Text="Immune to (AddImmunity)" FontWeight="Bold" Margin="0,6,0,0" />
+                                    <DataGrid ItemsSource="{Binding SpellImmunities}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
+                                              HeadersVisibility="Column" MinHeight="40">
+                                        <DataGrid.Columns>
+                                            <local:ChoiceColumn x:Name="_bSpellImmunity" Header="Spell or item" Binding="{Binding Name}" Width="*" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <TextBlock Text="Weak to (AddWeakness)" FontWeight="Bold" Margin="0,6,0,0" />
+                                    <DataGrid ItemsSource="{Binding SpellWeaknesses}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
+                                              HeadersVisibility="Column" MinHeight="40">
+                                        <DataGrid.Columns>
+                                            <local:ChoiceColumn x:Name="_bSpellWeakness" Header="Spell or item" Binding="{Binding Name}" Width="*" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </StackPanel>
+                            </Expander>
+
                             <Expander Header="Attacks" IsExpanded="True">
                                 <StackPanel Margin="4">
                                     <DataGrid ItemsSource="{Binding Attacks}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
                                               HeadersVisibility="Column" MinHeight="60">
                                         <DataGrid.Columns>
-                                            <DataGridComboBoxColumn x:Name="_bAttackType" Header="Type" SelectedItemBinding="{Binding Type}" />
+                                            <local:ChoiceColumn x:Name="_bAttackType" Header="Type" Binding="{Binding Type}" />
                                             <DataGridTextColumn Header="Skill" Binding="{Binding Skill}" />
                                             <DataGridTextColumn Header="Min" Binding="{Binding MinDamage}" />
                                             <DataGridTextColumn Header="Max" Binding="{Binding MaxDamage}" />
                                             <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" />
+                                            <DataGridTextColumn Header="Cooldown (s)" Binding="{Binding Cooldown}" />
                                             <DataGridTextColumn Header="Message" Binding="{Binding Message}" />
-                                            <DataGridComboBoxColumn x:Name="_bAttackEffect" Header="Effect" SelectedItemBinding="{Binding Effect}" />
+                                            <local:ChoiceColumn x:Name="_bAttackEffect" Header="Effect" Binding="{Binding Effect}" />
                                             <DataGridTextColumn Header="Chance / value" Binding="{Binding EffectValue1}" />
                                             <DataGridTextColumn Header="Value 2" Binding="{Binding EffectValue2}" />
+                                            <DataGridTextColumn Header="More effects" Binding="{Binding MoreEffects}" />
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <TextBlock Text="Effects: daze and prone take a chance; poison takes potency, chance; age takes amount, chance."
+                                    <TextBlock Text="Effects: daze and prone take a chance; poison takes potency, chance; age takes amount, chance. More effects are written as code, for example new AttackDazeComponent(5). A message starting with $&quot; is kept as an interpolated string."
                                                Foreground="DimGray" FontSize="11" TextWrapping="Wrap" />
                                     <TextBlock Text="Blocks" FontWeight="Bold" Margin="0,6,0,0" />
                                     <DataGrid ItemsSource="{Binding Blocks}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
@@ -193,15 +295,24 @@
                             </Expander>
 
                             <Expander Header="Spells">
-                                <DataGrid Margin="4" ItemsSource="{Binding Spells}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
-                                          HeadersVisibility="Column" MinHeight="60">
-                                    <DataGrid.Columns>
-                                        <DataGridComboBoxColumn x:Name="_bSpell" Header="Spell" SelectedItemBinding="{Binding Spell}" />
-                                        <DataGridTextColumn Header="Skill" Binding="{Binding Skill}" />
-                                        <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" />
-                                        <DataGridTextColumn Header="Cooldown (s)" Binding="{Binding Cooldown}" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                                <StackPanel Margin="4">
+                                    <DockPanel>
+                                        <TextBlock Text="Cast chance" Style="{StaticResource FieldLabel}" />
+                                        <TextBox Margin="0,3" Text="{Binding SpellChance, UpdateSourceTrigger=PropertyChanged}"
+                                                 ToolTip="What goes in new CreatureSpellCollection(...), for example 25, 75" />
+                                    </DockPanel>
+                                    <DataGrid ItemsSource="{Binding Spells}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
+                                              HeadersVisibility="Column" MinHeight="60">
+                                        <DataGrid.Columns>
+                                            <local:ChoiceColumn x:Name="_bSpell" Header="Spell" Binding="{Binding Spell}" />
+                                            <DataGridTextColumn Header="Skill / arguments" Binding="{Binding Skill}" />
+                                            <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" />
+                                            <DataGridTextColumn Header="Cooldown (s)" Binding="{Binding Cooldown}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <TextBlock Text="Skill / arguments is a skill level or named values such as skillLevel: 12, cost: 6."
+                                               Foreground="DimGray" FontSize="11" TextWrapping="Wrap" />
+                                </StackPanel>
                             </Expander>
 
                             <Expander Header="Gear and brain" IsExpanded="True">
@@ -240,13 +351,28 @@
                                     <DataGrid ItemsSource="{Binding Loot}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
                                               HeadersVisibility="Column" MinHeight="60">
                                         <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Pack" Binding="{Binding Pack}" />
                                             <DataGridCheckBoxColumn Header="At spawn" Binding="{Binding AtSpawn}" />
                                             <DataGridTextColumn Header="Loot pack or item" Binding="{Binding Item}" Width="*" />
                                             <DataGridTextColumn Header="Chance" Binding="{Binding Chance}" />
+                                            <DataGridTextColumn Header="Mutator" Binding="{Binding Mutator}" />
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <TextBlock Text="Loot packs like KeshmaiOre are defined in your segment, so type their names."
+                                    <TextBlock Text="Loot packs like KeshmaiOre are defined in your segment, so type their names. Rows with the same pack number roll together in one AddLoot."
                                                Foreground="DimGray" FontSize="11" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Expander>
+
+                            <Expander Header="Kept code" IsExpanded="True">
+                                <StackPanel Margin="4">
+                                    <TextBlock Text="Code the form has no field for, written back exactly as it is."
+                                               Foreground="DimGray" FontSize="11" TextWrapping="Wrap" />
+                                    <TextBlock Text="Before the creature" Style="{StaticResource SmallCaps}" />
+                                    <TextBox Text="{Binding CodeBefore, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CodeBox}" />
+                                    <TextBlock Text="Other property lines (inside the creature's braces)" Style="{StaticResource SmallCaps}" />
+                                    <TextBox Text="{Binding OtherInitializers, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CodeBox}" />
+                                    <TextBlock Text="Other statements (before the return)" Style="{StaticResource SmallCaps}" />
+                                    <TextBox Text="{Binding OtherStatements, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CodeBox}" />
                                 </StackPanel>
                             </Expander>
                         </StackPanel>
