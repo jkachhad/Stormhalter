@@ -13,6 +13,21 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="0,3,6,3" />
         </Style>
+        <Style TargetType="TextBlock" x:Key="SmallCaps">
+            <Setter Property="Foreground" Value="DimGray" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="0,2,0,1" />
+        </Style>
+        <!-- transparent-pixel checkerboard behind the sprite preview -->
+        <DrawingBrush x:Key="Checker" TileMode="Tile" Viewport="0,0,16,16" ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#FFE8E8E8" Geometry="M0,0 H2 V2 H0 Z" />
+                    <GeometryDrawing Brush="#FFC4C4C4" Geometry="M0,0 H1 V1 H0 Z M1,1 H2 V2 H1 Z" />
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
         <Style TargetType="ComboBox">
             <Setter Property="Margin" Value="0,3" />
             <Setter Property="IsEditable" Value="True" />
@@ -77,7 +92,7 @@
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Text="Body" Style="{StaticResource FieldLabel}" />
                                     <DockPanel Grid.Row="0" Grid.Column="1">
-                                        <Button DockPanel.Dock="Right" Content="Use selected body" Click="OnBuilderUseBody" />
+                                        <Button DockPanel.Dock="Right" Content="From Body &amp; Hue tab" Click="OnBuilderUseBody" />
                                         <TextBox Margin="0,3" Text="{Binding Body, UpdateSourceTrigger=PropertyChanged}" />
                                     </DockPanel>
                                     <TextBlock Grid.Row="1" Text="Hue" Style="{StaticResource FieldLabel}" />
@@ -86,7 +101,7 @@
                                     <ComboBox Grid.Row="2" Grid.Column="1" x:Name="_bHueName" Text="{Binding HueName, UpdateSourceTrigger=PropertyChanged}" />
                                     <TextBlock Grid.Row="3" Text="A R G B" Style="{StaticResource FieldLabel}" />
                                     <DockPanel Grid.Row="3" Grid.Column="1">
-                                        <Button DockPanel.Dock="Right" Content="From Hue tab" Click="OnBuilderUsePickerHue" />
+                                        <Button DockPanel.Dock="Right" Content="From Body &amp; Hue tab" Click="OnBuilderUsePickerHue" />
                                         <UniformGrid Columns="4">
                                             <TextBox Margin="0,3,2,3" Text="{Binding HueA, UpdateSourceTrigger=PropertyChanged}" />
                                             <TextBox Margin="0,3,2,3" Text="{Binding HueR, UpdateSourceTrigger=PropertyChanged}" />
@@ -252,13 +267,79 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="Body">
-                <DockPanel Margin="4">
+            <!-- Body and hue together: the body sprite drawn with the hue, the way it is tinted in game -->
+            <TabItem Header="Body &amp; Hue">
+                <DockPanel Margin="6">
+                    <DockPanel DockPanel.Dock="Top" Margin="0,0,0,6">
+                        <TextBlock DockPanel.Dock="Right" Text="sprite preview with tint" Foreground="DimGray" FontSize="11" VerticalAlignment="Center" />
+                        <TextBlock Text="Body &amp; Hue" FontWeight="Bold" FontSize="14" />
+                    </DockPanel>
+
+                    <Grid DockPanel.Dock="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Width="160" Height="160" VerticalAlignment="Top" Margin="0,0,10,0" BorderBrush="Gray" BorderThickness="1" CornerRadius="3"
+                                Background="{StaticResource Checker}">
+                            <Image x:Name="_huePreview" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="4" />
+                        </Border>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock x:Name="_bodyTitle" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
+                            <TextBlock x:Name="_bodyInfo" Foreground="DimGray" FontSize="11" TextWrapping="Wrap" Margin="0,2,0,6" />
+
+                            <TextBlock Text="BODY ID" Style="{StaticResource SmallCaps}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="_bodyId" Width="80" Margin="0,3" VerticalContentAlignment="Center" TextChanged="OnBodyIdChanged" />
+                                <Button x:Name="_browseBodies" Content="Browse bodies…" Click="OnBrowseBodies" FontWeight="Bold" Margin="6,3,0,3" />
+                            </StackPanel>
+
+                            <TextBlock Text="HUE" Style="{StaticResource SmallCaps}" Margin="0,6,0,0" />
+                            <ComboBox x:Name="_hueMode" IsEditable="False" SelectionChanged="OnHueModeChanged" />
+
+                            <WrapPanel Margin="0,4,0,0">
+                                <xctk:ColorPicker x:Name="_huePicker" Width="40" Height="24" UsingAlphaChannel="True" ShowDropDownButton="False"
+                                                  DisplayColorAndName="False" SelectedColorChanged="OnHueColorChanged" Margin="0,0,6,4"
+                                                  ToolTip="Pick any color" />
+                                <Border Background="#FF2B2B2B" CornerRadius="3" Padding="6,2" Margin="0,0,6,4" VerticalAlignment="Center">
+                                    <TextBlock x:Name="_hueArgb" FontFamily="Consolas" Foreground="#FFE8C060" />
+                                </Border>
+                                <ItemsControl x:Name="_hueSwatches">
+                                    <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate><DataTemplate>
+                                        <Button Width="22" Height="22" Padding="0" Margin="0,0,4,4" Background="{Binding Brush}" ToolTip="{Binding Name}"
+                                                BorderBrush="Gray" Click="OnHueSwatch" />
+                                    </DataTemplate></ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <UniformGrid DockPanel.Dock="Top" Columns="4" Margin="0,8,0,0">
+                        <StackPanel Margin="0,0,6,0"><TextBlock Text="A" Style="{StaticResource SmallCaps}" /><TextBox x:Name="_hueA" TextChanged="OnHueComponentChanged" /></StackPanel>
+                        <StackPanel Margin="0,0,6,0"><TextBlock Text="R" Style="{StaticResource SmallCaps}" /><TextBox x:Name="_hueR" TextChanged="OnHueComponentChanged" /></StackPanel>
+                        <StackPanel Margin="0,0,6,0"><TextBlock Text="G" Style="{StaticResource SmallCaps}" /><TextBox x:Name="_hueG" TextChanged="OnHueComponentChanged" /></StackPanel>
+                        <StackPanel><TextBlock Text="B" Style="{StaticResource SmallCaps}" /><TextBox x:Name="_hueB" TextChanged="OnHueComponentChanged" /></StackPanel>
+                    </UniformGrid>
+
+                    <TextBlock DockPanel.Dock="Top" Foreground="DimGray" FontSize="11" TextWrapping="Wrap" Margin="0,6,0,0"
+                               Text="The preview multiplies the sprite by the hue, which is how a tinted sprite is drawn. White means no change." />
+
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,6,0,0">
+                        <Button Content="Set body" Click="OnSetBody" Margin="0,3" />
+                        <Button Content="Set hue" Click="OnSetHue" />
+                        <Button Content="Set both" Click="OnSetBodyAndHue" FontWeight="Bold" />
+                    </StackPanel>
+
+                    <!-- the body gallery, shown by Browse bodies -->
+                    <DockPanel x:Name="_bodyBrowser" Visibility="Collapsed" Margin="0,6,0,0">
                     <DockPanel DockPanel.Dock="Top" Margin="0,0,0,4">
                         <TextBlock Text="Search" Style="{StaticResource FieldLabel}" />
                         <TextBox x:Name="_bodySearch" TextChanged="OnBodySearchChanged" VerticalContentAlignment="Center" />
                     </DockPanel>
-                    <TextBlock DockPanel.Dock="Bottom" Text="Double-click a body to set Body = id." Foreground="DimGray" FontSize="11" Margin="0,4,0,0" />
+                    <TextBlock DockPanel.Dock="Bottom" Text="Click a body to preview it. Double-click to pick it and close the list." Foreground="DimGray" FontSize="11" Margin="0,4,0,0" />
                     <ListBox x:Name="_bodies"
                              MouseDoubleClick="OnBodyDoubleClick"
                              SelectionChanged="OnBodySelectionChanged"
@@ -283,34 +364,8 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                    </DockPanel>
                 </DockPanel>
-            </TabItem>
-
-            <TabItem Header="Hue">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="6">
-                        <Border Width="192" Height="192" HorizontalAlignment="Left" Background="#FFE8E8E8" BorderBrush="Gray" BorderThickness="1">
-                            <Image x:Name="_huePreview" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" />
-                        </Border>
-                        <TextBlock x:Name="_huePreviewLabel" Foreground="DimGray" FontSize="11" Margin="0,2,0,8" TextWrapping="Wrap" />
-
-                        <TextBlock Text="Named color" FontWeight="Bold" />
-                        <DockPanel>
-                            <Button DockPanel.Dock="Right" Content="Set" Click="OnSetNamedHue" />
-                            <ComboBox x:Name="_hueNames" SelectionChanged="OnHueNameChanged" />
-                        </DockPanel>
-
-                        <TextBlock Text="Custom ARGB" FontWeight="Bold" Margin="0,10,0,0" />
-                        <xctk:ColorPicker x:Name="_huePicker" UsingAlphaChannel="True" DisplayColorAndName="True"
-                                          SelectedColorChanged="OnHueColorChanged" Margin="0,3" />
-                        <DockPanel>
-                            <Button DockPanel.Dock="Right" Content="Set" Click="OnSetCustomHue" />
-                            <TextBlock x:Name="_hueArgb" FontFamily="Consolas" VerticalAlignment="Center" />
-                        </DockPanel>
-                        <TextBlock Text="The preview multiplies the body by the hue. White leaves it unchanged."
-                                   Foreground="DimGray" FontSize="11" TextWrapping="Wrap" Margin="0,8,0,0" />
-                    </StackPanel>
-                </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Sounds">
