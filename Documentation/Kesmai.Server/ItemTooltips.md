@@ -296,6 +296,7 @@ Things to know:
 - Pass numbers you want shown as text (`Power.ToString()`). A plain number argument is read as a reference to another localization entry, which is how the stored spell's name is shown.
 - `beholder` is the player looking at the item. You can use it to show different lines to different players, but don't change the item or send messages while building the tooltip.
 - The last argument before your values is the line's order: higher numbers appear first, and lines with the same number keep the order you add them in.
+- Below the bonus lines, the tooltip shows its extra lines in three groups, each after a separator: the effect lines ("Use:", "Hit:" and so on), then the level and experience bars, then your other lines. Your text lines always go in the last group, whatever their order.
 - The style sets how the line looks: each line gets a small bullet and a default color for its style.
 
   | Style | Use it for | Default color |
@@ -380,7 +381,7 @@ public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
 
 - The second and third values are the progress within the current level, not totals. If your item stores total experience against cumulative thresholds, subtract the current level's threshold from both.
 - At the last level, pass `true` as the last argument: the bar is full and reads "Level 10 (maximum)".
-- If the level has no progress toward the next one, such as a level set by another item or a quest stage, use `tooltip.AddLevel(level)` instead: a "Level 3" line in the same place, without a bar.
+- If the level has no progress toward the next one, such as a level set by another item or a quest stage, use `tooltip.AddLevel(level)` instead: "Level 3" in the same place, without a bar.
 - The bar is part of the tooltip's extra lines, so call `InvalidateTooltip()` whenever the experience or level changes. The simplest place is the experience property's setter, which also lets a game master view and set the experience with `props`:
 
   ```csharp
@@ -427,7 +428,7 @@ public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
 }
 ```
 
-Effect lines always appear together after the other lines, grouped in the order of the table, so you don't pass an order or a style.
+Effect lines appear together in their own part of the tooltip, after the bonus lines and before the level bars and the other extra lines, grouped in the order of the table, so you don't pass an order or a style.
 
 **Shared wording.** These entries in the `Tooltip Effects (6610000-6619999)` section of `Enu.xml` cover most items:
 
