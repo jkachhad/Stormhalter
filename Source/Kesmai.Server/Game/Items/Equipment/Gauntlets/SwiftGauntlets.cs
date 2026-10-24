@@ -53,6 +53,12 @@ public class SwiftGauntlets : Gauntlets, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200284)); /* [You are looking at] [a pair of gloves that emanate strands of darkness.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200284)); /* a pair of gloves that emanate strands of darkness. */
+	}
+
 	public override TimeSpan GetSwingDelay(MobileEntity entity)
 	{
 		return entity.GetRoundDelay(0.5);

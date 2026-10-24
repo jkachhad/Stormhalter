@@ -43,6 +43,12 @@ public class WaveRobe : Robe, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250030)); /* The robe looks thick and heavy. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200198)); /* a blue robe with a cresting wave. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

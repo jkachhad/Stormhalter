@@ -39,6 +39,12 @@ public class EasterEgg : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200334)); /* [You are looking at] [an exquisitely painted easter egg.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200334)); /* an exquisitely painted easter egg. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

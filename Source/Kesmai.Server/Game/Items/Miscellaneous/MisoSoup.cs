@@ -35,6 +35,12 @@ public class MisoSoup : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200331)); /* [You are looking at] [a delicious smelling bowl of soup.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200331)); /* a delicious smelling bowl of soup. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

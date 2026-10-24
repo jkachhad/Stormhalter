@@ -58,6 +58,12 @@ public class MisericordeDagger : Dagger, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6290007)); /* an exquisite lemurian misericorde dagger whose honed finish reveals the wood grained texture of the metal. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

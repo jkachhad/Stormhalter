@@ -27,6 +27,12 @@ public class YellowBalm : Balm
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200088)); /* a clear bottle made of yellowish glass. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

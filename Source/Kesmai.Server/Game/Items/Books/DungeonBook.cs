@@ -59,4 +59,10 @@ public class DungeonBook : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200312)); /* [You are looking at] [a small paper book entitled 'The Dungeon'.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200312)); /* a small paper book entitled 'The Dungeon'. */
+	}
 }

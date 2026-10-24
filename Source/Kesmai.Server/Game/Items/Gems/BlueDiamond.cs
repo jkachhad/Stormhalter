@@ -29,6 +29,12 @@ public class BlueDiamond : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200290)); /* [You are looking at] [a rare, expertly cut blue diamond.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200290)); /* a rare, expertly cut blue diamond. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

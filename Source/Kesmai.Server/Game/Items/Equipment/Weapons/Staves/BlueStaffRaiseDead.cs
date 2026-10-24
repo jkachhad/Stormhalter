@@ -52,14 +52,32 @@ public class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
 	public int ChargesCurrent
 	{
 		get => _chargesCurrent;
-		set => _chargesCurrent = value;
+		set
+		{
+			if (_chargesCurrent == value)
+				return;
+
+			_chargesCurrent = value;
+
+			// the rich tooltip shows the remaining charges.
+			InvalidateTooltip();
+		}
 	}
 
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{
 		get => _chargesMax;
-		set => _chargesMax = value;
+		set
+		{
+			if (_chargesMax == value)
+				return;
+
+			_chargesMax = value;
+
+			// the rich tooltip shows the maximum charges.
+			InvalidateTooltip();
+		}
 	}
 		
 	#endregion

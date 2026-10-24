@@ -39,6 +39,12 @@ public class ChristmasStarGem : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200340)); /* [You are looking at] [a star used for decorating holiday trees.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200340)); /* a star used for decorating holiday trees. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

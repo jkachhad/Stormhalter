@@ -32,6 +32,12 @@ public class BrightFeather : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200285)); /* [You are looking at] [a bright feather.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200285)); /* a bright feather. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

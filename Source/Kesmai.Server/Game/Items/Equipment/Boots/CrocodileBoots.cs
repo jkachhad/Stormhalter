@@ -40,6 +40,12 @@ public class CrocodileBoots : Boots, ITreasure
 			entries.Add(new LocalizationEntry(6250103)); /* The boots contain the spell of Breathe Water. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200207)); /* a pair of boots made from crocodile hide. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -96,5 +102,13 @@ public class CrocodileBoots : Boots, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 504); /* Grants Breathe Water. */
 	}
 }

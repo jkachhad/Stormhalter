@@ -34,4 +34,10 @@ public class GoldenEgg : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200263)); /* [You are looking at] [a small golden egg.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200263)); /* a small golden egg. */
+	}
 }

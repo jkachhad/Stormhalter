@@ -44,6 +44,12 @@ public class BlackCloak : Robe, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250100)); /* The robe is extremely light. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200189)); /* a long black cloak. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

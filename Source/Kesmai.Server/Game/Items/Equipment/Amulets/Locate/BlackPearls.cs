@@ -45,6 +45,12 @@ public class BlackPearls : LocateAmulet
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250010)); /* The amulet contains the spell of Locate. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200069)); /* a necklace of lustrous black pearls. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

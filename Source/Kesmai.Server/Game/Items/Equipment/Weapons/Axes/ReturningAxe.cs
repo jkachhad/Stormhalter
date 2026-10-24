@@ -59,6 +59,12 @@ public class ReturningAxe : Axe, IReturningWeapon, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6290000)); /* a heavy battle axe with gleaming steel blades. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

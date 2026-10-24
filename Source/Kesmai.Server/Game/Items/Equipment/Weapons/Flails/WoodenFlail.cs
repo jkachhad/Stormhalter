@@ -44,6 +44,12 @@ public class WoodenFlail : Flail
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250090)); /* The flail appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200158)); /* a wooden flail. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

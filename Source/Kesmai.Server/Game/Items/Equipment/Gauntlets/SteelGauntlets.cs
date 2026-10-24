@@ -49,6 +49,12 @@ public class SteelGauntlets : Gauntlets, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250094)); /* The combat adds for the gauntlets are +2. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200170)); /* a pair of leather gauntlets with steel plates. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

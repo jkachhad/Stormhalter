@@ -49,6 +49,12 @@ public class Yttril : ItemEntity, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200221)); /* [You are looking at] [a blue_gray stone flecked with bits of glowing metal.  The stone is known as yttril.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200221)); /* a blue_gray stone flecked with bits of glowing metal.  The stone is known as yttril. */
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

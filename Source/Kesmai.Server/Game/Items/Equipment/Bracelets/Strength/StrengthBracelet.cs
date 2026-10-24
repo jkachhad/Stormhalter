@@ -52,6 +52,12 @@ public class StrengthBracelet : Bracelet, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200082)); /* a silver bracelet engraved for decoration. */
+	}
+
+	/// <inheritdoc />
 	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 	{
 		var modifiers = base.GetStatModifiers(wearer);
@@ -117,5 +123,13 @@ public class StrengthBracelet : Bracelet, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 553); /* Grants Strength. */
 	}
 }

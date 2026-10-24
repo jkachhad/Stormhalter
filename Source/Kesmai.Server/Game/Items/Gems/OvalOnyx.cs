@@ -29,6 +29,12 @@ public class OvalOnyx : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200291)); /* [You are looking at] [an onyx, cut into an oval shape.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200291)); /* an onyx, cut into an oval shape. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

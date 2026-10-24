@@ -20,14 +20,34 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 	public int ChargesCurrent
 	{
 		get => _chargesCurrent;
-		set => _chargesCurrent = value.Clamp(0, _chargesMax);
+		set
+		{
+			var charges = value.Clamp(0, _chargesMax);
+
+			if (_chargesCurrent == charges)
+				return;
+
+			_chargesCurrent = charges;
+
+			// the rich tooltip shows the remaining charges.
+			InvalidateTooltip();
+		}
 	}
 		
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{
 		get => _chargesMax;
-		set => _chargesMax = value;
+		set
+		{
+			if (_chargesMax == value)
+				return;
+
+			_chargesMax = value;
+
+			// the rich tooltip shows the maximum charges.
+			InvalidateTooltip();
+		}
 	}
 		
 	/// <summary>
@@ -106,6 +126,12 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 			entries.Add(new LocalizationEntry(6250051)); /* The amulet contains the spell of Neutralize. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200067)); /* a silver chain with a silver and onyx scorpion. */
+	}
+
 	private class InternalTarget : MobileTarget
 	{
 		private ScorpionAmulet _amulet;
@@ -168,5 +194,13 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610003, 535); /* Casts Neutralize Poison on a target. */
 	}
 }

@@ -19,7 +19,16 @@ public abstract class Consumable : ItemEntity
 	public IConsumableContent Content
 	{
 		get => _content;
-		set => _content = value;
+		set
+		{
+			if (_content == value)
+				return;
+
+			_content = value;
+
+			// the tooltip shows the content's effect.
+			InvalidateTooltip();
+		}
 	}
 
 	/// <summary>
@@ -185,6 +194,7 @@ public abstract class Consumable : ItemEntity
 		OnConsume(entity, destroy);
 
 		_content = null;
+		InvalidateTooltip();
 
 		// Delete the item if specified.
 		if (destroy)
@@ -262,6 +272,16 @@ public abstract class Consumable : ItemEntity
 		return true;
 	}
 		
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		// an emptied consumable has no content, so it has no effect line.
+		if (_content is { } content)
+			content.GetTooltipEffects(this, tooltip);
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{

@@ -43,6 +43,12 @@ public class LionRobe : Robe, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250030)); /* The robe looks thick and heavy. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200199)); /* a silver robe made of silk with a black lion. */
+	}
 		
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

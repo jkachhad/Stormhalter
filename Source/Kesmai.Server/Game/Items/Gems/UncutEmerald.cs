@@ -30,6 +30,12 @@ public class UncutEmerald : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200132)); /* [You are looking at] [a massive uncut emerald, as green as spring grass.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200132)); /* a massive uncut emerald, as green as spring grass. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

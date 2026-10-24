@@ -50,6 +50,12 @@ public class GoldenTorc : StunDeathProtectionAmulet
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250052)); /* The amulet contains the spell of Protection from Stun and Death. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200070)); /* a twisted gold torc inscribed with glowing runes. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

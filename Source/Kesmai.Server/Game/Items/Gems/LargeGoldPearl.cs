@@ -34,6 +34,12 @@ public class LargeGoldPearl : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200296)); /* [You are looking at] [an enormous golden pearl.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200296)); /* an enormous golden pearl. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

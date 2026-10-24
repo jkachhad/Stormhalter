@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Kesmai.Server.Game;
+using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Spells;
 
@@ -147,5 +149,14 @@ public class Poison
 	public virtual Poison Clone()
 	{
 		return new Poison(Delay, Potency);
+	}
+
+	/// <summary>
+	/// Adds the "Poisoned (+n)" line, with the potency, to the tooltip of the weapon or gauntlets that carry this poison.
+	/// </summary>
+	public void AddTooltipEntry(Tooltip tooltip)
+	{
+		// the potency is passed as signed text, since an int argument is read as a localization number.
+		tooltip.AddLocalizedText(6600046, Color.LimeGreen, TooltipTextStyle.Normal, 0, $"{Potency:+0;-0}"); /* Poisoned ({0}) */
 	}
 }

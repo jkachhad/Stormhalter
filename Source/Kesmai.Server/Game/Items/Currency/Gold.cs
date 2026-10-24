@@ -69,6 +69,16 @@ public class Gold : Currency
 		else
 			entries.Add(new LocalizationEntry(6200000, 6200001)); /* [You are looking at] [a gold coin.]*/
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		// the tooltip header shows the amount, so a stack only needs the text.
+		if (Amount > 1)
+			entries.Add(new LocalizationEntry(6199998)); /* gold coins. */
+		else
+			entries.Add(new LocalizationEntry(6200001)); /* a gold coin. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

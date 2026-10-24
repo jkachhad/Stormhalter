@@ -39,6 +39,12 @@ public class IronKey : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200333)); /* [You are looking at] [an iron key with silver runes.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200333)); /* an iron key with silver runes. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

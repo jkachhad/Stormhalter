@@ -43,6 +43,12 @@ public class TwoSeventyNineRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250041)); /* The ring contains the spell of Blind Resistance. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200064)); /* a large silver ring with a deep black stone set among rubies.  There is an eerie glow coming from the stone. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -103,5 +109,13 @@ public class TwoSeventyNineRing : Ring, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 547); /* Grants Blind Resistance. */
 	}
 }

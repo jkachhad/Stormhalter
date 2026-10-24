@@ -53,6 +53,12 @@ public class WarHammer : Mace
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250079)); /* The hammer appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200142)); /* a steel war hammer. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

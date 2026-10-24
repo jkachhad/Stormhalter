@@ -39,6 +39,12 @@ public class ChristmasTree : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200339)); /* [You are looking at] [a miniature decorative holiday tree.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200339)); /* a miniature decorative holiday tree. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

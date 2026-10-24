@@ -39,6 +39,12 @@ public class JeweledKey : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200262)); /* [You are looking at] [a jeweled key.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200262)); /* a jeweled key. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

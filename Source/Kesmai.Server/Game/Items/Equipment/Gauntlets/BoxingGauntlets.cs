@@ -40,6 +40,12 @@ public class BoxingGauntlets : Gauntlets, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200171)); /* [You are looking at] [a pair of thickly padded leather boxing gloves.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200171)); /* a pair of thickly padded leather boxing gloves. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

@@ -34,6 +34,12 @@ public class ClearBalm : Balm
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200005)); /* a clear glass bottle. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

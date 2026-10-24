@@ -16,6 +16,14 @@ public interface IConsumableContent
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries);
 
 	/// <summary>
+	/// Adds the effect of consuming this content to the tooltip of the item that holds it, such as "Use: Restores 20
+	/// health." with <see cref="Tooltip.AddEffect"/>. The item calls this only while it holds the content.
+	/// </summary>
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+	}
+
+	/// <summary>
 	/// Called when consumed by an entity.
 	/// </summary>
 	public void OnConsume(MobileEntity entity, Consumable item);
@@ -55,6 +63,12 @@ public class ConsumableHeal : IConsumableContent
 
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610020, _amount.ToString()); /* Restores {0} health. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -99,6 +113,12 @@ public class ConsumableDamage : IConsumableContent
 
 	public virtual void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 	{
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610021, _amount.ToString()); /* Hurts you for {0} damage, though not below 1 health. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -150,6 +170,12 @@ public class ConsumablePoison : IConsumableContent
 			entries.Add(new LocalizationEntry(6300393)); /* The bottle contains a poison. */
 	}
 
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610022, _potency.ToString()); /* Poisons you with potency {0}. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		entity.Poison(item.Owner, new Poison(TimeSpan.Zero, _potency));
@@ -197,6 +223,15 @@ public class ConsumablePoisonAntidote : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6300394)); /* The bottle contains a Neutralize Poison potion. */
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		if (_relative)
+			tooltip.AddEffect(TooltipEffectTrigger.Use, 6610023, _potency.ToString()); /* Weakens your poison by {0}. */
+		else
+			tooltip.AddEffect(TooltipEffectTrigger.Use, 6610024); /* Weakens any poison stronger than potency 5 to potency 5. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -257,6 +292,12 @@ public class ConsumableBlindnessAntidote : IConsumableContent
 			entries.Add(new LocalizationEntry(6250066)); /* The bottle contains a Cure Blindness potion. */
 	}
 
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610025); /* Cures blindness. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity.GetStatus(typeof(BlindStatus), out var status))
@@ -314,6 +355,15 @@ public class ConsumableRestoreMana : IConsumableContent
 			entries.Add(new LocalizationEntry(6250060)); /* The bottle contains a potion to restore mana. */
 	}
 
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		if (_amount.HasValue)
+			tooltip.AddEffect(TooltipEffectTrigger.Use, 6610026, _amount.Value.ToString()); /* Restores {0} mana. */
+		else
+			tooltip.AddEffect(TooltipEffectTrigger.Use, 6610027); /* Fully restores your mana. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (_amount.HasValue)
@@ -366,6 +416,12 @@ public class ConsumableIncreaseMana : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250078)); /* The liquid increases mana. */
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610028, _amount.ToString()); /* Removes up to {0} of your maximum mana penalty and fully restores your mana. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -435,6 +491,15 @@ public class ConsumableRestoreStamina : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250067)); /* The bottle contains a stamina potion. */
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		if (_amount.HasValue)
+			tooltip.AddEffect(TooltipEffectTrigger.Use, 6610029, _amount.Value.ToString()); /* Restores {0} stamina. */
+		else
+			tooltip.AddEffect(TooltipEffectTrigger.Use, 6610030); /* Fully restores your stamina. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -559,6 +624,12 @@ public class ConsumableAmbrosia : IConsumableContent
 			entries.Add(new LocalizationEntry(6250074)); /* The liquid inside restores youth. */
 	}
 
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610031); /* Makes you younger. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity is PlayerEntity player)
@@ -601,6 +672,12 @@ public class ConsumableNaphtha : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250061)); /* The bottle contains an ounce of Naphtha. */
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610032); /* Burns you for 10 damage. Thrown, it bursts into flames. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -657,6 +734,12 @@ public class ConsumableNitro : IConsumableContent
 			
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250063)); /* The bottle contains Nitro. */
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610033); /* Burns you for 10 damage. Thrown, it explodes in a concussive blast. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -716,6 +799,12 @@ public class ConsumableStrengthSpell : IConsumableContent
 			entries.Add(new LocalizationEntry(6250065)); /* The bottle contains a potion of temporary strength. */
 	}
 
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610002, 602); /* Casts Strength. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity is PlayerEntity player)
@@ -756,6 +845,12 @@ public class ConsumableStrengthStat : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250072)); /* The liquid permanently increases strength. */
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610034); /* Permanently raises your Strength by 1, but may blind and daze you. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -803,6 +898,12 @@ public class ConsumableDexterityStat : IConsumableContent
 			entries.Add(new LocalizationEntry(6250069)); /* The liquid permanently increases dexterity. */
 	}
 
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610035); /* Permanently raises your Dexterity by 1, but may blind and daze you. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity is PlayerEntity player)
@@ -848,6 +949,12 @@ public class ConsumableIntelligenceStat : IConsumableContent
 			entries.Add(new LocalizationEntry(6250068)); /* The liquid permanently increases intelligence. */
 	}
 
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610036); /* Permanently raises your Intelligence by 1. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity is PlayerEntity player)
@@ -886,6 +993,12 @@ public class ConsumableWillpowerStat : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250077)); /* The liquid permanently increases willpower. */
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610037); /* Permanently raises your Willpower by 1. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -928,6 +1041,12 @@ public class ConsumableWisdomStat : IConsumableContent
 			entries.Add(new LocalizationEntry(6250076)); /* The liquid permanently increases wisdom. */
 	}
 
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610038); /* Permanently raises your Wisdom by 1. */
+	}
+
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
 		if (entity is PlayerEntity player)
@@ -966,6 +1085,12 @@ public class ConsumableConstitutionStat : IConsumableContent
 	{
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250073)); /* The liquid permanently increases constitution. */
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610039); /* Permanently raises your Constitution by 2, reduces your maximum health and stamina penalties by 4, and fully restores you. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)
@@ -1026,6 +1151,12 @@ public class ConsumableBalm : IConsumableContent
 			
 		if (consumable.Identified)
 			entries.Add(new LocalizationEntry(6250004)); /* The bottle contains balm. */
+	}
+
+	/// <inheritdoc />
+	public void GetTooltipEffects(Consumable item, Tooltip tooltip)
+	{
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610040); /* Heals you over time. */
 	}
 
 	public void OnConsume(MobileEntity entity, Consumable item)

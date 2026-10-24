@@ -6,6 +6,7 @@ using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Game;
 using Kesmai.Server.Spells;
+using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
@@ -18,14 +19,34 @@ public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 	public int ChargesCurrent
 	{
 		get => _chargesCurrent;
-		set => _chargesCurrent = value.Clamp(0, _chargesMax);
+		set
+		{
+			var charges = value.Clamp(0, _chargesMax);
+
+			if (_chargesCurrent == charges)
+				return;
+
+			_chargesCurrent = charges;
+
+			// the rich tooltip shows the remaining charges.
+			InvalidateTooltip();
+		}
 	}
 		
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{
 		get => _chargesMax;
-		set => _chargesMax = value;
+		set
+		{
+			if (_chargesMax == value)
+				return;
+
+			_chargesMax = value;
+
+			// the rich tooltip shows the maximum charges.
+			InvalidateTooltip();
+		}
 	}
 		
 	/// <summary>
@@ -126,5 +147,13 @@ public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610002, 515); /* Casts Locate. */
 	}
 }

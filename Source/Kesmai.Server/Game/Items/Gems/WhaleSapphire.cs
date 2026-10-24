@@ -29,6 +29,12 @@ public class WhaleSapphire : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200130)); /* [You are looking at] [a dark-blue sapphire shaped like a whale.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200130)); /* a dark-blue sapphire shaped like a whale. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

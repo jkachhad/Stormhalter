@@ -43,6 +43,12 @@ public class BrownRobe : Robe, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250030)); /* The robe looks thick and heavy. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200200)); /* a brown robe interwoven with a black pattern. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
