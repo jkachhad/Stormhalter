@@ -68,6 +68,106 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		set => SetProperty(ref _maximum, value);
 	}
 
+	// Spawn time: kept in the OnAfterSpawn script (see SpawnTimeWindow), shown here so it can be set without code. While
+	// it is set to Always the script holds nothing, so the other choices are remembered here until a mode is picked.
+	private SpawnTimeWindow _unsavedSpawnTime = new SpawnTimeWindow();
+
+	private Script AfterSpawnScript => _scripts.First(s => s.Name == "OnAfterSpawn");
+
+	private SpawnTimeWindow CurrentSpawnTime
+	{
+		get
+		{
+			var written = SpawnTimeWindow.Read(AfterSpawnScript);
+			return written.Mode == SpawnTimeMode.Always ? _unsavedSpawnTime : written;
+		}
+	}
+
+	private void ChangeSpawnTime(Action<SpawnTimeWindow> change, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+	{
+		var window = CurrentSpawnTime.Clone();
+
+		change(window);
+		window.Apply(AfterSpawnScript);
+
+		if (window.Mode == SpawnTimeMode.Always)
+			_unsavedSpawnTime = window;
+
+		OnPropertyChanged(propertyName);
+		WeakReferenceMessenger.Default.Send(new SegmentSpawnChanged(this));
+	}
+
+	private bool PhaseAllowed(string phase) => CurrentSpawnTime.AllowedPhases.Contains(phase);
+
+	private void SetPhase(string phase, bool allowed, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+		=> ChangeSpawnTime(w => { if (allowed) w.AllowedPhases.Add(phase); else w.AllowedPhases.Remove(phase); }, propertyName);
+
+	[Category("Spawn time")]
+	[DisplayName("Spawn")]
+	[Description("Always; only in the ticked in-game light phases; or only between From and Until on the server's clock. Outside that, what it spawns is removed and it tries again after its delay.")]
+	public SpawnTimeMode SpawnTime
+	{
+		get => CurrentSpawnTime.Mode;
+		set => ChangeSpawnTime(w => w.Mode = value);
+	}
+
+	[Category("Spawn time")]
+	[DisplayName("Phase: Dawn")]
+	[Description("With In-game phases: may spawn at dawn.")]
+	public bool SpawnAtDawn { get => PhaseAllowed("Dawn"); set => SetPhase("Dawn", value); }
+
+	[Category("Spawn time")]
+	[DisplayName("Phase: Sunrise")]
+	[Description("With In-game phases: may spawn at sunrise.")]
+	public bool SpawnAtSunrise { get => PhaseAllowed("Sunrise"); set => SetPhase("Sunrise", value); }
+
+	[Category("Spawn time")]
+	[DisplayName("Phase: Daytime")]
+	[Description("With In-game phases: may spawn in daytime.")]
+	public bool SpawnAtDaytime { get => PhaseAllowed("Daytime"); set => SetPhase("Daytime", value); }
+
+	[Category("Spawn time")]
+	[DisplayName("Phase: Sunset")]
+	[Description("With In-game phases: may spawn at sunset.")]
+	public bool SpawnAtSunset { get => PhaseAllowed("Sunset"); set => SetPhase("Sunset", value); }
+
+	[Category("Spawn time")]
+	[DisplayName("Phase: Midnight")]
+	[Description("With In-game phases: may spawn at midnight.")]
+	public bool SpawnAtMidnight { get => PhaseAllowed("Midnight"); set => SetPhase("Midnight", value); }
+
+	[Category("Spawn time")]
+	[DisplayName("Phase: Nighttime")]
+	[Description("With In-game phases: may spawn at night.")]
+	public bool SpawnAtNighttime { get => PhaseAllowed("Nighttime"); set => SetPhase("Nighttime", value); }
+
+	[Category("Spawn time")]
+	[DisplayName("Server clock: From")]
+	[Description("With Server clock: the time of day (24-hour, the server's time zone) the window opens, e.g. 20:00:00.")]
+	public TimeSpan SpawnFrom
+	{
+		get => CurrentSpawnTime.From;
+		set => ChangeSpawnTime(w => w.From = new TimeSpan(value.Hours, value.Minutes, 0));
+	}
+
+	[Category("Spawn time")]
+	[DisplayName("Server clock: Until")]
+	[Description("With Server clock: the time of day the window closes, e.g. 02:00:00. Earlier than From means it runs past midnight; the same as From means all day.")]
+	public TimeSpan SpawnUntil
+	{
+		get => CurrentSpawnTime.Until;
+		set => ChangeSpawnTime(w => w.Until = new TimeSpan(value.Hours, value.Minutes, 0));
+	}
+
+	[Category("Spawn time")]
+	[DisplayName("Remove all outside the window")]
+	[Description("Ticked: outside the window, everything this spawner made is removed when it next tries to spawn. Unticked: only the new spawn is removed, and creatures already out stay.")]
+	public bool RemoveAllOutsideWindow
+	{
+		get => CurrentSpawnTime.RemoveAll;
+		set => ChangeSpawnTime(w => w.RemoveAll = value);
+	}
+
 	[Browsable(false)]
 	public ObservableCollection<SpawnEntry> Entries { get; set; } = new ObservableCollection<SpawnEntry>();
 
