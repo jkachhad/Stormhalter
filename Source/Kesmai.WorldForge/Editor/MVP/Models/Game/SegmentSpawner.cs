@@ -244,6 +244,73 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		set => ChangeSpawnTime(w => w.RemoveAll = value);
 	}
 
+	// Broadcast on spawn: also kept in the OnAfterSpawn script (see SpawnBroadcast), remembered here while it is off.
+	private SpawnBroadcast _unsavedBroadcast = new SpawnBroadcast();
+
+	private SpawnBroadcast CurrentBroadcast
+	{
+		get
+		{
+			var written = SpawnBroadcast.Read(AfterSpawnScript);
+			return written.Enabled ? written : _unsavedBroadcast;
+		}
+	}
+
+	private void ChangeBroadcast(Action<SpawnBroadcast> change, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+	{
+		var broadcast = CurrentBroadcast.Clone();
+
+		change(broadcast);
+		broadcast.Apply(AfterSpawnScript);
+
+		if (!broadcast.Enabled)
+			_unsavedBroadcast = broadcast;
+
+		OnPropertyChanged(propertyName);
+		WeakReferenceMessenger.Default.Send(new SegmentSpawnChanged(this));
+	}
+
+	[Category("Broadcast on spawn")]
+	[DisplayName("Broadcast on spawn")]
+	[PropertyOrder(0)]
+	[Description("Optional. On: each time this spawner spawns a creature, the message below is sent to every player in the chosen area. Off: nothing is announced. With Spawn time options on, only spawns they allow are announced.")]
+	public bool BroadcastOnSpawn
+	{
+		get => CurrentBroadcast.Enabled;
+		set => ChangeBroadcast(b => b.Enabled = value);
+	}
+
+	[Category("Broadcast on spawn")]
+	[DisplayName("Message")]
+	[PropertyOrder(1)]
+	[Description("What players see, in gold. {name} becomes the spawned creature's name, e.g. \"{name} has risen in the crypt!\".")]
+	public string BroadcastMessage
+	{
+		get => CurrentBroadcast.Message;
+		set => ChangeBroadcast(b => b.Message = value ?? String.Empty);
+	}
+
+	[Category("Broadcast on spawn")]
+	[DisplayName("Who hears it")]
+	[PropertyOrder(2)]
+	[Description("Segment: every player in this segment. Region: every player in the region the creature spawned in. Subregion: only players inside the subregion picked below, in that region.")]
+	public BroadcastScope BroadcastScope
+	{
+		get => CurrentBroadcast.Scope;
+		set => ChangeBroadcast(b => b.Scope = value);
+	}
+
+	[Category("Broadcast on spawn")]
+	[DisplayName("Subregion")]
+	[PropertyOrder(3)]
+	[System.ComponentModel.Editor(typeof(Kesmai.WorldForge.UI.SubregionNameEditor), typeof(Kesmai.WorldForge.UI.SubregionNameEditor))]
+	[Description("With Who hears it set to Subregion: the subregion whose players hear the message. The list shows this segment's subregions; the subregion must be in the region the creature spawns in.")]
+	public string BroadcastSubregion
+	{
+		get => CurrentBroadcast.Subregion;
+		set => ChangeBroadcast(b => b.Subregion = value ?? String.Empty);
+	}
+
 	[Browsable(false)]
 	public ObservableCollection<SpawnEntry> Entries { get; set; } = new ObservableCollection<SpawnEntry>();
 

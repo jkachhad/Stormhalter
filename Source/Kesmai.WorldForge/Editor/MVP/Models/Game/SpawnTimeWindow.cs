@@ -234,11 +234,17 @@ public class SpawnTimeWindow
 	}
 
 	/// <summary>Writes the window into the script, replacing any earlier block and leaving the rest of the script as it was.</summary>
-	public void Apply(Script script)
+	public void Apply(Script script) => Compose(script, ToBlock(), SpawnBroadcast.Read(script).ToBlock());
+
+	/// <summary>
+	/// Writes the spawn time block, then the broadcast block, at the top of the script, above the script's own code.
+	/// With neither, the script goes back to just its own code.
+	/// </summary>
+	internal static void Compose(Script script, string timeBlock, string broadcastBlock)
 	{
 		var nl = Environment.NewLine;
-		var rest = Remove(script.Body).Trim('\r', '\n');
-		var block = ToBlock();
+		var rest = RemoveBlock(RemoveBlock(script.Body, Begin, End), SpawnBroadcast.Begin, SpawnBroadcast.End).Trim('\r', '\n');
+		var block = String.Join(nl + nl, new[] { timeBlock, broadcastBlock }.Where(b => b.Length > 0));
 
 		if (block.Length == 0)
 		{
@@ -266,21 +272,21 @@ public class SpawnTimeWindow
 		script.IsEnabled = true;
 	}
 
-	/// <summary>The script without its spawn time block.</summary>
-	private static string Remove(string body)
+	/// <summary>The script without one of the marked blocks.</summary>
+	private static string RemoveBlock(string body, string begin, string end)
 	{
 		var lines = body.Replace("\r\n", "\n").Split('\n').ToList();
-		var start = lines.FindIndex(l => l.Trim().StartsWith(Begin));
+		var start = lines.FindIndex(l => l.Trim().StartsWith(begin));
 
 		if (start < 0)
 			return body;
 
-		var end = lines.FindIndex(start, l => l.Trim() == End);
+		var last = lines.FindIndex(start, l => l.Trim() == end);
 
-		if (end < 0)
+		if (last < 0)
 			return body;
 
-		lines.RemoveRange(start, end - start + 1);
+		lines.RemoveRange(start, last - start + 1);
 
 		return String.Join(Environment.NewLine, lines);
 	}
