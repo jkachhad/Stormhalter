@@ -1,13 +1,17 @@
 using System;
 using System.Xml.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge.Scripting;
 
 /// <summary>
 /// Represents a script with distinct name, signature, header, body and footer sections.
 /// </summary>
-public class Script
+public class Script : ObservableObject
 {
+	private string _body = string.Empty;
+	private bool _isEnabled;
+
 	/// <summary>Gets or sets the script name.</summary>
 	public string Name { get; set; } = string.Empty;
 	
@@ -18,13 +22,13 @@ public class Script
 	public string Header { get; set; } = string.Empty;
 
 	/// <summary>Gets or sets the script body.</summary>
-	public string Body { get; set; } = string.Empty;
+	public string Body { get => _body; set => SetProperty(ref _body, value ?? string.Empty); }
 
 	/// <summary>Gets or sets the script footer.</summary>
 	public string Footer { get; set; } = string.Empty;
 	
 	/// <summary>Gets or sets a value indicating whether this script is enabled.</summary>
-	public bool IsEnabled { get; set; }
+	public bool IsEnabled { get => _isEnabled; set => SetProperty(ref _isEnabled, value); }
 	
 	public bool IsEmpty => String.IsNullOrWhiteSpace(Body);
 
