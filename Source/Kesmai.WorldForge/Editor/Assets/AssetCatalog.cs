@@ -61,6 +61,20 @@ public class AssetCatalog
 	public IReadOnlyList<BodyAsset> Bodies { get; private set; } = [];
 	public IReadOnlyList<SoundAsset> Sounds { get; private set; } = [];
 
+	/// <summary>Custom item art from Data\Items-External.xml, drawn the same way as bodies.</summary>
+	public IReadOnlyList<BodyAsset> ItemArt { get; private set; } = [];
+
+	/// <summary>WeaponFlags members for the Weapon Maker.</summary>
+	public IReadOnlyList<string> WeaponFlags { get; private set; } = [];
+
+	/// <summary>Weapon skills (the static Skill fields), such as Sword or Bow.</summary>
+	public IReadOnlyList<string> Skills { get; private set; } = [];
+
+	public IReadOnlyList<string> Professions { get; private set; } = ["Fighter", "Thief", "Wizard", "Thaumaturge", "MartialArtist", "Knight"];
+
+	/// <summary>The folder the body, sound and item lists were read from: the repository's Content folder when found.</summary>
+	public string ContentPath { get; private set; } = String.Empty;
+
 	/// <summary>Problems found while loading, shown to the user instead of failing silently.</summary>
 	public IReadOnlyList<string> Warnings { get; private set; } = [];
 
@@ -80,8 +94,10 @@ public class AssetCatalog
 
 		var contentPath = FindContentPath();
 
+		catalog.ContentPath = contentPath;
 		catalog.Bodies = LoadBodies(contentPath, warnings);
 		catalog.Sounds = LoadSounds(contentPath, warnings);
+		catalog.ItemArt = LoadItemArt(contentPath);
 		catalog.Warnings = warnings;
 
 		return catalog;
@@ -150,6 +166,19 @@ public class AssetCatalog
 		Immunities = EnumMembers("CreatureImmunity");
 		Weaknesses = EnumMembers("CreatureWeakness");
 		EntityStats = EnumMembers("EntityStat");
+		WeaponFlags = EnumMembers("WeaponFlags");
+
+		var professions = EnumMembers("Profession");
+
+		if (professions.Count > 0)
+			Professions = professions;
+
+		// Skill is a class whose static fields are the skills
+		Skills = types.FirstOrDefault(t => t.Name == "Skill" && t.TypeKind == TypeKind.Class)?
+			.GetMembers().OfType<IFieldSymbol>()
+			.Where(f => f.IsStatic && f.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public && f.Type.Name == "Skill")
+			.Select(f => f.Name)
+			.ToList() ?? [];
 
 		Statuses = types
 			.Where(t => !t.IsAbstract && !t.IsGenericType && t.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public)
@@ -216,6 +245,28 @@ public class AssetCatalog
 		catch (Exception e)
 		{
 			warnings.Add($"Body-External.xml could not be read: {e.Message}");
+			return [];
+		}
+	}
+
+	private static List<BodyAsset> LoadItemArt(string contentPath)
+	{
+		var path = Path.Combine(contentPath, "Data", "Items-External.xml");
+
+		try
+		{
+			return !File.Exists(path) ? [] : XDocument.Load(path).Root!
+				.Elements("item")
+				.Select(element => BodyAsset.FromElement(element, contentPath))
+				.Where(item => item != null)
+				.Select(item => item!)
+				.GroupBy(item => item.Id)
+				.Select(g => g.First())
+				.OrderBy(item => item.Id)
+				.ToList();
+		}
+		catch
+		{
 			return [];
 		}
 	}

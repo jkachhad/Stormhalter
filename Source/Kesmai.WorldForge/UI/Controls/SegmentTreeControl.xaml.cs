@@ -99,6 +99,8 @@ public partial class SegmentTreeControl : UserControl
     private SpawnsTreeViewItem _spawnersNode;
     private TreasuresTreeViewItem _treasureNode;
     private TreeViewItem _questsNode;
+    private TreeViewItem _itemsNode;
+    private TreeViewItem _weaponsNode;
 
     private void EnsureSegmentNode()
     {
@@ -133,6 +135,8 @@ public partial class SegmentTreeControl : UserControl
         _templatesNode?.Dispose();
         _templatesNode = null;
         _questsNode = null;
+        _itemsNode = null;
+        _weaponsNode = null;
     }
 
     private void EnsureQuestsNode()
@@ -147,6 +151,21 @@ public partial class SegmentTreeControl : UserControl
         };
     }
     
+    private void EnsureMakerNodes()
+    {
+        _itemsNode ??= new TreeViewItem
+        {
+            Tag = new Kesmai.WorldForge.Editor.Items.SegmentItems(Segment, Kesmai.WorldForge.Editor.Items.ItemKind.Item),
+            Header = CreateHeader("Items", "Treasures.png"),
+        };
+
+        _weaponsNode ??= new TreeViewItem
+        {
+            Tag = new Kesmai.WorldForge.Editor.Items.SegmentItems(Segment, Kesmai.WorldForge.Editor.Items.ItemKind.Weapon),
+            Header = CreateHeader("Weapons", "Gear.png"),
+        };
+    }
+
     private void EnsureLocationsNode()
     {
         if (_locationsNode is not null || Segment is null)
@@ -228,6 +247,7 @@ public partial class SegmentTreeControl : UserControl
         EnsureBrushesNode();
         EnsureTemplatesNode();
         EnsureQuestsNode();
+        EnsureMakerNodes();
 
         _tree.Items.Add(_segmentNode);
 
@@ -236,6 +256,8 @@ public partial class SegmentTreeControl : UserControl
         _tree.Items.Add(_entitiesNode);
         _tree.Items.Add(_treasureNode);
         _tree.Items.Add(_questsNode);
+        _tree.Items.Add(_itemsNode);
+        _tree.Items.Add(_weaponsNode);
         _tree.Items.Add(_spawnersNode);
         _tree.Items.Add(_componentsNode);
         _tree.Items.Add(_brushesNode);
