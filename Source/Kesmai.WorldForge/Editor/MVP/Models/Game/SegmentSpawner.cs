@@ -10,6 +10,7 @@ using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Kesmai.WorldForge.UI.Documents;
@@ -104,7 +105,8 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 	[Category("Spawn time")]
 	[DisplayName("Spawn")]
-	[Description("Always; only in the ticked in-game light phases; or only between From and Until on the server's clock. Outside that, what it spawns is removed and it tries again after its delay.")]
+	[PropertyOrder(0)]
+	[Description("Always; only in the ticked in-game light phases; only between From and Until on the server's clock; or once at each of the listed server times. Outside that, what it spawns is removed and it tries again after its delay.")]
 	public SpawnTimeMode SpawnTime
 	{
 		get => CurrentSpawnTime.Mode;
@@ -113,54 +115,106 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Dawn")]
-	[Description("With In-game phases: may spawn at dawn.")]
+	[PropertyOrder(1)]
+	[Description("With InGamePhases: may spawn at dawn.")]
 	public bool SpawnAtDawn { get => PhaseAllowed("Dawn"); set => SetPhase("Dawn", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Sunrise")]
-	[Description("With In-game phases: may spawn at sunrise.")]
+	[PropertyOrder(2)]
+	[Description("With InGamePhases: may spawn at sunrise.")]
 	public bool SpawnAtSunrise { get => PhaseAllowed("Sunrise"); set => SetPhase("Sunrise", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Daytime")]
-	[Description("With In-game phases: may spawn in daytime.")]
+	[PropertyOrder(3)]
+	[Description("With InGamePhases: may spawn in daytime.")]
 	public bool SpawnAtDaytime { get => PhaseAllowed("Daytime"); set => SetPhase("Daytime", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Sunset")]
-	[Description("With In-game phases: may spawn at sunset.")]
+	[PropertyOrder(4)]
+	[Description("With InGamePhases: may spawn at sunset.")]
 	public bool SpawnAtSunset { get => PhaseAllowed("Sunset"); set => SetPhase("Sunset", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Midnight")]
-	[Description("With In-game phases: may spawn at midnight.")]
+	[PropertyOrder(5)]
+	[Description("With InGamePhases: may spawn at midnight.")]
 	public bool SpawnAtMidnight { get => PhaseAllowed("Midnight"); set => SetPhase("Midnight", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Nighttime")]
-	[Description("With In-game phases: may spawn at night.")]
+	[PropertyOrder(6)]
+	[Description("With InGamePhases: may spawn at night.")]
 	public bool SpawnAtNighttime { get => PhaseAllowed("Nighttime"); set => SetPhase("Nighttime", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Server clock: From")]
-	[Description("With Server clock: the time of day (24-hour, the server's time zone) the window opens, e.g. 20:00:00.")]
-	public TimeSpan SpawnFrom
+	[PropertyOrder(7)]
+	[Description("With ServerClock: the time of day (24-hour, the server's time zone) the window opens, e.g. 20:00.")]
+	public string SpawnFrom
 	{
-		get => CurrentSpawnTime.From;
-		set => ChangeSpawnTime(w => w.From = new TimeSpan(value.Hours, value.Minutes, 0));
+		get => CurrentSpawnTime.From.ToString(@"hh\:mm");
+		set
+		{
+			if (SpawnTimeWindow.ParseTime(value) is TimeSpan time)
+				ChangeSpawnTime(w => w.From = time);
+		}
 	}
 
 	[Category("Spawn time")]
 	[DisplayName("Server clock: Until")]
-	[Description("With Server clock: the time of day the window closes, e.g. 02:00:00. Earlier than From means it runs past midnight; the same as From means all day.")]
-	public TimeSpan SpawnUntil
+	[PropertyOrder(8)]
+	[Description("With ServerClock: the time of day the window closes, e.g. 02:00. Earlier than From means it runs past midnight; the same as From means all day.")]
+	public string SpawnUntil
 	{
-		get => CurrentSpawnTime.Until;
-		set => ChangeSpawnTime(w => w.Until = new TimeSpan(value.Hours, value.Minutes, 0));
+		get => CurrentSpawnTime.Until.ToString(@"hh\:mm");
+		set
+		{
+			if (SpawnTimeWindow.ParseTime(value) is TimeSpan time)
+				ChangeSpawnTime(w => w.Until = time);
+		}
+	}
+
+	[Category("Spawn time")]
+	[DisplayName("Server times")]
+	[PropertyOrder(9)]
+	[System.ComponentModel.Editor(typeof(Kesmai.WorldForge.UI.TimeListEditor), typeof(Kesmai.WorldForge.UI.TimeListEditor))]
+	[Description("With ServerTimes: the times of day (24-hour, server time) it spawns at, once each per day. + adds a time, − removes one.")]
+	public string SpawnTimes
+	{
+		get => SpawnTimeWindow.FormatTimes(CurrentSpawnTime.Times);
+		set => ChangeSpawnTime(w =>
+		{
+			w.Times.Clear();
+			w.Times.AddRange(SpawnTimeWindow.ParseTimes(value));
+		});
+	}
+
+	[Category("Spawn time")]
+	[DisplayName("Server times: per time")]
+	[PropertyOrder(10)]
+	[Description("With ServerTimes: how many creatures it may spawn for each listed time.")]
+	public int SpawnsPerTime
+	{
+		get => CurrentSpawnTime.PerTime;
+		set => ChangeSpawnTime(w => w.PerTime = Math.Max(1, value));
+	}
+
+	[Category("Spawn time")]
+	[DisplayName("Server times: catch window (min)")]
+	[PropertyOrder(11)]
+	[Description("With ServerTimes: how many minutes after each time it may still spawn. Make it longer than the spawner's maximum delay so it gets a chance to try; it also covers a server restart.")]
+	public int SpawnWindowMinutes
+	{
+		get => CurrentSpawnTime.WindowMinutes;
+		set => ChangeSpawnTime(w => w.WindowMinutes = Math.Max(1, value));
 	}
 
 	[Category("Spawn time")]
 	[DisplayName("Remove all outside the window")]
+	[PropertyOrder(12)]
 	[Description("Ticked: outside the window, everything this spawner made is removed when it next tries to spawn. Unticked: only the new spawn is removed, and creatures already out stay.")]
 	public bool RemoveAllOutsideWindow
 	{
