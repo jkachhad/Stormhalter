@@ -36,6 +36,7 @@ public class AssetCatalog
 	public IReadOnlyList<string> Jewelry { get; private set; } = [];
 	public IReadOnlyList<string> Spells { get; private set; } = [];
 	public IReadOnlyList<string> SearchStrategies { get; private set; } = [];
+	public IReadOnlyList<string> AttackComponents { get; private set; } = [];
 	public IReadOnlyList<string> ShieldPenetration { get; private set; } = [];
 	public IReadOnlyList<string> Immunities { get; private set; } = [];
 	public IReadOnlyList<string> Weaknesses { get; private set; } = [];
@@ -128,6 +129,7 @@ public class AssetCatalog
 		Jewelry = Concrete("Ring", "Amulet", "Bracelet");
 		Spells = Concrete("Spell");
 		SearchStrategies = Concrete("CombatantSearchStrategy");
+		AttackComponents = Concrete("CreatureAttackComponent");
 
 		var penetration = EnumMembers("ShieldPenetration");
 		penetration.Insert(0, "None");

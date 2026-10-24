@@ -12,15 +12,21 @@ using Kesmai.WorldForge.Editor.Assets;
 namespace Kesmai.WorldForge.UI;
 
 /// <summary>
-/// Side panel for the OnSpawn script: dropdowns of server types, a body gallery, a hue picker with a tinted
-/// preview, and the custom sound library. Each choice is applied to the script through <see cref="EditRequested"/>.
+/// Side panel for the OnSpawn script: a builder form for the whole script, dropdowns of server types, a body
+/// gallery, a hue picker with a tinted preview, and the custom sound library. Each choice is applied to the script
+/// through <see cref="EditRequested"/>.
 /// </summary>
 public partial class OnSpawnAssetPanel : UserControl
 {
 	/// <summary>Raised with an edit to apply to the current script body.</summary>
 	public event Action<Func<string, string>>? EditRequested;
 
+	/// <summary>Returns the current OnSpawn body, or null when no creature is selected.</summary>
+	public Func<string?>? ReadScript { get; set; }
+
 	private AssetCatalog? _catalog;
+	private OnSpawnBuilder _builder = new();
+	private string? _pendingScript;
 	private readonly MediaPlayer _player = new();
 	private int _optionRow;
 
@@ -28,7 +34,101 @@ public partial class OnSpawnAssetPanel : UserControl
 	{
 		InitializeComponent();
 
+		SetBuilder(new OnSpawnBuilder());
+
 		Loaded += OnLoaded;
+	}
+
+	/// <summary>Fills the builder from a script, for example when another creature is selected.</summary>
+	public void ShowScript(string? script)
+	{
+		if (_catalog is null)
+		{
+			_pendingScript = script;
+			return;
+		}
+
+		var builder = new OnSpawnBuilder();
+
+		builder.SetEnumChoices(_catalog.Immunities, _catalog.Weaknesses);
+
+		if (!String.IsNullOrWhiteSpace(script))
+			builder.Parse(script, _catalog.Shields, _catalog.Armor, _catalog.Helmets, _catalog.Gauntlets, _catalog.Boots);
+
+		SetBuilder(builder);
+	}
+
+	private void SetBuilder(OnSpawnBuilder builder)
+	{
+		_builder.Changed -= OnBuilderChanged;
+		_builder = builder;
+		_builder.Changed += OnBuilderChanged;
+
+		_builderRoot.DataContext = _builder;
+		_builderPreview.Text = _builder.Generate();
+	}
+
+	private void OnBuilderChanged(object? sender, EventArgs e) => _builderPreview.Text = _builder.Generate();
+
+	private void OnBuilderRead(object sender, RoutedEventArgs e)
+	{
+		var script = ReadScript?.Invoke();
+
+		if (script is null)
+		{
+			_status.Text = "Select a creature with an OnSpawn script first.";
+			return;
+		}
+
+		ShowScript(script);
+		_status.Text = "Filled the builder from OnSpawn.";
+	}
+
+	private void OnBuilderWrite(object sender, RoutedEventArgs e)
+	{
+		var body = _builder.Generate();
+
+		EditRequested?.Invoke(_ => body);
+		_status.Text = "Wrote the builder to OnSpawn.";
+	}
+
+	private void OnBuilderUseBody(object sender, RoutedEventArgs e)
+	{
+		if (_bodies.SelectedItem is BodyAsset body)
+			_builder.Body = body.Id.ToString();
+		else
+			_status.Text = "Pick a body on the Body tab first.";
+	}
+
+	private void OnBuilderUsePickerHue(object sender, RoutedEventArgs e)
+	{
+		var color = _huePicker.SelectedColor ?? Colors.White;
+
+		_builder.HueMode = "Custom";
+		_builder.HueA = color.A;
+		_builder.HueR = color.R;
+		_builder.HueG = color.G;
+		_builder.HueB = color.B;
+	}
+
+	private void FillBuilderChoices(AssetCatalog catalog)
+	{
+		_bCreature.ItemsSource = catalog.Creatures;
+		_bAlignment.ItemsSource = catalog.Alignments;
+		_bHueMode.ItemsSource = OnSpawnBuilder.HueModes;
+		_bHueName.ItemsSource = catalog.NamedColors;
+		_bPenetration.ItemsSource = catalog.ShieldPenetration;
+		_bSearch.ItemsSource = catalog.SearchStrategies;
+		_bWeapon.ItemsSource = catalog.Weapons;
+		_bShield.ItemsSource = catalog.Shields;
+		_bArmor.ItemsSource = catalog.Armor;
+		_bHelmet.ItemsSource = catalog.Helmets;
+		_bGauntlets.ItemsSource = catalog.Gauntlets;
+		_bBoots.ItemsSource = catalog.Boots;
+		_bBrain.ItemsSource = catalog.Brains;
+		_bAttackType.ItemsSource = OnSpawnBuilder.AttackTypes;
+		_bAttackEffect.ItemsSource = new[] { String.Empty }.Concat(catalog.AttackComponents).ToList();
+		_bSpell.ItemsSource = catalog.Spells;
 	}
 
 	private async void OnLoaded(object sender, RoutedEventArgs e)
@@ -40,6 +140,8 @@ public partial class OnSpawnAssetPanel : UserControl
 		_catalog = await AssetCatalog.LoadAsync();
 
 		BuildOptions(_catalog);
+		FillBuilderChoices(_catalog);
+		ShowScript(_pendingScript ?? ReadScript?.Invoke());
 
 		_bodies.ItemsSource = _catalog.Bodies;
 		_sounds.ItemsSource = _catalog.Sounds;
