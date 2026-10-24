@@ -220,6 +220,13 @@
                                         </DataTemplate></ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                     <TextBlock Text="Weakness" FontWeight="Bold" Margin="0,6,0,0" />
+                                    <DockPanel Margin="0,2,0,0">
+                                        <TextBlock Text="Weakness damage %" Style="{StaticResource FieldLabel}" />
+                                        <TextBox Width="70" HorizontalAlignment="Left" Margin="0,3" Text="{Binding WeaknessDamage, UpdateSourceTrigger=PropertyChanged}"
+                                                 ToolTip="Writes Stats[EntityStat.MagicDamageTakenIncrease].Add(value, ModifierType.Constant). Empty writes nothing." />
+                                    </DockPanel>
+                                    <TextBlock Text="This raises all magic damage the creature takes, not only damage from its weaknesses."
+                                               Foreground="DimGray" FontSize="11" TextWrapping="Wrap" />
                                     <ItemsControl ItemsSource="{Binding Weaknesses}">
                                         <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate><DataTemplate>
