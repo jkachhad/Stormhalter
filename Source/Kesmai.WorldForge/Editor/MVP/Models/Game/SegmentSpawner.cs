@@ -80,7 +80,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		get
 		{
 			var written = SpawnTimeWindow.Read(AfterSpawnScript);
-			return written.Mode == SpawnTimeMode.Always ? _unsavedSpawnTime : written;
+			return written.IsAlways ? _unsavedSpawnTime : written;
 		}
 	}
 
@@ -91,7 +91,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		change(window);
 		window.Apply(AfterSpawnScript);
 
-		if (window.Mode == SpawnTimeMode.Always)
+		if (window.IsAlways)
 			_unsavedSpawnTime = window;
 
 		OnPropertyChanged(propertyName);
@@ -103,56 +103,68 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	private void SetPhase(string phase, bool allowed, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
 		=> ChangeSpawnTime(w => { if (allowed) w.AllowedPhases.Add(phase); else w.AllowedPhases.Remove(phase); }, propertyName);
 
+	// Each "Use" toggle is optional. With none on the spawner works as normal; with several on, a spawn needs all of them.
+
 	[Category("Spawn time")]
-	[DisplayName("Spawn")]
+	[DisplayName("Use light phases")]
 	[PropertyOrder(0)]
-	[Description("Always; only in the ticked in-game light phases; only between From and Until on the server's clock; or once at each of the listed server times. Outside that, what it spawns is removed and it tries again after its delay.")]
-	public SpawnTimeMode SpawnTime
+	[Description("Optional. On: the spawner only spawns during the in-game light phases ticked below. Off: the time of day in the game doesn't matter. Can be combined with the other Use options; then every one that is on must allow the spawn.")]
+	public bool UseLightPhases
 	{
-		get => CurrentSpawnTime.Mode;
-		set => ChangeSpawnTime(w => w.Mode = value);
+		get => CurrentSpawnTime.UsePhases;
+		set => ChangeSpawnTime(w => w.UsePhases = value);
 	}
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Dawn")]
 	[PropertyOrder(1)]
-	[Description("With InGamePhases: may spawn at dawn.")]
+	[Description("With Use light phases on: may spawn at dawn, the first light of the in-game day.")]
 	public bool SpawnAtDawn { get => PhaseAllowed("Dawn"); set => SetPhase("Dawn", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Sunrise")]
 	[PropertyOrder(2)]
-	[Description("With InGamePhases: may spawn at sunrise.")]
+	[Description("With Use light phases on: may spawn at sunrise, between dawn and daytime.")]
 	public bool SpawnAtSunrise { get => PhaseAllowed("Sunrise"); set => SetPhase("Sunrise", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Daytime")]
 	[PropertyOrder(3)]
-	[Description("With InGamePhases: may spawn in daytime.")]
+	[Description("With Use light phases on: may spawn in full daytime.")]
 	public bool SpawnAtDaytime { get => PhaseAllowed("Daytime"); set => SetPhase("Daytime", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Sunset")]
 	[PropertyOrder(4)]
-	[Description("With InGamePhases: may spawn at sunset.")]
+	[Description("With Use light phases on: may spawn at sunset, as daytime ends.")]
 	public bool SpawnAtSunset { get => PhaseAllowed("Sunset"); set => SetPhase("Sunset", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Midnight")]
 	[PropertyOrder(5)]
-	[Description("With InGamePhases: may spawn at midnight.")]
+	[Description("With Use light phases on: may spawn at midnight, the darkest part of the in-game night.")]
 	public bool SpawnAtMidnight { get => PhaseAllowed("Midnight"); set => SetPhase("Midnight", value); }
 
 	[Category("Spawn time")]
 	[DisplayName("Phase: Nighttime")]
 	[PropertyOrder(6)]
-	[Description("With InGamePhases: may spawn at night.")]
+	[Description("With Use light phases on: may spawn at night. Tick Midnight as well for the whole night.")]
 	public bool SpawnAtNighttime { get => PhaseAllowed("Nighttime"); set => SetPhase("Nighttime", value); }
 
 	[Category("Spawn time")]
-	[DisplayName("Server clock: From")]
+	[DisplayName("Use server clock window")]
 	[PropertyOrder(7)]
-	[Description("With ServerClock: the time of day (24-hour, the server's time zone) the window opens, e.g. 20:00.")]
+	[Description("Optional. On: the spawner only spawns between From and Until on the server's real clock (24-hour, the server's time zone). Off: the real time doesn't matter.")]
+	public bool UseServerClockWindow
+	{
+		get => CurrentSpawnTime.UseClock;
+		set => ChangeSpawnTime(w => w.UseClock = value);
+	}
+
+	[Category("Spawn time")]
+	[DisplayName("Server clock: From")]
+	[PropertyOrder(8)]
+	[Description("With Use server clock window on: the time the window opens, typed as 20:00. Spawns from this time on.")]
 	public string SpawnFrom
 	{
 		get => CurrentSpawnTime.From.ToString(@"hh\:mm");
@@ -165,8 +177,8 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 	[Category("Spawn time")]
 	[DisplayName("Server clock: Until")]
-	[PropertyOrder(8)]
-	[Description("With ServerClock: the time of day the window closes, e.g. 02:00. Earlier than From means it runs past midnight; the same as From means all day.")]
+	[PropertyOrder(9)]
+	[Description("With Use server clock window on: the time the window closes, typed as 02:00. Earlier than From means the window runs past midnight (20:00 to 02:00); the same as From means all day.")]
 	public string SpawnUntil
 	{
 		get => CurrentSpawnTime.Until.ToString(@"hh\:mm");
@@ -178,10 +190,20 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	}
 
 	[Category("Spawn time")]
+	[DisplayName("Use server times")]
+	[PropertyOrder(10)]
+	[Description("Optional. On: the spawner spawns only just after each of the listed server times, once a day per time. Off: it isn't tied to set times.")]
+	public bool UseServerTimes
+	{
+		get => CurrentSpawnTime.UseTimes;
+		set => ChangeSpawnTime(w => w.UseTimes = value);
+	}
+
+	[Category("Spawn time")]
 	[DisplayName("Server times")]
-	[PropertyOrder(9)]
+	[PropertyOrder(11)]
 	[System.ComponentModel.Editor(typeof(Kesmai.WorldForge.UI.TimeListEditor), typeof(Kesmai.WorldForge.UI.TimeListEditor))]
-	[Description("With ServerTimes: the times of day (24-hour, server time) it spawns at, once each per day. + adds a time, − removes one.")]
+	[Description("With Use server times on: the times of day it spawns at (24-hour, server time). + adds a time, − removes one; click a time to type a new one, e.g. 20:00.")]
 	public string SpawnTimes
 	{
 		get => SpawnTimeWindow.FormatTimes(CurrentSpawnTime.Times);
@@ -194,8 +216,8 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 	[Category("Spawn time")]
 	[DisplayName("Server times: per time")]
-	[PropertyOrder(10)]
-	[Description("With ServerTimes: how many creatures it may spawn for each listed time.")]
+	[PropertyOrder(12)]
+	[Description("With Use server times on: how many creatures it may spawn for each listed time, e.g. 3 for a pack of three at 20:00.")]
 	public int SpawnsPerTime
 	{
 		get => CurrentSpawnTime.PerTime;
@@ -204,8 +226,8 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 	[Category("Spawn time")]
 	[DisplayName("Server times: catch window (min)")]
-	[PropertyOrder(11)]
-	[Description("With ServerTimes: how many minutes after each time it may still spawn. Make it longer than the spawner's maximum delay so it gets a chance to try; it also covers a server restart.")]
+	[PropertyOrder(13)]
+	[Description("With Use server times on: how many minutes after each time it may still spawn. The spawner only tries every MinimumDelay to MaximumDelay, so make this longer than MaximumDelay; it also covers a server restart.")]
 	public int SpawnWindowMinutes
 	{
 		get => CurrentSpawnTime.WindowMinutes;
@@ -214,8 +236,8 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 	[Category("Spawn time")]
 	[DisplayName("Remove all outside the window")]
-	[PropertyOrder(12)]
-	[Description("Ticked: outside the window, everything this spawner made is removed when it next tries to spawn. Unticked: only the new spawn is removed, and creatures already out stay.")]
+	[PropertyOrder(14)]
+	[Description("Optional, with any Use option on. Ticked: when a spawn isn't allowed, everything this spawner made is removed. Unticked: only the new spawn is removed, and creatures already out stay until killed.")]
 	public bool RemoveAllOutsideWindow
 	{
 		get => CurrentSpawnTime.RemoveAll;

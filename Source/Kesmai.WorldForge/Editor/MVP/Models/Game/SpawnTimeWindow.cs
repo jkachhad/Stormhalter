@@ -9,17 +9,6 @@ using Kesmai.WorldForge.Scripting;
 
 namespace Kesmai.WorldForge;
 
-public enum SpawnTimeMode
-{
-	/// <summary>The spawner works at any time.</summary>
-	Always,
-	/// <summary>Only during the ticked in-game light phases.</summary>
-	InGamePhases,
-	/// <summary>Only between two times on the server's clock.</summary>
-	ServerClock,
-	/// <summary>Once at each listed time on the server's clock.</summary>
-	ServerTimes,
-}
 
 /// <summary>
 /// When a spawner may spawn. The server's spawners have no setting for this, so it is written as a marked block at
@@ -35,7 +24,17 @@ public class SpawnTimeWindow
 	private const string KeptOpen = "#if false // WorldForge: this code was in a disabled script; Spawn time enabled the script";
 	private const string KeptClose = "#endif // WorldForge";
 
-	public SpawnTimeMode Mode { get; set; }
+	/// <summary>Only during the ticked in-game light phases.</summary>
+	public bool UsePhases { get; set; }
+
+	/// <summary>Only between From and Until on the server's clock.</summary>
+	public bool UseClock { get; set; }
+
+	/// <summary>Only at the listed times on the server's clock, once each a day.</summary>
+	public bool UseTimes { get; set; }
+
+	/// <summary>No condition is on, so the spawner works as normal and nothing is written.</summary>
+	public bool IsAlways => !UsePhases && !UseClock && !UseTimes;
 	public HashSet<string> AllowedPhases { get; } = new(StringComparer.OrdinalIgnoreCase);
 	public TimeSpan From { get; set; } = new(20, 0, 0);
 	public TimeSpan Until { get; set; } = new(2, 0, 0);
@@ -54,7 +53,7 @@ public class SpawnTimeWindow
 
 	public SpawnTimeWindow Clone()
 	{
-		var copy = new SpawnTimeWindow { Mode = Mode, From = From, Until = Until, RemoveAll = RemoveAll, WindowMinutes = WindowMinutes, PerTime = PerTime };
+		var copy = new SpawnTimeWindow { UsePhases = UsePhases, UseClock = UseClock, UseTimes = UseTimes, From = From, Until = Until, RemoveAll = RemoveAll, WindowMinutes = WindowMinutes, PerTime = PerTime };
 		copy.AllowedPhases.UnionWith(AllowedPhases);
 		copy.Times.AddRange(Times);
 		return copy;
@@ -77,8 +76,17 @@ public class SpawnTimeWindow
 
 			switch (setting.Groups["key"].Value)
 			{
-				case "mode" when Enum.TryParse<SpawnTimeMode>(value, out var mode):
-					window.Mode = mode;
+				// blocks written before the toggles held one mode
+				case "mode":
+					window.UsePhases = value == "InGamePhases";
+					window.UseClock = value == "ServerClock";
+					window.UseTimes = value == "ServerTimes";
+					break;
+				case "use":
+					var used = value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+					window.UsePhases = used.Contains("phases");
+					window.UseClock = used.Contains("clock");
+					window.UseTimes = used.Contains("times");
 					break;
 				case "phases":
 					window.AllowedPhases.UnionWith(value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Where(p => Phases.Contains(p)));
@@ -125,15 +133,19 @@ public class SpawnTimeWindow
 
 	public static string FormatTimes(IEnumerable<TimeSpan> times) => String.Join(", ", times.Select(t => t.ToString(@"hh\:mm")));
 
-	/// <summary>The marked block, or an empty string when the window is always open.</summary>
+	/// <summary>
+	/// The marked block, or an empty string when no condition is on. Each condition that is on must allow the spawn;
+	/// the server times are checked last, so a time is only used up by a spawn the other conditions let through.
+	/// </summary>
 	public string ToBlock()
 	{
-		if (Mode == SpawnTimeMode.Always)
+		if (IsAlways)
 			return String.Empty;
 
 		var nl = Environment.NewLine;
 		var phases = Phases.Where(AllowedPhases.Contains).ToList();
-		var settings = $"mode={Mode}; phases={String.Join(",", phases)}; from={From:hh\\:mm}; until={Until:hh\\:mm}; removeAll={(RemoveAll ? "true" : "false")}"
+		var used = new[] { UsePhases ? "phases" : null, UseClock ? "clock" : null, UseTimes ? "times" : null }.Where(u => u != null);
+		var settings = $"use={String.Join(",", used)}; phases={String.Join(",", phases)}; from={From:hh\\:mm}; until={Until:hh\\:mm}; removeAll={(RemoveAll ? "true" : "false")}"
 		               + $"; times={FormatTimes(Times).Replace(" ", String.Empty)}; window={WindowMinutes}; perTime={PerTime}";
 		var remove = RemoveAll ? "spawner.Despawn(); /* remove everything this spawner made */" : "spawn.Delete(); /* remove the new spawn */";
 
@@ -142,13 +154,46 @@ public class SpawnTimeWindow
 			$"{Begin} {settings}",
 			"// Written by the Spawn time settings in Properties; change it there.",
 			"{",
+			"\tvar allowed = true;",
 		};
 
-		if (Mode == SpawnTimeMode.ServerTimes)
+		if (UsePhases)
+		{
+			var test = phases.Count == 0 ? "false" : String.Join(" || ", phases.Select(p => $"phase == Lightphase.{p}"));
+
+			lines.Add(String.Empty);
+			lines.Add("\t// in-game light phases");
+			lines.Add("\tvar phase = spawn.Facet.Lightphase;");
+			lines.Add(String.Empty);
+			lines.Add($"\tif (!({test}))");
+			lines.Add("\t\tallowed = false;");
+		}
+
+		if (UseClock)
+		{
+			var from = $"new TimeSpan({From.Hours}, {From.Minutes}, 0)";
+			var until = $"new TimeSpan({Until.Hours}, {Until.Minutes}, 0)";
+
+			// a window like 20:00 to 02:00 runs past midnight; the same time twice means all day
+			var test = From == Until ? "true"
+				: From < Until ? $"timeOfDay >= {from} && timeOfDay < {until}"
+				: $"timeOfDay >= {from} || timeOfDay < {until}";
+
+			lines.Add(String.Empty);
+			lines.Add("\t// server clock window");
+			lines.Add("\tvar timeOfDay = DateTime.Now.TimeOfDay;");
+			lines.Add(String.Empty);
+			lines.Add($"\tif (!({test}))");
+			lines.Add("\t\tallowed = false;");
+		}
+
+		if (UseTimes)
 		{
 			// the latest listed time it is still within the window of; each time spawns PerTime creatures once a day
-			var times = Times.Count == 0 ? "" : String.Join(", ", Times.Select(t => $"new TimeSpan({t.Hours}, {t.Minutes}, 0)"));
+			var times = String.Join(", ", Times.Select(t => $"new TimeSpan({t.Hours}, {t.Minutes}, 0)"));
 
+			lines.Add(String.Empty);
+			lines.Add("\t// server times");
 			lines.Add("\tvar now = DateTime.Now;");
 			lines.Add("\tvar slot = (DateTime?)null;");
 			lines.Add(String.Empty);
@@ -168,42 +213,16 @@ public class SpawnTimeWindow
 			lines.Add("\tvar spawned = record.Get<string>(\"Slot\", \"\") == key ? record.Get<int>(\"Count\", 0) : 0;");
 			lines.Add(String.Empty);
 			lines.Add($"\tif (slot == null || spawned >= {Math.Max(1, PerTime)})");
+			lines.Add("\t\tallowed = false;");
+			lines.Add("\telse if (allowed)");
 			lines.Add("\t{");
-			lines.Add($"\t\t{remove}");
-			lines.Add("\t\treturn;");
+			lines.Add("\t\trecord.Set<string>(\"Slot\", key);");
+			lines.Add("\t\trecord.Set<int>(\"Count\", spawned + 1);");
 			lines.Add("\t}");
-			lines.Add(String.Empty);
-			lines.Add("\trecord.Set<string>(\"Slot\", key);");
-			lines.Add("\trecord.Set<int>(\"Count\", spawned + 1);");
-			lines.Add("}");
-			lines.Add(End);
-
-			return String.Join(nl, lines);
 		}
 
-		if (Mode == SpawnTimeMode.InGamePhases)
-		{
-			var test = phases.Count == 0 ? "false" : String.Join(" || ", phases.Select(p => $"phase == Lightphase.{p}"));
-
-			lines.Add("\tvar phase = spawn.Facet.Lightphase;");
-			lines.Add(String.Empty);
-			lines.Add($"\tif (!({test}))");
-		}
-		else
-		{
-			var from = $"new TimeSpan({From.Hours}, {From.Minutes}, 0)";
-			var until = $"new TimeSpan({Until.Hours}, {Until.Minutes}, 0)";
-
-			// a window like 20:00 to 02:00 runs past midnight; the same time twice means all day
-			var test = From == Until ? "true"
-				: From < Until ? $"now >= {from} && now < {until}"
-				: $"now >= {from} || now < {until}";
-
-			lines.Add("\tvar now = DateTime.Now.TimeOfDay;");
-			lines.Add(String.Empty);
-			lines.Add($"\tif (!({test}))");
-		}
-
+		lines.Add(String.Empty);
+		lines.Add("\tif (!allowed)");
 		lines.Add("\t{");
 		lines.Add($"\t\t{remove}");
 		lines.Add("\t\treturn;");
