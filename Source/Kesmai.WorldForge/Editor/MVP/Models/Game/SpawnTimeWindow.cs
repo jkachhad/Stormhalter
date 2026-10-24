@@ -17,6 +17,8 @@ public enum SpawnTimeMode
 	InGamePhases,
 	/// <summary>Only between two times on the server's clock.</summary>
 	ServerClock,
+	/// <summary>Once at each listed time on the server's clock.</summary>
+	ServerTimes,
 }
 
 /// <summary>
@@ -41,10 +43,20 @@ public class SpawnTimeWindow
 	/// <summary>Outside the window, remove everything the spawner made rather than only the new spawn.</summary>
 	public bool RemoveAll { get; set; }
 
+	/// <summary>With ServerTimes: the times of day it spawns at.</summary>
+	public List<TimeSpan> Times { get; } = new();
+
+	/// <summary>With ServerTimes: how long after each time it may still spawn, for a late spawn attempt or a restart.</summary>
+	public int WindowMinutes { get; set; } = 30;
+
+	/// <summary>With ServerTimes: how many creatures it may spawn for each time.</summary>
+	public int PerTime { get; set; } = 1;
+
 	public SpawnTimeWindow Clone()
 	{
-		var copy = new SpawnTimeWindow { Mode = Mode, From = From, Until = Until, RemoveAll = RemoveAll };
+		var copy = new SpawnTimeWindow { Mode = Mode, From = From, Until = Until, RemoveAll = RemoveAll, WindowMinutes = WindowMinutes, PerTime = PerTime };
 		copy.AllowedPhases.UnionWith(AllowedPhases);
+		copy.Times.AddRange(Times);
 		return copy;
 	}
 
@@ -80,11 +92,38 @@ public class SpawnTimeWindow
 				case "removeAll":
 					window.RemoveAll = value == "true";
 					break;
+				case "times":
+					window.Times.AddRange(ParseTimes(value));
+					break;
+				case "window" when Int32.TryParse(value, out var minutes):
+					window.WindowMinutes = minutes;
+					break;
+				case "perTime" when Int32.TryParse(value, out var count):
+					window.PerTime = count;
+					break;
 			}
 		}
 
 		return window;
 	}
+
+	/// <summary>A time typed as 20:00, 8:05, 2000 or 20; null when it isn't one.</summary>
+	public static TimeSpan? ParseTime(string? text)
+	{
+		var value = (text ?? String.Empty).Trim();
+
+		if (TimeSpan.TryParseExact(value, [@"h\:mm", @"hh\:mm", @"hhmm", @"hmm"], CultureInfo.InvariantCulture, out var time) && time < TimeSpan.FromDays(1))
+			return time;
+
+		return Int32.TryParse(value, out var hours) && hours is >= 0 and < 24 ? TimeSpan.FromHours(hours) : null;
+	}
+
+	/// <summary>Times written as "08:00, 20:30", in order and without repeats.</summary>
+	public static List<TimeSpan> ParseTimes(string? text)
+		=> (text ?? String.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+			.Select(ParseTime).Where(t => t != null).Select(t => t!.Value).Distinct().OrderBy(t => t).ToList();
+
+	public static string FormatTimes(IEnumerable<TimeSpan> times) => String.Join(", ", times.Select(t => t.ToString(@"hh\:mm")));
 
 	/// <summary>The marked block, or an empty string when the window is always open.</summary>
 	public string ToBlock()
@@ -94,7 +133,8 @@ public class SpawnTimeWindow
 
 		var nl = Environment.NewLine;
 		var phases = Phases.Where(AllowedPhases.Contains).ToList();
-		var settings = $"mode={Mode}; phases={String.Join(",", phases)}; from={From:hh\\:mm}; until={Until:hh\\:mm}; removeAll={(RemoveAll ? "true" : "false")}";
+		var settings = $"mode={Mode}; phases={String.Join(",", phases)}; from={From:hh\\:mm}; until={Until:hh\\:mm}; removeAll={(RemoveAll ? "true" : "false")}"
+		               + $"; times={FormatTimes(Times).Replace(" ", String.Empty)}; window={WindowMinutes}; perTime={PerTime}";
 		var remove = RemoveAll ? "spawner.Despawn(); /* remove everything this spawner made */" : "spawn.Delete(); /* remove the new spawn */";
 
 		var lines = new List<string>
@@ -103,6 +143,43 @@ public class SpawnTimeWindow
 			"// Written by the Spawn time settings in Properties; change it there.",
 			"{",
 		};
+
+		if (Mode == SpawnTimeMode.ServerTimes)
+		{
+			// the latest listed time it is still within the window of; each time spawns PerTime creatures once a day
+			var times = Times.Count == 0 ? "" : String.Join(", ", Times.Select(t => $"new TimeSpan({t.Hours}, {t.Minutes}, 0)"));
+
+			lines.Add("\tvar now = DateTime.Now;");
+			lines.Add("\tvar slot = (DateTime?)null;");
+			lines.Add(String.Empty);
+			lines.Add($"\tforeach (var time in new TimeSpan[] {{ {times} }})");
+			lines.Add("\t{");
+			lines.Add("\t\tvar start = now.Date + time;");
+			lines.Add(String.Empty);
+			lines.Add("\t\tif (start > now)");
+			lines.Add("\t\t\tstart = start.AddDays(-1);");
+			lines.Add(String.Empty);
+			lines.Add($"\t\tif (now - start < TimeSpan.FromMinutes({Math.Max(1, WindowMinutes)}) && (slot == null || start > slot))");
+			lines.Add("\t\t\tslot = start;");
+			lines.Add("\t}");
+			lines.Add(String.Empty);
+			lines.Add("\tvar record = Storage.Get(\"WorldForge:SpawnTimes:\" + spawner.Name);");
+			lines.Add("\tvar key = slot?.ToString(\"yyyy-MM-dd HH:mm\") ?? String.Empty;");
+			lines.Add("\tvar spawned = record.Get<string>(\"Slot\", \"\") == key ? record.Get<int>(\"Count\", 0) : 0;");
+			lines.Add(String.Empty);
+			lines.Add($"\tif (slot == null || spawned >= {Math.Max(1, PerTime)})");
+			lines.Add("\t{");
+			lines.Add($"\t\t{remove}");
+			lines.Add("\t\treturn;");
+			lines.Add("\t}");
+			lines.Add(String.Empty);
+			lines.Add("\trecord.Set<string>(\"Slot\", key);");
+			lines.Add("\trecord.Set<int>(\"Count\", spawned + 1);");
+			lines.Add("}");
+			lines.Add(End);
+
+			return String.Join(nl, lines);
+		}
 
 		if (Mode == SpawnTimeMode.InGamePhases)
 		{
