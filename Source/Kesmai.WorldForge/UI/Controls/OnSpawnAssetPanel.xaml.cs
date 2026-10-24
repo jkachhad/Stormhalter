@@ -176,6 +176,7 @@ public partial class OnSpawnAssetPanel : UserControl
 		_bSpell.ItemsSource = catalog.Spells;
 		_bStatus.ItemsSource = catalog.Statuses;
 		_bStat.ItemsSource = catalog.EntityStats;
+		_bStatModifier.ItemsSource = StatRow.Modifiers;
 		_bSpellImmunity.ItemsSource = catalog.Spells;
 		_bSpellWeakness.ItemsSource = catalog.Spells;
 

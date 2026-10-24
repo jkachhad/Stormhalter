@@ -120,10 +120,12 @@ public class AssetCatalog
 			.OrderBy(n => n)
 			.ToList();
 
+		// the package is compiled without the framework, so Roslyn can't always tell an enum from a class; an enum
+		// still shows as deriving from something named Enum, and its members are its public static fields
 		List<string> EnumMembers(string name) => types
-			.FirstOrDefault(t => t.TypeKind == TypeKind.Enum && t.Name == name)?
+			.FirstOrDefault(t => t.Name == name && (t.TypeKind == TypeKind.Enum || t.BaseType?.Name == "Enum"))?
 			.GetMembers().OfType<IFieldSymbol>()
-			.Where(f => f.HasConstantValue && f.Name != "None")
+			.Where(f => f.IsStatic && f.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public && !f.IsImplicitlyDeclared && f.Name != "None")
 			.Select(f => f.Name)
 			.ToList() ?? [];
 
