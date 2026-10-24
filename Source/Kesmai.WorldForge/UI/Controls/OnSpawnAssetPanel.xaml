@@ -383,6 +383,76 @@
                 </DockPanel>
             </TabItem>
 
+            <!-- Dialogue: the Shift+Right Click options (Gossips), part of the same form as the Builder -->
+            <TabItem Header="Dialogue">
+                <DockPanel x:Name="_dialogueRoot" Margin="4">
+                    <StackPanel DockPanel.Dock="Bottom" Margin="0,4,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Read from OnSpawn" Click="OnBuilderRead" Margin="0,3" />
+                            <Button Content="Write to OnSpawn" Click="OnBuilderWrite" FontWeight="Bold" />
+                        </StackPanel>
+                        <TextBlock Text="Builder and Dialogue are one form: Write saves both." Foreground="DimGray" FontSize="11" />
+                    </StackPanel>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TextBlock TextWrapping="Wrap" Foreground="DimGray" FontSize="11" Margin="0,0,0,4"
+                                       Text="The options a player sees on Shift+Right Click. Each one can need a quest to be in a state, then runs its steps in order. Quests are tracked per player by name, so another creature's dialogue can check the same quest. Only humanoid creatures have these options." />
+
+                            <TextBlock Text="Options" FontWeight="Bold" />
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Right" Margin="4,0,0,0">
+                                    <Button Content="Add" Click="OnDialogueAdd" Margin="0,0,0,3" />
+                                    <Button Content="Remove" Click="OnDialogueRemove" Margin="0,0,0,3" />
+                                    <Button Content="Up" Click="OnDialogueUp" Margin="0,0,0,3" />
+                                    <Button Content="Down" Click="OnDialogueDown" Margin="0" />
+                                </StackPanel>
+                                <ListBox x:Name="_dialogueList" ItemsSource="{Binding Dialogue}" Height="130" />
+                            </DockPanel>
+
+                            <StackPanel x:Name="_dialogueOption" DataContext="{Binding SelectedItem, ElementName=_dialogueList}" Margin="0,6,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="Menu text" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="0" Grid.Column="1" Margin="0,3" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="1" Text="Only when quest" Style="{StaticResource FieldLabel}" />
+                                    <DockPanel Grid.Row="1" Grid.Column="1">
+                                        <ComboBox DockPanel.Dock="Right" x:Name="_dRequiredState" Width="100" IsEditable="False" SelectedItem="{Binding RequiredState}" />
+                                        <ComboBox DockPanel.Dock="Right" x:Name="_dRequiredComparison" Width="60" IsEditable="False" Margin="4,3" SelectedItem="{Binding RequiredComparison}" />
+                                        <ComboBox x:Name="_dRequiredQuest" DropDownOpened="OnQuestNamesOpened" Text="{Binding RequiredQuest, UpdateSourceTrigger=PropertyChanged}"
+                                                  ToolTip="Leave empty for an option that always works" />
+                                    </DockPanel>
+                                    <TextBlock Grid.Row="2" Text="Otherwise say" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="2" Grid.Column="1" Margin="0,3" Text="{Binding OtherwiseSay, UpdateSourceTrigger=PropertyChanged}"
+                                             ToolTip="What the creature says when the quest isn't in that state (optional)" />
+                                </Grid>
+
+                                <TextBlock Text="Steps" FontWeight="Bold" Margin="0,6,0,0" />
+                                <DataGrid x:Name="_dialogueSteps" ItemsSource="{Binding Steps}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
+                                          HeadersVisibility="Column" MinHeight="80" BeginningEdit="OnDialogueStepEdit">
+                                    <DataGrid.Columns>
+                                        <local:ChoiceColumn x:Name="_dStepKind" Header="Step" Binding="{Binding Kind}" />
+                                        <local:ChoiceColumn x:Name="_dStepQuest" Header="Quest" Binding="{Binding Quest}" />
+                                        <DataGridTextColumn Header="Text, amount, item, state or code" Binding="{Binding Value}" Width="*" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <TextBlock Text="Selected step" Style="{StaticResource SmallCaps}" />
+                                <TextBox DataContext="{Binding SelectedItem, ElementName=_dialogueSteps}" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource CodeBox}" />
+                                <TextBlock TextWrapping="Wrap" Foreground="DimGray" FontSize="11"
+                                           Text="Say: the creature speaks to the player. Set quest: pick the quest and put Enabled, Started, Completed or Not started in the last column. Give gold / experience: an amount. Give item: an item class such as Longsword. Message player: gold text only they see. Code: any C#, using humanoid and player. Text starting with $&quot; can use {player.Name}." />
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </TabItem>
+
             <!-- Creature options: each row edits one line of the OnSpawn script -->
             <TabItem Header="Creature">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">

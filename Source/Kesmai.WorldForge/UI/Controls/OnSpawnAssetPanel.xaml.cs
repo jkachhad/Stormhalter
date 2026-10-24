@@ -108,6 +108,7 @@ public partial class OnSpawnAssetPanel : UserControl
 		_builder.Changed += OnBuilderChanged;
 
 		_builderRoot.DataContext = _builder;
+		_dialogueRoot.DataContext = _builder;
 		_builderPreview.Text = _builder.Generate();
 
 		if (_catalog is not null)
@@ -156,6 +157,52 @@ public partial class OnSpawnAssetPanel : UserControl
 
 	private void OnBuilderUsePickerHue(object sender, RoutedEventArgs e) => HueToBuilder();
 
+	private void OnDialogueAdd(object sender, RoutedEventArgs e)
+	{
+		var option = new DialogueOption { Title = "New option" };
+		option.Steps.Add(new DialogueStep { Kind = DialogueStep.Say, Value = "Greetings." });
+
+		_builder.Dialogue.Add(option);
+		_dialogueList.SelectedItem = option;
+	}
+
+	private void OnDialogueRemove(object sender, RoutedEventArgs e)
+	{
+		if (_dialogueList.SelectedItem is DialogueOption option)
+			_builder.Dialogue.Remove(option);
+	}
+
+	private void OnDialogueUp(object sender, RoutedEventArgs e) => MoveDialogue(-1);
+	private void OnDialogueDown(object sender, RoutedEventArgs e) => MoveDialogue(1);
+
+	private void MoveDialogue(int offset)
+	{
+		if (_dialogueList.SelectedItem is not DialogueOption option)
+			return;
+
+		var index = _builder.Dialogue.IndexOf(option);
+		var target = index + offset;
+
+		if (target < 0 || target >= _builder.Dialogue.Count)
+			return;
+
+		_builder.Dialogue.Move(index, target);
+		_dialogueList.SelectedItem = option;
+	}
+
+	/// <summary>Every quest the dialogue mentions, for the quest dropdowns.</summary>
+	private List<string> QuestNames() => _builder.Dialogue
+		.SelectMany(o => o.Steps.Select(s => s.Quest).Append(o.RequiredQuest))
+		.Where(q => !String.IsNullOrWhiteSpace(q))
+		.Select(q => q.Trim())
+		.Distinct()
+		.OrderBy(q => q)
+		.ToList();
+
+	private void OnQuestNamesOpened(object? sender, EventArgs e) => _dRequiredQuest.ItemsSource = QuestNames();
+
+	private void OnDialogueStepEdit(object? sender, DataGridBeginningEditEventArgs e) => _dStepQuest.ItemsSource = QuestNames();
+
 	private void FillBuilderChoices(AssetCatalog catalog)
 	{
 		_bCreature.ItemsSource = catalog.Creatures;
@@ -177,6 +224,9 @@ public partial class OnSpawnAssetPanel : UserControl
 		_bStatus.ItemsSource = catalog.Statuses;
 		_bStat.ItemsSource = catalog.EntityStats;
 		_bStatModifier.ItemsSource = StatRow.Modifiers;
+		_dStepKind.ItemsSource = DialogueStep.Kinds;
+		_dRequiredComparison.ItemsSource = OnSpawnBuilder.RequirementComparisons;
+		_dRequiredState.ItemsSource = OnSpawnBuilder.QuestStates;
 		_bSpellImmunity.ItemsSource = catalog.Spells;
 		_bSpellWeakness.ItemsSource = catalog.Spells;
 
