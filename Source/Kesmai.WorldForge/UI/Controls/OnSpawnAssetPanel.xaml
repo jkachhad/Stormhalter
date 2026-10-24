@@ -238,14 +238,17 @@
                                             <local:ChoiceColumn x:Name="_bStatus" Header="Status" Binding="{Binding Name}" Width="*" />
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <TextBlock Text="Stat bonuses (Stats[...].Base)" FontWeight="Bold" Margin="0,6,0,0" />
+                                    <TextBlock Text="Stat bonuses" FontWeight="Bold" Margin="0,6,0,0" />
                                     <DataGrid ItemsSource="{Binding Stats}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
                                               HeadersVisibility="Column" MinHeight="40">
                                         <DataGrid.Columns>
                                             <local:ChoiceColumn x:Name="_bStat" Header="Stat" Binding="{Binding Stat}" Width="*" />
                                             <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                                            <local:ChoiceColumn x:Name="_bStatModifier" Header="How" Binding="{Binding Modifier}" />
                                         </DataGrid.Columns>
                                     </DataGrid>
+                                    <TextBlock Text="How: Base sets the stat (Stats[X].Base = value). Constant, AdditivePercent and MultiplicativePercent add to it (Stats[X].Add(value, ModifierType.How)), for example MagicDamageTakenIncrease +25."
+                                               Foreground="DimGray" FontSize="11" TextWrapping="Wrap" />
                                     <TextBlock Text="Immune to (AddImmunity)" FontWeight="Bold" Margin="0,6,0,0" />
                                     <DataGrid ItemsSource="{Binding SpellImmunities}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
                                               HeadersVisibility="Column" MinHeight="40">

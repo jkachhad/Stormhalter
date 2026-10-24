@@ -416,7 +416,9 @@ public class OnSpawnBuilder : ObservableObject
 		setup.AddRange(Statuses.Where(s => Has(s.Name)).Select(s => $"{v}.AddStatus(new {s.Name.Trim()}({v}));"));
 		setup.AddRange(SpellImmunities.Where(s => Has(s.Name)).Select(s => $"{v}.AddImmunity(typeof({s.Name.Trim()}));"));
 		setup.AddRange(SpellWeaknesses.Where(s => Has(s.Name)).Select(s => $"{v}.AddWeakness(typeof({s.Name.Trim()}));"));
-		setup.AddRange(Stats.Where(s => Has(s.Stat) && Has(s.Value)).Select(s => $"{v}.Stats[EntityStat.{s.Stat.Trim()}].Base = {s.Value.Trim()};"));
+		setup.AddRange(Stats.Where(s => Has(s.Stat) && Has(s.Value)).Select(s => Has(s.Modifier) && s.Modifier.Trim() != StatRow.Base
+			? $"{v}.Stats[EntityStat.{s.Stat.Trim()}].Add({s.Value.Trim()}, ModifierType.{s.Modifier.Trim()});"
+			: $"{v}.Stats[EntityStat.{s.Stat.Trim()}].Base = {s.Value.Trim()};"));
 
 		if (Has(TargetChangeInterval))
 			setup.Add($"{v}.CombatantChangeInterval = {TargetChangeInterval.Trim()};");
@@ -983,6 +985,28 @@ public class OnSpawnBuilder : ObservableObject
 			return Done();
 		}
 
+		// creature.Stats[EntityStat.Name].Add(value, ModifierType.Kind);
+		if (expression is InvocationExpressionSyntax
+		    {
+			    Expression: MemberAccessExpressionSyntax
+			    {
+				    Name.Identifier.Text: "Add",
+				    Expression: ElementAccessExpressionSyntax
+				    {
+					    Expression: MemberAccessExpressionSyntax { Expression: IdentifierNameSyntax modifierOwner, Name.Identifier.Text: "Stats" },
+					    ArgumentList.Arguments: [{ NameColon: null } modifiedStat],
+				    },
+			    },
+			    ArgumentList.Arguments: [{ NameColon: null } amount, { NameColon: null } kind],
+		    }
+		    && modifierOwner.Identifier.Text == v
+		    && Member(modifiedStat.Expression, "EntityStat") is string modified
+		    && Member(kind.Expression, "ModifierType") is string modifier && StatRow.Modifiers.Contains(modifier))
+		{
+			Stats.Add(new StatRow { Stat = modified, Value = amount.Expression.ToString(), Modifier = modifier });
+			return Done();
+		}
+
 		// creature.CombatantSearchStrategy = (attacker) => new RandomSearchStrategy();
 		if (expression is AssignmentExpressionSyntax { Left: MemberAccessExpressionSyntax { Expression: IdentifierNameSyntax strategyOwner, Name.Identifier.Text: "CombatantSearchStrategy" } } strategy
 		    && strategy.IsKind(SyntaxKind.SimpleAssignmentExpression) && strategyOwner.Identifier.Text == v && !Has(SearchStrategy)
@@ -1462,12 +1486,20 @@ public class NameRow : ObservableObject
 
 public class StatRow : ObservableObject
 {
+	/// <summary>Sets the stat's base value: <c>Stats[EntityStat.X].Base = value</c>.</summary>
+	public const string Base = "Base";
+
+	/// <summary>Base, or a ModifierType that adds to the stat: <c>Stats[EntityStat.X].Add(value, ModifierType.Kind)</c>.</summary>
+	public static readonly string[] Modifiers = [Base, "Constant", "AdditivePercent", "MultiplicativePercent"];
+
 	private string _stat = String.Empty;
 	private string _value = String.Empty;
+	private string _modifier = Base;
 
 	/// <summary>An EntityStat member, such as FireProtection.</summary>
 	public string Stat { get => _stat; set => SetProperty(ref _stat, value); }
 	public string Value { get => _value; set => SetProperty(ref _value, value); }
+	public string Modifier { get => _modifier; set => SetProperty(ref _modifier, value); }
 }
 
 public class BlockRow : ObservableObject
