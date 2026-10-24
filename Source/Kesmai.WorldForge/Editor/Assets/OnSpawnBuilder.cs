@@ -24,7 +24,7 @@ namespace Kesmai.WorldForge.Editor.Assets;
 /// <see cref="CodeBefore"/>, <see cref="OtherInitializers"/> and <see cref="OtherStatements"/>, so writing back a
 /// script that was read never drops anything.
 /// </remarks>
-public class OnSpawnBuilder : ObservableObject
+public partial class OnSpawnBuilder : ObservableObject
 {
 	public static readonly string[] FlagNames =
 	[
@@ -229,6 +229,7 @@ public class OnSpawnBuilder : ObservableObject
 		Watch(SpellImmunities);
 		Watch(SpellWeaknesses);
 		Watch(Stats);
+		Watch(Dialogue);
 	}
 
 	/// <summary>Fills the immunity and weakness choices from the server's enums.</summary>
@@ -565,6 +566,8 @@ public class OnSpawnBuilder : ObservableObject
 			lines.Add("};");
 			lines.Add(String.Empty);
 		}
+
+		lines.AddRange(GenerateDialogue(v));
 
 		if (Has(OtherStatements))
 		{
@@ -1006,6 +1009,11 @@ public class OnSpawnBuilder : ObservableObject
 			Stats.Add(new StatRow { Stat = modified, Value = amount.Expression.ToString(), Modifier = modifier });
 			return Done();
 		}
+
+		// creature.Gossips = new List<GossipInteraction>() { ... };
+		if (expression is AssignmentExpressionSyntax { Left: MemberAccessExpressionSyntax { Expression: IdentifierNameSyntax gossipOwner, Name.Identifier.Text: "Gossips" } } gossips
+		    && gossips.IsKind(SyntaxKind.SimpleAssignmentExpression) && gossipOwner.Identifier.Text == v && ReadDialogue(gossips.Right))
+			return Done();
 
 		// creature.CombatantSearchStrategy = (attacker) => new RandomSearchStrategy();
 		if (expression is AssignmentExpressionSyntax { Left: MemberAccessExpressionSyntax { Expression: IdentifierNameSyntax strategyOwner, Name.Identifier.Text: "CombatantSearchStrategy" } } strategy
