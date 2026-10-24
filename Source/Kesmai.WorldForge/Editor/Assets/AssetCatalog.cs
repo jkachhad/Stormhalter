@@ -103,7 +103,7 @@ public class AssetCatalog
 		}
 
 		List<string> Concrete(params string[] baseNames) => types
-			.Where(t => !t.IsAbstract && !t.IsGenericType && t.DeclaredAccessibility == Accessibility.Public)
+			.Where(t => !t.IsAbstract && !t.IsGenericType && t.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public)
 			.Where(t => baseNames.Any(b => DerivesFrom(t, b)))
 			.Select(t => t.Name)
 			.Distinct()
