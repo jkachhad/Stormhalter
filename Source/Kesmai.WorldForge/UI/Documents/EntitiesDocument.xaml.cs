@@ -24,7 +24,10 @@ public partial class EntitiesDocument : UserControl
 		DataContextChanged += OnDataContextChanged;
 		
 		_assetPanel.EditRequested += OnAssetEditRequested;
+		_assetPanel.ReadScript = () => GetOnSpawnScript()?.Body;
 	}
+
+	private Script? GetOnSpawnScript() => _viewModel?.Entity?.Scripts.FirstOrDefault(s => s.Name == "OnSpawn");
 
 	/// <summary>
 	/// Applies an edit from the asset panel to the OnSpawn script, through its editor so the change shows
@@ -32,12 +35,9 @@ public partial class EntitiesDocument : UserControl
 	/// </summary>
 	private void OnAssetEditRequested(Func<string, string> edit)
 	{
-		if (_viewModel?.Entity is null)
-			return;
+		var onSpawn = GetOnSpawnScript();
 
-		var onSpawn = _viewModel.Entity.Scripts.FirstOrDefault(s => s.Name == "OnSpawn");
-
-		if (onSpawn is null)
+		if (_viewModel is null || onSpawn is null)
 			return;
 
 		if (!ReferenceEquals(_viewModel.SelectedScript, onSpawn))
@@ -65,6 +65,7 @@ public partial class EntitiesDocument : UserControl
 			_viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
 		UpdateSpawns();
+		_assetPanel.ShowScript(GetOnSpawnScript()?.Body);
 	}
 	
 	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
@@ -73,7 +74,10 @@ public partial class EntitiesDocument : UserControl
 			return;
 
 		if (args.PropertyName == nameof(EntitiesViewModel.Entity))
+		{
 			UpdateSpawns();
+			_assetPanel.ShowScript(GetOnSpawnScript()?.Body);
+		}
 	}
 
 	private void UpdateSpawns()
