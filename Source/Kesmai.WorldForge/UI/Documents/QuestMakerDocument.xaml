@@ -1,0 +1,331 @@
+<UserControl x:Class="Kesmai.WorldForge.UI.Documents.QuestMakerDocument"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1200"
+             FontFamily="Tahoma" FontSize="13">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="FieldLabel">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,3,8,3" />
+        </Style>
+        <Style TargetType="TextBlock" x:Key="Hint">
+            <Setter Property="Foreground" Value="DimGray" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,2,0,4" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,3" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="0,3,4,3" />
+            <Setter Property="Padding" Value="8,2" />
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="Padding" Value="6" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left: quest files, stages and the branch map -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0">
+                <Button DockPanel.Dock="Right" Content="↻" ToolTip="Look for quest files again" Click="OnRefreshQuests" Margin="0,3" />
+                <TextBlock Text="Quests" FontWeight="Bold" VerticalAlignment="Center" />
+            </DockPanel>
+            <DockPanel Grid.Row="1">
+                <WrapPanel DockPanel.Dock="Bottom">
+                    <Button Content="New" Click="OnNewQuest" />
+                    <Button Content="Sample" Click="OnSampleQuest" ToolTip="A quest with kill, collect and escort branches to start from" />
+                    <Button Content="Delete" Click="OnDeleteQuest" />
+                </WrapPanel>
+                <ListBox ItemsSource="{Binding QuestFiles}" SelectedItem="{Binding SelectedFile}" DisplayMemberPath="Name" />
+            </DockPanel>
+
+            <TextBlock Grid.Row="2" Text="Stages" FontWeight="Bold" Margin="0,8,0,2" />
+            <DockPanel Grid.Row="3">
+                <WrapPanel DockPanel.Dock="Bottom">
+                    <Button Content="Add" Click="OnAddStage" />
+                    <Button Content="Remove" Click="OnRemoveStage" />
+                    <Button Content="▲" Click="OnMoveStageUp" ToolTip="Move up" />
+                    <Button Content="▼" Click="OnMoveStageDown" ToolTip="Move down" />
+                </WrapPanel>
+                <ListBox ItemsSource="{Binding Quest.Stages}" SelectedItem="{Binding SelectedStage}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Id, Mode=OneWay}" FontWeight="Bold" />
+                                <Run Text="{Binding Kind, Mode=OneWay}" Foreground="Gray" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+
+            <TextBlock Grid.Row="4" Text="Branches" FontWeight="Bold" Margin="0,8,0,2" />
+            <TreeView Grid.Row="5" x:Name="_branches" SelectedItemChanged="OnBranchSelected" />
+        </Grid>
+
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+
+        <!-- Middle: quest settings and the selected stage -->
+        <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" Padding="0,0,4,0">
+            <StackPanel>
+                <GroupBox Header="Quest" DataContext="{Binding Quest}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="Class name" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="Used for the file name and the generated classes. Letters, digits and underscores." />
+                        <TextBlock Grid.Row="1" Text="Title" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="2" Text="Quest giver" Style="{StaticResource FieldLabel}" />
+                        <DockPanel Grid.Row="2" Grid.Column="1">
+                            <TextBox DockPanel.Dock="Right" Width="60" Text="{Binding GiverBody, UpdateSourceTrigger=PropertyChanged}" ToolTip="Body id" />
+                            <TextBlock DockPanel.Dock="Right" Text="Body" Style="{StaticResource FieldLabel}" Margin="8,3,6,3" />
+                            <TextBox Text="{Binding GiverName, UpdateSourceTrigger=PropertyChanged}" />
+                        </DockPanel>
+                        <TextBlock Grid.Row="3" Text="Intro" Style="{StaticResource FieldLabel}" VerticalAlignment="Top" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Intro, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="False" MinHeight="40"
+                                 ToolTip="What the giver says before the player accepts." />
+                        <TextBlock Grid.Row="4" Text="Accept button" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding AcceptLabel, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="5" Text="First stage" Style="{StaticResource FieldLabel}" />
+                        <ComboBox Grid.Row="5" Grid.Column="1" Margin="0,3" IsEditable="True"
+                                  ItemsSource="{Binding DataContext.StageIds, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                  Text="{Binding StartStage, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="6" Text="When finished" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding CompletedText, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="What the giver says to someone who finished the quest." />
+                        <CheckBox Grid.Row="7" Grid.Column="1" Content="Repeatable (can be accepted again after finishing)" IsChecked="{Binding Repeatable}" Margin="0,4" />
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Stage" DataContext="{Binding SelectedStage}">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Name" Style="{StaticResource FieldLabel}" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id, UpdateSourceTrigger=LostFocus}"
+                                     ToolTip="Choices point at stages by this name. Renaming updates them." />
+                            <TextBlock Grid.Row="1" Text="Objective" Style="{StaticResource FieldLabel}" />
+                            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="_kind" Margin="0,3" SelectedItem="{Binding Kind}" />
+                            <TextBlock Grid.Row="2" Text="Giver says" Style="{StaticResource FieldLabel}" VerticalAlignment="Top" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" MinHeight="40"
+                                     ToolTip="Said when the stage starts and whenever the player talks to the giver during it." />
+                            <TextBlock Grid.Row="3" Text="When done" Style="{StaticResource FieldLabel}" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding DoneText, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="Said once the objective is done, before the player picks a choice." />
+                        </Grid>
+
+                        <TextBlock Style="{StaticResource Hint}">
+                            Talk: the choices are offered right away. Kill, Collect and Escort: the choices open once the objective is done.
+                            End: finishes the quest and gives its rewards.
+                        </TextBlock>
+
+                        <!-- Kill -->
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Kind}" Value="Kill"><Setter Property="Visibility" Value="Visible" /></DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="70" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Kill entity" Style="{StaticResource FieldLabel}" />
+                            <ComboBox Grid.Column="1" Margin="0,3" IsEditable="True"
+                                      ItemsSource="{Binding DataContext.EntityNames, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                      Text="{Binding Target, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Column="2" Text="Count" Style="{StaticResource FieldLabel}" Margin="8,3,6,3" />
+                            <TextBox Grid.Column="3" Text="{Binding Count, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+
+                        <!-- Collect -->
+                        <StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Kind}" Value="Collect"><Setter Property="Visibility" Value="Visible" /></DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="70" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Item type" Style="{StaticResource FieldLabel}" />
+                                <ComboBox Grid.Column="1" Margin="0,3" IsEditable="True" IsTextSearchEnabled="True"
+                                          ItemsSource="{Binding DataContext.ItemTypes, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                          Text="{Binding Target, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Grid.Column="2" Text="Count" Style="{StaticResource FieldLabel}" Margin="8,3,6,3" />
+                                <TextBox Grid.Column="3" Text="{Binding Count, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <CheckBox Content="Take the items when the player turns them in" IsChecked="{Binding Consume}" Margin="0,4" />
+                            <TextBlock Style="{StaticResource Hint}" Text="Counts items of this class in the backpack, belt and hands. Item classes from your segment can be typed in." />
+                        </StackPanel>
+
+                        <!-- Escort -->
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Kind}" Value="Escort"><Setter Property="Visibility" Value="Visible" /></DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Escort name" Style="{StaticResource FieldLabel}" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding EscortName, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="1" Text="Body / health" Style="{StaticResource FieldLabel}" />
+                            <UniformGrid Grid.Row="1" Grid.Column="1" Columns="2">
+                                <TextBox Margin="0,3,4,3" Text="{Binding EscortBody, UpdateSourceTrigger=PropertyChanged}" ToolTip="Body id" />
+                                <TextBox Text="{Binding EscortHealth, UpdateSourceTrigger=PropertyChanged}" ToolTip="Health" />
+                            </UniformGrid>
+                            <TextBlock Grid.Row="2" Text="Destination" Style="{StaticResource FieldLabel}" />
+                            <UniformGrid Grid.Row="2" Grid.Column="1" Columns="4">
+                                <TextBox Margin="0,3,4,3" Text="{Binding DestinationX, UpdateSourceTrigger=PropertyChanged}" ToolTip="X" />
+                                <TextBox Margin="0,3,4,3" Text="{Binding DestinationY, UpdateSourceTrigger=PropertyChanged}" ToolTip="Y" />
+                                <TextBox Margin="0,3,4,3" Text="{Binding DestinationRegion, UpdateSourceTrigger=PropertyChanged}" ToolTip="Region" />
+                                <TextBox Text="{Binding DestinationRange, UpdateSourceTrigger=PropertyChanged}" ToolTip="How close counts as arrived" />
+                            </UniformGrid>
+                            <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource Hint}"
+                                       Text="X, Y, region and range. The escort appears at the giver; the player orders it to follow. If it dies, talking to the giver summons it again." />
+                        </Grid>
+
+                        <TextBlock Text="Choices (branches)" FontWeight="Bold" Margin="0,8,0,2" />
+                        <DataGrid x:Name="_choices" ItemsSource="{Binding Choices}" AutoGenerateColumns="False" CanUserAddRows="False"
+                                  HeadersVisibility="Column" MinHeight="70">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Player picks" Binding="{Binding Label, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                                <DataGridTemplateColumn Header="Leads to stage" Width="160">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox IsEditable="True" BorderThickness="0"
+                                                      ItemsSource="{Binding DataContext.StageIds, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                      Text="{Binding Next, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <WrapPanel>
+                            <Button Content="Add choice" Click="OnAddChoice" />
+                            <Button Content="Remove choice" Click="OnRemoveChoice" />
+                        </WrapPanel>
+                        <TextBlock Style="{StaticResource Hint}" Text="Each choice shows up in the giver's menu. Two or more choices make the quest branch." />
+
+                        <TextBlock Text="Rewards" FontWeight="Bold" Margin="0,8,0,2" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Experience" Style="{StaticResource FieldLabel}" />
+                            <TextBox Grid.Column="1" Text="{Binding RewardExperience, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Column="2" Text="Gold" Style="{StaticResource FieldLabel}" Margin="8,3,6,3" />
+                            <TextBox Grid.Column="3" Text="{Binding RewardGold, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="1" Text="Items" Style="{StaticResource FieldLabel}" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding RewardItems, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="Item classes separated by commas, like GreaterHealingPotion, or constructor calls like new Gem(500)" />
+                        </Grid>
+                        <TextBlock Style="{StaticResource Hint}" Text="Given when the player turns this stage in, or straight away for an End stage. Items drop at the player's feet." />
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch" />
+
+        <!-- Right: problems, actions and the generated code -->
+        <DockPanel Grid.Column="4">
+            <StackPanel DockPanel.Dock="Top">
+                <TextBlock Text="Check" FontWeight="Bold" />
+                <TextBlock Text="{Binding Problems}" TextWrapping="Wrap" Margin="0,2,0,6">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="Firebrick" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Problems}" Value="Ready to save."><Setter Property="Foreground" Value="ForestGreen" /></DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <WrapPanel>
+                    <Button Content="Save to segment" Click="OnSave" FontWeight="Bold"
+                            ToolTip="Writes Source\Quests\[class name].cs in the segment folder" />
+                    <Button Content="Add kill hooks" Click="OnAddKillHooks"
+                            ToolTip="Adds a line to each kill target's OnDeath script so its deaths count" />
+                    <Button Content="Create giver entity" Click="OnCreateGiver"
+                            ToolTip="Adds an entity whose OnSpawn returns the quest giver, ready for a spawner" />
+                    <Button Content="Copy code" Click="OnCopyCode" />
+                </WrapPanel>
+                <TextBlock Text="{Binding Status}" TextWrapping="Wrap" Foreground="DimGray" FontSize="11" Margin="0,2,0,6" />
+                <TextBlock Text="Generated C#" FontWeight="Bold" />
+            </StackPanel>
+            <TextBox Text="{Binding Preview, Mode=OneWay}" IsReadOnly="True" FontFamily="Consolas" FontSize="12"
+                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="NoWrap"
+                     VerticalContentAlignment="Top" />
+        </DockPanel>
+    </Grid>
+</UserControl>
