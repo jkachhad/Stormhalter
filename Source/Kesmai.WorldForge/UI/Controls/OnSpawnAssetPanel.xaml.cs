@@ -1,0 +1,530 @@
+#nullable enable
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using Kesmai.WorldForge.Editor.Assets;
+
+namespace Kesmai.WorldForge.UI;
+
+/// <summary>
+/// Side panel for the OnSpawn script: a builder form for the whole script, dropdowns of server types, a body
+/// gallery, a hue picker with a tinted preview, and the custom sound library. Each choice is applied to the script
+/// through <see cref="EditRequested"/>.
+/// </summary>
+public partial class OnSpawnAssetPanel : UserControl
+{
+	/// <summary>Raised with an edit to apply to the current script body.</summary>
+	public event Action<Func<string, string>>? EditRequested;
+
+	/// <summary>Returns the current OnSpawn body, or null when no creature is selected.</summary>
+	public Func<string?>? ReadScript { get; set; }
+
+	private AssetCatalog? _catalog;
+	private OnSpawnBuilder _builder = new();
+	private string? _pendingScript;
+	private readonly MediaPlayer _player = new();
+	private int _optionRow;
+
+	private const string NoHue = "None";
+	private const string CustomHue = "Custom ARGB";
+
+	private static readonly HueSwatch[] _swatches = new[] { "White", "Red", "Lime", "Blue", "Gold", "Purple", "Cyan", "Orange", "Gray", "Black" }
+		.Select(name => new HueSwatch(name, NamedColor(name)))
+		.ToArray();
+
+	private Dictionary<int, BodyAsset> _bodyById = new();
+	private BodyAsset? _body;
+	private Color _hue = Colors.White;
+	private bool _syncing;
+
+	public OnSpawnAssetPanel()
+	{
+		InitializeComponent();
+
+		SetBuilder(new OnSpawnBuilder());
+
+		Loaded += OnLoaded;
+	}
+
+	/// <summary>Fills the builder from a script, for example when another creature is selected.</summary>
+	public void ShowScript(string? script)
+	{
+		if (_catalog is null)
+		{
+			_pendingScript = script;
+			return;
+		}
+
+		var builder = new OnSpawnBuilder();
+
+		builder.SetEnumChoices(_catalog.Immunities, _catalog.Weaknesses);
+
+		if (!String.IsNullOrWhiteSpace(script))
+			builder.Parse(script, _catalog.Shields, _catalog.Armor, _catalog.Helmets, _catalog.Gauntlets, _catalog.Boots);
+
+		SetBuilder(builder);
+	}
+
+	private void SetBuilder(OnSpawnBuilder builder)
+	{
+		_builder.Changed -= OnBuilderChanged;
+		_builder = builder;
+		_builder.Changed += OnBuilderChanged;
+
+		_builderRoot.DataContext = _builder;
+		_builderPreview.Text = _builder.Generate();
+
+		if (_catalog is not null)
+			ShowBuilderBodyAndHue();
+	}
+
+	private void OnBuilderChanged(object? sender, EventArgs e) => _builderPreview.Text = _builder.Generate();
+
+	private void OnBuilderRead(object sender, RoutedEventArgs e)
+	{
+		var script = ReadScript?.Invoke();
+
+		if (script is null)
+		{
+			_status.Text = "Select a creature with an OnSpawn script first.";
+			return;
+		}
+
+		ShowScript(script);
+		_status.Text = "Filled the builder from OnSpawn.";
+	}
+
+	private void OnBuilderWrite(object sender, RoutedEventArgs e)
+	{
+		var body = _builder.Generate();
+
+		EditRequested?.Invoke(_ => body);
+		_status.Text = "Wrote the builder to OnSpawn.";
+	}
+
+	private void OnBuilderUseBody(object sender, RoutedEventArgs e)
+	{
+		var id = _bodyId.Text.Trim();
+
+		if (id.Length > 0)
+			_builder.Body = id;
+		else
+			_status.Text = "Pick a body on the Body & Hue tab first.";
+	}
+
+	private void OnBuilderUsePickerHue(object sender, RoutedEventArgs e) => HueToBuilder();
+
+	private void FillBuilderChoices(AssetCatalog catalog)
+	{
+		_bCreature.ItemsSource = catalog.Creatures;
+		_bAlignment.ItemsSource = catalog.Alignments;
+		_bHueMode.ItemsSource = OnSpawnBuilder.HueModes;
+		_bHueName.ItemsSource = catalog.NamedColors;
+		_bPenetration.ItemsSource = catalog.ShieldPenetration;
+		_bSearch.ItemsSource = catalog.SearchStrategies;
+		_bWeapon.ItemsSource = catalog.Weapons;
+		_bShield.ItemsSource = catalog.Shields;
+		_bArmor.ItemsSource = catalog.Armor;
+		_bHelmet.ItemsSource = catalog.Helmets;
+		_bGauntlets.ItemsSource = catalog.Gauntlets;
+		_bBoots.ItemsSource = catalog.Boots;
+		_bBrain.ItemsSource = catalog.Brains;
+		_bAttackType.ItemsSource = OnSpawnBuilder.AttackTypes;
+		_bAttackEffect.ItemsSource = new[] { String.Empty }.Concat(catalog.AttackComponents).ToList();
+		_bSpell.ItemsSource = catalog.Spells;
+	}
+
+	private async void OnLoaded(object sender, RoutedEventArgs e)
+	{
+		Loaded -= OnLoaded;
+
+		_status.Text = "Loading server types, bodies and sounds…";
+
+		_catalog = await AssetCatalog.LoadAsync();
+
+		BuildOptions(_catalog);
+		FillBuilderChoices(_catalog);
+
+		_bodyById = _catalog.Bodies.GroupBy(b => b.Id).ToDictionary(g => g.Key, g => g.First());
+		_bodies.ItemsSource = _catalog.Bodies;
+		_sounds.ItemsSource = _catalog.Sounds;
+		_hueMode.ItemsSource = new[] { NoHue, CustomHue }.Concat(_catalog.NamedColors).ToList();
+		_hueSwatches.ItemsSource = _swatches;
+
+		ShowScript(_pendingScript ?? ReadScript?.Invoke());
+
+		_status.Text = _catalog.Warnings.Count > 0
+			? String.Join(Environment.NewLine, _catalog.Warnings)
+			: $"{_catalog.Creatures.Count} creatures, {_catalog.Bodies.Count} bodies, {_catalog.Sounds.Count} sounds.";
+	}
+
+	private void BuildOptions(AssetCatalog catalog)
+	{
+		AddOption("Creature class", catalog.Creatures, (body, value) => OnSpawnEdits.SetCreatureType(body, value));
+
+		AddOption("Brain (AI)", catalog.Brains, (body, value) =>
+		{
+			var variable = OnSpawnEdits.GetVariable(body);
+			return OnSpawnEdits.SetStatement(body, @"\w+\.Brain\s*=", $"{variable}.Brain = new {value}({variable});");
+		});
+
+		AddOption("Shield penetration", catalog.ShieldPenetration,
+			(body, value) => OnSpawnEdits.SetInitializer(body, "BasePenetration", $"ShieldPenetration.{value}"));
+
+		AddOption("Alignment", catalog.Alignments,
+			(body, value) => OnSpawnEdits.SetInitializer(body, "Alignment", $"Alignment.{value}"));
+
+		AddOption("Immunity", catalog.Immunities,
+			(body, value) => OnSpawnEdits.SetInitializer(body, "Immunity", $"CreatureImmunity.{value}"));
+
+		AddOption("Weakness", catalog.Weaknesses,
+			(body, value) => OnSpawnEdits.SetInitializer(body, "Weakness", $"CreatureWeakness.{value}"));
+
+		AddOption("Target strategy", catalog.SearchStrategies, (body, value) =>
+		{
+			var variable = OnSpawnEdits.GetVariable(body);
+			var argument = value is "ClosestSearchStrategy" or "FarthestSearchStrategy" ? $"{variable}.Location" : String.Empty;
+
+			return OnSpawnEdits.SetStatement(body, @"\w+\.CombatantSearchStrategy\s*=",
+				$"{variable}.CombatantSearchStrategy = new {value}({argument});");
+		});
+
+		AddOption("Wield weapon", catalog.Weapons, Wield);
+		AddOption("Wield shield", catalog.Shields, Wield);
+		AddOption("Armor / robe", catalog.Armor, Equip);
+		AddOption("Helmet", catalog.Helmets, Equip);
+		AddOption("Gauntlets", catalog.Gauntlets, Equip);
+		AddOption("Boots", catalog.Boots, Equip);
+		AddOption("Ring / amulet", catalog.Jewelry, Equip);
+
+		AddOption("Spell", catalog.Spells, (body, value) =>
+		{
+			var variable = OnSpawnEdits.GetVariable(body);
+			return OnSpawnEdits.SetStatement(body, @"\w+\.Spells\s*=",
+				$"{variable}.Spells = new CreatureSpellCollection() {{ {{ new CreatureSpellEntry(new CreatureSpell<{value}>(10), 100, TimeSpan.FromSeconds(3)) }} }};");
+		});
+	}
+
+	private static string Wield(string body, string value)
+		=> OnSpawnEdits.AppendStatement(body, $"{OnSpawnEdits.GetVariable(body)}.Wield(new {value}());");
+
+	private static string Equip(string body, string value)
+		=> OnSpawnEdits.AppendStatement(body, $"{OnSpawnEdits.GetVariable(body)}.Equip(new {value}());");
+
+	private void AddOption(string label, IReadOnlyList<string> values, Func<string, string, string> apply)
+	{
+		_optionsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+		var text = new TextBlock { Text = label, Style = (Style)FindResource("FieldLabel") };
+		var combo = new ComboBox { ItemsSource = values, IsEnabled = values.Count > 0 };
+		var button = new Button { Content = "Set", IsEnabled = values.Count > 0 };
+
+		button.Click += (_, _) =>
+		{
+			var value = (combo.Text ?? String.Empty).Trim();
+
+			if (value.Length > 0)
+				EditRequested?.Invoke(body => apply(body, value));
+		};
+
+		Grid.SetRow(text, _optionRow);
+		Grid.SetRow(combo, _optionRow);
+		Grid.SetRow(button, _optionRow);
+		Grid.SetColumn(combo, 1);
+		Grid.SetColumn(button, 2);
+
+		_optionsGrid.Children.Add(text);
+		_optionsGrid.Children.Add(combo);
+		_optionsGrid.Children.Add(button);
+
+		_optionRow++;
+	}
+
+	private void OnBodySearchChanged(object sender, TextChangedEventArgs e)
+	{
+		if (_catalog is null)
+			return;
+
+		var query = _bodySearch.Text.Trim();
+
+		_bodies.ItemsSource = query.Length == 0
+			? _catalog.Bodies
+			: _catalog.Bodies.Where(b => b.Id.ToString().StartsWith(query)
+			                             || b.Name.Contains(query, StringComparison.OrdinalIgnoreCase)
+			                             || b.Texture.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
+	}
+
+	private void OnBrowseBodies(object sender, RoutedEventArgs e)
+	{
+		var show = _bodyBrowser.Visibility != Visibility.Visible;
+
+		_bodyBrowser.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+		_browseBodies.Content = show ? "Hide bodies" : "Browse bodies…";
+
+		if (show && _body is not null)
+		{
+			_syncing = true;
+			_bodies.SelectedItem = _body;
+			_syncing = false;
+
+			if (_bodies.SelectedItem is not null)
+				_bodies.ScrollIntoView(_bodies.SelectedItem);
+		}
+	}
+
+	private void OnBodySelectionChanged(object sender, SelectionChangedEventArgs e)
+	{
+		if (!_syncing && _bodies.SelectedItem is BodyAsset body)
+			_bodyId.Text = body.Id.ToString();
+	}
+
+	private void OnBodyDoubleClick(object sender, MouseButtonEventArgs e)
+	{
+		if (_bodies.SelectedItem is not BodyAsset body)
+			return;
+
+		_bodyId.Text = body.Id.ToString();
+		OnBrowseBodies(sender, e);
+	}
+
+	private void OnBodyIdChanged(object sender, TextChangedEventArgs e)
+	{
+		_body = Int32.TryParse(_bodyId.Text.Trim(), out var id) && _bodyById.TryGetValue(id, out var body) ? body : null;
+		UpdateHuePreview();
+	}
+
+	private void OnHueModeChanged(object sender, SelectionChangedEventArgs e)
+	{
+		if (_syncing || _hueMode.SelectedItem is not string mode)
+			return;
+
+		switch (mode)
+		{
+			case NoHue: SetHue(Colors.White, NoHue); break;
+			case CustomHue: SetHue(_hue, CustomHue); break;
+			default: SetHue(NamedColor(mode), mode); break;
+		}
+	}
+
+	private void OnHueColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+	{
+		if (!_syncing && e.NewValue is Color color)
+			SetHue(color, CustomHue);
+	}
+
+	private void OnHueSwatch(object sender, RoutedEventArgs e)
+	{
+		if (sender is FrameworkElement { DataContext: HueSwatch swatch })
+			SetHue(swatch.Color, swatch.Name);
+	}
+
+	private void OnHueComponentChanged(object sender, TextChangedEventArgs e)
+	{
+		if (_syncing)
+			return;
+
+		if (Byte.TryParse(_hueA.Text.Trim(), out var a) && Byte.TryParse(_hueR.Text.Trim(), out var r)
+		    && Byte.TryParse(_hueG.Text.Trim(), out var g) && Byte.TryParse(_hueB.Text.Trim(), out var b))
+			SetHue(Color.FromArgb(a, r, g, b), CustomHue, updateComponents: false);
+	}
+
+	/// <summary>Shows a hue in every control of the Body &amp; Hue tab without the controls feeding back into each other.</summary>
+	private void SetHue(Color color, string mode, bool updateComponents = true)
+	{
+		_syncing = true;
+
+		_hue = color;
+		_hueMode.SelectedItem = mode;
+		_huePicker.SelectedColor = color;
+
+		if (updateComponents)
+		{
+			_hueA.Text = color.A.ToString();
+			_hueR.Text = color.R.ToString();
+			_hueG.Text = color.G.ToString();
+			_hueB.Text = color.B.ToString();
+		}
+
+		_syncing = false;
+
+		UpdateHuePreview();
+	}
+
+	/// <summary>Fills the Body &amp; Hue tab from the builder, so it shows the selected creature's body and hue.</summary>
+	private void ShowBuilderBodyAndHue()
+	{
+		_bodyId.Text = _builder.Body;
+
+		switch (_builder.HueMode)
+		{
+			case "Named" when !String.IsNullOrWhiteSpace(_builder.HueName):
+				SetHue(NamedColor(_builder.HueName.Trim()), _builder.HueName.Trim());
+				break;
+			case "Custom":
+				SetHue(Color.FromArgb(_builder.HueA, _builder.HueR, _builder.HueG, _builder.HueB), CustomHue);
+				break;
+			default:
+				SetHue(Colors.White, NoHue);
+				break;
+		}
+	}
+
+	private void HueToBuilder()
+	{
+		var mode = _hueMode.SelectedItem as string ?? NoHue;
+
+		if (mode == NoHue)
+		{
+			_builder.HueMode = "None";
+		}
+		else if (mode == CustomHue)
+		{
+			_builder.HueMode = "Custom";
+			(_builder.HueA, _builder.HueR, _builder.HueG, _builder.HueB) = (_hue.A, _hue.R, _hue.G, _hue.B);
+		}
+		else
+		{
+			_builder.HueMode = "Named";
+			_builder.HueName = mode;
+		}
+	}
+
+	private string? HueExpression() => (_hueMode.SelectedItem as string ?? NoHue) switch
+	{
+		NoHue => null,
+		CustomHue => $"Color.FromArgb({_hue.A}, {_hue.R}, {_hue.G}, {_hue.B})",
+		var name => $"Color.{name}",
+	};
+
+	private void OnSetBody(object sender, RoutedEventArgs e) => ApplyBodyAndHue(body: true, hue: false);
+	private void OnSetHue(object sender, RoutedEventArgs e) => ApplyBodyAndHue(body: false, hue: true);
+	private void OnSetBodyAndHue(object sender, RoutedEventArgs e) => ApplyBodyAndHue(body: true, hue: true);
+
+	/// <summary>Writes the body and/or hue into the OnSpawn script, and into the builder so the two stay in step.</summary>
+	private void ApplyBodyAndHue(bool body, bool hue)
+	{
+		var id = _bodyId.Text.Trim();
+		var expression = HueExpression();
+		var messages = new List<string>();
+
+		if (body && !Int32.TryParse(id, out _))
+		{
+			messages.Add("Enter a body id or pick one with Browse bodies.");
+			body = false;
+		}
+
+		if (hue && expression is null)
+		{
+			messages.Add("Hue is None, so the script's hue was left alone.");
+			hue = false;
+		}
+
+		if (!body && !hue)
+		{
+			if (messages.Count > 0)
+				_status.Text = String.Join(" ", messages);
+			return;
+		}
+
+		EditRequested?.Invoke(script =>
+		{
+			if (body)
+				script = OnSpawnEdits.SetInitializer(script, "Body", id);
+
+			if (hue)
+				script = OnSpawnEdits.SetInitializer(script, "Hue", expression!);
+
+			return script;
+		});
+
+		if (body)
+			_builder.Body = id;
+
+		if (hue)
+			HueToBuilder();
+
+		messages.Insert(0, body && hue ? $"Set Body = {id} and Hue = {expression}." : body ? $"Set Body = {id}." : $"Set Hue = {expression}.");
+		_status.Text = String.Join(" ", messages);
+	}
+
+	private static Color NamedColor(string name)
+	{
+		var color = System.Drawing.Color.FromName(name);
+		return Color.FromArgb(color.A, color.R, color.G, color.B);
+	}
+
+	private void UpdateHuePreview()
+	{
+		_hueArgb.Text = $"ARGB #{_hue.A:X2}{_hue.R:X2}{_hue.G:X2}{_hue.B:X2}";
+		_huePreview.Source = _body?.Tint(_hue);
+
+		var id = _bodyId.Text.Trim();
+
+		if (_body is null)
+		{
+			_bodyTitle.Text = id.Length == 0 ? "No body" : $"Body {id}";
+			_bodyInfo.Text = id.Length == 0
+				? "Enter a body id or pick one with Browse bodies."
+				: "This id isn't in Body-External.xml, so there is nothing to preview.";
+			return;
+		}
+
+		_bodyTitle.Text = String.IsNullOrEmpty(_body.Name) ? $"Body {_body.Id}" : $"Body {_body.Id} · {_body.Name}";
+
+		var image = _body.Image;
+		var size = _body.Source is Int32Rect source ? $"{source.Width}×{source.Height}px"
+			: image is not null ? $"{image.PixelWidth}×{image.PixelHeight}px"
+			: "texture not found";
+
+		_bodyInfo.Text = $"{_body.Texture} · {size}";
+	}
+
+	/// <summary>A one-click hue on the Body &amp; Hue tab.</summary>
+	public sealed record HueSwatch(string Name, Color Color)
+	{
+		public Brush Brush { get; } = new SolidColorBrush(Color);
+	}
+
+	private void OnPlaySound(object sender, RoutedEventArgs e)
+	{
+		if (sender is not FrameworkElement { DataContext: SoundAsset sound })
+			return;
+
+		if (sound.FilePath is null)
+		{
+			_status.Text = $"No audio file found for sound {sound.Id}.";
+			return;
+		}
+
+		_player.Open(new Uri(sound.FilePath));
+		_player.Play();
+	}
+
+	private void OnCopySoundId(object sender, RoutedEventArgs e)
+	{
+		if (sender is not FrameworkElement { DataContext: SoundAsset sound })
+			return;
+
+		Clipboard.SetText(sound.Id.ToString());
+		_status.Text = $"Copied sound id {sound.Id}.";
+	}
+
+	private void OnSoundSearchChanged(object sender, TextChangedEventArgs e)
+	{
+		if (_catalog is null)
+			return;
+
+		var query = _soundSearch.Text.Trim();
+
+		_sounds.ItemsSource = query.Length == 0
+			? _catalog.Sounds
+			: _catalog.Sounds.Where(s => s.Id.ToString().Contains(query)
+			                             || s.Name.Contains(query, StringComparison.OrdinalIgnoreCase)
+			                             || s.Category.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
+	}
+}
