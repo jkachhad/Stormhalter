@@ -16,7 +16,7 @@ namespace Kesmai.WorldForge.Editor.Assets;
 
 /// <summary>
 /// Lists the choices offered by the OnSpawn asset panel: server types read from the Kesmai.Server.Reference
-/// package, and the bodies and sounds defined in the custom art folder (Body-External.xml, Audio-External.xml).
+/// package, and the bodies and sounds defined in the repository's Content folder (Body-External.xml, Audio-External.xml).
 /// </summary>
 public class AssetCatalog
 {
@@ -72,7 +72,7 @@ public class AssetCatalog
 			warnings.Add($"Server types could not be loaded: {e.Message}");
 		}
 
-		var contentPath = Core.CustomArtPath ?? String.Empty;
+		var contentPath = FindContentPath();
 
 		catalog.Bodies = LoadBodies(contentPath, warnings);
 		catalog.Sounds = LoadSounds(contentPath, warnings);
@@ -152,13 +152,37 @@ public class AssetCatalog
 			CollectTypes(child, types);
 	}
 
+	/// <summary>
+	/// Finds the folder holding Data\Body-External.xml and Data\Audio-External.xml: the custom art folder when it
+	/// has them, otherwise the Content folder of the repository WorldForge was built in.
+	/// </summary>
+	private static string FindContentPath()
+	{
+		static bool HasLists(string? path) => !String.IsNullOrEmpty(path)
+			&& File.Exists(Path.Combine(path, "Data", "Body-External.xml"))
+			&& File.Exists(Path.Combine(path, "Data", "Audio-External.xml"));
+
+		if (HasLists(Core.CustomArtPath))
+			return Core.CustomArtPath;
+
+		for (var directory = new DirectoryInfo(AppContext.BaseDirectory); directory != null; directory = directory.Parent)
+		{
+			var content = Path.Combine(directory.FullName, "Content");
+
+			if (HasLists(content))
+				return content;
+		}
+
+		return Core.CustomArtPath ?? String.Empty;
+	}
+
 	private static List<BodyAsset> LoadBodies(string contentPath, List<string> warnings)
 	{
 		var path = Path.Combine(contentPath, "Data", "Body-External.xml");
 
 		if (!File.Exists(path))
 		{
-			warnings.Add($"No body list at {path}. Point WorldForge's custom art folder at the repository's Content folder to see bodies.");
+			warnings.Add($"No body list at {path}. Run WorldForge from inside the repository, or point its custom art folder at the repository's Content folder, to see bodies.");
 			return [];
 		}
 
