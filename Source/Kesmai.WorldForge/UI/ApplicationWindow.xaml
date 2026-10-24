@@ -218,9 +218,37 @@
                     <Setter Property="Title" Value="{Binding Model.Name}" />
                 </Style>
             </DockingManager.LayoutItemContainerStyle>
-           
+
         </DockingManager>
-        
+
+        <!-- Start: while no segment is open, the empty document area offers to create or open one -->
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="300,0,0,0">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Segment}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="320" />
+                    <Setter Property="Height" Value="64" />
+                    <Setter Property="Margin" Value="0,8" />
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </StackPanel.Resources>
+            <Image Source="..\Resources\WorldForge-Logo.png" MaxWidth="320" MaxHeight="160" Stretch="Uniform" Margin="0,0,0,16" />
+            <Button Content="Create Segment..." Command="{Binding CreateSegmentCommand}" />
+            <Button Content="Open Segment" Command="{Binding OpenSegmentCommand}" />
+            <TextBlock Text="Both are also in the File menu." HorizontalAlignment="Center" Foreground="DimGray" Margin="0,6,0,0" />
+        </StackPanel>
+
         <StatusBar Grid.Row="2">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
