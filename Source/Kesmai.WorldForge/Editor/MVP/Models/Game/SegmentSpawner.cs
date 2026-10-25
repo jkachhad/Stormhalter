@@ -311,6 +311,94 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		set => ChangeBroadcast(b => b.Subregion = value ?? String.Empty);
 	}
 
+	// Sound on spawn: also kept in the OnAfterSpawn script (see SpawnSound), remembered here while it is off.
+	private SpawnSound _unsavedSound = new SpawnSound();
+
+	private SpawnSound CurrentSound
+	{
+		get
+		{
+			var written = SpawnSound.Read(AfterSpawnScript);
+			return written.Enabled ? written : _unsavedSound;
+		}
+	}
+
+	private void ChangeSound(Action<SpawnSound> change, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+	{
+		var sound = CurrentSound.Clone();
+
+		change(sound);
+		sound.Apply(AfterSpawnScript);
+
+		if (!sound.Enabled)
+			_unsavedSound = sound;
+
+		OnPropertyChanged(propertyName);
+		WeakReferenceMessenger.Default.Send(new SegmentSpawnChanged(this));
+	}
+
+	[Category("Sound on spawn")]
+	[DisplayName("Sound on spawn")]
+	[PropertyOrder(0)]
+	[Description("Optional. On: each time this spawner spawns a creature, the sound below plays. Off: no sound. With Spawn time options on, only spawns they allow make the sound.")]
+	public bool SoundOnSpawn
+	{
+		get => CurrentSound.Enabled;
+		set => ChangeSound(s => s.Enabled = value);
+	}
+
+	[Category("Sound on spawn")]
+	[DisplayName("Sound")]
+	[PropertyOrder(1)]
+	[System.ComponentModel.Editor(typeof(Kesmai.WorldForge.UI.SoundIdEditor), typeof(Kesmai.WorldForge.UI.SoundIdEditor))]
+	[Description("The sound to play: pick one from the repo's sound list (Audio-External.xml) or type a sound id. ▶ plays it here when the repo has its file.")]
+	public int SpawnSoundId
+	{
+		get => CurrentSound.SoundId;
+		set => ChangeSound(s => s.SoundId = value);
+	}
+
+	[Category("Sound on spawn")]
+	[DisplayName("Who hears it")]
+	[PropertyOrder(2)]
+	[Description("Nearby: anyone within Range tiles of the creature, the way creatures make their own sounds. Segment: every player in the segment. Region: every player in the region it spawned in. Subregion: only players inside the subregion picked below.")]
+	public SoundScope SpawnSoundScope
+	{
+		get => CurrentSound.Scope;
+		set => ChangeSound(s => s.Scope = value);
+	}
+
+	[Category("Sound on spawn")]
+	[DisplayName("Range (tiles)")]
+	[PropertyOrder(3)]
+	[Description("With Who hears it set to Nearby: how many tiles away the sound can be heard. Creature scripts mostly use 3.")]
+	public int SpawnSoundRange
+	{
+		get => CurrentSound.Range;
+		set => ChangeSound(s => s.Range = Math.Max(0, value));
+	}
+
+	[Category("Sound on spawn")]
+	[DisplayName("Volume")]
+	[PropertyOrder(4)]
+	[Description("How loud it plays, on the same scale scripts use with EmitSound; they mostly use 9.")]
+	public int SpawnSoundVolume
+	{
+		get => CurrentSound.Volume;
+		set => ChangeSound(s => s.Volume = Math.Clamp(value, 0, 255));
+	}
+
+	[Category("Sound on spawn")]
+	[DisplayName("Subregion")]
+	[PropertyOrder(5)]
+	[System.ComponentModel.Editor(typeof(Kesmai.WorldForge.UI.SubregionNameEditor), typeof(Kesmai.WorldForge.UI.SubregionNameEditor))]
+	[Description("With Who hears it set to Subregion: the subregion whose players hear the sound. It must be in the region the creature spawns in.")]
+	public string SpawnSoundSubregion
+	{
+		get => CurrentSound.Subregion;
+		set => ChangeSound(s => s.Subregion = value ?? String.Empty);
+	}
+
 	[Browsable(false)]
 	public ObservableCollection<SpawnEntry> Entries { get; set; } = new ObservableCollection<SpawnEntry>();
 
