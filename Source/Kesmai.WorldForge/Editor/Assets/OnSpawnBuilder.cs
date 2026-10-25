@@ -579,7 +579,16 @@ public partial class OnSpawnBuilder : ObservableObject
 			lines.Add(String.Empty);
 		}
 
-		lines.AddRange(GenerateDialogue(v));
+		if (DialogueAllowed)
+		{
+			lines.AddRange(GenerateDialogue(v));
+		}
+		else if (_dialogueAsRead != null)
+		{
+			// not a humanoid: options the script already had are written back untouched, and none are added
+			Chunk(_dialogueAsRead);
+			lines.Add(String.Empty);
+		}
 
 		if (Has(OtherStatements))
 		{
@@ -1032,7 +1041,10 @@ public partial class OnSpawnBuilder : ObservableObject
 		// creature.Gossips = new List<GossipInteraction>() { ... };
 		if (expression is AssignmentExpressionSyntax { Left: MemberAccessExpressionSyntax { Expression: IdentifierNameSyntax gossipOwner, Name.Identifier.Text: "Gossips" } } gossips
 		    && gossips.IsKind(SyntaxKind.SimpleAssignmentExpression) && gossipOwner.Identifier.Text == v && ReadDialogue(gossips.Right))
+		{
+			_dialogueAsRead = Verbatim([statement]);
 			return Done();
+		}
 
 		// creature.CombatantSearchStrategy = (attacker) => new RandomSearchStrategy();
 		if (expression is AssignmentExpressionSyntax { Left: MemberAccessExpressionSyntax { Expression: IdentifierNameSyntax strategyOwner, Name.Identifier.Text: "CombatantSearchStrategy" } } strategy

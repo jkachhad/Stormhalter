@@ -24,6 +24,21 @@ public partial class OnSpawnBuilder
 	// written back as "[ ... ]" when the script used a collection expression
 	private bool _dialogueAsCollectionExpression;
 
+	// the Gossips statement as the script had it, written back as is while dialogue isn't allowed
+	private string? _dialogueAsRead;
+
+	private bool _dialogueAllowed = true;
+
+	/// <summary>
+	/// False when the creature class isn't a Humanoid: only humanoids have Shift+Right Click options, so the tab's
+	/// options aren't written (the script's own Gossips code, if any, is kept as it was).
+	/// </summary>
+	public bool DialogueAllowed
+	{
+		get => _dialogueAllowed;
+		set => Set(ref _dialogueAllowed, value);
+	}
+
 	public const string QuestKeyPrefix = "Quest:";
 
 	/// <summary>Quest states as shown in the form; "Not started" is stored as an empty string.</summary>

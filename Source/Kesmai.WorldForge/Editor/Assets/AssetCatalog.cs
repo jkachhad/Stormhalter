@@ -47,6 +47,9 @@ public class AssetCatalog
 	/// <summary>Status classes for AddStatus, such as NightVisionStatus.</summary>
 	public IReadOnlyList<string> Statuses { get; private set; } = [];
 
+	/// <summary>Each server class's base class, by name, so a segment class can be followed down to the server's.</summary>
+	public IReadOnlyDictionary<string, string> BaseTypes { get; private set; } = new Dictionary<string, string>();
+
 	/// <summary>EntityStat members for Stats[EntityStat.X].Base.</summary>
 	public IReadOnlyList<string> EntityStats { get; private set; } = [];
 
@@ -179,6 +182,13 @@ public class AssetCatalog
 			.Where(f => f.IsStatic && f.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public && f.Type.Name == "Skill")
 			.Select(f => f.Name)
 			.ToList() ?? [];
+
+		var bases = new Dictionary<string, string>();
+
+		foreach (var type in types.Where(t => t.TypeKind == TypeKind.Class && t.BaseType != null))
+			bases.TryAdd(type.Name, type.BaseType!.Name);
+
+		BaseTypes = bases;
 
 		Statuses = types
 			.Where(t => !t.IsAbstract && !t.IsGenericType && t.DeclaredAccessibility == Microsoft.CodeAnalysis.Accessibility.Public)
