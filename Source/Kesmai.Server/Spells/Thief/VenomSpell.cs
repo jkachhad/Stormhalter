@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Items;
 using Kesmai.Server.Network;
@@ -151,6 +152,8 @@ public class VenomSpell : DelayedSpell
 
 public class Venom : Poison
 {
+	/* weapons save only the potency and load their poison as venom, so this is the poison game masters can create. */
+	[CommandConstructor]
 	public Venom(int potency) : base(TimeSpan.Zero, potency, true)
 	{
 	}
