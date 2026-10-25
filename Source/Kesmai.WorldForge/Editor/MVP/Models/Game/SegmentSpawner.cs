@@ -311,6 +311,87 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		set => ChangeBroadcast(b => b.Subregion = value ?? String.Empty);
 	}
 
+	// Spawn after kills: part of the spawn time block, plus a counter (KillCountHook) on the enemy's OnDeath script while
+	// any spawner in the segment uses that enemy.
+	private void ChangeKills(Action<SpawnTimeWindow> change, [System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+	{
+		var before = CurrentSpawnTime.UseKills ? CurrentSpawnTime.KillEnemy : null;
+
+		ChangeSpawnTime(change, propertyName);
+
+		var after = CurrentSpawnTime.UseKills ? CurrentSpawnTime.KillEnemy : null;
+
+		foreach (var enemy in new[] { before, after }.Where(e => !String.IsNullOrWhiteSpace(e)).Distinct())
+			SyncKillCounter(enemy);
+	}
+
+	/// <summary>Adds the counter to the enemy's OnDeath while a spawner in the segment needs it, and takes it out once none does.</summary>
+	private void SyncKillCounter(string enemy)
+	{
+		var request = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+		var segment = request.HasReceivedResponse ? request.Response : null;
+		var entity = segment?.Entities.FirstOrDefault(e => String.Equals(e.Name, enemy.Trim(), StringComparison.Ordinal));
+		var onDeath = entity?.Scripts.FirstOrDefault(s => s.Name == "OnDeath");
+
+		if (segment is null || entity is null || onDeath is null)
+			return;
+
+		var spawners = segment.Spawns.Location.Cast<SegmentSpawner>().Concat(segment.Spawns.Region).Append(this).Distinct();
+		var needed = spawners.Any(s => s.CurrentSpawnTime is { UseKills: true } w && String.Equals(w.KillEnemy.Trim(), enemy.Trim(), StringComparison.Ordinal));
+		var installed = KillCountHook.IsInstalled(onDeath);
+
+		if (needed == installed)
+			return;
+
+		if (needed)
+			KillCountHook.Install(onDeath, enemy);
+		else
+			KillCountHook.Remove(onDeath);
+
+		WeakReferenceMessenger.Default.Send(new SegmentEntityChanged(entity));
+	}
+
+	[Category("Spawn after kills")]
+	[DisplayName("Spawn after kills")]
+	[PropertyOrder(0)]
+	[Description("Optional. On: the spawner only spawns once players have killed the enemy below enough times since its last spawn. WorldForge adds a small kill counter to that enemy's OnDeath script, and takes it out again when no spawner uses that enemy. Works together with the Spawn time options: all that are on must allow the spawn.")]
+	public bool SpawnAfterKills
+	{
+		get => CurrentSpawnTime.UseKills;
+		set => ChangeKills(w => w.UseKills = value);
+	}
+
+	[Category("Spawn after kills")]
+	[DisplayName("Enemy")]
+	[PropertyOrder(1)]
+	[System.ComponentModel.Editor(typeof(Kesmai.WorldForge.UI.EntityNameEditor), typeof(Kesmai.WorldForge.UI.EntityNameEditor))]
+	[Description("The entity whose deaths count, picked from this segment's entities (a name can be typed too). Its OnDeath script gets the counter.")]
+	public string KillEnemy
+	{
+		get => CurrentSpawnTime.KillEnemy;
+		set => ChangeKills(w => w.KillEnemy = (value ?? String.Empty).Trim());
+	}
+
+	[Category("Spawn after kills")]
+	[DisplayName("Kills needed")]
+	[PropertyOrder(2)]
+	[Description("How many of the enemy must die before each spawn. After a spawn the count starts again, so the next spawn needs this many more kills.")]
+	public int KillsNeeded
+	{
+		get => CurrentSpawnTime.KillsNeeded;
+		set => ChangeKills(w => w.KillsNeeded = Math.Max(1, value));
+	}
+
+	[Category("Spawn after kills")]
+	[DisplayName("Count kills in")]
+	[PropertyOrder(3)]
+	[Description("Segment: deaths of the enemy anywhere in this segment count. Region: only deaths in the region this spawner spawns in count.")]
+	public KillCountArea KillsCountedIn
+	{
+		get => CurrentSpawnTime.KillsInRegion ? KillCountArea.Region : KillCountArea.Segment;
+		set => ChangeKills(w => w.KillsInRegion = value == KillCountArea.Region);
+	}
+
 	// Sound on spawn: also kept in the OnAfterSpawn script (see SpawnSound), remembered here while it is off.
 	private SpawnSound _unsavedSound = new SpawnSound();
 
