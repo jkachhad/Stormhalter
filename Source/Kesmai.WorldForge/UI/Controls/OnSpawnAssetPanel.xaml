@@ -406,8 +406,13 @@
                             <TextBlock TextWrapping="Wrap" Foreground="DimGray" FontSize="11" Margin="0,0,0,4"
                                        Text="The options a player sees on Shift+Right Click. Each one can need a quest to be in a state, then runs its steps in order. Quests are tracked per player by name, so another creature's dialogue can check the same quest. Only humanoid creatures have these options." />
 
+                            <Border x:Name="_dialogueWarningBox" Visibility="Collapsed" Background="#FFFFF4D6" BorderBrush="#FFE0A800"
+                                    BorderThickness="1" Padding="6" Margin="0,0,0,6">
+                                <TextBlock x:Name="_dialogueWarning" TextWrapping="Wrap" />
+                            </Border>
+
                             <TextBlock Text="Options" FontWeight="Bold" />
-                            <DockPanel>
+                            <DockPanel x:Name="_dialogueOptionsList">
                                 <StackPanel DockPanel.Dock="Right" Margin="4,0,0,0">
                                     <Button Content="Add" Click="OnDialogueAdd" Margin="0,0,0,3" />
                                     <Button Content="Remove" Click="OnDialogueRemove" Margin="0,0,0,3" />
