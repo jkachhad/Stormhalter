@@ -382,7 +382,7 @@ public partial class Shopkeeper : VendorEntity
 		QueueRestockTimer();
 	}
 
-	private sealed class ShowPricesInteraction : InteractionEntry
+	private sealed class ShowPricesInteraction : VendorInteraction
 	{
 		public static readonly ShowPricesInteraction Instance = new ShowPricesInteraction();
 		
@@ -390,41 +390,31 @@ public partial class Shopkeeper : VendorEntity
 		{
 		}
 
-		public override void OnClick(PlayerEntity source, WorldEntity target)
+		protected override void OnClick(PlayerEntity source, VendorEntity vendor, Point2D counter)
 		{
-			if (source is null || !(target is Shopkeeper shopkeeper))
+			if (vendor is not Shopkeeper shopkeeper)
 				return;
 
-			if (shopkeeper.AtCounter(source, out var _))
+			/* We Iterate all the items in the stock to keep index values consistent with list. */
+			if (shopkeeper._stock.Any(s => !s.IsEmpty))
 			{
-				/* We Iterate all the items in the stock to keep index values consistent with list. */
-				if (shopkeeper._stock.Any(s => !s.IsEmpty))
+				shopkeeper.SayTo(source, 6300382); /* I will sell to you .. */
+					
+				for (int i = 0; i < shopkeeper._stock.Count; i++)
 				{
-					shopkeeper.SayTo(source, 6300382); /* I will sell to you .. */
-						
-					for (int i = 0; i < shopkeeper._stock.Count; i++)
-					{
-						var stock = shopkeeper._stock[i];
+					var stock = shopkeeper._stock[i];
 
-						/* Do not list empty entries. */
-						if (!stock.IsEmpty)
-							shopkeeper.SayTo(source, 6300384, stock.Name.WithArticle(), stock.Cost.ToString(), (i + 1).ToString());
-					}
-				}
-				else
-				{
-					shopkeeper.SayTo(source, 6300381); /* I don't have anything of interest. */
-
-					if (shopkeeper._stock.Any(s => !s.IsFull) && (shopkeeper._restockTimer is null || !shopkeeper._restockTimer.Running))
-						Log.Warn($"[{shopkeeper.Segment.Name}] Shopkeeper '{shopkeeper.Name}' at {shopkeeper.Location} not restocking.");
+					/* Do not list empty entries. */
+					if (!stock.IsEmpty)
+						shopkeeper.SayTo(source, 6300384, stock.Name.WithArticle(), stock.Cost.ToString(), (i + 1).ToString());
 				}
 			}
 			else
 			{
-				if (shopkeeper._counters.Any())
-					shopkeeper.SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					shopkeeper.SayTo(source, 6300237); /* Please stand closer to me. */
+				shopkeeper.SayTo(source, 6300381); /* I don't have anything of interest. */
+
+				if (shopkeeper._stock.Any(s => !s.IsFull) && (shopkeeper._restockTimer is null || !shopkeeper._restockTimer.Running))
+					Log.Warn($"[{shopkeeper.Segment.Name}] Shopkeeper '{shopkeeper.Name}' at {shopkeeper.Location} not restocking.");
 			}
 		}
 	}
@@ -465,7 +455,7 @@ public partial class Shopkeeper : VendorEntity
 		}
 	}
 
-	private sealed class BuyAllInteraction : InteractionEntry
+	private sealed class BuyAllInteraction : VendorInteraction
 	{
 		public static readonly BuyAllInteraction Instance = new BuyAllInteraction();
 		
@@ -473,25 +463,12 @@ public partial class Shopkeeper : VendorEntity
 		{
 		}
 
-		public override void OnClick(PlayerEntity source, WorldEntity target)
+		protected override void OnClick(PlayerEntity source, VendorEntity vendor, Point2D counter)
 		{
-			if (source is null || !(target is Shopkeeper shopkeeper))
+			if (vendor is not Shopkeeper shopkeeper)
 				return;
-
-			if (!shopkeeper.AtCounter(source, out var counter))
-			{
-				if (shopkeeper._counters.Any())
-					shopkeeper.SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					shopkeeper.SayTo(source, 6300237); /* Please stand closer to me. */
-
-				return;
-			}
 
 			var segment = shopkeeper.Segment;
-
-			if (segment is null)
-				return;
 
 			var items = segment.GetItemsAt(counter, "all", (i) => i is Gold).ToList();
 			var totalValue = (uint)items.Sum(i => i.ActualPrice * i.Amount);
