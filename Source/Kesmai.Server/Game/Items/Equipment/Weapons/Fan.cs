@@ -61,6 +61,12 @@ public class Fan : Weapon, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200302)); /* a fan with black steel blades. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

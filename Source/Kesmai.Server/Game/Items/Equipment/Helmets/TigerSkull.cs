@@ -52,6 +52,12 @@ public class TigerSkull : Helmet, ITreasure
 			entries.Add(new LocalizationEntry(6250107)); /* The skull is fairly thick. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200212)); /* a tiger skull. */
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

@@ -49,6 +49,12 @@ public class GiltDagger : Dagger
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200155)); /* a gilt-handled dagger with a fine steel blade. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

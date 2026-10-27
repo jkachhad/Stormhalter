@@ -35,6 +35,12 @@ public class IceDragonFigurine : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200319)); /* [You are looking at] [a blue figurine of a dragon in flight.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200319)); /* a blue figurine of a dragon in flight. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

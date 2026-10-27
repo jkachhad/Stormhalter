@@ -34,6 +34,12 @@ public class BearJacket : Jacket
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200203)); /* a coat made from the hide of a single huge bear. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

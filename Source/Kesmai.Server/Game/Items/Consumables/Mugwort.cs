@@ -53,6 +53,12 @@ public class Mugwort : Food
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250119)); /* The sprig contains the spell of Neutralize. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200231)); /* a dark-green sprig of mugwort. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

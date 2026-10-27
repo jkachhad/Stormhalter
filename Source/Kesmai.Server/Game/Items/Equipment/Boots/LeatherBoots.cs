@@ -37,6 +37,12 @@ public class LeatherBoots : Boots
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250102)); /* The boots appear quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200206)); /* a pair of soft leather boots. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

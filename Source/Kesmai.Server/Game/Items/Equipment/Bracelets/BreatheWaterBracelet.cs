@@ -37,6 +37,12 @@ public class BreatheWaterBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250031)); /* The bracelet contains the spell of Breathe Water. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200041)); /* a silver bracelet set with tiny jade dolphins. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -93,5 +99,13 @@ public class BreatheWaterBracelet : Bracelet, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 504); /* Grants Breathe Water. */
 	}
 }

@@ -36,6 +36,12 @@ public class SmallWhitePearl : Gem
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200293)); /* a small white pearl. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

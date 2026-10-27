@@ -59,6 +59,12 @@ public class KoshGauntlets : Gauntlets, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250094)); /* The combat adds for the gauntlets are +2. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6290012)); /* a pair of gauntlets made from leathery dragon skin with shiny blue-steel plates. */
+	}
 		
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

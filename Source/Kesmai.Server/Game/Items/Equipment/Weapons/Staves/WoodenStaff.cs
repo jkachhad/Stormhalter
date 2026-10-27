@@ -49,6 +49,12 @@ public class WoodenStaff : Staff
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200135)); /* a wooden staff. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

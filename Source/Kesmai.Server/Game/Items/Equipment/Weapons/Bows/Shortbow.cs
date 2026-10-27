@@ -52,6 +52,12 @@ public class Shortbow : Bow
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200034)); /* a shortbow. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

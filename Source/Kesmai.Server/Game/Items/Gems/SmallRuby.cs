@@ -32,6 +32,12 @@ public class SmallRuby : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200021)); /* [You are looking at] [a small red gem.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200021)); /* a small red gem. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

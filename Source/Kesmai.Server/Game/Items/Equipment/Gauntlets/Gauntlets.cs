@@ -46,6 +46,18 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 
 	/// <inheritdoc />
 	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int MeleeDamageMitigation => 0;
+
+	/// <inheritdoc />
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int RangedDamageMitigation => 0;
+
+	/// <inheritdoc />
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int ProjectileDamageMitigation => 0;
+
+	/// <inheritdoc />
+	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int MinimumDamage => 0;
 
 	/// <inheritdoc />
@@ -66,7 +78,22 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int MaxRange => 0;
 
-	public Poison Poison { get; set; }
+	private Poison _poison;
+
+	/// <summary>
+	/// Gets or sets the poison applied to these <see cref="Gauntlets"/>.
+	/// </summary>
+	public Poison Poison
+	{
+		get => _poison;
+		set
+		{
+			if (_poison != value)
+				InvalidateTooltip();
+
+			_poison = value;
+		}
+	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gauntlets"/> class.
@@ -135,6 +162,16 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	public virtual void OnHit(MobileEntity attacker, MobileEntity defender)
 	{
 	}
+
+	/// <inheritdoc />
+	public virtual void OnCriticalHit(MobileEntity attacker, MobileEntity defender)
+	{
+	}
+
+	/// <inheritdoc />
+	public virtual void OnMiss(MobileEntity attacker, MobileEntity defender)
+	{
+	}
 	
 	/// <inheritdoc />
 	public virtual void OnBlock(MobileEntity attacker)
@@ -164,11 +201,20 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		if (Poison is { } poison)
+			poison.AddTooltipEntry(tooltip);
+	}
+
+	/// <inheritdoc />
 	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
 	{
 		base.GetClientProperties(observer, properties);
 
-		if (RequiresIdentification && !Identified)
+		if (!Identified)
 			return;
 
 		// the skill identifier, not the implicit int conversion (which is a zero-based index).
@@ -207,6 +253,35 @@ public abstract class Gauntlets : Equipment, IWeapon, IArmored
 
 		if (ProjectileProtection != 0)
 			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+
+		if (MeleeDamageMitigation != 0)
+			properties.Set(ItemPropertyId.MeleeDamageMitigation, MeleeDamageMitigation);
+
+		if (RangedDamageMitigation != 0)
+			properties.Set(ItemPropertyId.RangedDamageMitigation, RangedDamageMitigation);
+
+		if (ProjectileDamageMitigation != 0)
+			properties.Set(ItemPropertyId.ProjectileDamageMitigation, ProjectileDamageMitigation);
+	}
+
+	/// <inheritdoc />
+	protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
+	{
+		var modifiers = base.GetBaseModifiers(wearer);
+
+		if (CanApplyStatModifiers(wearer))
+		{
+			if (MeleeDamageMitigation != 0)
+				modifiers.Add(EntityStat.MeleeDamageMitigation, MeleeDamageMitigation);
+
+			if (RangedDamageMitigation != 0)
+				modifiers.Add(EntityStat.RangedDamageMitigation, RangedDamageMitigation);
+
+			if (ProjectileDamageMitigation != 0)
+				modifiers.Add(EntityStat.ProjectileDamageMitigation, ProjectileDamageMitigation);
+		}
+
+		return modifiers;
 	}
 	
 	/// <inheritdoc />

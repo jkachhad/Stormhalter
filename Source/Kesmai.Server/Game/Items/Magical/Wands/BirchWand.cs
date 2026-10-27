@@ -44,6 +44,12 @@ public class BirchWand : Wand, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250114)); /* The wand contains the spell of Blind. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200225)); /* a birch wand. */
+	}
 		
 	public override Spell GetSpell()
 	{

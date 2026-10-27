@@ -48,6 +48,12 @@ public class PermanentWisdomPotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200107)); /* a heavy glass bottle mounted on a gold base and set with emeralds. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

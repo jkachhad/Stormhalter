@@ -28,6 +28,24 @@ public interface IArmored
 	/// Gets the protection provided against projectile attacks.
 	/// </summary>
 	int ProjectileProtection { get; }
+
+	/// <summary>
+	/// Gets the melee damage mitigation provided to the wearer.
+	/// </summary>
+	/// <remarks>
+	/// The mitigation members default to 0 so that items implementing this interface directly still compile.
+	/// </remarks>
+	int MeleeDamageMitigation => 0;
+
+	/// <summary>
+	/// Gets the ranged damage mitigation provided to the wearer.
+	/// </summary>
+	int RangedDamageMitigation => 0;
+
+	/// <summary>
+	/// Gets the projectile damage mitigation provided to the wearer.
+	/// </summary>
+	int ProjectileDamageMitigation => 0;
 	
 	/// <summary>
 	/// Triggered when this weapon blocks an attack from the specified attacker.

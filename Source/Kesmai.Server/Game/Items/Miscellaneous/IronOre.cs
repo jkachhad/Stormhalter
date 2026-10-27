@@ -49,6 +49,12 @@ public class IronOre : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200220)); /* [You are looking at] [a lump of iron ore.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200220)); /* a lump of iron ore. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

@@ -763,6 +763,9 @@
   <entry index="6200393">a silver ring with a fiery red ruby inset among a circle of diamonds</entry>
   <entry index="6200394">a finely crafted two handed sword that was forged from the finest umbral steel in the land.</entry>
   <entry index="6200395">An Eerie Skull - Halloween 2023.</entry>
+  <entry index="6200396">a book entitled '{0}' written by {1}.</entry>
+  <entry index="6200397">the body of {0}.</entry>
+  <entry index="6200398">an experimental cloak.</entry>
 
   <entry index="6250001">The armor seems quite ordinary.</entry>
   <entry index="6250002">The combat adds for this weapon are +5.</entry>
@@ -901,6 +904,23 @@
   <entry index="6250135">The hat emanates power, and shimmers as you touch it. It contains the spell of Night Vision.</entry>
   <entry index="6250136">The jacket is so intensely black it that appears to be bending the fabric of space and time around it. It contains the spell of Speed.</entry>
   <entry index="6250137">The ring provides and increase to Critical Hit Chance and Damage, but makes you feel vulnerable to the magic arts.</entry>
+
+  <!-- Tooltip Descriptions (6290000-6299999) -->
+  <entry index="6290000">a heavy battle axe with gleaming steel blades.</entry>
+  <entry index="6290001">a black broadsword.</entry>
+  <entry index="6290002">a long black iron rod with glowing red gems arranged in a ring near the center.</entry>
+  <entry index="6290003">a heavy crossbow with an ornately carved tiller and a peculiar black steel bow.</entry>
+  <entry index="6290004">a long black iron rod with glowing red gems arranged in a ring near the center.</entry>
+  <entry index="6290005">a large steel throwing hammer.</entry>
+  <entry index="6290006">a huge battle axe with shining silver blades.</entry>
+  <entry index="6290007">an exquisite lemurian misericorde dagger whose honed finish reveals the wood grained texture of the metal.</entry>
+  <entry index="6290008">an ebony staff encrusted with diamonds. The weapon emanates power.</entry>
+  <entry index="6290009">an impossibly thin black blade mounted on a silver hilt.</entry>
+  <entry index="6290010">a fine sword made of an otherworldly metal. Looking at the blade makes you dizzy, as if you were looking at the wings of a hummingbird.</entry>
+  <entry index="6290011">an antique Lengian parrying dagger with a gold heron inscribed in the smooth blue gilted metal. The weapon feels exceptionally well balanced.</entry>
+  <entry index="6290012">a pair of gauntlets made from leathery dragon skin with shiny blue-steel plates.</entry>
+  <entry index="6290013">a large gnarled staff with a ram skull attached.</entry>
+  <entry index="6290014">an unholy scepter that has the markings of a corrupted queen. The weapon emanates power.</entry>
 
   <entry index="6300001">You feel a momentary vibration in the {0} as you lift it.</entry>
 
@@ -1230,6 +1250,7 @@
   <entry index="6300437">Please put {0} {1} on the counter.</entry>
   <entry index="6300438">Please put {0} {1} on the ground.</entry>
   <entry index="6300439">For you, I will sell one for {0} {1}.</entry>
+  <entry index="6300440">You must be level {0} to use this.</entry>
   
   <!-- Ingrid Gossip -->
   <entry index="6300500">Since the fire, Oakvael's gone completely silent. No word, no messengers. My brother was there—he's a knight—and I don't know if silence means he rode out, or worse.</entry>
@@ -1366,4 +1387,864 @@
 
   <entry index="6500020">Train: {0}</entry>
   <entry index="6500021">Critique: {0}</entry>
+
+  <!-- Tooltips -->
+  <entry index="6600000">Charges: {0} / {1}</entry>
+  <entry index="6600001">Enchanted</entry>
+  <entry index="6600002">Conjured</entry>
+  <entry index="6600003">Owner: {0}</entry>
+  <entry index="6600004">Unbound</entry>
+  <entry index="6600005">Unidentified</entry>
+  <entry index="6600006">Spell: {0}</entry>
+  <entry index="6600007">Skill: {0}</entry>
+  <entry index="6600010">Sword</entry>
+  <entry index="6600011">Mace</entry>
+  <entry index="6600012">Bow</entry>
+  <entry index="6600013">Dagger</entry>
+  <entry index="6600014">Staff</entry>
+  <entry index="6600015">Flail</entry>
+  <entry index="6600016">Rapier</entry>
+  <entry index="6600017">Throwing</entry>
+  <entry index="6600018">Halberd</entry>
+  <entry index="6600019">Greatstaff</entry>
+  <entry index="6600020">Greatsword</entry>
+  <entry index="6600021">Thieving</entry>
+  <entry index="6600022">Hand</entry>
+  <entry index="6600023">Magic</entry>
+  <entry index="6600030">Two-Handed</entry>
+  <entry index="6600031">Silver</entry>
+  <entry index="6600032">Blue Glowing</entry>
+  <entry index="6600033">Throwable</entry>
+  <entry index="6600034">Returning</entry>
+  <entry index="6600035">Must Throw</entry>
+  <entry index="6600036">Quick Throw</entry>
+  <entry index="6600037">Lawful</entry>
+  <entry index="6600038">Chaotic</entry>
+  <entry index="6600039">Neutral</entry>
+  <entry index="6600040">{0} Health Regeneration</entry>
+  <entry index="6600041">{0} Stamina Regeneration</entry>
+  <entry index="6600042">{0} Mana Regeneration</entry>
+  <entry index="6600043">{0} Hindrance</entry>
+  <entry index="6600044">Restricts spellcasting</entry>
+  <entry index="6600045">Swing Delay: {0} rounds</entry>
+  <entry index="6600046">Poisoned ({0})</entry>
+  <entry index="6600047">Enchanted ({0} Attack Bonus)</entry>
+  <entry index="6600048">Lawful (+1 Attack Bonus vs. Evil)</entry>
+  <entry index="6600050">{0} Melee Mitigation</entry>
+  <entry index="6600051">{0} Ranged Mitigation</entry>
+  <entry index="6600052">{0} Projectile Mitigation</entry>
+  <entry index="6600053">{0} Magic Damage Dealt</entry>
+  <entry index="6600054">{0} Magic Damage Dealt Reduction</entry>
+  <entry index="6600055">{0} Magic Damage Bonus</entry>
+  <entry index="6600056">{0} Magic Damage Taken Reduction</entry>
+  <entry index="6600057">{0} Magic Critical Strike Chance</entry>
+  <entry index="6600058">{0} Magic Critical Strike Damage</entry>
+  <entry index="6600059">{0} Max Health</entry>
+  <entry index="6600060">{0} Max Mana</entry>
+  <entry index="6600061">{0} Max Stamina</entry>
+  <entry index="6600062">{0} Barrier</entry>
+  <entry index="6600063">{0} Strength</entry>
+  <entry index="6600064">{0} Dexterity</entry>
+  <entry index="6600065">{0} Strength Adds</entry>
+  <entry index="6600066">{0} Fire Protection</entry>
+  <entry index="6600067">{0} Ice Protection</entry>
+  <entry index="6600068">{0} Daze Protection</entry>
+  <entry index="6600069">{0} Death Protection</entry>
+  <entry index="6600070">{0} Lightning Resistance</entry>
+  <entry index="6600071">{0} Spell Focus</entry>
+  <entry index="6600072">{0} Maximum Fire Protection</entry>
+  <entry index="6600073">{0} Maximum Ice Protection</entry>
+  <entry index="6600074">{0} Spell Clearcast Chance</entry>
+  <entry index="6600075">{0}s Mana Recovery Delay</entry>
+  <entry index="6600080">Bow</entry>
+  <entry index="6600081">Crossbow</entry>
+  <entry index="6600082">Projectile</entry>
+  <entry index="6600083">Piercing</entry>
+  <entry index="6600084">Slashing</entry>
+  <entry index="6600085">Bashing</entry>
+  <entry index="6600086">Snake Staff</entry>
+  <entry index="6600090">Use: {0}</entry>
+  <entry index="6600091">Equip: {0}</entry>
+  <entry index="6600092">Hit: {0}</entry>
+  <entry index="6600093">Critical Hit: {0}</entry>
+  <entry index="6600094">Block: {0}</entry>
+  <entry index="6600095">Parry: {0}</entry>
+  <entry index="6600096">Miss: {0}</entry>
+  <entry index="6600097">Requires Level {0}</entry>
+  <entry index="6600110">Socket: {0}</entry>
+  <entry index="6600111">None</entry>
+  <entry index="6600112">Minotaur Gem</entry>
+  <entry index="6600113">Queen Gem</entry>
+  <entry index="6600114">Void Gem</entry>
+
+  <!-- Tooltip Effects (6610000-6619999): the text of "Use:", "Equip:" and other effect lines, without the prefix. -->
+  <!-- Equipped and used effects -->
+  <entry index="6610000">Grants {0}.</entry>
+  <entry index="6610001">Grants {0} while it has charges.</entry>
+  <entry index="6610002">Casts {0}.</entry>
+  <entry index="6610003">Casts {0} on a target.</entry>
+  <entry index="6610004">Lets you walk on water.</entry>
+  <entry index="6610005">Grants {0} to Fighters.</entry>
+  <entry index="6610006">Grants {0} to Thieves.</entry>
+  <entry index="6610007">Grants {0} to Wizards.</entry>
+  <entry index="6610008">Grants {0} to Thaumaturges.</entry>
+  <entry index="6610009">Grants {0} to Knights.</entry>
+  <entry index="6610010">Grants {0} to Martial Artists.</entry>
+  <entry index="6610011">Grants {0} to Thaumaturges, Wizards and Thieves.</entry>
+  <entry index="6610012">Lets you walk on water at level 30 or higher.</entry>
+  <entry index="6610013">Removes any magic damage bonus.</entry>
+  <!-- Potions, balms and other consumables -->
+  <entry index="6610020">Restores {0} health.</entry>
+  <entry index="6610021">Hurts you for {0} damage, though not below 1 health.</entry>
+  <entry index="6610022">Poisons you with potency {0}.</entry>
+  <entry index="6610023">Weakens your poison by {0}.</entry>
+  <entry index="6610024">Weakens any poison stronger than potency 5 to potency 5.</entry>
+  <entry index="6610025">Cures blindness.</entry>
+  <entry index="6610026">Restores {0} mana.</entry>
+  <entry index="6610027">Fully restores your mana.</entry>
+  <entry index="6610028">Removes up to {0} of your maximum mana penalty and fully restores your mana.</entry>
+  <entry index="6610029">Restores {0} stamina.</entry>
+  <entry index="6610030">Fully restores your stamina.</entry>
+  <entry index="6610031">Makes you younger.</entry>
+  <entry index="6610032">Burns you for 10 damage. Thrown, it bursts into flames.</entry>
+  <entry index="6610033">Burns you for 10 damage. Thrown, it explodes in a concussive blast.</entry>
+  <entry index="6610034">Permanently raises your Strength by 1, but may blind and daze you.</entry>
+  <entry index="6610035">Permanently raises your Dexterity by 1, but may blind and daze you.</entry>
+  <entry index="6610036">Permanently raises your Intelligence by 1.</entry>
+  <entry index="6610037">Permanently raises your Willpower by 1.</entry>
+  <entry index="6610038">Permanently raises your Wisdom by 1.</entry>
+  <entry index="6610039">Permanently raises your Constitution by 2, reduces your maximum health and stamina penalties by 4, and fully restores you.</entry>
+  <entry index="6610040">Heals you over time.</entry>
+  <entry index="6610041">Venom on this dagger poisons at {0} times its potency.</entry>
+  <!-- Item abilities -->
+  <entry index="6610050">Holds gold dropped onto it, and sets it down near you again.</entry>
+  <entry index="6610051">Turns a gem into gold, then recharges for 60 rounds.</entry>
+  <entry index="6610052">Identifies the item in your right hand. Use it from your left hand.</entry>
+  <entry index="6610053">Remembers where you put it on. Taking it off returns you there and destroys the ring.</entry>
+  <!-- Progress bars -->
+  <entry index="6610060">Level {0}</entry>
+  <entry index="6610061">Level {0} (maximum)</entry>
+  <entry index="6610062">Experience</entry>
+
+  <!-- Segments: 100000000 + segment id * 1000000. Each segment has a block of 1000000 entries. -->
+
+  <!-- Segment 1: Kesmai (101000000-101999999) -->
+  <entry index="101000000">Kesmai</entry>
+  <!-- Kesmai: Item Names (101000001-101099999) -->
+  <!-- Kesmai: Item Text (101100000-101199999) -->
+  <!-- Kesmai: Speech and Quests (101200000-101299999) -->
+  <!-- Kesmai: Messages (101300000-101399999) -->
+  <!-- Kesmai: Reserved (101400000-101899999) -->
+  <!-- Kesmai: Tooltip Descriptions (101900000-101999999) -->
+  <entry index="101900000">an eery skull - halloween 2024. Trick.. or Treat.</entry>
+  <entry index="101900001">an eery skull - halloween 2025. Trick.. or Treat.</entry>
+
+  <!-- Segment 2: Leng (102000000-102999999) -->
+  <entry index="102000000">Leng</entry>
+  <!-- Leng: Item Names (102000001-102099999) -->
+  <!-- Leng: Item Text (102100000-102199999) -->
+  <!-- Leng: Speech and Quests (102200000-102299999) -->
+  <!-- Leng: Messages (102300000-102399999) -->
+  <!-- Leng: Reserved (102400000-102899999) -->
+  <!-- Leng: Tooltip Descriptions (102900000-102999999) -->
+
+  <!-- Segment 3: Axe Glacier (103000000-103999999) -->
+  <entry index="103000000">Axe Glacier</entry>
+  <!-- Axe Glacier: Item Names (103000001-103099999) -->
+  <!-- Axe Glacier: Item Text (103100000-103199999) -->
+  <!-- Axe Glacier: Speech and Quests (103200000-103299999) -->
+  <!-- Axe Glacier: Messages (103300000-103399999) -->
+  <!-- Axe Glacier: Reserved (103400000-103899999) -->
+  <!-- Axe Glacier: Tooltip Descriptions (103900000-103999999) -->
+
+  <!-- Segment 4: Oakvael (104000000-104999999) -->
+  <entry index="104000000">Oakvael</entry>
+  <!-- Oakvael: Item Names (104000001-104099999) -->
+  <!-- Oakvael: Item Text (104100000-104199999) -->
+  <!-- Oakvael: Speech and Quests (104200000-104299999) -->
+  <!-- Oakvael: Messages (104300000-104399999) -->
+  <!-- Oakvael: Reserved (104400000-104899999) -->
+  <!-- Oakvael: Tooltip Descriptions (104900000-104999999) -->
+
+  <!-- Segment 5: Underkingdom (105000000-105999999) -->
+  <entry index="105000000">Underkingdom</entry>
+  <!-- Underkingdom: Item Names (105000001-105099999) -->
+  <!-- Underkingdom: Item Text (105100000-105199999) -->
+  <!-- Underkingdom: Speech and Quests (105200000-105299999) -->
+  <!-- Underkingdom: Messages (105300000-105399999) -->
+  <!-- Underkingdom: Reserved (105400000-105899999) -->
+  <!-- Underkingdom: Tooltip Descriptions (105900000-105999999) -->
+
+  <!-- Segment 11: Annwn (111000000-111999999) -->
+  <entry index="111000000">Annwn</entry>
+  <!-- Annwn: Item Names (111000001-111099999) -->
+  <!-- Annwn: Item Text (111100000-111199999) -->
+  <!-- Annwn: Speech and Quests (111200000-111299999) -->
+  <!-- Annwn: Messages (111300000-111399999) -->
+  <!-- Annwn: Reserved (111400000-111899999) -->
+  <!-- Annwn: Tooltip Descriptions (111900000-111999999) -->
+  <entry index="111900000">the book made from a cadaver skin and bone.</entry>
+  <entry index="111900001">an ancient sword blade looking for its counterpart..</entry>
+  <entry index="111900002">a Pet Sword. It is lawful.</entry>
+  <entry index="111900003">a Silvermoon Sword crafted by the great Silvermoon. It is lawful.</entry>
+  <entry index="111900004">PetStaffAG empowered by magical symbols.</entry>
+  <entry index="111900005">a Griffin Fig.</entry>
+  <entry index="111900006">magic spear empowered by magical symbols.</entry>
+  <entry index="111900007">magic staff empowered by magical symbols.</entry>
+  <entry index="111900008">a splintered Giant Hunting Bow. Use at your own risk, as it is highly unwieldy..for now.</entry>
+  <entry index="111900009">a splintered Giant Hunting Bow from Echo.</entry>
+  <entry index="111900010">a Wakizashi forged by the master Masamune.</entry>
+  <entry index="111900011">a sword forged from the light of the sun and the steel of the heavens.</entry>
+  <entry index="111900012">green dagger.</entry>
+  <entry index="111900013">a long naginata with a gleaming golden blade.</entry>
+  <entry index="111900014">huge hammer with a ponderous scarred head of iron. The haft is wrapped with strips of sky-blue leather and shod with an iron cap and steel ring.</entry>
+  <entry index="111900015">a huge sledge hammer made of ice and steel. It can crush even the heaviest of armor.</entry>
+  <entry index="111900016">an Ancient Jeweled Key from Torri Wusong</entry>
+  <entry index="111900017">a resolute lock pick that can be used on any Wusong door</entry>
+  <entry index="111900018">an Ancient Jeweled Key from Torri Wusong Undead</entry>
+  <entry index="111900019">an Ancient Jeweled Key from Torri Wusong Treasure Vault</entry>
+  <entry index="111900020">a vest made from the green dragon scales.</entry>
+  <entry index="111900021">a chaotic pair of gauntlets from Wusong crafted by a chaotic smith.</entry>
+  <entry index="111900022">a pair of Samurai Armor forged in Torri Wusong by an chaotic smith.</entry>
+  <entry index="111900023">a pair of Samurai Armor forged from samurai warriors and an Ancient Dragon.</entry>
+  <entry index="111900024">a Ninja Gi forged in Torri Wusong by an chaotic smith.</entry>
+  <entry index="111900025">a Ninja Gi forged from Wusong Ninjas and a cloth from an Ancient Dragon.</entry>
+  <entry index="111900026">Bwolf fur.</entry>
+  <entry index="111900027">an Elk Vest.</entry>
+  <entry index="111900028">an eerie eroding skull.</entry>
+  <entry index="111900029">a crystalized spearhead sharpened on each side with magical properties.</entry>
+  <entry index="111900030">boots made from the feathers and claws of a fierce Griffin. The boots emit a Blue Glow.</entry>
+  <entry index="111900031">a gem that has the ability to imbue quality for AG Items.</entry>
+  <entry index="111900032">a scroll that has the ability to recharge Wusong Items.</entry>
+  <entry index="111900033">a dark-blue sapphire shaped like a swallow.</entry>
+  <entry index="111900034">an amulet that shimmers with blue and white gems.</entry>
+  <entry index="111900035">a silver ore moon dust.</entry>
+  <entry index="111900036">a Whale Gem.</entry>
+  <entry index="111900037">a Panther Gem.</entry>
+  <entry index="111900038">a Dragon Gem.</entry>
+  <entry index="111900039">a Shining Egg.</entry>
+  <entry index="111900040">a Conc Shell.</entry>
+  <entry index="111900041">a Tsuba.</entry>
+  <entry index="111900042">a Black Pearl.</entry>
+  <entry index="111900043">a piece of bow shaft.</entry>
+  <entry index="111900044">Katana.</entry>
+  <entry index="111900045">a Menuki.</entry>
+  <entry index="111900046">a Cord.</entry>
+  <entry index="111900047">a Dragon Menuki.</entry>
+  <entry index="111900048">a heavy flail used to crush the heads of many victims.</entry>
+  <entry index="111900049">AG Credits.</entry>
+  <entry index="111900050">a AG Credit.</entry>
+  <entry index="111900051">a Ytrill.</entry>
+  <entry index="111900052">an unnatural Egg with radiant shine.</entry>
+  <entry index="111900053">a short sword.</entry>
+  <entry index="111900054">a spear shaft with magical symbols wrapping the full length.</entry>
+  <entry index="111900055">a gold cloth.</entry>
+  <entry index="111900056">a sword hilt dripping with dark ichor.</entry>
+  <entry index="111900057">an ancient sword hilt looking for its counterpart.</entry>
+  <entry index="111900058">a gem from an Ancient beast.</entry>
+  <entry index="111900059">a gem from an emperor who has done many cruel deeds.</entry>
+  <entry index="111900060">a gem from a fearsome minotaur.</entry>
+  <entry index="111900061">a gem from the void. As you peer into it, you feel something looking back.</entry>
+  <entry index="111900062">an Ancient Panda bear skull. There is a mino stone inserted beneath the jaw line.</entry>
+  <entry index="111900063">an Ancient Panda bear skull. There is a void stone inserted beneath the jaw line.</entry>
+  <entry index="111900064">an Ancient Panda bear skull. There is a queen stone inserted beneath the jaw line.</entry>
+  <entry index="111900065">an Ancient Panda bear skull. There is a Ryujin stone inserted beneath the jaw line.</entry>
+  <entry index="111900066">an Ancient Panda bear skull. There is a small hole where a stone can be inserted beneath the jaw line.</entry>
+  <entry index="111900067">There is a void stone inserted beneath the jaw line.</entry>
+  <entry index="111900068">There is a queen stone inserted beneath the jaw line.</entry>
+  <entry index="111900069">There is a Ryujin stone inserted beneath the jaw line.</entry>
+  <entry index="111900070">There is a small hole where a stone can be inserted beneath the jaw line.</entry>
+  <entry index="111900071">Your attunement level is {0} and have {1} spell band invested.</entry>
+  <entry index="111900072">a Wizard Book.</entry>
+  <entry index="111900073">a scythe with a blood groove leading all the way down to the handle.. It is lawful.</entry>
+  <entry index="111900074">a sickle forged with ice.</entry>
+  <entry index="111900075">a pair of obsidion and flame scales.</entry>
+  <entry index="111900076">a vest made from the storm-gray scales of an ancient cloud dragon.</entry>
+  <entry index="111900077">Muian spring water bottled by ancient Martial Artists.</entry>
+  <entry index="111900078">a threestaff.</entry>
+  <entry index="111900079">a pair of gauntlets made of iridescent green and blood red scales alternating in ever smaller pattern of glowing constellations. A wickedly curved talon projects from each knuckle.</entry>
+  <entry index="111900080">a Black robe with a snake insignia. Magical Properties are imbued.</entry>
+  <entry index="111900081">a pair of gauntlets with crystalline claws which have an odd metalic sheen. The long cuffs of thick leather are covered with thick green fur.</entry>
+  <entry index="111900082">a ring that has peculiar marks that match other weapons.</entry>
+  <entry index="111900083">{0}% chance to strike a hostile creature again for 130% damage.</entry>
+  <entry index="111900084">Every 10th hit strikes again with light for a normal hit's damage plus 4 times your Greatsword skill.</entry>
+  <entry index="111900085">Casts Fireball at a target once 7 hits have charged it, stronger with each charge. Casting uses the charges, and unused charges fade on the 20th hit.</entry>
+  <entry index="111900086">With an Omni Ring worn, every 10th hit dazes a creature for {0} rounds.</entry>
+  <entry index="111900087">With an Omni Ring worn, summons a flying beast at your target for 2 minutes. Your later hits send it at your target and draw hostile creatures within 3 squares of it to attack it.</entry>
+  <entry index="111900088">Once every 10 hits, stuns a creature for {0} rounds unless it is immune to magic or protected from stuns.</entry>
+  <entry index="111900089">{0}% chance for a Thief to envenom a creature, stronger with Magic skill.</entry>
+  <entry index="111900090">A Thief wearing an Omni Ring and Menuki Gauntlets has a 50% chance, plus 1.5% per gauntlet quality grade, to slip into hiding.</entry>
+  <entry index="111900091">The 6th hit of each cycle strikes a poisoned target again for {0}% damage. A cycle is 6 hits when that strike lands without an Omni Ring, otherwise up to 10.</entry>
+  <entry index="111900092">With an Omni Ring worn, the 8th hit of each cycle, from the darkness, strikes again for 70% damage per ring quality grade and ends the cycle.</entry>
+  <entry index="111900093">With an Omni Ring worn, {0}% chance from hiding to strike again for 40% damage per ring quality grade.</entry>
+  <entry index="111900094">Leaps onto a creature up to 3 squares away for double damage once 7 hits have charged it. Leaping uses the charges, and unused charges fade on the 10th hit.</entry>
+  <entry index="111900095">{0}% chance on a thrown hit to strike the target's square with a lightning bolt, cast at a skill level of your level minus {1}.</entry>
+  <entry index="111900096">7% chance to stun the hostile creatures on your square for 7 rounds, except those immune to magic or protected from stuns.</entry>
+  <entry index="111900097">Casts Concussion at a target once 7 hits have charged it. Casting uses the charges, and unused charges fade on the 15th hit.</entry>
+  <entry index="111900098">{0}% chance to heal you for {1} health.</entry>
+  <entry index="111900099">{0}% chance to heal a Thaumaturge for {1} health.</entry>
+  <entry index="111900100">Restores 2 mana to a Wizard, with a {0}% chance to heal for {1} health.</entry>
+  <entry index="111900101">{0}% chance for other professions to heal for {1} health.</entry>
+  <entry index="111900102">4% chance to summon a Dark Efreet to fight beside you for 10 minutes.</entry>
+  <entry index="111900103">10% chance for Thieves, Wizards and Thaumaturges to strike again for 3 times their Magic skill.</entry>
+  <entry index="111900104">A Thief with Vigor has a 33% chance instead, for 6 times their Magic skill, costing 5 stamina.</entry>
+  <entry index="111900105">10% chance for Knights and Martial Artists to strike again for 4 times their Hand skill.</entry>
+  <entry index="111900106">Casts Ice Storm at a target once 7 hits have charged it. Casting uses the charges, and unused charges fade on the 20th hit.</entry>
+  <entry index="111900107">Heals you for {0} health.</entry>
+  <entry index="111900108">With an Omni Ring worn, every 2nd hit also heals you for {0} plus half your level.</entry>
+  <entry index="111900109">With an Omni Ring worn, every 2nd hit also heals you for half your level.</entry>
+  <entry index="111900110">{0}% chance once every 12 parries to grant a Thief {1} for 3 minutes.</entry>
+  <entry index="111900111">With Lucy Scales worn, gives 10 Lightning Resistance per quality grade above Common, or grants Lightning Resistance with Legendary scales.</entry>
+  <entry index="111900112">{0} Lightning Resistance while you wield the Sword of Light, the green dagger, or the magic spear or staff of Annwn.</entry>
+  <entry index="111900113">Grants Lightning Resistance while you wield the Sword of Light, the green dagger, or the magic spear or staff of Annwn.</entry>
+  <entry index="111900114">{0} Lightning Resistance while Makon Gauntlets are worn.</entry>
+  <entry index="111900115">Grants Lightning Resistance while Makon Gauntlets are worn.</entry>
+  <entry index="111900116">With an Elk Vest worn, gives 10 Lightning Resistance per quality grade above Common, or grants Lightning Resistance with a Legendary vest.</entry>
+  <entry index="111900117">Each hit charges worn Griffin Boots toward an empowered leap kick.</entry>
+  <entry index="111900118">Leaps at a creature up to 3 squares away and kicks it for {0}% of your jumpkick damage, doubled for Martial Artists and Thieves.</entry>
+  <entry index="111900119">After 15 hits from kicks or from Makon or Menuki Gauntlets, the next kick also casts Lightning Bolt at the target.</entry>
+  <entry index="111900120">With an Omni Ring worn, a Thief hitting with a Wakizashi above Common has a {0}% chance to slip into hiding.</entry>
+  <entry index="111900121">With an Omni Ring above Common worn, Concussion is cast at skill level 12 per ring quality grade instead of 12.</entry>
+  <entry index="111900122">With an Omni Ring worn, that strike also curses the target for about 12 damage per ring quality grade.</entry>
+  <entry index="111900123">With an Omni Ring worn, it deals 10 more damage per ring quality grade and also strikes up to 3 other groups of hostile creatures within 3 squares of the target. A ring above Uncommon also needs 1 fewer hit per grade above Uncommon.</entry>
+
+  <!-- Segment 15: Mu (115000000-115999999) -->
+  <entry index="115000000">Mu</entry>
+  <!-- Mu: Item Names (115000001-115099999) -->
+  <!-- Mu: Item Text (115100000-115199999) -->
+  <!-- Mu: Speech and Quests (115200000-115299999) -->
+  <!-- Mu: Messages (115300000-115399999) -->
+  <!-- Mu: Reserved (115400000-115899999) -->
+  <!-- Mu: Tooltip Descriptions (115900000-115999999) -->
+  <entry index="115900000">Mu MuStaff {0}.</entry>
+  <entry index="115900002">A dark iron band wrapped in old gold and crowned with a deep emerald stone, said to hold a remnant of the Jade Serpent's breath. Though no longer carved from the sacred jade of Mu's mist-veiled peaks, it still carries an echo of that ancient power.</entry>
+  <entry index="115900003">A copper thief's ring set with a vivid green cat's-eye gem, favoured by those who live by stealth, speed, and cunning.</entry>
+  <entry index="115900004">A silver and gold knight's ring set with a blue shield crest, symbolising honour, defence, and sworn service.</entry>
+  <entry index="115900005">A rugged gold fighter's ring set with a blood-red gem, marked by skulls and battle-worn metalwork.</entry>
+  <entry index="115900006">A golden wizard's ring set with a glowing amber orb, etched with runes that focus arcane power.</entry>
+  <entry index="115900007">A blackened gold ring set with a glowing violet skull gem, worn by thaumaturges who draw power from forbidden magic.</entry>
+  <entry index="115900008">A Muian Skill Sphere, it hums with so much power.</entry>
+  <entry index="115900009">Mu Armor {0}.</entry>
+  <entry index="115900010">A cursed suit of armor... its shadowed plates whisper with the lingering will of fallen wraithlords.</entry>
+  <entry index="115900011">A Muian Upgrade Sphere.</entry>
+  <entry index="115900012">a Muian hickory wand with gold and silver inlay.</entry>
+  <entry index="115900013">Muian spring water bottled by ancient Martial Artists.</entry>
+  <entry index="115900014">a small gold ring emitting a faint greenish glow</entry>
+  <entry index="115900015">{0}`s Candy Cane. {1} It is magically tuned for {2} skill.</entry>
+  <entry index="115900016">A Candy Cane.</entry>
+  <entry index="115900017">{0}`s Warm Muian Christmas Gloves.</entry>
+  <entry index="115900018">Someone's Warm Muian Christmas Gloves.</entry>
+  <entry index="115900019">{0}`s Muian Christmas Ring. Looks like it should be worn by someone a lot more jolly.</entry>
+  <entry index="115900020">Someone's Muian Christmas Ring. Looks like it should be worn by someone a lot more jolly.</entry>
+  <entry index="115900021">A Muian temporary weapon blank. Shaped for {0} skill.</entry>
+  <entry index="115900022">a wrapped present{0}.Enjoy the holidays.</entry>
+  <entry index="115900023">{0}`s Easter Whacker. {1} It is magically tuned for {2} skill.</entry>
+  <entry index="115900024">An Easter Whacker.</entry>
+  <entry index="115900025">a painted easter egg{0}.Enjoy the holidays.</entry>
+  <entry index="115900026">{0}`s Easter Robe. {1}</entry>
+  <entry index="115900027">An Easter Robe.</entry>
+  <entry index="115900028">{0}`s multi headed flail, made out of bunnies tied together by their tails. {1} It is magically tuned for {2} skill.</entry>
+  <entry index="115900029">a multi headed flail, made out of bunnies tied together by their tails.</entry>
+  <entry index="115900030">This weapon has violently rearranged {0} bunnies.</entry>
+  <entry index="115900031">a grotesque piece of armor made out of rats.</entry>
+  <entry index="115900032">a scroll written in a strange language. The style is similar to that of the land of peaks.</entry>
+  <entry index="115900033">Muian christmas weapon sheath.</entry>
+  <entry index="115900034">Shorthand's Redline, a sharp bloodied pirate's rapier, cold to the touch.</entry>
+  <entry index="115900035">An ancient glaive made of fine wood and mountain-forged steel, its curved blade honed for the sweeping strikes of a seasoned warrior. Frost clings to the grain and edge alike, as though the weapon still remembers the frozen peaks where it was first raised. Etched into the haft a single word... 'Frostreaver'.</entry>
+  <entry index="115900036">Nightpiercer, a narrow blackened dagger whose edge seems to drink the light around it.</entry>
+  <entry index="115900037">Astralynx, a silent celestial bow whose arrows hunt with the eyes of a star-born predator.</entry>
+  <entry index="115900038">A brutal battle axe forged from darkened iron and oath-bound steel, its heavy crescent blade bears the scars of countless broken vows. The haft is wrapped in aged black leather, worn smooth by warriors who chose victory over honor. Faint crimson lines run through the metal like old blood trapped beneath the surface. Etched near the axe head is a single word... 'Oathbreaker'.</entry>
+  <entry index="115900047">Turns you into a bunny during the Easter season.</entry>
+  <entry index="115900048">{0}% chance to sweep up to {1} other nearby enemies for bonus damage and pull them beside you, then strike your target again. At most once every {2} rounds.</entry>
+  <entry index="115900049">{0}% chance to strike {1} to {2} more times. At most once every {3} rounds.</entry>
+  <entry index="115900050">{0}% chance for the arrow to split and hit {1} to {2} more times. At most once every {3} rounds.</entry>
+  <entry index="115900051">2% chance per {0} skill level, plus 4% per quality grade, to also attack up to 4 other hostile creatures on your square.</entry>
+  <entry index="115900052">{0}% chance to daze the attacker for {4} rounds, let you act again at once and gain {1} defense for {2} rounds, for {5} stamina. Needs 30 stamina; at most once every {3} rounds.</entry>
+  <entry index="115900053">{0}% chance to daze the attacker for {4} rounds, let you act again at once and add {1} to your maximum damage for {2} rounds, for {5} stamina. Needs 30 stamina; at most once every {3} rounds.</entry>
+
+  <!-- Segment 26: Bloodlands (126000000-126999999) -->
+  <entry index="126000000">Bloodlands</entry>
+  <!-- Bloodlands: Item Names (126000001-126099999) -->
+  <!-- Bloodlands: Item Text (126100000-126199999) -->
+  <!-- Bloodlands: Speech and Quests (126200000-126299999) -->
+  <!-- Bloodlands: Messages (126300000-126399999) -->
+  <!-- Bloodlands: Reserved (126400000-126899999) -->
+  <!-- Bloodlands: Tooltip Descriptions (126900000-126999999) -->
+  <entry index="126900000">Muian spring water bottled by ancient Martial Artists.</entry>
+  <entry index="126900001">In a land.. .</entry>
+  <entry index="126900002">a leathery piece of skin from a cadaver.</entry>
+  <entry index="126900003">a vial filled with blood.</entry>
+  <entry index="126900004">the book made from a cadaver skin and bone.</entry>
+  <entry index="126900005">a crystalized pearl that is used to exchange for something..</entry>
+  <entry index="126900006">a ring that has peculiar marks that match other weapons. Total Blood Souls: {0}. Total Blood Souls for Vendor/Use {1}.</entry>
+  <entry index="126900007">a highly volatile substance. Please be careful where you drop this.</entry>
+  <entry index="126900008">a wand soaked in blood and forged by the ghods of death.</entry>
+  <entry index="126900009">a bow laced in blood. The strings seemed to be made from the leathery skin of wyverns.</entry>
+  <entry index="126900010">a scroll with the description {0}.</entry>
+  <entry index="126900011">a scythe with a blood groove leading all the way down to the handle.. It is lawful.</entry>
+  <entry index="126900013">a sharp dagger with a blood groove that extends all the way to the handle.</entry>
+  <entry index="126900014">This dagger is covered in blood and has been used for many heinous deeds</entry>
+  <entry index="126900015">an extremely sharp axe with a blood groove that extends all the way to the handle.</entry>
+  <entry index="126900016">a light flail with dozens of serrated spikes, seemingly ready to draw blood.</entry>
+  <entry index="126900017">a rapier with a triple pointed tip and three blood grooves all the way to the handle. It has no alignment.</entry>
+  <entry index="126900018">a sword. The demonic symbols resonate and you feel uneasy as if darkness is peering back into you. It is Evil.</entry>
+  <entry index="126900019">a broad sword with a point designed for open wounds and two slashing edges. A blood groove flows down to the handle.</entry>
+  <entry index="126900020">a pair of gauntlets with a blood groove that lines each knuckle.</entry>
+  <entry index="126900021">a sacrificial khopesh stained with blood and seemingly light with ghod-like power. It has no alignment.</entry>
+  <entry index="126900022">an unholy scepter that has the markings of royalty.</entry>
+  <entry index="126900024">14% chance, with a Blood Ring worn, to strike a creature on the four Planes, in Praetoseba or in the upper temple for bonus damage from its blood souls, growing from level 21.</entry>
+  <entry index="126900025">Orders your followers to attack the target.</entry>
+  <entry index="126900026">50% chance to heal a Thaumaturge for {0} health, 33% chance to heal a Wizard for 5, and 10% chance to heal anyone else for 5.</entry>
+  <entry index="126900027">Restores 2 mana to a Wizard.</entry>
+  <entry index="126900028">10% chance to heal you for 5 health.</entry>
+  <entry index="126900029">4% chance to summon a Dark Efreet to fight for you while you have 4 or fewer followers.</entry>
+  <entry index="126900030">Every 7th hit strikes with death magic for {0} damage while you wear a Bone Carapace.</entry>
+  <entry index="126900031">Every 5th hit strikes again for {0} times your Flail skill, up to 700.</entry>
+  <entry index="126900032">Every 7th hit strikes again for {0} times your Rapier skill, up to 90.</entry>
+  <entry index="126900033">With an Uncommon or better Master Gi, the 3rd hit of each combo strikes again for twice your melee damage.</entry>
+  <entry index="126900034">With an Epic or better Master Gi, the 5th hit of each combo sends an aftershock through up to 5 hostile creatures on your square for 25% of your melee damage.</entry>
+  <entry index="126900035">With an Artifact or better Master Gi, the 10th hit of each combo strikes again for five times your melee damage.</entry>
+  <entry index="126900036">Every 4th hit smites an undead target for 20 times your Magic skill.</entry>
+  <entry index="126900037">A combo is 3 hits with an Uncommon or Rare Master Gi, 5 with an Epic or Legendary one, and 11 with an Artifact or better one.</entry>
+
+  <!-- Segment 28: Razalas Peak (128000000-128999999) -->
+  <entry index="128000000">Razalas Peak</entry>
+  <!-- Razalas Peak: Item Names (128000001-128099999) -->
+  <!-- Razalas Peak: Item Text (128100000-128199999) -->
+  <!-- Razalas Peak: Speech and Quests (128200000-128299999) -->
+  <!-- Razalas Peak: Messages (128300000-128399999) -->
+  <!-- Razalas Peak: Reserved (128400000-128899999) -->
+  <!-- Razalas Peak: Tooltip Descriptions (128900000-128999999) -->
+  <entry index="128900000">a dark amulet.</entry>
+  <entry index="128900001">a pitch black ring.</entry>
+  <entry index="128900002">a gold ring set with four small diamonds encircling a fiery ruby.</entry>
+  <entry index="128900003">a bright bracelet with odd hieroglyphs.</entry>
+  <entry index="128900004">a ring with a bright green stone set inside.</entry>
+  <entry index="128900005">A ring made of a strange composite metal including plague ore.</entry>
+  <entry index="128900006">a ring that emits an aura of magic.</entry>
+  <entry index="128900007">a ring imbued with rage.</entry>
+  <entry index="128900008">a fine bracelet, that seems to be looking for something.</entry>
+  <entry index="128900009">a fine ring that appears to be searching for something.</entry>
+  <entry index="128900010">an amulet with a silver dagger on it.</entry>
+  <entry index="128900011">a ring crafted by a powerful being, used for tallying victories.</entry>
+  <entry index="128900012">an amulet with a wolf insignia.</entry>
+  <entry index="128900013">a bracelet with a wolf insignia.</entry>
+  <entry index="128900014">a ring with a wolf insignia.</entry>
+  <entry index="128900015">a set of dark scales.</entry>
+  <entry index="128900016">a pair of lightweight boots.</entry>
+  <entry index="128900017">a fully black robe.</entry>
+  <entry index="128900018">a set of medium weight scales.</entry>
+  <entry index="128900019">a skull eminating darkness.</entry>
+  <entry index="128900020">a set of heavy armor, crafted out of bright scales.</entry>
+  <entry index="128900021">heavy boots, eminating light.</entry>
+  <entry index="128900022">bright, heavy robe.</entry>
+  <entry index="128900023">a helmet, light emanating from it.</entry>
+  <entry index="128900024">a pair of versatile gauntlets.</entry>
+  <entry index="128900025">A shield that radiates light.</entry>
+  <entry index="128900026">boots..</entry>
+  <entry index="128900027">a pair of gauntlets. Strange bones are laced into the knuckles.</entry>
+  <entry index="128900028">a pair of gauntlets. Eldritch runes are welded into them.</entry>
+  <entry index="128900029">a set of heavy armor, created by the lord of the pit himself.</entry>
+  <entry index="128900030">a helmet, carved out of the skull of some horrible monster.</entry>
+  <entry index="128900031">a finer saffron robe.</entry>
+  <entry index="128900032">A shield that radiates holy power.</entry>
+  <entry index="128900033">a set of holy armor.</entry>
+  <entry index="128900034">a grotesque piece of armor made out of rats.</entry>
+  <entry index="128900035">a vest that crackles with electricity, made from the scales of a dragon.</entry>
+  <entry index="128900036">a suit of armor that feels lighter than the air itself.</entry>
+  <entry index="128900037">a fine robe, it seems to be searching for something.</entry>
+  <entry index="128900038">a pair of gauntlets fit for a kung fu master.</entry>
+  <entry index="128900039">a fine helmet, it seems to be searching for something.</entry>
+  <entry index="128900040">a pair of gauntlets, crafted out of stone.</entry>
+  <entry index="128900041">a robe, seemingly for a spellcaster.</entry>
+  <entry index="128900042">boots made of wolf leather and fur.</entry>
+  <entry index="128900043">a pair of gauntlets with silver claws on the fingers.</entry>
+  <entry index="128900044">an outfit made of wolves pelts.</entry>
+  <entry index="128900045">A stone cleansed by thaumaturgical magic. It seems attuned to the labyrinth.</entry>
+  <entry index="128900046">A stone that emits corruption. It feels as if it leads you towards the Labyrinth.</entry>
+  <entry index="128900047">A large deposit of ytrill with noxious yellow veins within.</entry>
+  <entry index="128900048">A large rock containing a vein of holy silver.</entry>
+  <entry index="128900049">A key used to open a pit gate.</entry>
+  <entry index="128900050">a particularly valuable rat corpse.</entry>
+  <entry index="128900051">a scroll written in a strange language.</entry>
+  <entry index="128900052">An ancient egyptian scroll.</entry>
+  <entry index="128900053">A tangle of branches, light as a feather. They wrap around whatever touches them, binding it firmly.</entry>
+  <entry index="128900054">A stinger light as the air and hard as a diamond.</entry>
+  <entry index="128900055">An ancient weapon blade.</entry>
+  <entry index="128900056">An ancient weapon hilt.</entry>
+  <entry index="128900057">An ancient holy symbol.</entry>
+  <entry index="128900058">A set of keys, sizes ranging from small to very large.</entry>
+  <entry index="128900059">An ancient but ornately carved key.</entry>
+  <entry index="128900060">a tanned mystical wolf pelt.</entry>
+  <entry index="128900061">a hammer that rumbles like a storm cloud.</entry>
+  <entry index="128900062">a katana. It seems to look back at you.</entry>
+  <entry index="128900063">an axe imbued with berserkers rage.</entry>
+  <entry index="128900064">a crossbow, meant to be wielded in the dark.</entry>
+  <entry index="128900065">a dagger built for ambush.</entry>
+  <entry index="128900066">a rapier that seeks blood.</entry>
+  <entry index="128900067">a circular shuriken, curved for strange pathing when thrown.</entry>
+  <entry index="128900068">a staff imbued with dark magicks.</entry>
+  <entry index="128900069">a segmented threestaff, powerful in the hands of a skilled martial artist.</entry>
+  <entry index="128900070">a bow powered by light.</entry>
+  <entry index="128900071">a flail built for war.</entry>
+  <entry index="128900072">a greatsword built for war.</entry>
+  <entry index="128900073">a halberd with an immaculately forged chain attached.</entry>
+  <entry index="128900074">a one handed mace built for war.</entry>
+  <entry index="128900075">a staff with an intense healing aura.</entry>
+  <entry index="128900076">a light sword built for war.</entry>
+  <entry index="128900077">a heavy maul. Its design is impractical for battle.</entry>
+  <entry index="128900078">A crossbow that crackles with electricity.</entry>
+  <entry index="128900079">A staff that hums with energy.</entry>
+  <entry index="128900080">A staff with three parts connected with chains.</entry>
+  <entry index="128900081">A halberd covered in ashe.</entry>
+  <entry index="128900082">A regal staff, formerly wielded by a hive queen.</entry>
+  <entry index="128900083">a wand filled with elemental power.</entry>
+  <entry index="128900084">a multi headed flail, made out of rats tied together by their tails.</entry>
+  <entry index="128900085">a red, corrupted dagger.</entry>
+  <entry index="128900086">a radiant silver greatsword.</entry>
+  <entry index="128900087">A halberd fit for a goblin king.</entry>
+  <entry index="128900088">a ball with a cloudy inside. You occasionally see a flash of lightning.</entry>
+  <entry index="128900089">A rapier that moves with supernatural speed.</entry>
+  <entry index="128900090">a heavy silver flail with a huge spiked ball on a steel chain.</entry>
+  <entry index="128900091">A sharp shuriken that spins on its own</entry>
+  <entry index="128900092">A rapier made from a strange stinger, with a hilt of tangled branches. They grip your hand as you grip them.</entry>
+  <entry index="128900093">A cursed staff</entry>
+  <entry index="128900094">a katana. It hums happily.</entry>
+  <entry index="128900095">A wand that sounds like a windy day.</entry>
+  <entry index="128900096">Your ring has tallied {0} of points to the Darkness, and {1} of points to the Elementals. You have also won {2} contests</entry>
+  <entry index="128900097">{0}% chance to set off the hit powers of the Razalas Peak rings and gear you wear.</entry>
+  <entry index="128900098">{0}% chance to cast {1} on the target, or {2}, {3} or {4} once your War Faction ring has won 20, 40 or 60 contests. The ring must be your own, put on before you wield or wear this, and have won at least one contest.</entry>
+  <entry index="128900099">{0}% chance to restore {1} mana and set off the hit powers of the Razalas Peak rings and gear you wear.</entry>
+  <entry index="128900100">{0}% chance to claw the target for 4 per quality grade of each Wolf amulet, bracer, boots, pelt armor and ring you wear: as poison on creatures for Thieves, as damage for Martial Artists.</entry>
+  <entry index="128900101">Hurts a Lawful wielder for {0} health.</entry>
+  <entry index="128900102">Fighters who are not Knights gain damage, attack, dodge and swing speed as their health falls below 90%, up to +10 to +20 damage, +2 attack and a swing every 0.35 rounds below 10% health.</entry>
+  <entry index="128900103">Deals 50% more damage while you stand in darkness.</entry>
+  <entry index="128900104">Deals 50% more damage while 3 or fewer creatures are at your location.</entry>
+  <entry index="128900105">Every 10th hit throws the shuriken at up to {0} hostile targets nearby.</entry>
+  <entry index="128900106">Chance to strike again: 1.5% per Threestaff skill level plus 3% per quality grade, or 2% and 4% for Martial Artists. Each extra hit can strike again too.</entry>
+  <entry index="128900107">Chance to strike again: 2% per Threestaff skill level plus 4% per quality grade. Each extra hit can strike again too.</entry>
+  <entry index="128900108">Deals 50% more damage and adds 1 mana regeneration while you stand in light and are not hidden.</entry>
+  <entry index="128900109">Deals 50% more damage while you are at full health.</entry>
+  <entry index="128900110">Makes the Lord of the Pit vulnerable to attacks for 30 seconds, but may call his shades to his aid.</entry>
+  <entry index="128900111">Deals {0} extra damage while you stand in fire.</entry>
+  <entry index="128900112">Chance to also strike another hostile creature on your square: 2% per Flail skill level plus 4% per quality grade. That strike can bounce again.</entry>
+  <entry index="128900113">{0}% chance to blind the target for {1} rounds.</entry>
+  <entry index="128900114">2.5% chance per Throwing skill level to throw it again at another hostile creature within 3 squares of the target, and that throw can bounce again.</entry>
+  <entry index="128900115">{0}% chance to summon a shadow of yourself at the target.</entry>
+  <entry index="128900116">Stuns you for 4 rounds.</entry>
+  <entry index="128900117">50% chance to strike back at an attacker on your square.</entry>
+
+  <!-- Segment 29: Blackburrow (129000000-129999999) -->
+  <entry index="129000000">Blackburrow</entry>
+  <!-- Blackburrow: Item Names (129000001-129099999) -->
+  <!-- Blackburrow: Item Text (129100000-129199999) -->
+  <!-- Blackburrow: Speech and Quests (129200000-129299999) -->
+  <!-- Blackburrow: Messages (129300000-129399999) -->
+  <!-- Blackburrow: Reserved (129400000-129899999) -->
+  <!-- Blackburrow: Tooltip Descriptions (129900000-129999999) -->
+  <entry index="129900000">a green robe adorned with the golden runes of the Ghods.  The robe has a peculiar pudding stain and a faint smell of bananas.  This robe contains the spell of Banana!</entry>
+  <entry index="129900001">a blue robe adorned with the golden runes of the Ghods.  The robe has a peculiar pudding stain and a faint smell of bananas.  This robe contains the spell of Banana!</entry>
+  <entry index="129900002">Relic of the First Archmage
+Bound to the soul of its bearer. Refuses to be worn by anyone deemed unworthy.</entry>
+  <entry index="129900003">a yellow robe adorned with the golden runes of the Ghods.  The robe has a peculiar pudding stain and a faint smell of bananas.  This robe contains the spell of Banana!</entry>
+  <entry index="129900004">a purple robe adorned with the golden runes of the Ghods.  The robe has a peculiar pudding stain and a faint smell of bananas.  This robe contains the spell of Banana!</entry>
+  <entry index="129900005">boots made from the Bananas. B-A-N-A-N-A-S!</entry>
+  <entry index="129900006">Portal gem to a new land!</entry>
+  <entry index="129900007">a small red alchemy stone imbued with chaotic energy.</entry>
+  <entry index="129900008">a toad's foot. It has been mangled from detachment.</entry>
+  <entry index="129900009">a carapace made from the skin of a Scorpion.</entry>
+  <entry index="129900010">a small silver silver necklace with a lightning bolt charm.</entry>
+  <entry index="129900011">a golden amulet with an ornate red gem.</entry>
+  <entry index="129900012">.. known as Keshma.</entry>
+  <entry index="129900013">a polished silver ring with a large pearl setting. When you touch the ring you begin to get a faint whiff of something swampy and full of decay.</entry>
+  <entry index="129900014">a pair of frogs boots. Feeling Froggy? Leap!</entry>
+  <entry index="129900015">a shimmering green robe. Magical Properties are imbued.</entry>
+  <entry index="129900016">A sharpening plate made of fine diamond cement. This will get your weapon very sharp. This stone can be used {0} more time(s).</entry>
+  <entry index="129900017">something you shouldn't have.</entry>
+  <entry index="129900018">a scroll with the description {0}.</entry>
+  <entry index="129900019">a finely crafted two handed sword that was forged from the finest umbral steel in the land.</entry>
+  <entry index="129900020">a pair of gauntlets made from the claws of a poison dart frog.</entry>
+  <entry index="129900021">an ornate pair of cardinal red gloves made from the finest silk in the land. They have phantom claws protruding from the knuckles.</entry>
+  <entry index="129900022">a small but heavy Javelin, made from the finest metal and wood in the land.</entry>
+  <entry index="129900023">a crude hunting bow. It is carved with an insignia of a ranger. It is very light.</entry>
+  <entry index="129900024">a very long pike with a silver point that glistens with sharpness.</entry>
+  <entry index="129900025">Heals you for 5% of your weapon damage.</entry>
+  <entry index="129900026">{0}% chance to poison the target with potency 20, or, for a Thief, with venom of potency 10 plus twice your Magic skill.</entry>
+  <entry index="129900027">Every 5th hit on a poisoned target deals {0}% bonus damage while you wear Venom Scales, Ice Flame Scales or a Scorpion Carapace.</entry>
+  <entry index="129900028">Strikes with a magic missile for three times your Magic skill if you are a Wizard.</entry>
+  <entry index="129900029">Heals a Thaumaturge for {0}% of the damage. Hitting a creature also heals the other players in sight within 3 squares and your followers within 3 squares for a share of it, at least 8 each.</entry>
+  <entry index="129900030">Orders a Thaumaturge's followers to attack the target while Toggle Pet Attack is on.</entry>
+  <entry index="129900031">40% chance to restore {0} mana to Thaumaturges and Wizards.</entry>
+  <entry index="129900032">Every 4th hit venoms a creature with potency 10 per quality grade of your Frog Gauntlets, if they are Uncommon or better.</entry>
+  <entry index="129900033">Every 2nd hit stuns up to 3 hostile creatures within 3 squares of you for 8 rounds, the target first, except summoned ones and those immune to magic or protected from stuns.</entry>
+  <entry index="129900034">Cleaves the other hostile creatures in your square for {0}% of the damage.</entry>
+
+  <!-- Segment 30: Keshma (130000000-130999999) -->
+  <entry index="130000000">Keshma</entry>
+  <!-- Keshma: Item Names (130000001-130099999) -->
+  <!-- Keshma: Item Text (130100000-130199999) -->
+  <!-- Keshma: Speech and Quests (130200000-130299999) -->
+  <!-- Keshma: Messages (130300000-130399999) -->
+  <!-- Keshma: Reserved (130400000-130899999) -->
+  <!-- Keshma: Tooltip Descriptions (130900000-130999999) -->
+  <entry index="130900000">Keshma is an island North East of Kesmai islands. eons ago they were connected hence such similar names. In a forgotten language, Kesh means Dragon and Ma/Mai means land.</entry>
+  <entry index="130900001">Keshma is an island North East of Kesmai islands. eons ago they were connected hence such similar names. In a forgotten language, Kesh means Dragon and Ma/Mai means land. The void is a strange land filled with ancient Magick and violent mysterious creatures. Void volume has a quality of {0}.</entry>
+  <entry index="130900002">Kymo's Shield of water glistens and bubbles outward providing magical protection but no physical protection</entry>
+  <entry index="130900003">a fancy broom.</entry>
+  <entry index="130900004">a silver and blue amulet imbued with a socket.</entry>
+  <entry index="130900005">A magic potion from an altered spirit.</entry>
+  <entry index="130900006">boots made from the feathers and claws of a fierce Griffin. The boots emit a Blue Keshmian Glow.</entry>
+  <entry index="130900007">Armor crafted from strands of the finest Keshmian steel thread, mail and plate.</entry>
+  <entry index="130900008">A sharpening plate made of fine diamond cement. This will get your weapon very sharp. This stone can be used {0} more time(s).</entry>
+  <entry index="130900009">A red bottle that looks like it originated from the lands of Arabia.</entry>
+  <entry index="130900010">a beautiful blue gem set in a titanium ring band.</entry>
+  <entry index="130900011">a beautiful ring set with a giant Emerald.</entry>
+  <entry index="130900012">A long section of rope that would be useful for tying up a fleeing opponent.</entry>
+  <entry index="130900013">something you shouldn't have.</entry>
+  <entry index="130900014">a jeweled lockpick. It looks like it could be quite useful in the hands of a skilled practicioner.</entry>
+  <entry index="130900015">a crumpled up note. It looks like it was penned in a hurry. If you look closer you might be able to make out the writing.</entry>
+  <entry index="130900016">a Knight's Seal Ring, which is adorned with the rank insignia of Knight-Lieutenant.</entry>
+  <entry index="130900017">a sprig of mature Red Mugwort, complete with red berries.</entry>
+  <entry index="130900018">Muian spring water bottled by ancient Martial Artists.</entry>
+  <entry index="130900019">a thankyou gift from your Dev's - halloween 2024</entry>
+  <entry index="130900020">a ring that only a Collaborator or Lux should posess.</entry>
+  <entry index="130900021">There is a void stone inserted beneath the jaw line.</entry>
+  <entry index="130900022">There is a queen stone inserted beneath the jaw line.</entry>
+  <entry index="130900023">There is a Ryujin stone inserted beneath the jaw line.</entry>
+  <entry index="130900024">There is a small hole where a stone can be inserted beneath the jaw line.</entry>
+  <entry index="130900025">Your attunement level is {0} and have {1} spell band invested.</entry>
+  <entry index="130900026">a gem from a Altered Water Creature.</entry>
+  <entry index="130900027">a polished silver ring with a large pearl setting. When you touch the ring you begin to get a faint whiff of something swampy and full of decay.</entry>
+  <entry index="130900028">a void scroll that allows you to slot your helm/shield/ring or upgrade your weapon.</entry>
+  <entry index="130900029">a gem from a Altered Void Creature.</entry>
+  <entry index="130900030">{0} of Void Relic.</entry>
+  <entry index="130900031">a Void Relic (stackable).</entry>
+  <entry index="130900032">{0} of Kesh Coffer.</entry>
+  <entry index="130900033">a Kesh Coffer (stackable).</entry>
+  <entry index="130900034">a gem from a Altered Fire Creature.</entry>
+  <entry index="130900035">a silver ring with an icey blue stone. When you touch it, visions of a blustery blizard fill your mind.</entry>
+  <entry index="130900036">a blue identify appraisal ring. Made for those who want a little insight.</entry>
+  <entry index="130900037">A strange purple ring that hums with a strange otherworldly power.</entry>
+  <entry index="130900038">a pair of fantastically fashionable silk lined boots!</entry>
+  <entry index="130900039">an ornate pair of gauntlets fashioned from Blue Keshmian Steel plates and addorned with blue dragon scales.</entry>
+  <entry index="130900040">a deadly Kenga Dagger. Said to be faster than most daggers and equally as ferocious.</entry>
+  <entry index="130900041">a beautiful helm made from Blue Keshmian Steel and fine red dragon scales.</entry>
+  <entry index="130900042">an elaborate buckler shield made from wood and volcanic glass. It has a dragon's horn mounted to the middle that could pierce the strongest armor.</entry>
+  <entry index="130900043">a beautiful helm made from fine red dragon scales.</entry>
+  <entry index="130900044">an extremely ornate helm made of dragon horn and Keshmian Steel and made in the style worn by the ancient Samurai of Leng.</entry>
+  <entry index="130900045">a simple metal shield. It would be difficult to tell it's special by looking at it, but you feel a rush of magical power when its held.</entry>
+  <entry index="130900046">a Keshmian steel shield that has been polished to a high shine. There is a blueish tint to the shield, which is centered with the crest of the Keshmian Knight Guild.</entry>
+  <entry index="130900047">the pinky ring of a Giant. It's so big it'll fit your arm as a bracelet!</entry>
+  <entry index="130900048">a bracelet that shimmers of water and sky</entry>
+  <entry index="130900049">a beautiful gemmed bracelet. The bracelet exudes power.</entry>
+  <entry index="130900050">a bright pulsating purple ring that emenates energy.</entry>
+  <entry index="130900051">a pewter ring with an onyx gem set in flower petals</entry>
+  <entry index="130900052">a titanium ring that has been polished to a brilliant shine with {0} Kesh Credit.</entry>
+  <entry index="130900053">a gold twisted ring that vibrates with magical power.</entry>
+  <entry index="130900054">a small gold ring emitting a faint yellow glow</entry>
+  <entry index="130900055">{0} Keshma Credit.</entry>
+  <entry index="130900056">a Keshma Credit.</entry>
+  <entry index="130900057">{0} of Void Crystal.</entry>
+  <entry index="130900058">a Void Crystal (stackable).</entry>
+  <entry index="130900059">{0} Keshma {1} credit.</entry>
+  <entry index="130900060">a Keshma {0} credit.</entry>
+  <entry index="130900061">A sky blue robe that seems to be made from ice crystals.</entry>
+  <entry index="130900062">what appears to be a very important piece of treasure.</entry>
+  <entry index="130900063">an obsidion gem shining with power and heavy.</entry>
+  <entry index="130900064">a soul stone. Place your quest ball in your left hand and this object in your right hand to absorb the soul into your quest ball. It contains the essence of </entry>
+  <entry index="130900065">a glass ball. It looks a lot like a blue Agate. It contains the essence of the following dragons:</entry>
+  <entry index="130900066">what appears to be a very important shard of treasure for {0}</entry>
+  <entry index="130900067">a radiant Gem</entry>
+  <entry index="130900068">The gemstone regales with ominous power. It is fully unlocked allowing fast travel to all available portals.</entry>
+  <entry index="130900069">an old worn gemstone. It doesn't seem to glow like it used to.</entry>
+  <entry index="130900070">The gemstone has been polished and seems to hunger for power. The following areas have been unlocked: </entry>
+  <entry index="130900071">None.</entry>
+  <entry index="130900072">After careful inspection you notice an inscription on the back of the gem... 'if lost, return to Vinz'</entry>
+  <entry index="130900073">Mossland and Surface.</entry>
+  <entry index="130900074">Crypt and Library.</entry>
+  <entry index="130900075">Mountain and Valley.</entry>
+  <entry index="130900076">The Dark Forest.</entry>
+  <entry index="130900077">The Glacier Cavern.</entry>
+  <entry index="130900078">The Water Temple.</entry>
+  <entry index="130900079">The Volcano.</entry>
+  <entry index="130900080">The Void.</entry>
+  <entry index="130900081">Paradoxia.</entry>
+  <entry index="130900082">Yasnaki</entry>
+  <entry index="130900083">an other-worldly ore that seems to radiate power within.</entry>
+  <entry index="130900084">what appears to be regular Iron Ore, but it's completely weightless.</entry>
+  <entry index="130900085">a freshly harvested set of dragon scales that is cut in the rough pattern of a Vest. It would take a Smithy to complete the work, but you sense the resulting Armor would be quite powerful.</entry>
+  <entry index="130900086">what appears to be a plain blank sheet of an unrecognizeable metal.</entry>
+  <entry index="130900087">a blacksmith's hammer forged of the finest Keshmian steel. You sense this tool was crafted by one of the finest master smithy in the land.</entry>
+  <entry index="130900088">a mould that could be used to cast the decorative features of armor or weapons.</entry>
+  <entry index="130900089">the metal framing required to make a fine set of armor. This particular framework appears to be made of fine Keshmian Steel.</entry>
+  <entry index="130900090">a bolt of cloth, it appears to be made of very fine wool.</entry>
+  <entry index="130900091">a egg from Easter 2026. Crack some eggs and make an omelet.</entry>
+  <entry index="130900092">a trick or treat bag from Halloween 2025. Trick or Treat from devs.</entry>
+  <entry index="130900093">a present from Christmas 2025. Unwrap your gift for the love of muffins.</entry>
+  <entry index="130900094">a thank you gift from your Dev's - christmas {0}.</entry>
+  <entry index="130900095">Total Elf Kills: {0}.</entry>
+  <entry index="130900096">a skeleton key, I wonder where this fits? - halloween {0}</entry>
+  <entry index="130900097">a {0} egg. Happy Holidays from the devs.</entry>
+  <entry index="130900099">a {0} pet. Happy Holidays from the devs.</entry>
+  <entry index="130900100">a gold and black figurine of a snarling tiger.</entry>
+  <entry index="130900101">a Griffin Fig.</entry>
+  <entry index="130900102">a Demon figurine.</entry>
+  <entry index="130900103">a figurine of a Ferocious Ice Dragon.</entry>
+  <entry index="130900104">a scroll with {0} kills for {1}</entry>
+  <entry index="130900105">a scroll with the description {0}.</entry>
+  <entry index="130900106">an elaborate longsword covered in magical runes.</entry>
+  <entry index="130900107">This bad boy is for killing bosses on sandbox</entry>
+  <entry index="130900108">a boring old testing Scythe.</entry>
+  <entry index="130900109">Your scythe has {0} pet focus points.</entry>
+  <entry index="130900111">a simple longsword that rattles when you shake it.</entry>
+  <entry index="130900112">a basic iron longsword. The hilt is made from wood that seems to glow with power. The blade seems to emanate a weak aura.</entry>
+  <entry index="130900113">a ornate steel longsword. It is embedded with beautiful gems cut in the shape of mystical symbols. It vibrates with power.</entry>
+  <entry index="130900114">gorgeous longsword forged from the finest blue Keshmian Ore, which is deceptively light. You are overwhelmed with the power this blade possesses.</entry>
+  <entry index="130900115">simple two handed sword made from bronze.</entry>
+  <entry index="130900116">an Iron Broadsword. The handle is engraved with mystical symbols. It seems to emanate a weak blue aura.</entry>
+  <entry index="130900117">an ornate steel Broadsword. The blade is inlaid with Keshmian ore in a beautiful lattice pattern. It vibrates with power.</entry>
+  <entry index="130900118">a beautifully ornate Broadsword forged completely from Keshmian Ore, which is deceptively light. You feel as if you could take on an entire army with this weapon.</entry>
+  <entry index="130900119">a boring old practice shuriken.</entry>
+  <entry index="130900120">a basic wooden shuriken. The shuriken is carved with mystical symbols. It seems to emanate a weak aura.</entry>
+  <entry index="130900121">a shuriken that has been polished and sharpened to a deadly gleaming points. It vibrates with power.</entry>
+  <entry index="130900122">a perfectly balanced blue Keshmian shuriken, which has no weight. It feels both cold and warm to the touch.</entry>
+  <entry index="130900123">a boring old wooden practice Halberd.</entry>
+  <entry index="130900124">a basic wooden Halberd. The handle is engraved with mystical symbols. It seems to emanate a weak aura.</entry>
+  <entry index="130900125">a ornate steel Halberd. The point has been sharpened into a develish looking hook and spear. It emanates power.</entry>
+  <entry index="130900126">a beautiful Halberd forged from Keshmian Ore, which is deceptively light. It's so sharp that the slightest touch will cause bleeding wounds.</entry>
+  <entry index="130900127">a boring old practice threestaff.</entry>
+  <entry index="130900128">a basic wooden threestaff. The handle is engraved with mystical symbols. It seems to emanate a weak blue aura.</entry>
+  <entry index="130900129">an ornate steel threestaff. It is covered in magical symbols that seem to glow blue when you touch it.</entry>
+  <entry index="130900130">a superbly balanced threestaff built from blue Keshmian Ore, which is deceptively light. It is both beautiful and deadly.</entry>
+  <entry index="130900131">a boring old practice staff.</entry>
+  <entry index="130900132">a basic wooden staff. The handle is engraved with mystical symbols. It seems to emanate a weak aura.</entry>
+  <entry index="130900133">a ornate steel staff. It is embedded with beautiful gems cut in the shape of mystical symbols. It vibrates with power.</entry>
+  <entry index="130900134">gorgeous stave forged from the finest blue Keshmian Ore, which is deceptively light. You are overwhelmed with the power this staff possesses.</entry>
+  <entry index="130900135">a boring old boxing gloves.</entry>
+  <entry index="130900136">basic leather gloves with blue Keshmian ore plates over the knuckles. It seems to emanate a weak blue aura.</entry>
+  <entry index="130900137">ornate gloves made from the finest leather, the knuckles are tipped with blue Keshmian ore spikes. They make your hands vibrate with power.</entry>
+  <entry index="130900138">gorgeous gloves woven with strands of the finest blue Keshmian Ore, which is deceptively light. The gauntlets are tipped with menacing looking retractable blue Keshmian steel claws.</entry>
+  <entry index="130900139">a poorly constructed common morningstar.</entry>
+  <entry index="130900140">a basic iron morningstar. The handle is scratched with mystical looking symbols. It seems to emanate a weak blue aura.</entry>
+  <entry index="130900141">a ornate steel morningstar with a basic blue Keshmian ore spiked head.</entry>
+  <entry index="130900142">a sinister morningstar forged completely from blue Keshmian Ore, which is deceptively light. The spiked ball at the end glows as if burning with holy flames.</entry>
+  <entry index="130900143">an Iron Claymore sword. The handle is engraved with mystical symbols. It seems to emanate a weak blue aura.</entry>
+  <entry index="130900144">an ornate steel Claymore. The blade is inlaid with Keshmian ore in a beautiful lattice pattern. It vibrates with power.</entry>
+  <entry index="130900145">long Claymore sword forged completely from Keshmian Ore, which is deceptively light. You feel as if you could take on an entire army with this weapon.</entry>
+  <entry index="130900146">a flimsy practice rapier sword.</entry>
+  <entry index="130900147">a simple iron rapier with an elaborate hilt. The hilt is engraved with mystical symbols. It seems to emanate a weak aura.</entry>
+  <entry index="130900148">a ornate steel Rapier. The blade is steel and Keshmian ore twisted together and sharpened to a dangerous point. It vibrates with power.</entry>
+  <entry index="130900149">a perfectly balanced rapier forged completely of the finest blue Keshmian Ore, which is deceptively light. You feel like you could defeat anyone in a duel with this amazing weapon.</entry>
+  <entry index="130900150">a simple dagger made from a blade of dragonglass.</entry>
+  <entry index="130900151">a basic bronze dagger with a handle carved of Walnut. The handle is engraved with mystical symbols. It seems to emanate a weak aura.</entry>
+  <entry index="130900152">a ornate steel dagger with an elaborate metal hilt. It is embedded with beautiful gems cut in the shape of mystical symbols. It's dripping with a seemingly endless supply of vile green ooze.</entry>
+  <entry index="130900153">a dagger with a blade forged of the finest blue Keshmian Ore. The handle seems to be carved out of the tooth of a dragon. It smells of sulfur.</entry>
+  <entry index="130900154">a boring old practice hatchet.</entry>
+  <entry index="130900155">a basic wooden hatchet. The hatchet handle is carved with mystical symbols. It seems to emanate a weak aura.</entry>
+  <entry index="130900156">a hatchet with a walnut handle and a steel blade. The blade has been polished and sharpened to a deadly gleaming point. It vibrates with power.</entry>
+  <entry index="130900157">a perfectly balanced blue Keshmian Ore Hatchet, which is deceptively light. The blade sparks with energy, and oddly feels both cold and warm to the touch.</entry>
+  <entry index="130900158">an old bo staff with a crude spear head tied to the end.</entry>
+  <entry index="130900159">an oaken Nunte Bo. It seems to emanate a weak blue aura.</entry>
+  <entry index="130900160">a finely crafted Nunte Bo, made from the finest Oak in the land. The tip is forged from Keshmian steel and vibrates with power.</entry>
+  <entry index="130900161">masterfully crafted Nunte Bo. The staff is made from an otherwordly material that is strong but seems to weigh nothing. The tip has been forged from the finest Keshmian ore available.</entry>
+  <entry index="130900162">old worn practice Sais.</entry>
+  <entry index="130900163">a roughly forged Sai. It seems to emanate a weak blue aura.</entry>
+  <entry index="130900164">a finely crafted Sai, made from the finest plain steel in the land. The tips are forged from Keshmian steel and vibrate with power.</entry>
+  <entry index="130900165">masterfully crafted Sai. The Sai is made from an otherwordly material that is strong but seems to weigh nothing. The blades have been forged from the finest Keshmian ore available.</entry>
+  <entry index="130900166">a boring old practice Flail.</entry>
+  <entry index="130900167">a basic wooden flail. The handle is engraved with mystical symbols. It seems to emanate a weak aura.</entry>
+  <entry index="130900168">a ornate steel handled Flail. It has a wicked looking spiked ball which is glowing with power.</entry>
+  <entry index="130900169">a massive Flail forged from Keshmian Ore, which is deceptively light. The spiked ball looks like it could shatter armor.</entry>
+  <entry index="130900170">a boring old practice crossbow.</entry>
+  <entry index="130900171">a basic wooden crossbow. The handle is engraved with mystical symbols. It seems to emanate a weak aura.</entry>
+  <entry index="130900172">a ornate steel handled crossbow. It is embedded with beautiful gems cut in the shape of mystical symbols. It vibrates with power.</entry>
+  <entry index="130900173">gorgeous crossbow made by the most skilled craftsmen in the land, utilizing the finest blue Keshmian Ore, which is deceptively light. You are overwhelmed with the power this weapon possesses.</entry>
+  <entry index="130900174">a sword made from good and evil. It's glow is enchanted with the blood of it's victims.</entry>
+  <entry index="130900175">a sword made from good and evil. It's glow is enchanted with the blood of it's victims</entry>
+  <entry index="130900176">Teaches Fire Strike to Wizards.</entry>
+  <entry index="130900177">Hit effects need 16 skill with this weapon.</entry>
+  <entry index="130900178">{0}% chance for a Knight with a shield to taunt nearby enemies.</entry>
+  <entry index="130900179">{0}% chance to also strike with the weapon in your left hand.</entry>
+  <entry index="130900180">Below 75% health, a growing chance of wild berserker swings for heavy damage.</entry>
+  <entry index="130900181">Below 75% health, a growing chance of wild berserker swings that make the target bleed.</entry>
+  <entry index="130900182">With an Epic or better hatchet in your left hand, a growing chance below 75% health of wild berserker swings.</entry>
+  <entry index="130900183">{0}% chance to make the target bleed heavily.</entry>
+  <entry index="130900184">Once every {0} hits, finishes a bleeding target with a strike for {1}x damage.</entry>
+  <entry index="130900185">Once every 7 hits, spins to cut the hostile creatures on your square and make them bleed.</entry>
+  <entry index="130900186">Up to {0}% chance, less as you tire, to strike again in a flurry.</entry>
+  <entry index="130900187">{0}% chance to finish off a lesser enemy below 20% health.</entry>
+  <entry index="130900188">{0}% chance for Martial Artists and Thieves to finish off a lesser enemy below 20% health.</entry>
+  <entry index="130900189">{0}% chance for Thieves to finish off a lesser enemy below 20% health.</entry>
+  <entry index="130900190">Deals {0} to {1} bonus fire damage to creatures.</entry>
+  <entry index="130900191">Deals {0} to {1} bonus ice damage to creatures.</entry>
+  <entry index="130900192">Deals {0} to {1} bonus death damage to creatures.</entry>
+  <entry index="130900193">Cleaves up to 5 enemies beside you for {0}% damage, double against bleeding ones.</entry>
+  <entry index="130900194">{0}% chance to make every adjacent enemy bleed.</entry>
+  <entry index="130900195">Up to {0}% chance, less as you tire, to whirl into extra strikes on every enemy on your square.</entry>
+  <entry index="130900196">{0}% chance to daze the enemies on your square ({1}% for Martial Artists).</entry>
+  <entry index="130900197">15% chance to restore {0} mana.</entry>
+  <entry index="130900198">15% chance for Thaumaturges and Wizards to restore {0} mana.</entry>
+  <entry index="130900199">Every 11 hits stores a charge of Meteor Strike, up to {0}.</entry>
+  <entry index="130900200">3rd hit of a combo: strikes for {0}x damage, scaled by your stamina.</entry>
+  <entry index="130900201">3rd hit of a combo: a strike that grows with your stamina.</entry>
+  <entry index="130900202">5th hit of a combo: strikes the enemies around you and dazes them.</entry>
+  <entry index="130900203">5th hit of a combo: strikes for {0}x damage, scaled by your stamina, and can daze.</entry>
+  <entry index="130900204">10th hit of a combo: strikes for {0}x damage, scaled by your stamina.</entry>
+  <entry index="130900205">10th hit of a combo: strikes for {0}x damage, scaled by your stamina, and can daze.</entry>
+  <entry index="130900206">10th hit of a combo: a crushing blow for heavy damage.</entry>
+  <entry index="130900207">{0}% chance to strike again, up to twice in a row.</entry>
+  <entry index="130900208">{0}% chance for a Martial Artist to restore {1} health or stamina and heal the party a little.</entry>
+  <entry index="130900209">A Thief stalking in the shadows strikes again for half damage.</entry>
+  <entry index="130900210">{0}% chance to smite the undead for {1}x damage.</entry>
+  <entry index="130900211">{0}% chance to restore {1} health and mana to you, and health, mana and stamina to the players in sight within 2 squares.</entry>
+  <entry index="130900212">Your followers attack the enemy you hit.</entry>
+  <entry index="130900213">{0}% chance to strike again for full damage.</entry>
+  <entry index="130900214">Heals you for 8% of the weapon's damage.</entry>
+  <entry index="130900215">{0}% chance to avoid all damage for 4 seconds.</entry>
+  <entry index="130900216">A Thief striking an enemy that isn't fighting them deals bonus damage.</entry>
+  <entry index="130900217">In your left hand, {0}% chance to also throw your right-hand returning weapon at a distant target.</entry>
+  <entry index="130900218">In your left hand, {0}% chance for a Thief to also throw a right-hand returning weapon at a distant target.</entry>
+  <entry index="130900219">{0}% chance for a Thief to cast Poison Cloud on a distant target.</entry>
+  <entry index="130900220">{0}% chance to also hit up to {1} enemies near the target.</entry>
+  <entry index="130900221">{0}% chance on a thrown hit to cast the chosen spell at the target.</entry>
+  <entry index="130900222">{0}% chance to give the other players in sight within 3 squares a balm that heals {1} health three times a round.</entry>
+  <entry index="130900223">Each hit quickens your swings while you keep fighting, at a cost in stamina.</entry>
+  <entry index="130900224">30% chance, when thrown, to pin the target in place for 15 seconds.</entry>
+  <entry index="130900225">{0}% chance to charge it to cast Lightning Lance or Fireball.</entry>
+  <entry index="130900226">Lowers the target's defense by {0} for {1} seconds.</entry>
+  <entry index="130900227">In darkness, {0}% chance of a bonus shot for double damage.</entry>
+  <entry index="130900228">Every 2 hits in a row add an extra shot for 75% damage, up to {0}, at 1 stamina each.</entry>
+  <entry index="130900229">{0}% chance to cast the spell of a frost, fire or darkness item in your backpack's first slot.</entry>
+  <entry index="130900230">A stun vial in your backpack's first slot uses a charge on every hit to daze the hostile creatures on the target's square for up to {0} rounds.</entry>
+  <entry index="130900231">20% chance to summon a Dark Efreet to fight for you.</entry>
+  <entry index="130900232">In your right hand, 13% chance to awaken for 10 seconds, raising its speed and attack, and its damage by 100 per quality grade.</entry>
+  <entry index="130900233">In your left hand, 33% chance to raise your melee damage mitigation by 10 and its defense by {0} for 10 seconds.</entry>
+  <entry index="130900234">{0}% chance to strike up to 3 enemies around you for {1} damage each.</entry>
+  <entry index="130900235">Makes the target bleed heavily.</entry>
+  <entry index="130900236">Hitting another player trains your Thieving skill, up to 19.</entry>
+  <entry index="130900237">With 19 Hand skill, hits also train your Staff skill.</entry>
+  <entry index="130900238">With 19 Hand skill, hits also train your Dagger skill.</entry>
+  <entry index="130900239">After {0} hits, strikes up to {1} enemies around you for {2}x damage and shares the stolen life with your group.</entry>
+  <entry index="130900240">After 7 hits, slashes up to {0} enemies around you for {1}x damage and dazes them.</entry>
+  <entry index="130900241">Charges a target 2 or 3 squares away for double damage, stunning it and the hostile creatures on its square for 5 rounds, or pokes a target next to you. A charge costs 20 stamina and recharges in 20 rounds, a poke that lands in 1.5.</entry>
+  <entry index="130900242">The 7th hit after using it readies its charge again.</entry>
+  <entry index="130900243">Casts Meteor Strike at a target, stronger with each stored charge, then recharges for {0} rounds. Needs both hands free, and 19 Magic skill to use more than 1 charge.</entry>
+  <entry index="130900244">Once charged, casts Lightning Lance at a target away from you, or Fireball at one on your square.</entry>
+  <entry index="130900245">{0}% chance to strike back at an attacker on your square, {1}% for a Martial Artist. Each parry spends one of up to 6 charges your hits store.</entry>
+  <entry index="130900246">{0}% chance to sweep up to {1} hostile creatures on your square for weapon damage, using one of up to 6 charges your hits store.</entry>
+  <entry index="130900247">{0}% chance to bash the attacker, strike back with your right-hand weapon if the attacker is within its reach, and envenom a creature with potency equal to your level; a weaker attacker is also dazed for 4 rounds.</entry>
+  <entry index="130900248">{0}% chance to bash the attacker and strike back with your right-hand weapon if it is within reach; a weaker attacker is also dazed for {1} rounds.</entry>
+  <entry index="130900249">{0}% chance to bash the attacker and strike back with your right-hand weapon if it is within reach.</entry>
+  <entry index="130900250">Once your hits fully quicken it, evens out your health with the players in sight within 3 squares, then slows it again.</entry>
+  <entry index="130900251">Above level 29, with a shield in your left hand: up to {0}% chance, less as you tire, to strike again in a flurry instead.</entry>
+  <entry index="130900252">Switches the spell its hits cast between none and Lightning Bolt.</entry>
+  <entry index="130900253">Switches the spell its hits cast between none, Lightning Bolt and Ice Storm.</entry>
+  <entry index="130900254">Switches the spell its hits cast between none, Lightning Bolt, Ice Storm and Fireball.</entry>
+  <entry index="130900255">Switches the spell its hits cast between none, Lightning Bolt, Ice Storm, Fireball and Fire Strike.</entry>
+  <entry index="130900256">{0}% chance to cast the chosen spell at the target; only Ice Storm and Fireball can be cast on your square.</entry>
+  <entry index="130900257">3rd hit of a combo: strikes for {0}x damage, scaled by your stamina, and can daze.</entry>
+  <entry index="130900258">{0}% chance for a poison vial in your backpack's first slot to use a charge and poison the target with potency equal to your level.</entry>
+  <entry index="130900259">With your left hand empty, {0}% chance to strike back at an attacker on your square, {1}% for a Martial Artist. Each such parry spends one of up to 6 charges your hits store.</entry>
+  <entry index="130900260">With both hands empty, {0}% chance to strike back at an attacker on your square, {1}% for a Martial Artist. Each block spends one of up to 6 charges your hits store.</entry>
+  <entry index="130900261">Restores {0} health, plus a tick of your health regeneration.</entry>
 </data>

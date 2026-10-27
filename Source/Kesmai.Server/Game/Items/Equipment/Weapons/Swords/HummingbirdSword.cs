@@ -43,6 +43,12 @@ public class HummingbirdSword : ShortSword, ITreasure
 			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6290010)); /* a fine sword made of an otherworldly metal. Looking at the blade makes you dizzy, as if you were looking at the wings of a hummingbird. */
+	}
+
 #if (Alpha)
 		protected override bool OnDroppedInto(MobileEntity entity, Container container, int slot)
 		{

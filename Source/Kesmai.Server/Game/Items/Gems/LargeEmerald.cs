@@ -33,6 +33,12 @@ public class LargeEmerald : Gem
 		entries.Add(new LocalizationEntry(6200000, 6200117)); /* [You are looking at] [a large green emerald.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200117)); /* a large green emerald. */
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

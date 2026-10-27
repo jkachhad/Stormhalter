@@ -80,6 +80,24 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	public virtual int ProjectileProtection => 0;
 
 	/// <summary>
+	/// Gets the melee damage mitigation provided to the wearer.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int MeleeDamageMitigation => 0;
+
+	/// <summary>
+	/// Gets the ranged damage mitigation provided to the wearer.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int RangedDamageMitigation => 0;
+
+	/// <summary>
+	/// Gets the projectile damage mitigation provided to the wearer.
+	/// </summary>
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int ProjectileDamageMitigation => 0;
+
+	/// <summary>
 	/// Gets the maximum range at which this weapon can be used.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
@@ -95,7 +113,10 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		set
 		{
 			if (_poison != value)
+			{
 				Delta(ItemDelta.UpdateIcon);
+				InvalidateTooltip();
+			}
 
 			_poison = value;
 		}
@@ -177,16 +198,7 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// </remarks>
 	public virtual double GetAttackBonus(MobileEntity attacker, MobileEntity defender)
 	{
-		var attackBonus = BaseAttackBonus;
-
-		/* Enchanted weapons from a Knight have additional attack bonus based on the level of the knight. */
-		if (IsEnchanted)
-		{
-			if (attacker is PlayerEntity player)
-				attackBonus += ((player.Level - 5) / 3).Clamp(1, 5);
-			else
-				attackBonus += 1;
-		}
+		var attackBonus = BaseAttackBonus + GetEnchantedAttackBonus(attacker);
 
 		/*
 		 * "The Black Broadsword (BBS for short) is the best weapon in the game. It hits hard and blocks well.
@@ -200,6 +212,24 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 				attackBonus += 1;
 
 		return attackBonus;
+	}
+
+	/// <summary>
+	/// Gets the attack bonus an enchantment adds for the attacker, or 0 when this weapon is not enchanted. The tooltip
+	/// shows it on the Enchanted line.
+	/// </summary>
+	/// <remarks>
+	/// Enchanted weapons from a Knight have additional attack bonus based on the level of the knight.
+	/// </remarks>
+	public virtual int GetEnchantedAttackBonus(MobileEntity attacker)
+	{
+		if (!IsEnchanted)
+			return 0;
+
+		if (attacker is PlayerEntity player)
+			return ((player.Level - 5) / 3).Clamp(1, 5);
+
+		return 1;
 	}
 
 	/// <inheritdoc/>
@@ -240,11 +270,20 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		if (Poison is { } poison)
+			poison.AddTooltipEntry(tooltip);
+	}
+
+	/// <inheritdoc />
 	public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
 	{
 		base.GetClientProperties(observer, properties);
 
-		if (RequiresIdentification && !Identified)
+		if (!Identified)
 			return;
 
 		// the skill identifier, not the implicit int conversion (which is a zero-based index).
@@ -284,6 +323,15 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		if (ProjectileProtection != 0)
 			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
 
+		if (MeleeDamageMitigation != 0)
+			properties.Set(ItemPropertyId.MeleeDamageMitigation, MeleeDamageMitigation);
+
+		if (RangedDamageMitigation != 0)
+			properties.Set(ItemPropertyId.RangedDamageMitigation, RangedDamageMitigation);
+
+		if (ProjectileDamageMitigation != 0)
+			properties.Set(ItemPropertyId.ProjectileDamageMitigation, ProjectileDamageMitigation);
+
 		if (HealthRegeneration != 0)
 			properties.Set(ItemPropertyId.HealthRegeneration, HealthRegeneration);
 
@@ -309,6 +357,15 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 			if (ManaRegeneration > 0)
 				modifiers.Add(EntityStat.ManaRegenerationRate, ManaRegeneration);
+
+			if (MeleeDamageMitigation != 0)
+				modifiers.Add(EntityStat.MeleeDamageMitigation, MeleeDamageMitigation);
+
+			if (RangedDamageMitigation != 0)
+				modifiers.Add(EntityStat.RangedDamageMitigation, RangedDamageMitigation);
+
+			if (ProjectileDamageMitigation != 0)
+				modifiers.Add(EntityStat.ProjectileDamageMitigation, ProjectileDamageMitigation);
 		}
 
 		return modifiers;
@@ -451,6 +508,16 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 			if (AutoRevenom && RevenomPotency > 0)
 				Poison = new Venom(RevenomPotency);
 		}
+	}
+
+	/// <inheritdoc />
+	public virtual void OnCriticalHit(MobileEntity attacker, MobileEntity defender)
+	{
+	}
+
+	/// <inheritdoc />
+	public virtual void OnMiss(MobileEntity attacker, MobileEntity defender)
+	{
 	}
 
 	public override bool DropToLocation(Point2D location)

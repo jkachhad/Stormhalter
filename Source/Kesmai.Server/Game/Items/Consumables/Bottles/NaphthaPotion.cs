@@ -48,6 +48,12 @@ public class NaphthaPotion : Bottle
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200086)); /* a black ceramic bottle. */
+	}
 		
 	/// <inheritdoc />
 	public override ActionType GetAction()

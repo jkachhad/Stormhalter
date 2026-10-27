@@ -50,6 +50,12 @@ public class Javelin : Staff
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250091)); /* The javelin casts a lightning bolt when thrown. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200161)); /* a silver colored javelin shaped like a lightning bolt. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

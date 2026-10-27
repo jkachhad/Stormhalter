@@ -42,6 +42,12 @@ public class StaminaPotion : Bottle
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200093)); /* a pale-blue bottle streaked with white lines. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

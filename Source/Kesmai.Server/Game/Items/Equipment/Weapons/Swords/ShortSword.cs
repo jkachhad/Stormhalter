@@ -8,6 +8,9 @@ namespace Kesmai.Server.Items;
 public class ShortSword : Sword
 {
 	/// <inheritdoc />
+	public override bool RequiresIdentification => false;
+
+	/// <inheritdoc />
 	public override uint BasePrice => 20;
 
 	/// <inheritdoc />
@@ -56,6 +59,12 @@ public class ShortSword : Sword
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250020)); /* The shortsword appears quite ordinary. */
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200024)); /* an iron shortsword. */
 	}
 	
 	/// <inheritdoc />

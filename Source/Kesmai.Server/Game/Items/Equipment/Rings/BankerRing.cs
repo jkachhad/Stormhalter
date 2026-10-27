@@ -206,6 +206,12 @@ public class BankerRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200343)); /* a heavy gold ring with a faded inscription that reads "Pr..-rt. of .a-.er's G'.ld." */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
@@ -234,5 +240,13 @@ public class BankerRing : Ring, ITreasure
 		/* Add some validation to prevent invalid amounts. */
 		if (_consumed > _carryLimit)
 			_consumed = _carryLimit;
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610050); /* Holds gold dropped onto it, and sets it down near you again. */
 	}
 }

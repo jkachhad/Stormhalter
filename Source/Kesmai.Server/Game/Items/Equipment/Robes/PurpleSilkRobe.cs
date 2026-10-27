@@ -45,6 +45,12 @@ public class PurpleSilkRobe : Robe, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200040)); /* a robe of imperial purple silk embroidered in gold thread with a chrysanthemum. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

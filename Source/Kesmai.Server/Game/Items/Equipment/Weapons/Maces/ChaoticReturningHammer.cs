@@ -56,4 +56,10 @@ public class ChaoticReturningHammer : Mace, IReturningWeapon, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250007)); /* The combat adds for this weapon are +3. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200386)); /* a large steel throwing hammer. The hammer is emitting a soft yellow glow. The weapon is chaotic. */
+	}
 }

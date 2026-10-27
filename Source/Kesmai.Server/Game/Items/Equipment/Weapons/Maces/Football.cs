@@ -50,4 +50,10 @@ public class Football : Mace
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200218)); /* [You are looking at] [a leather football.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200218)); /* a leather football. */
+	}
 }

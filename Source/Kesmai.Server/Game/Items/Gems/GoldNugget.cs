@@ -35,6 +35,12 @@ public class GoldNugget : Gem
 		entries.Add(new LocalizationEntry(6200000, 6200120)); /* [You are looking at] [a gold nugget.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200120)); /* a gold nugget. */
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

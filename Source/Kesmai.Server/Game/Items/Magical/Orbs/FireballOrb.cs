@@ -35,6 +35,12 @@ public class FireballOrb : SpellOrb, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200278)); /* a red glass ball. */
+	}
+
+	/// <inheritdoc />
 	protected override void PlaceEffect(MobileEntity source, Point2D location)
 	{
 		var spell = new FireballSpell

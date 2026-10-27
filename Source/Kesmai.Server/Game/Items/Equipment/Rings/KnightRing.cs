@@ -45,6 +45,12 @@ public class KnightRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250043)); /* The ring contains Knight's spells. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200054)); /* a large silver ring, with a triangular piece of jade mounted among three small blue diamonds. */
+	}
+
 	protected override bool OnDroppedInto(MobileEntity entity, Container container, int slot)
 	{
 		if (!base.OnDroppedInto(entity, container, slot))

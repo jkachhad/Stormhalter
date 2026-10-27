@@ -31,6 +31,12 @@ public class PantherSapphire : Gem
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200129)); /* an icy-blue sapphire cut into the shape of a stalking panther. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
