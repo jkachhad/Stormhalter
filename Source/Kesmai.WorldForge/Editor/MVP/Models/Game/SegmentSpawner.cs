@@ -515,6 +515,12 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 			_maximum = (int)maximumElement;
 
 		ValidateScripts(element);
+
+		// spawn time blocks written by an older WorldForge are rewritten from their settings, so saving carries the current code
+		var spawnTime = SpawnTimeWindow.Read(AfterSpawnScript);
+
+		if (!spawnTime.IsAlways)
+			spawnTime.Apply(AfterSpawnScript);
 	}
 	
 	protected SegmentSpawner()

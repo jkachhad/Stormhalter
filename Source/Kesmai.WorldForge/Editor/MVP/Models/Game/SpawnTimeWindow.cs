@@ -169,7 +169,11 @@ public class SpawnTimeWindow
 		var settings = $"use={String.Join(",", used)}; phases={String.Join(",", phases)}; from={From:hh\\:mm}; until={Until:hh\\:mm}; removeAll={(RemoveAll ? "true" : "false")}"
 		               + $"; times={FormatTimes(Times).Replace(" ", String.Empty)}; window={WindowMinutes}; perTime={PerTime}"
 		               + $"; enemy={Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(KillEnemy))}; kills={KillsNeeded}; killsIn={(KillsInRegion ? "region" : "segment")}";
-		var remove = RemoveAll ? "spawner.Despawn(); /* remove everything this spawner made */" : "spawn.Delete(); /* remove the new spawn */";
+		// removed on the next tick: the server is still working with the new spawn when OnAfterSpawn runs, and deleting it
+		// there throws inside Spawner.Spawn and crashes the server
+		var remove = RemoveAll
+			? "Timer.DelayCall(() => spawner.Despawn()); /* remove everything this spawner made, once it has finished spawning */"
+			: "Timer.DelayCall(() => spawn.Delete()); /* remove the new spawn, once the spawner has finished with it */";
 
 		var lines = new List<string>
 		{
