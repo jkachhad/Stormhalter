@@ -14,6 +14,7 @@ public class IdentifySpell : DelayedSpell
 	
 	protected override void OnCast()
 	{
+		_caster.SendLocalizedMessage(6300505); /* Target an item to identify. */
 		_caster.Target = new InternalTarget(this);
 	}
 

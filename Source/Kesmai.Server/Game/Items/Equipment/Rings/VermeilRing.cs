@@ -66,7 +66,10 @@ public class VermeilRing : Ring, ITreasure
 			return false;
 			
 		if (entity is PlayerEntity player)
+		{
+			player.SendLocalizedMessage(6300505); /* Target an item to identify. */
 			player.Target = new InternalTarget(this);
+		}
 
 		return true;
 	}
