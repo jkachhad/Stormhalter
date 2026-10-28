@@ -13,9 +13,9 @@ namespace Kesmai.Server.Game;
 
 public abstract partial class TrainerEntity : VendorEntity
 {
-	/* Training a typed amount stays as speech until the input dialog (Kesmai #361). Full training and
-	   critiques are interaction entries. */
-	private static Regex _train = new Regex(@"^train\s([\d]+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	private static Regex _train = new Regex(@"^train(\s?[\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	private static Regex _critiqueSkill = new Regex(@"^critique\s(\w.*?)\sskill?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	private static Regex _critiqueTraining = new Regex(@"^critique\s(\w.*?)\straining?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		
 	protected Dictionary<Skill, TrainingEntry> _training;
 
@@ -52,6 +52,7 @@ public abstract partial class TrainerEntity : VendorEntity
 			return;
 		}
 			
+		/* example: train */
 		/* example: train (amount) */
 		if (_train.TryGetMatch(order, out var trainMatch) && CanTrain(source, out var skill, out var entry))
 		{
@@ -136,6 +137,28 @@ public abstract partial class TrainerEntity : VendorEntity
 					SayTo(source, 6300237); /* Please stand closer to me. */
 			}
 
+			return;
+		}
+
+		/* example: critique (skill) skill */
+		if (_critiqueSkill.TryGetMatch(order, out var critiqueSkillMatch))
+		{
+			args.Handled = true;
+
+			var skillName = critiqueSkillMatch.Groups[1].Value;
+
+			CritiqueSkill(source, Skill.All.FirstOrDefault(s => s.Name.Matches(skillName, true)));
+			return;
+		}
+
+		/* example: critique (skill) training */
+		if (_critiqueTraining.TryGetMatch(order, out var critiqueTrainingMatch))
+		{
+			args.Handled = true;
+
+			var skillName = critiqueTrainingMatch.Groups[1].Value;
+
+			CritiqueTraining(source, Skill.All.FirstOrDefault(s => s.Name.Matches(skillName, true)));
 			return;
 		}
 	}

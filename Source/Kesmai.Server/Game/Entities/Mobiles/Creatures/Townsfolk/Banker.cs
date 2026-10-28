@@ -10,10 +10,10 @@ namespace Kesmai.Server.Game;
 
 public partial class Banker : VendorEntity
 {
-	/* Typed amounts stay as speech until the input dialog (Kesmai #361). */
-	private static Regex _deposit = new Regex(@"^deposit\s([\d]+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	private static Regex _deposit = new Regex(@"^deposit(\s?[\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 	private static Regex _withdraw = new Regex(@"^withdraw\s([\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-		
+	private static Regex _showBalance = new Regex(@"^show\sbalance$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
 	public Banker()
 	{
 	}
@@ -37,18 +37,25 @@ public partial class Banker : VendorEntity
 		var source = args.Source;
 		var order = args.Order;
 			
+		/* example: deposit */
 		/* example: deposit (amount) */
 		if (_deposit.TryGetMatch(order, out var depositMatch))
 		{
 			args.Handled = true;
-				
+
 			if (!AtCounter(source, out var counter))
 			{
 				this.SayNotAtCounter(source);
 				return;
 			}
 
-			if (!long.TryParse(depositMatch.Groups[1].Value, out var requestedAmount) || requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
+			if (!long.TryParse(depositMatch.Groups[1].Value, out var requestedAmount))
+			{
+				Deposit(source, counter);
+				return;
+			}
+
+			if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
 			{
 				SayTo(source, 6300243); /* Are you trying to be funny? */
 				return;
@@ -96,6 +103,15 @@ public partial class Banker : VendorEntity
 				this.SayNotAtCounter(source);
 			}
 
+			return;
+		}
+
+		/* example: show balance */
+		if (_showBalance.TryGetMatch(order, out _))
+		{
+			args.Handled = true;
+
+			ShowBalance(source);
 			return;
 		}
 	}
