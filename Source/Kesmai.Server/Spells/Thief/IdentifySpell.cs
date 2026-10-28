@@ -92,15 +92,5 @@ public class IdentifySpell : DelayedSpell
 
 			_spell.CastAt(target);
 		}
-
-		protected override void OnTargetCancel(MobileEntity source, TargetCancel cancelType)
-		{
-			base.OnTargetCancel(source, cancelType);
-
-			if (source.Spell != _spell)
-				return;
-
-			_spell.Cancel();
-		}
 	}
 }
