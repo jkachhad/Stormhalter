@@ -4,6 +4,7 @@ using System.IO;
 using Kesmai.Server.Game;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Network;
+using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
@@ -65,17 +66,7 @@ public class VermeilRing : Ring, ITreasure
 			return false;
 			
 		if (entity is PlayerEntity player)
-		{
-			player.EmitSound(237, 3, 6);
-
-			if (player.RightHand != null)
-			{
-				player.RightHand.Identified = true;
-				player.SendDescription(player.RightHand);
-			}
-
-			player.QueueRoundTimer();
-		}
+			player.Target = new InternalTarget(this);
 
 		return true;
 	}
@@ -90,6 +81,30 @@ public class VermeilRing : Ring, ITreasure
 		}
 
 		base.GetInteractions(source, entries);
+	}
+
+	private sealed class InternalTarget : ItemTarget
+	{
+		private readonly VermeilRing _ring;
+
+		public InternalTarget(VermeilRing ring)
+		{
+			_ring = ring;
+		}
+
+		protected override void OnTarget(MobileEntity source, ItemEntity target)
+		{
+			/* The ring must still be held in the left hand. */
+			if (!source.IsAlive || !source.CanPerformAction || !ReferenceEquals(source.LeftHand, _ring))
+				return;
+
+			source.EmitSound(237, 3, 6);
+
+			target.Identified = true;
+			source.SendDescription(target);
+
+			source.QueueRoundTimer();
+		}
 	}
 	
 	/// <summary>
