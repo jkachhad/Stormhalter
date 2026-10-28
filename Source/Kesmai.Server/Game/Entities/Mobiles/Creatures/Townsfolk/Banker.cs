@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
 
@@ -9,6 +10,10 @@ namespace Kesmai.Server.Game;
 
 public partial class Banker : VendorEntity
 {
+	private static Regex _deposit = new Regex(@"^deposit(\s?[\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	private static Regex _withdraw = new Regex(@"^withdraw\s([\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	private static Regex _showBalance = new Regex(@"^show\sbalance$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
 	public Banker()
 	{
 	}
@@ -34,6 +39,84 @@ public partial class Banker : VendorEntity
 		(player, vendor, counter, text) => ((Banker)vendor).Withdraw(player, counter, UInt32.Parse(text)),
 		InputKind.Number);
 
+	public override void HandleOrder(OrderEventArgs args)
+	{
+		base.HandleOrder(args);
+
+		if (args.Handled)
+			return;
+			
+		var source = args.Source;
+		var order = args.Order;
+			
+		/* example: deposit */
+		/* example: deposit (amount) */
+		if (_deposit.TryGetMatch(order, out var depositMatch))
+		{
+			args.Handled = true;
+
+			if (!AtCounter(source, out var counter))
+			{
+				this.SayNotAtCounter(source);
+				return;
+			}
+
+			if (!long.TryParse(depositMatch.Groups[1].Value, out var requestedAmount))
+			{
+				Deposit(source, counter);
+				return;
+			}
+
+			if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
+			{
+				SayTo(source, 6300243); /* Are you trying to be funny? */
+				return;
+			}
+
+			Deposit(source, counter, (uint)requestedAmount);
+			return;
+		}
+			
+		/* example: withdraw (amount) */
+		if (_withdraw.TryGetMatch(order, out var withdrawMatch))
+		{
+			args.Handled = true;
+				
+			if (AtCounter(source, out var counter))
+			{
+				if (withdrawMatch.Groups[1].Success && long.TryParse(withdrawMatch.Groups[1].Value, out var requestedAmount))
+				{
+					if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
+						SayTo(source, 6300243); /* Are you trying to be funny? */
+					else
+						Withdraw(source, counter, (uint)requestedAmount);
+				}
+				else
+				{
+					SayTo(source, 6300257); /* Would you tell me the amount? */
+				}
+			}
+			else
+			{
+				this.SayNotAtCounter(source);
+			}
+
+			return;
+		}
+
+		/* example: show balance */
+		if (_showBalance.TryGetMatch(order, out _))
+		{
+			args.Handled = true;
+
+			ShowBalance(source);
+			return;
+		}
+	}
+
+	/// <summary>
+	/// Withdraws coins from the account onto the counter.
+	/// </summary>
 	private void Withdraw(PlayerEntity source, Point2D counter, uint amount)
 	{
 		if (amount > source.Gold)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Kesmai.Server.Game.Items.Magical;
 using Kesmai.Server.Miscellaneous;
 
@@ -13,6 +14,9 @@ namespace Kesmai.Server.Game;
 
 public abstract partial class TrainerEntity : VendorEntity
 {
+	private static Regex _train = new Regex(@"^train(\s?[\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	private static Regex _critiqueSkill = new Regex(@"^critique\s(\w.*?)\sskill?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	private static Regex _critiqueTraining = new Regex(@"^critique\s(\w.*?)\straining?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		
 	protected Dictionary<Skill, TrainingEntry> _training;
 
@@ -47,10 +51,80 @@ public abstract partial class TrainerEntity : VendorEntity
 		base.GetInteractions(source, entries);
 	}
 
+	public override void HandleOrder(OrderEventArgs args)
+	{
+		base.HandleOrder(args);
+
+		if (args.Handled)
+			return;
+			
+		var source = args.Source;
+		var order = args.Order;
+			
+		if (!CanTrain(source.Profession))
+		{
+			SayTo(source, 6300322); /* You are not of my profession! Get out! */
+
+			args.Handled = true;
+			return;
+		}
+			
+		/* example: train */
+		/* example: train (amount) */
+		if (_train.TryGetMatch(order, out var trainMatch) && CanTrain(source, out _, out _))
+		{
+			args.Handled = true;
+
+			if (!AtCounter(source, out var counter))
+			{
+				this.SayNotAtCounter(source);
+				return;
+			}
+
+			if (!long.TryParse(trainMatch.Groups[1].Value, out var requestedAmount))
+			{
+				TrainAmount(source, counter);
+				return;
+			}
+
+			if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
+			{
+				SayTo(source, 6300243); /* Are you trying to be funny? */
+				return;
+			}
+
+			TrainAmount(source, counter, requestedAmount);
+			return;
+		}
+
+		/* example: critique (skill) skill */
+		if (_critiqueSkill.TryGetMatch(order, out var critiqueSkillMatch))
+		{
+			args.Handled = true;
+
+			var skillName = critiqueSkillMatch.Groups[1].Value;
+
+			CritiqueSkill(source, Skill.All.FirstOrDefault(s => s.Name.Matches(skillName, true)));
+			return;
+		}
+
+		/* example: critique (skill) training */
+		if (_critiqueTraining.TryGetMatch(order, out var critiqueTrainingMatch))
+		{
+			args.Handled = true;
+
+			var skillName = critiqueTrainingMatch.Groups[1].Value;
+
+			CritiqueTraining(source, Skill.All.FirstOrDefault(s => s.Name.Matches(skillName, true)));
+			return;
+		}
+	}
+
 	/// <summary>
-	/// Trains the skill of the item in the player's hand with up to the requested amount of the gold on the counter.
+	/// Trains the skill of the item in the player's hand with the gold on the counter, or with up to the requested
+	/// amount of it.
 	/// </summary>
-	private void TrainAmount(PlayerEntity source, Point2D counter, long requestedAmount)
+	private void TrainAmount(PlayerEntity source, Point2D counter, long? requestedAmount = null)
 	{
 		if (!CanTrain(source.Profession))
 		{
@@ -72,13 +146,16 @@ public abstract partial class TrainerEntity : VendorEntity
 			var (currentTraining, currentCost,
 				nextTraining, nextCost) = source.CalculateTraining(skill);
 
-			if (requestedAmount > trainAmount)
+			if (requestedAmount.HasValue)
 			{
-				SayTo(source, 6300243); /* Are you trying to be funny? */
-				return;
-			}
+				if (requestedAmount.Value > trainAmount)
+				{
+					SayTo(source, 6300243); /* Are you trying to be funny? */
+					return;
+				}
 
-			trainAmount = requestedAmount;
+				trainAmount = requestedAmount.Value;
+			}
 
 			if (currentTraining < 1 && nextTraining < 1)
 			{
@@ -110,9 +187,9 @@ public abstract partial class TrainerEntity : VendorEntity
 
 				if (!ConsumeFromLocation<Gold>(counter, (uint)purchase))
 					return;
-		
+
 				var trained = currentTrained + nextTrained;
-					
+
 				source.Train(skill, trained);
 				source.AwardExperience(purchase);
 
@@ -121,10 +198,7 @@ public abstract partial class TrainerEntity : VendorEntity
 		}
 		else
 		{
-			if (Counters.Any())
-				SayTo(source, 6300246); /* Please put some coins on the counter. */
-			else
-				SayTo(source, 6300247); /* Please put some coins on the ground. */
+			this.SayPutCoins(source);
 		}
 	}
 

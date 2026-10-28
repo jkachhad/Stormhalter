@@ -10,6 +10,8 @@ namespace Kesmai.Server.Game;
 
 public abstract partial class SpellTrainer : ProfessionTrainer
 {
+	private static Regex _teach = new Regex(@"^teach\s([\w\s\/]*?)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
 	public SpellTrainer()
 	{
 	}
@@ -32,10 +34,7 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 
 		if (CanTrain(source.Profession))
 		{
-			var profession = source.Profession;
-
-			var spells = profession.GetSpells();
-			var available = spells.Where(st => st.SkillLevel <= skillLevel && !st.IsTaught(source)).ToList();
+			var available = GetAvailableSpells(source);
 
 			if (available.Any())
 			{
@@ -51,6 +50,125 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 		}
 
 		base.GetInteractions(source, entries);
+	}
+
+	public override void HandleOrder(OrderEventArgs args)
+	{
+		base.HandleOrder(args);
+
+		if (args.Handled)
+			return;
+
+		var source = args.Source;
+		var order = args.Order;
+
+		/* example: show spells */
+		if (order.Matches("show spells", true))
+		{
+			args.Handled = true;
+
+			if (AtCounter(source, out _))
+			{
+				var available = GetAvailableSpells(source);
+
+				if (available.Any())
+				{
+					for (var i = 0; i < available.Count; i++)
+						SayTo(source, $"{i + 1}. {available[i].Name} - {available[i].Cost} coins.");
+				}
+				else
+				{
+					SayTo(source, 6300323); /* There are no spells I can teach you. */
+				}
+			}
+			else
+			{
+				this.SayNotAtCounter(source);
+			}
+
+			return;
+		}
+
+		/* example: teach (spell name, index) */
+		if (_teach.TryGetMatch(order, out var teachMatch))
+		{
+			args.Handled = true;
+
+			if (AtCounter(source, out var counter))
+			{
+				var available = GetAvailableSpells(source);
+				var spell = default(ProfessionSpell);
+
+				/* Try to find the spell by name if index does not resolve. */
+				if (int.TryParse(teachMatch.Groups[1].Value, out var index))
+				{
+					if (index > 0 && index <= available.Count)
+						spell = available[index - 1];
+				}
+				else
+				{
+					var spellName = teachMatch.Groups[1].Value;
+
+					spell = available.FirstOrDefault(sp => sp.RespondsTo(spellName));
+				}
+
+				TeachSpell(source, counter, spell);
+			}
+			else
+			{
+				this.SayNotAtCounter(source);
+			}
+
+			return;
+		}
+	}
+
+	/// <summary>
+	/// Gets the spells of the player's profession they have the skill for and haven't learned.
+	/// </summary>
+	private static List<ProfessionSpell> GetAvailableSpells(PlayerEntity source)
+	{
+		var skillLevel = source.GetSkillLevel(Skill.Magic);
+		var spells = source.Profession.GetSpells();
+
+		return spells.Where(st => st.SkillLevel <= skillLevel && !st.IsTaught(source)).ToList();
+	}
+
+	/// <summary>
+	/// Teaches the spell for the gold on the counter.
+	/// </summary>
+	private void TeachSpell(PlayerEntity source, Point2D counter, ProfessionSpell spell)
+	{
+		var available = GetAvailableSpells(source);
+
+		if (!available.Any())
+		{
+			SayTo(source, 6300323); /* There are no spells I can teach you. */
+			return;
+		}
+
+		if (spell is null || !available.Contains(spell))
+		{
+			SayTo(source, 6300321); /* That spell is not yet available to you. */
+			return;
+		}
+
+		if (this.CountOnCounter<Gold>(counter) is 0)
+		{
+			this.SayPutCoins(source);
+			return;
+		}
+
+		if (!this.ConsumeFromCounter<Gold>(counter, (uint)spell.Cost))
+		{
+			SayTo(source, 6300243); /* Are you trying to be funny? */
+			return;
+		}
+
+		foreach (var spellType in spell.Spells)
+			source.Spells.Learn(spellType);
+
+		SayTo(source, 6300325, spell.Name); /* You have learned the {0} spell. */
 	}
 
 	public class TeachSpellInteraction : VendorInteraction
@@ -69,43 +187,8 @@ public abstract partial class SpellTrainer : ProfessionTrainer
 
 		protected override void OnClick(PlayerEntity source, VendorEntity vendor, Point2D counter)
 		{
-			var trainer = (SpellTrainer)vendor;
-			var skillLevel = source.GetSkillLevel(Skill.Magic);
-			var profession = source.Profession;
-
-			var spells = profession.GetSpells();
-			var available = spells.Where(st => st.SkillLevel <= skillLevel && !st.IsTaught(source)).ToList();
-
-			if (!available.Any())
-			{
-				trainer.SayTo(source, 6300323); /* There are no spells I can teach you. */
-				return;
-			}
-			
-			if (!available.Contains(_spell))
-			{
-				trainer.SayTo(source, 6300321); /* That spell is not yet available to you. */
-				return;
-			}
-
-			var spellCost = (uint)_spell.Cost;
-
-			if (trainer.CountOnCounter<Gold>(counter) is 0)
-			{
-				trainer.SayPutCoins(source);
-				return;
-			}
-
-			if (!trainer.ConsumeFromCounter<Gold>(counter, spellCost))
-			{
-				trainer.SayTo(source, 6300243); /* Are you trying to be funny? */
-				return;
-			}
-
-			foreach (var spellType in _spell.Spells)
-				source.Spells.Learn(spellType);
-
-			trainer.SayTo(source, 6300325, _spell.Name); /* You have learned the {0} spell. */
+			if (vendor is SpellTrainer trainer)
+				trainer.TeachSpell(source, counter, _spell);
 		}
 	}
 }
