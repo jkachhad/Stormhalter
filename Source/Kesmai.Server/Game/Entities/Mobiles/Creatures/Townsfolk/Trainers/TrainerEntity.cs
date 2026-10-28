@@ -1,4 +1,5 @@
-﻿using Kesmai.Server.Items;
+﻿using Kesmai.Server.Engines.Interactions;
+using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,22 @@ public abstract partial class TrainerEntity : VendorEntity
 		_training = new Dictionary<Skill, TrainingEntry>();
 	}
 
+	private static readonly VendorInputInteraction _trainAmount = new VendorInputInteraction("Train an amount…",
+		"How many coins of training? The trainer uses the weapon in your hand.",
+		(player, vendor, counter, text) => ((TrainerEntity)vendor).TrainAmount(player, counter, Int64.Parse(text)),
+		InputKind.Number);
+
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		if (CanTrain(source.Profession))
+		{
+			entries.Add(_trainAmount);
+			entries.Add(InteractionSeparator.Instance);
+		}
+
+		base.GetInteractions(source, entries);
+	}
+
 	public override void HandleOrder(OrderEventArgs args)
 	{
 		base.HandleOrder(args);
@@ -54,89 +71,29 @@ public abstract partial class TrainerEntity : VendorEntity
 			
 		/* example: train */
 		/* example: train (amount) */
-		if (_train.TryGetMatch(order, out var trainMatch) && CanTrain(source, out var skill, out var entry))
+		if (_train.TryGetMatch(order, out var trainMatch) && CanTrain(source, out _, out _))
 		{
 			args.Handled = true;
-				
-			if (AtCounter(source, out var counter))
+
+			if (!AtCounter(source, out var counter))
 			{
-				var segment = Segment;
-				var gold = segment.GetItemsAt(counter).OfType<Gold>().ToList();
-
-				if (gold.Any())
-				{
-					var trainAmount = gold.Sum(g => g.Amount);
-					var canTrainNext = source.GetSkillLevel(skill) < entry.Maximum;
-
-					var (currentTraining, currentCost,
-						nextTraining, nextCost) = source.CalculateTraining(skill);
-
-					if (trainMatch.Groups[1].Success && long.TryParse(trainMatch.Groups[1].Value, out var requestedAmount))
-					{
-						if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue || requestedAmount > trainAmount)
-						{
-							SayTo(source, 6300243); /* Are you trying to be funny? */
-							return;
-						}
-
-						trainAmount = requestedAmount;
-					}
-
-					if (currentTraining < 1 && nextTraining < 1)
-					{
-						SayTo(source, 6300244); /* You must practice more before I can train you again. */
-					}
-					else if (currentTraining < 1 && !canTrainNext)
-					{
-						SayTo(source, 6300241); /* I can teach you no more. */
-					}
-					else
-					{
-						var currentTrained = (long)(trainAmount / currentCost);
-						var nextTrained = 0L;
-
-						if (currentTrained >= currentTraining)
-							currentTrained = currentTraining;
-
-						var purchase = currentTrained * currentCost;
-
-						if (canTrainNext && trainAmount > purchase && nextTraining > 0)
-						{
-							nextTrained = (long)(trainAmount - purchase) / nextCost;
-
-							if (nextTrained >= nextTraining)
-								nextTrained = nextTraining;
-
-							purchase += nextTrained * nextCost;
-						}
-
-						if (!ConsumeFromLocation<Gold>(counter, (uint)purchase))
-							return;
-			
-						var trained = currentTrained + nextTrained;
-							
-						source.Train(skill, trained);
-						source.AwardExperience(purchase);
-
-						SayTo(source, 6300245, skill.Name);
-					}
-				}
-				else
-				{
-					if (Counters.Any())
-						SayTo(source, 6300246); /* Please put some coins on the counter. */
-					else
-						SayTo(source, 6300247); /* Please put some coins on the ground. */
-				}
-			}
-			else
-			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
+				this.SayNotAtCounter(source);
+				return;
 			}
 
+			if (!long.TryParse(trainMatch.Groups[1].Value, out var requestedAmount))
+			{
+				TrainAmount(source, counter);
+				return;
+			}
+
+			if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
+			{
+				SayTo(source, 6300243); /* Are you trying to be funny? */
+				return;
+			}
+
+			TrainAmount(source, counter, requestedAmount);
 			return;
 		}
 
@@ -160,6 +117,88 @@ public abstract partial class TrainerEntity : VendorEntity
 
 			CritiqueTraining(source, Skill.All.FirstOrDefault(s => s.Name.Matches(skillName, true)));
 			return;
+		}
+	}
+
+	/// <summary>
+	/// Trains the skill of the item in the player's hand with the gold on the counter, or with up to the requested
+	/// amount of it.
+	/// </summary>
+	private void TrainAmount(PlayerEntity source, Point2D counter, long? requestedAmount = null)
+	{
+		if (!CanTrain(source.Profession))
+		{
+			SayTo(source, 6300322); /* You are not of my profession! Get out! */
+			return;
+		}
+
+		if (!CanTrain(source, out var skill, out var entry))
+			return;
+
+		var segment = Segment;
+		var gold = segment.GetItemsAt(counter).OfType<Gold>().ToList();
+
+		if (gold.Any())
+		{
+			var trainAmount = gold.Sum(g => g.Amount);
+			var canTrainNext = source.GetSkillLevel(skill) < entry.Maximum;
+
+			var (currentTraining, currentCost,
+				nextTraining, nextCost) = source.CalculateTraining(skill);
+
+			if (requestedAmount.HasValue)
+			{
+				if (requestedAmount.Value > trainAmount)
+				{
+					SayTo(source, 6300243); /* Are you trying to be funny? */
+					return;
+				}
+
+				trainAmount = requestedAmount.Value;
+			}
+
+			if (currentTraining < 1 && nextTraining < 1)
+			{
+				SayTo(source, 6300244); /* You must practice more before I can train you again. */
+			}
+			else if (currentTraining < 1 && !canTrainNext)
+			{
+				SayTo(source, 6300241); /* I can teach you no more. */
+			}
+			else
+			{
+				var currentTrained = (long)(trainAmount / currentCost);
+				var nextTrained = 0L;
+
+				if (currentTrained >= currentTraining)
+					currentTrained = currentTraining;
+
+				var purchase = currentTrained * currentCost;
+
+				if (canTrainNext && trainAmount > purchase && nextTraining > 0)
+				{
+					nextTrained = (long)(trainAmount - purchase) / nextCost;
+
+					if (nextTrained >= nextTraining)
+						nextTrained = nextTraining;
+
+					purchase += nextTrained * nextCost;
+				}
+
+				if (!ConsumeFromLocation<Gold>(counter, (uint)purchase))
+					return;
+
+				var trained = currentTrained + nextTrained;
+
+				source.Train(skill, trained);
+				source.AwardExperience(purchase);
+
+				SayTo(source, 6300245, skill.Name);
+			}
+		}
+		else
+		{
+			this.SayPutCoins(source);
 		}
 	}
 

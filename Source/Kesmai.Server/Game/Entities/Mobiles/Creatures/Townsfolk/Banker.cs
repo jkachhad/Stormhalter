@@ -21,11 +21,23 @@ public partial class Banker : VendorEntity
 	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
 	{
 		entries.Add(DepositAllInteraction.Instance);
+		entries.Add(_depositAmount);
+		entries.Add(_withdrawAmount);
 		entries.Add(ShowBalanceInteraction.Instance);
 		entries.Add(InteractionSeparator.Instance);
 
 		base.GetInteractions(source, entries);
 	}
+
+	private static readonly VendorInputInteraction _depositAmount = new VendorInputInteraction("Deposit…",
+		"How many coins do you want to deposit?",
+		(player, vendor, counter, text) => ((Banker)vendor).Deposit(player, counter, UInt32.Parse(text)),
+		InputKind.Number);
+
+	private static readonly VendorInputInteraction _withdrawAmount = new VendorInputInteraction("Withdraw…",
+		"How many coins do you want to withdraw?",
+		(player, vendor, counter, text) => ((Banker)vendor).Withdraw(player, counter, UInt32.Parse(text)),
+		InputKind.Number);
 
 	public override void HandleOrder(OrderEventArgs args)
 	{
@@ -75,23 +87,9 @@ public partial class Banker : VendorEntity
 				if (withdrawMatch.Groups[1].Success && long.TryParse(withdrawMatch.Groups[1].Value, out var requestedAmount))
 				{
 					if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
-					{
 						SayTo(source, 6300243); /* Are you trying to be funny? */
-					}
-					else if (requestedAmount <= source.Gold)
-					{
-						source.Gold -= (uint)requestedAmount;
-
-						var gold = new Gold()
-						{
-							Amount = (uint)requestedAmount
-						};
-						gold.Move(counter, true, Segment);
-					}
 					else
-					{
-						SayTo(source, 6300258); /* You don't have that much in your account. */
-					}
+						Withdraw(source, counter, (uint)requestedAmount);
 				}
 				else
 				{
@@ -114,6 +112,25 @@ public partial class Banker : VendorEntity
 			ShowBalance(source);
 			return;
 		}
+	}
+
+	/// <summary>
+	/// Withdraws coins from the account onto the counter.
+	/// </summary>
+	private void Withdraw(PlayerEntity source, Point2D counter, uint amount)
+	{
+		if (amount > source.Gold)
+		{
+			SayTo(source, 6300258); /* You don't have that much in your account. */
+			return;
+		}
+
+		source.Gold -= amount;
+
+		new Gold()
+		{
+			Amount = amount
+		}.Move(counter, true, Segment);
 	}
 
 	/// <summary>
