@@ -217,8 +217,18 @@ public class SpawnTimeWindow
 			lines.Add($"\tvar killKey = {KillCountHook.CounterKey(KillEnemy, KillsInRegion ? "spawn.RegionIndex" : null)};");
 			lines.Add($"\tvar killCounts = Storage.Get({KillCountHook.Literal(KillCountHook.StorageName)});");
 			lines.Add("\tvar killsUsed = Storage.Get(\"WorldForge:KillsUsed:\" + spawner.Name);");
+			lines.Add("\tvar killCount = killCounts.Get<int>(killKey, 0);");
+			lines.Add("\tvar killsFrom = killsUsed.Get<int>(killKey, -1);");
 			lines.Add(String.Empty);
-			lines.Add($"\tif (killCounts.Get<int>(killKey, 0) - killsUsed.Get<int>(killKey, 0) < {Math.Max(1, KillsNeeded)})");
+			// with no count remembered yet, kills from before the spawner started waiting (earlier tests, other setups) don't count
+			lines.Add("\t// the first check starts counting from now");
+			lines.Add("\tif (killsFrom < 0)");
+			lines.Add("\t{");
+			lines.Add("\t\tkillsFrom = killCount;");
+			lines.Add("\t\tkillsUsed.Set<int>(killKey, killsFrom);");
+			lines.Add("\t}");
+			lines.Add(String.Empty);
+			lines.Add($"\tif (killCount - killsFrom < {Math.Max(1, KillsNeeded)})");
 			lines.Add("\t\tallowed = false;");
 		}
 
@@ -267,7 +277,7 @@ public class SpawnTimeWindow
 		{
 			// this spawn used the kills up; the next one needs as many again, counted from now
 			lines.Add(String.Empty);
-			lines.Add("\tkillsUsed.Set<int>(killKey, killCounts.Get<int>(killKey, 0));");
+			lines.Add("\tkillsUsed.Set<int>(killKey, killCount);");
 		}
 
 		lines.Add("}");
