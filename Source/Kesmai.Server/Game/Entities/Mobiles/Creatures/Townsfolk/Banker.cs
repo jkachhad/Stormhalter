@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Kesmai.Server.Engines.Interactions;
 using Kesmai.Server.Items;
 
 namespace Kesmai.Server.Game;
@@ -11,9 +13,18 @@ public partial class Banker : VendorEntity
 	private static Regex _deposit = new Regex(@"^deposit(\s?[\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 	private static Regex _withdraw = new Regex(@"^withdraw\s([\d]*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 	private static Regex _showBalance = new Regex(@"^show\sbalance$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-		
+
 	public Banker()
 	{
+	}
+
+	public override void GetInteractions(PlayerEntity source, List<InteractionEntry> entries)
+	{
+		entries.Add(DepositAllInteraction.Instance);
+		entries.Add(ShowBalanceInteraction.Instance);
+		entries.Add(InteractionSeparator.Instance);
+
+		base.GetInteractions(source, entries);
 	}
 
 	public override void HandleOrder(OrderEventArgs args)
@@ -31,50 +42,26 @@ public partial class Banker : VendorEntity
 		if (_deposit.TryGetMatch(order, out var depositMatch))
 		{
 			args.Handled = true;
-				
-			if (AtCounter(source, out var counter))
+
+			if (!AtCounter(source, out var counter))
 			{
-				var segment = Segment;
-				var gold = segment.GetItemsAt(counter).OfType<Gold>().ToList();
-
-				if (gold.Any())
-				{
-					var depositAmount = (uint)gold.Sum(g => g.Amount);
-
-					if (depositMatch.Groups[1].Success && long.TryParse(depositMatch.Groups[1].Value, out var requestedAmount))
-					{
-						if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue || requestedAmount > depositAmount)
-						{
-							SayTo(source, 6300243); /* Are you trying to be funny? */
-							return;
-						}
-
-						depositAmount = (uint)requestedAmount;
-					}
-
-					if (!ConsumeFromLocation<Gold>(counter, depositAmount))
-						return;
-
-					source.Gold += depositAmount;
-
-					SayTo(source, 6300256, source.Gold.ToString("#,##0")); /* Thank you. Your balance is now {0} coins. */
-				}
-				else
-				{
-					if (Counters.Any())
-						SayTo(source, 6300246); /* Please put some coins on the counter. */
-					else
-						SayTo(source, 6300247); /* Please put some coins on the ground. */
-				}
-			}
-			else
-			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
+				this.SayNotAtCounter(source);
+				return;
 			}
 
+			if (!long.TryParse(depositMatch.Groups[1].Value, out var requestedAmount))
+			{
+				Deposit(source, counter);
+				return;
+			}
+
+			if (requestedAmount <= 0 || requestedAmount > UInt32.MaxValue)
+			{
+				SayTo(source, 6300243); /* Are you trying to be funny? */
+				return;
+			}
+
+			Deposit(source, counter, (uint)requestedAmount);
 			return;
 		}
 			
@@ -113,28 +100,88 @@ public partial class Banker : VendorEntity
 			}
 			else
 			{
-				if (_counters.Any())
-					SayTo(source, 6300236); /* Please step up to a counter. */
-				else
-					SayTo(source, 6300237); /* Please stand closer to me. */
+				this.SayNotAtCounter(source);
 			}
 
 			return;
 		}
-			
+
 		/* example: show balance */
-		if (_showBalance.TryGetMatch(order, out var showBalanceMatch))
+		if (_showBalance.TryGetMatch(order, out _))
 		{
 			args.Handled = true;
-				
-			var balance = source.Gold;
 
-			if (balance > 0)
-				SayTo(source, 6300260, balance.ToString("#,##0")); /* Your account balance is {0} coins. */
-			else
-				SayTo(source, 6300259); /* Your account is empty. */
-
+			ShowBalance(source);
 			return;
+		}
+	}
+
+	/// <summary>
+	/// Deposits coins from the counter. With no amount, deposits all of them.
+	/// </summary>
+	private void Deposit(PlayerEntity source, Point2D counter, uint? amount = null)
+	{
+		var onCounter = this.CountOnCounter<Gold>(counter);
+
+		if (onCounter is 0)
+		{
+			this.SayPutCoins(source);
+			return;
+		}
+
+		var depositAmount = amount ?? onCounter;
+
+		if (depositAmount > onCounter)
+		{
+			SayTo(source, 6300243); /* Are you trying to be funny? */
+			return;
+		}
+
+		if (!this.ConsumeFromCounter<Gold>(counter, depositAmount))
+			return;
+
+		source.Gold += depositAmount;
+
+		SayTo(source, 6300256, source.Gold.ToString("#,##0")); /* Thank you. Your balance is now {0} coins. */
+	}
+
+	private void ShowBalance(PlayerEntity source)
+	{
+		var balance = source.Gold;
+
+		if (balance > 0)
+			SayTo(source, 6300260, balance.ToString("#,##0")); /* Your account balance is {0} coins. */
+		else
+			SayTo(source, 6300259); /* Your account is empty. */
+	}
+
+	private sealed class DepositAllInteraction : VendorInteraction
+	{
+		public static readonly DepositAllInteraction Instance = new DepositAllInteraction();
+
+		private DepositAllInteraction() : base("Deposit all")
+		{
+		}
+
+		protected override void OnClick(PlayerEntity player, VendorEntity vendor, Point2D counter)
+		{
+			if (vendor is Banker banker)
+				banker.Deposit(player, counter);
+		}
+	}
+
+	private sealed class ShowBalanceInteraction : VendorInteraction
+	{
+		public static readonly ShowBalanceInteraction Instance = new ShowBalanceInteraction();
+
+		private ShowBalanceInteraction() : base("Show balance")
+		{
+		}
+
+		protected override void OnClick(PlayerEntity player, VendorEntity vendor, Point2D counter)
+		{
+			if (vendor is Banker banker)
+				banker.ShowBalance(player);
 		}
 	}
 }
