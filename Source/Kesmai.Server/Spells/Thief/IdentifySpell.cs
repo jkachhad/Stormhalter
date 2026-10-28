@@ -2,6 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
+using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Spells;
 
@@ -13,7 +14,13 @@ public class IdentifySpell : DelayedSpell
 	
 	protected override void OnCast()
 	{
-		CastAt(_caster.RightHand);
+		_caster.Target = new InternalTarget(this);
+	}
+
+	public override void OnReset()
+	{
+		if (_caster.Target is InternalTarget)
+			Target.Cancel(_caster);
 	}
 		
 	void CastAt(ItemEntity target)
@@ -63,9 +70,27 @@ public class IdentifySpell : DelayedSpell
 		}
 		else
 		{
-			CastAt(_caster.RightHand);
+			Cast();
 		}
 
 		return true;
+	}
+
+	private sealed class InternalTarget : ItemTarget
+	{
+		private readonly IdentifySpell _spell;
+
+		public InternalTarget(IdentifySpell spell)
+		{
+			_spell = spell;
+		}
+
+		protected override void OnTarget(MobileEntity source, ItemEntity target)
+		{
+			if (source.Spell != _spell)
+				return;
+
+			_spell.CastAt(target);
+		}
 	}
 }
