@@ -170,8 +170,8 @@ public class SpawnTimeWindow
 		               + $"; times={FormatTimes(Times).Replace(" ", String.Empty)}; window={WindowMinutes}; perTime={PerTime}"
 		               + $"; enemy={Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(KillEnemy))}; kills={KillsNeeded}; killsIn={(KillsInRegion ? "region" : "segment")}";
 		// removed on the next tick: the server is still working with the new spawn when OnAfterSpawn runs, and deleting it
-		// there throws inside Spawner.Spawn and crashes the server
-		// the new spawn is also made invisible at once (below), so it isn't seen for that tick
+		// there throws inside Spawner.Spawn and crashes the server. It isn't made invisible first: on the server, an
+		// invisible spawn wasn't removed, and blocked spawns piled up
 		var remove = RemoveAll
 			? "Timer.DelayCall(() => spawner.Despawn()); /* remove everything this spawner made, once it has finished spawning */"
 			: "Timer.DelayCall(() => spawn.Delete()); /* remove the new spawn, once the spawner has finished with it */";
@@ -280,11 +280,7 @@ public class SpawnTimeWindow
 		lines.Add(String.Empty);
 		lines.Add("\tif (!allowed)");
 		lines.Add("\t{");
-		// the removal is queued first, so the spawn goes even if hiding it fails on a creature not yet in the world
 		lines.Add($"\t\t{remove}");
-		lines.Add(String.Empty);
-		lines.Add("\t\ttry { spawn.IsInvisible = true; /* not seen while it waits to be removed */ }");
-		lines.Add("\t\tcatch (Exception) { }");
 		lines.Add("\t\treturn;");
 		lines.Add("\t}");
 
