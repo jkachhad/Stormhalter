@@ -78,6 +78,51 @@
 
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
+                            <!-- the CreatureDTO.SetCreatureValues values that have no field elsewhere; Name, Body, Level, stats and sounds use theirs -->
+                            <Expander Header="CreatureDTO" IsExpanded="True">
+                                <Expander.Style>
+                                    <Style TargetType="Expander">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HasDto}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Expander.Style>
+                                <Grid Margin="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="Wrap" FontSize="11" Margin="0,0,0,4">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="The script sets these with creatureDTO.SetCreatureValues. Name, Body, Level, Max health, Max mana, Experience, Movement, Hide detection, Visibility distance (visibilty), Vision range and the sounds are in their own fields." />
+                                                <Setter Property="Foreground" Value="DimGray" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsDtoOnly}" Value="True">
+                                                        <Setter Property="Text" Value="This OnSpawn picks between creatures with if or switch, so only its CreatureDTO values are written: these, plus Name, Body, Level, Max health, Max mana, Experience, Movement, Hide detection, Visibility distance, Vision range and the sounds. Everything else in the script stays exactly as typed, and the other builder fields aren't written." />
+                                                        <Setter Property="Foreground" Value="DarkGoldenrod" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="1" Text="Alignment" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="0,3" Text="{Binding DtoAlignment, UpdateSourceTrigger=PropertyChanged}"
+                                             ToolTip="1 = Chaotic (yellow), 2 = Evil (red), anything else = Lawful" />
+                                    <TextBlock Grid.Row="2" Text="Attack" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="2" Grid.Column="1" Margin="0,3" Text="{Binding DtoAttack, UpdateSourceTrigger=PropertyChanged}"
+                                             ToolTip="creatureDTO.Attack; the attacks below often scale from it, for example creatureDTO.Attack*2" />
+                                    <TextBlock Grid.Row="3" Text="Defense" Style="{StaticResource FieldLabel}" />
+                                    <TextBox Grid.Row="3" Grid.Column="1" Margin="0,3" Text="{Binding DtoDefense, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid>
+                            </Expander>
+
                             <Expander Header="Identity" IsExpanded="True">
                                 <Grid Margin="4">
                                     <Grid.ColumnDefinitions>
