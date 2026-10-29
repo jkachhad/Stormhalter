@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.CodeAnalysis;
@@ -212,7 +213,34 @@ public partial class OnSpawnBuilder : ObservableObject
 		["exp"] = nameof(Experience), ["movement"] = nameof(Movement), ["hideDetection"] = nameof(HideDetection),
 		["visionRange"] = nameof(VisionRange), ["level"] = nameof(Level), ["nearbySound"] = nameof(NearbySound),
 		["attackSound"] = nameof(AttackSound), ["deathSound"] = nameof(DeathSound),
+		// the server's parameter really is spelled "visibilty"; it is written back with the name the script used
+		["visibilty"] = nameof(VisibilityDistance), ["visibility"] = nameof(VisibilityDistance),
+		["alignment"] = nameof(DtoAlignment), ["attack"] = nameof(DtoAttack), ["defense"] = nameof(DtoDefense),
 	};
+
+	private string _dtoAlignment = String.Empty;
+	private string _dtoAttack = String.Empty;
+	private string _dtoDefense = String.Empty;
+
+	/// <summary>The CreatureDTO's alignment number: 1 chaotic, 2 evil, anything else lawful.</summary>
+	public string DtoAlignment { get => _dtoAlignment; set => Set(ref _dtoAlignment, value); }
+
+	/// <summary>The CreatureDTO's attack, which its attacks scale from.</summary>
+	public string DtoAttack { get => _dtoAttack; set => Set(ref _dtoAttack, value); }
+
+	/// <summary>The CreatureDTO's defense.</summary>
+	public string DtoDefense { get => _dtoDefense; set => Set(ref _dtoDefense, value); }
+
+	/// <summary>The script has a CreatureDTO.SetCreatureValues call, so its values are shown in their own section.</summary>
+	public bool HasDto => _dtoPrefix != null || IsDtoOnly;
+
+	// An OnSpawn the builder can't rewrite as a whole (one that picks a creature with if or switch) can still have its
+	// CreatureDTO values edited: each one is replaced where it stands, and everything else stays exactly as typed.
+	private string? _dtoOnlyScript;
+	private readonly List<(string Field, int Start, int Length, string Read)> _dtoOnlyValues = new();
+
+	/// <summary>Only the CreatureDTO values are edited; the rest of the form isn't written.</summary>
+	public bool IsDtoOnly => _dtoOnlyScript != null;
 
 	/// <summary>OnSpawn is a method body, so it is read as one: the statements of <c>{ script }</c>. Null when it has syntax errors.</summary>
 	private static BlockSyntax? ParseBody(string script)
@@ -308,12 +336,16 @@ public partial class OnSpawnBuilder : ObservableObject
 		(nameof(HideDetection), HideDetection), (nameof(VisibilityDistance), VisibilityDistance),
 		(nameof(VisionRange), VisionRange), (nameof(RangePerception), RangePerception), (nameof(Level), Level),
 		(nameof(NearbySound), NearbySound), (nameof(AttackSound), AttackSound), (nameof(DeathSound), DeathSound),
-		(nameof(WarmSound), WarmSound),
+		(nameof(WarmSound), WarmSound), (nameof(DtoAlignment), DtoAlignment), (nameof(DtoAttack), DtoAttack),
+		(nameof(DtoDefense), DtoDefense),
 	];
 
 	/// <summary>Writes the form as a complete OnSpawn body.</summary>
 	public string Generate()
 	{
+		if (_dtoOnlyScript != null)
+			return GenerateDtoOnly(_dtoOnlyScript);
+
 		var v = Has(Variable) ? Variable.Trim() : "creature";
 		var lines = new List<string>();
 		var init = new List<string>();
@@ -630,13 +662,25 @@ public partial class OnSpawnBuilder : ObservableObject
 			var parsed = Parse(expanded, shields, armor, helmets, gauntlets, boots);
 
 			_returnsCreation = parsed.Succeeded;
+
+			// the expanded text starts with the script's own code, so the values read stand at the same places in it
+			if (parsed.DtoOnly)
+				_dtoOnlyScript = script;
+
 			return parsed;
 		}
 
 		if (returnIndex < 0 || statements[returnIndex] is not ReturnStatementSyntax { Expression: IdentifierNameSyntax returned })
-			return result.Fail(statements.Any(s => s is IfStatementSyntax or SwitchStatementSyntax)
+		{
+			var branches = statements.Any(s => s is IfStatementSyntax or SwitchStatementSyntax);
+
+			if (branches && ReadDtoOnly(script, body, result))
+				return result;
+
+			return result.Fail(branches
 				? "OnSpawn picks between creatures with if or switch (for example a rare variant), so the builder can't edit it. Edit that one in the script."
 				: "OnSpawn doesn't end by returning its creature (return creature;), so the builder can't rewrite it safely.");
+		}
 
 		if (returnIndex != statements.Count - 1)
 			return result.Fail("OnSpawn has code after its return, so the builder can't rewrite it safely.");
@@ -739,6 +783,69 @@ public partial class OnSpawnBuilder : ObservableObject
 		result.KeptStatements += statements.Count - 1;
 	}
 
+	/// <summary>
+	/// Reads only the CreatureDTO values of a script the builder can't rewrite as a whole. False when it has no
+	/// SetCreatureValues call before its creatures are picked.
+	/// </summary>
+	private bool ReadDtoOnly(string script, BlockSyntax body, OnSpawnParseResult result)
+	{
+		var call = body.Statements.Select(FindDtoCall).FirstOrDefault(c => c is not null);
+
+		if (call is null)
+			return false;
+
+		// the body was parsed as "{" + newline + script + newline + "}"
+		var offset = 1 + Environment.NewLine.Length;
+
+		foreach (var argument in call.ArgumentList.Arguments)
+		{
+			if (!_dtoArgumentFields.TryGetValue(argument.NameColon!.Name.Identifier.Text, out var field)
+			    || _dtoOnlyValues.Any(v => v.Field == field))
+				continue;
+
+			var read = argument.Expression.ToString();
+
+			if (field == nameof(Name))
+			{
+				if (argument.Expression is not LiteralExpressionSyntax { RawKind: (int)SyntaxKind.StringLiteralExpression } literal)
+					continue;
+
+				read = literal.Token.ValueText;
+			}
+
+			_dtoOnlyValues.Add((field, argument.Expression.SpanStart - offset, argument.Expression.Span.Length, read));
+			SetField(field, read);
+			result.Filled++;
+		}
+
+		_dtoOnlyScript = script;
+		result.DtoOnly = true;
+
+		return true;
+	}
+
+	/// <summary>The script as read, with each CreatureDTO value the form changed replaced where it stands.</summary>
+	private string GenerateDtoOnly(string script)
+	{
+		var text = new StringBuilder(script);
+
+		foreach (var (field, start, length, read) in _dtoOnlyValues.OrderByDescending(v => v.Start))
+		{
+			// a name is written as typed, spaces included; other values are code
+			var value = field == nameof(Name) ? GetField(field) : GetField(field).Trim();
+
+			// a value can't be removed from the call, so an emptied field keeps what the script had
+			if (!Has(value) || value == read)
+				continue;
+
+			text.Remove(start, length).Insert(start, field == nameof(Name) ? Quote(value) : value);
+		}
+
+		return text.ToString();
+	}
+
+	private string GetField(string field) => field == nameof(Name) ? Name : ValueFields().First(f => f.Field == field).Value;
+
 	/// <summary>A SetCreatureValues call with only named arguments, which the form can map back by name.</summary>
 	private static InvocationExpressionSyntax? FindDtoCall(StatementSyntax statement)
 	{
@@ -775,6 +882,9 @@ public partial class OnSpawnBuilder : ObservableObject
 			case nameof(AttackSound): AttackSound = value; break;
 			case nameof(DeathSound): DeathSound = value; break;
 			case nameof(WarmSound): WarmSound = value; break;
+			case nameof(DtoAlignment): DtoAlignment = value; break;
+			case nameof(DtoAttack): DtoAttack = value; break;
+			case nameof(DtoDefense): DtoDefense = value; break;
 		}
 	}
 
@@ -1458,6 +1568,9 @@ public class OnSpawnParseResult
 	public string? Problem { get; private set; }
 
 	public bool Succeeded => Problem is null;
+
+	/// <summary>Only the CreatureDTO values were read; the rest of the script is kept exactly as typed.</summary>
+	public bool DtoOnly { get; set; }
 
 	public OnSpawnParseResult Fail(string problem)
 	{
