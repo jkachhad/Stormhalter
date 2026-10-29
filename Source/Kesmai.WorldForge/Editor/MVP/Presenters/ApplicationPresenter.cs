@@ -462,6 +462,9 @@ public class ApplicationPresenter : ObservableRecipient
 		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
 			(root, version) => segment.Treasures.Load(root, version));
 
+		// Spawn after kills: counters copied along with an entity, or missing, are put right
+		SegmentSpawner.SyncKillCounters(segment.Entities, segment.Spawns.Location.Cast<SegmentSpawner>().Concat(segment.Spawns.Region));
+
 		Segment.UpdateTiles();
 
 		// loading raised change messages; the segment as loaded is the saved state.

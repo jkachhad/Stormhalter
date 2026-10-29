@@ -325,6 +325,49 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 			SyncKillCounter(enemy);
 	}
 
+	/// <summary>
+	/// Puts the counters right when a segment opens: each entity a spawner waits on gets a counter under its own name,
+	/// and a counter no spawner needs (one copied along with an entity, for example) is taken out.
+	/// </summary>
+	/// <returns>The entities whose OnDeath changed.</returns>
+	public static List<SegmentEntity> SyncKillCounters(IEnumerable<SegmentEntity> entities, IEnumerable<SegmentSpawner> spawners)
+	{
+		var needed = spawners
+			.Select(s => SpawnTimeWindow.Read(s.AfterSpawnScript))
+			.Where(w => w.UseKills && !String.IsNullOrWhiteSpace(w.KillEnemy))
+			.Select(w => w.KillEnemy.Trim())
+			.ToHashSet(StringComparer.Ordinal);
+		var changed = new List<SegmentEntity>();
+
+		foreach (var entity in entities)
+		{
+			var onDeath = entity.Scripts.FirstOrDefault(s => s.Name == "OnDeath");
+
+			if (onDeath is null)
+				continue;
+
+			if (needed.Contains(entity.Name))
+			{
+				if (KillCountHook.IsInstalledFor(onDeath, entity.Name))
+					continue;
+
+				KillCountHook.Install(onDeath, entity.Name);
+			}
+			else if (KillCountHook.HasCounter(onDeath))
+			{
+				KillCountHook.Remove(onDeath);
+			}
+			else
+			{
+				continue;
+			}
+
+			changed.Add(entity);
+		}
+
+		return changed;
+	}
+
 	/// <summary>Adds the counter to the enemy's OnDeath while a spawner in the segment needs it, and takes it out once none does.</summary>
 	private void SyncKillCounter(string enemy)
 	{
@@ -338,9 +381,10 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 		var spawners = segment.Spawns.Location.Cast<SegmentSpawner>().Concat(segment.Spawns.Region).Append(this).Distinct();
 		var needed = spawners.Any(s => s.CurrentSpawnTime is { UseKills: true } w && String.Equals(w.KillEnemy.Trim(), enemy.Trim(), StringComparison.Ordinal));
-		var installed = KillCountHook.IsInstalled(onDeath);
+		// a counter under another name (copied along with the entity) counts as not installed, and is replaced
+		var installed = KillCountHook.IsInstalledFor(onDeath, enemy);
 
-		if (needed == installed)
+		if (needed == installed && (needed || !KillCountHook.HasCounter(onDeath)))
 			return;
 
 		if (needed)
