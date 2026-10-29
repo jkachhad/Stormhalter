@@ -31,6 +31,7 @@ internal static class ScriptBlocks
 		("// worldforge-spawn-broadcast:", "// end worldforge-spawn-broadcast"),
 		("// worldforge-spawn-sound:", "// end worldforge-spawn-sound"),
 		("// worldforge-kill-count:", "// end worldforge-kill-count"),
+		("// worldforge-spawn-hold:", "// end worldforge-spawn-hold"),
 	];
 
 	/// <summary>The script's line ending: CRLF when it has one, otherwise LF (what scripts read from a segment have).</summary>
