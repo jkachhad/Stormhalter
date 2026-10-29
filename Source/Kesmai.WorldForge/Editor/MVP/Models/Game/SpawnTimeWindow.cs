@@ -171,6 +171,7 @@ public class SpawnTimeWindow
 		               + $"; enemy={Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(KillEnemy))}; kills={KillsNeeded}; killsIn={(KillsInRegion ? "region" : "segment")}";
 		// removed on the next tick: the server is still working with the new spawn when OnAfterSpawn runs, and deleting it
 		// there throws inside Spawner.Spawn and crashes the server
+		// the new spawn is made invisible at once, so it isn't seen for that tick
 		var remove = RemoveAll
 			? "Timer.DelayCall(() => spawner.Despawn()); /* remove everything this spawner made, once it has finished spawning */"
 			: "Timer.DelayCall(() => spawn.Delete()); /* remove the new spawn, once the spawner has finished with it */";
@@ -232,7 +233,13 @@ public class SpawnTimeWindow
 			lines.Add("\t\tkillsUsed.Set<int>(killKey, killsFrom);");
 			lines.Add("\t}");
 			lines.Add(String.Empty);
-			lines.Add($"\tif (killCount - killsFrom < {Math.Max(1, KillsNeeded)})");
+			lines.Add(String.Empty);
+			// the kills release a whole wave: it stays open until the spawner has its minimum again
+			lines.Add("\t// a wave the kills released stays open until the spawner is filled");
+			lines.Add("\tvar waveKey = killKey + \":wave\";");
+			lines.Add("\tvar waveOpen = killsUsed.Get<int>(waveKey, 0) == 1;");
+			lines.Add(String.Empty);
+			lines.Add($"\tif (!waveOpen && killCount - killsFrom < {Math.Max(1, KillsNeeded)})");
 			lines.Add("\t\tallowed = false;");
 		}
 
@@ -273,15 +280,21 @@ public class SpawnTimeWindow
 		lines.Add(String.Empty);
 		lines.Add("\tif (!allowed)");
 		lines.Add("\t{");
+		lines.Add("\t\tspawn.IsInvisible = true; /* not seen while it waits to be removed */");
 		lines.Add($"\t\t{remove}");
 		lines.Add("\t\treturn;");
 		lines.Add("\t}");
 
 		if (UseKills)
 		{
-			// this spawn used the kills up; the next one needs as many again, counted from now
+			// opening a wave uses the kills up; the next wave needs as many again, counted from now. The spawner's entries
+			// hold its live groups; the new spawn's group may not be among them yet
 			lines.Add(String.Empty);
-			lines.Add("\tkillsUsed.Set<int>(killKey, killCount);");
+			lines.Add("\tif (!waveOpen)");
+			lines.Add("\t\tkillsUsed.Set<int>(killKey, killCount);");
+			lines.Add(String.Empty);
+			lines.Add("\tvar groups = spawner.Sum(entry => entry.Count) + (spawner.Any(entry => entry.Contains(spawn.Group)) ? 0 : 1);");
+			lines.Add("\tkillsUsed.Set<int>(waveKey, groups < spawner.Sum(entry => entry.Minimum) ? 1 : 0);");
 		}
 
 		lines.Add("}");
