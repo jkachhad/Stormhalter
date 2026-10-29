@@ -74,7 +74,7 @@
                 </CollectionViewSource>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridComboBoxColumn MinWidth="200" Header="Entity" 
+                <DataGridComboBoxColumn MinWidth="200" Header="Entity" SortMemberPath="SegmentEntity.Name" 
                                         ItemsSource="{Binding Source={StaticResource EntitiesCollection}}"
                                         SelectedItemBinding="{Binding SegmentEntity, UpdateSourceTrigger=PropertyChanged}"></DataGridComboBoxColumn>
 
