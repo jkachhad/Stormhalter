@@ -33,13 +33,25 @@ public static class KillCountHook
 
 	public static bool IsInstalled(Script? onDeath) => onDeath is { IsEnabled: true } && onDeath.Body.Contains(Begin);
 
+	/// <summary>
+	/// Whether the counter in this OnDeath counts deaths under this enemy's name. An entity copied from another keeps
+	/// that one's counter, which counts its deaths under the other name.
+	/// </summary>
+	public static bool IsInstalledFor(Script? onDeath, string enemy)
+		=> IsInstalled(onDeath) && onDeath!.Body.Replace("\r\n", "\n").Contains($"{Marker(enemy)}\n");
+
+	/// <summary>Whether the OnDeath has a counter at all, for this or another name.</summary>
+	public static bool HasCounter(Script? onDeath) => onDeath is not null && onDeath.Body.Contains(Begin);
+
+	private static string Marker(string enemy) => $"{Begin} enemy={Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(enemy.Trim()))}";
+
 	private static string Block(string enemy)
 	{
 		var segment = CounterKey(enemy, null);
 		var region = CounterKey(enemy, "source.RegionIndex");
 
 		return String.Join("\n",
-			$"{Begin} enemy={Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(enemy.Trim()))}",
+			Marker(enemy),
 			"// Counts this creature's deaths for spawners set to Spawn after kills. WorldForge adds and removes it; change it on those spawners.",
 			"{",
 			$"\tvar kills = Storage.Get({Literal(StorageName)});",
