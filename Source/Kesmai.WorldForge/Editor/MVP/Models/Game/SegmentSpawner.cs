@@ -75,6 +75,8 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 	private Script AfterSpawnScript => _scripts.First(s => s.Name == "OnAfterSpawn");
 
+	private Script BeforeSpawnScript => _scripts.First(s => s.Name == "OnBeforeSpawn");
+
 	private SpawnTimeWindow CurrentSpawnTime
 	{
 		get
@@ -90,6 +92,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 		change(window);
 		window.Apply(AfterSpawnScript);
+		window.ApplyHold(BeforeSpawnScript);
 
 		if (window.IsAlways)
 			_unsavedSpawnTime = window;
@@ -419,7 +422,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	[Category("Spawn after kills")]
 	[DisplayName("Kills needed")]
 	[PropertyOrder(2)]
-	[Description("How many of the enemy must die before each spawn. After a spawn the count starts again, so the next spawn needs this many more kills.")]
+	[Description("How many of the enemy must die to release a wave: the spawner then spawns until it has its entries' minimum. After that the count starts again, so the next wave needs this many more kills.")]
 	public int KillsNeeded
 	{
 		get => CurrentSpawnTime.KillsNeeded;
@@ -434,6 +437,16 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	{
 		get => CurrentSpawnTime.KillsInRegion ? KillCountArea.Region : KillCountArea.Segment;
 		set => ChangeKills(w => w.KillsInRegion = value == KillCountArea.Region);
+	}
+
+	[Category("Spawn after kills")]
+	[DisplayName("Hold spawner until kills")]
+	[PropertyOrder(4)]
+	[Description("Experimental, off by default. While the kills aren't met, OnBeforeSpawn stops this spawner and starts it again 5 seconds later to check, so it doesn't make creatures that are then removed (the brief flash). If the server spawns anyway, they are still removed as before, so the flash may remain. Turning it off puts OnBeforeSpawn back exactly as it was.")]
+	public bool HoldSpawner
+	{
+		get => CurrentSpawnTime.HoldSpawner;
+		set => ChangeSpawnTime(w => w.HoldSpawner = value);
 	}
 
 	// Sound on spawn: also kept in the OnAfterSpawn script (see SpawnSound), remembered here while it is off.
@@ -564,7 +577,10 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		var spawnTime = SpawnTimeWindow.Read(AfterSpawnScript);
 
 		if (!spawnTime.IsAlways)
+		{
 			spawnTime.Apply(AfterSpawnScript);
+			spawnTime.ApplyHold(BeforeSpawnScript);
+		}
 	}
 	
 	protected SegmentSpawner()
