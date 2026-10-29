@@ -311,7 +311,22 @@ public class SpawnTimeWindow
 			lines.Add("\t\tkillsUsed.Set<int>(killKey, killCount);");
 			lines.Add(String.Empty);
 			lines.Add("\tvar groups = spawner.Sum(entry => entry.Count) + (spawner.Any(entry => entry.Contains(spawn.Group)) ? 0 : 1);");
-			lines.Add("\tkillsUsed.Set<int>(waveKey, groups < spawner.Sum(entry => entry.Minimum) ? 1 : 0);");
+			lines.Add("\tvar minimum = spawner.Sum(entry => entry.Minimum);");
+			lines.Add("\tkillsUsed.Set<int>(waveKey, groups < minimum ? 1 : 0);");
+			// the server spawns one group a tick; Keshma's Water Drake Trap calls spawner.Spawn() from a timer the same way
+			lines.Add(String.Empty);
+			lines.Add("\t// a wave just released is filled straight away, not one creature each spawner tick");
+			lines.Add("\tif (!waveOpen && groups < minimum)");
+			lines.Add("\t{");
+			lines.Add("\t\tTimer.DelayCall(() =>");
+			lines.Add("\t\t{");
+			lines.Add("\t\t\tfor (var i = 0; i < minimum && killsUsed.Get<int>(waveKey, 0) == 1; i++)");
+			lines.Add("\t\t\t{");
+			lines.Add("\t\t\t\tif (!spawner.Spawn())");
+			lines.Add("\t\t\t\t\tbreak;");
+			lines.Add("\t\t\t}");
+			lines.Add("\t\t});");
+			lines.Add("\t}");
 		}
 
 		lines.Add("}");
