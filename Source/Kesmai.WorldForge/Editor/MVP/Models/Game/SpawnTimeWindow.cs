@@ -252,10 +252,11 @@ public class SpawnTimeWindow
 			}
 
 			lines.Add(String.Empty);
-			// the kills release a whole wave: it stays open until the spawner has its minimum again
-			lines.Add("\t// a wave the kills released stays open until the spawner is filled");
-			lines.Add("\tvar waveKey = killKey + \":wave\";");
-			lines.Add("\tvar waveOpen = killsUsed.Get<int>(waveKey, 0) == 1;");
+			// the kills release one wave, spawned all at once below; it is open only while that fill runs (with a time
+			// limit, so a restart in the middle can't leave it open), so creatures killed later need new kills
+			lines.Add("\t// a wave the kills released is open only while it is being spawned");
+			lines.Add("\tvar waveKey = killKey + \":release\";");
+			lines.Add("\tvar waveOpen = Int64.TryParse(killsUsed.Get<string>(waveKey, \"\"), out var openUntil) && DateTime.UtcNow.Ticks < openUntil;");
 			lines.Add(String.Empty);
 			lines.Add($"\tif (!waveOpen && killCount - killsFrom < {Math.Max(1, KillsNeeded)})");
 			lines.Add("\t\tallowed = false;");
@@ -304,28 +305,34 @@ public class SpawnTimeWindow
 
 		if (UseKills)
 		{
-			// opening a wave uses the kills up; the next wave needs as many again, counted from now. The spawner's entries
-			// hold its live groups; the new spawn's group may not be among them yet
+			// opening a wave uses the kills up; the next wave needs as many again, counted from now. The server spawns one
+			// group a tick, so the rest of the wave is spawned straight away with spawner.Spawn(), from a timer the way
+			// Keshma's Water Drake Trap calls it. The spawner's entries hold its live groups; the new spawn's may not be
+			// among them yet
 			lines.Add(String.Empty);
+			lines.Add("\t// this spawn opens a wave: the rest of it is spawned straight away, then the wave closes");
 			lines.Add("\tif (!waveOpen)");
+			lines.Add("\t{");
 			lines.Add("\t\tkillsUsed.Set<int>(killKey, killCount);");
 			lines.Add(String.Empty);
-			lines.Add("\tvar groups = spawner.Sum(entry => entry.Count) + (spawner.Any(entry => entry.Contains(spawn.Group)) ? 0 : 1);");
-			lines.Add("\tvar minimum = spawner.Sum(entry => entry.Minimum);");
-			lines.Add("\tkillsUsed.Set<int>(waveKey, groups < minimum ? 1 : 0);");
-			// the server spawns one group a tick; Keshma's Water Drake Trap calls spawner.Spawn() from a timer the same way
+			lines.Add("\t\tvar others = spawner.Sum(entry => entry.Count) - (spawner.Any(entry => entry.Contains(spawn.Group)) ? 1 : 0);");
+			lines.Add("\t\tvar more = spawner.Sum(entry => entry.Minimum) - others - 1;");
 			lines.Add(String.Empty);
-			lines.Add("\t// a wave just released is filled straight away, not one creature each spawner tick");
-			lines.Add("\tif (!waveOpen && groups < minimum)");
-			lines.Add("\t{");
-			lines.Add("\t\tTimer.DelayCall(() =>");
+			lines.Add("\t\tif (more > 0)");
 			lines.Add("\t\t{");
-			lines.Add("\t\t\tfor (var i = 0; i < minimum && killsUsed.Get<int>(waveKey, 0) == 1; i++)");
+			lines.Add("\t\t\tkillsUsed.Set<string>(waveKey, DateTime.UtcNow.AddSeconds(30).Ticks.ToString());");
+			lines.Add(String.Empty);
+			lines.Add("\t\t\tTimer.DelayCall(() =>");
 			lines.Add("\t\t\t{");
-			lines.Add("\t\t\t\tif (!spawner.Spawn())");
-			lines.Add("\t\t\t\t\tbreak;");
-			lines.Add("\t\t\t}");
-			lines.Add("\t\t});");
+			lines.Add("\t\t\t\tfor (var i = 0; i < more; i++)");
+			lines.Add("\t\t\t\t{");
+			lines.Add("\t\t\t\t\tif (!spawner.Spawn())");
+			lines.Add("\t\t\t\t\t\tbreak;");
+			lines.Add("\t\t\t\t}");
+			lines.Add(String.Empty);
+			lines.Add("\t\t\t\tkillsUsed.Set<string>(waveKey, \"\");");
+			lines.Add("\t\t\t});");
+			lines.Add("\t\t}");
 			lines.Add("\t}");
 		}
 
@@ -368,7 +375,7 @@ public class SpawnTimeWindow
 			"\t{",
 			$"\t\tvar killCount = Storage.Get({KillCountHook.Literal(KillCountHook.StorageName)}).Get<int>(killKey, 0);",
 			"\t\tvar killsFrom = killsUsed.Get<int>(killKey, -1);",
-			"\t\tvar waveOpen = killsUsed.Get<int>(killKey + \":wave\", 0) == 1;",
+			"\t\tvar waveOpen = Int64.TryParse(killsUsed.Get<string>(killKey + \":release\", \"\"), out var openUntil) && DateTime.UtcNow.Ticks < openUntil;",
 			String.Empty,
 			$"\t\tif (killsFrom >= 0 && !waveOpen && killCount - killsFrom < {Math.Max(1, KillsNeeded)})",
 			"\t\t{",
