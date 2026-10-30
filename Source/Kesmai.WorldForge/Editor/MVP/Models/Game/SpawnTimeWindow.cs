@@ -244,22 +244,60 @@ public class SpawnTimeWindow
 			lines.Add("\t}");
 			lines.Add(String.Empty);
 
-			if (Holds)
-			{
-				// OnBeforeSpawn has no spawn to take a region from, so it reads the key this block used
-				lines.Add("\t// for Hold spawner until kills in OnBeforeSpawn");
-				lines.Add("\tkillsUsed.Set<string>(\"key\", killKey);");
-			}
-
 			lines.Add(String.Empty);
 			// the kills release one wave, spawned all at once below; it is open only while that fill runs (with a time
 			// limit, so a restart in the middle can't leave it open), so creatures killed later need new kills
 			lines.Add("\t// a wave the kills released is open only while it is being spawned");
 			lines.Add("\tvar waveKey = killKey + \":release\";");
 			lines.Add("\tvar waveOpen = Int64.TryParse(killsUsed.Get<string>(waveKey, \"\"), out var openUntil) && DateTime.UtcNow.Ticks < openUntil;");
+			lines.Add($"\tvar killsMet = waveOpen || killCount - killsFrom >= {Math.Max(1, KillsNeeded)};");
 			lines.Add(String.Empty);
-			lines.Add($"\tif (!waveOpen && killCount - killsFrom < {Math.Max(1, KillsNeeded)})");
+			lines.Add("\tif (!killsMet)");
 			lines.Add("\t\tallowed = false;");
+
+			if (Holds)
+			{
+				// Stopping the spawner in OnBeforeSpawn doesn't cancel the spawn already under way (Tim's server), but a
+				// stopped spawner tries no more (Keshma stops its Yasnaki spawners on a boss's death). So while the kills
+				// aren't met the spawner is stopped, and a timer watches for them, then starts it and spawns the wave
+				lines.Add(String.Empty);
+				lines.Add("\t// Hold spawner until kills: stopped while the kills aren't met, with a timer watching for them");
+				lines.Add("\tAction holdSpawner = () =>");
+				lines.Add("\t{");
+				lines.Add("\t\tspawner.Stop();");
+				lines.Add(String.Empty);
+				lines.Add("\t\t// one watcher at a time; one that stopped (a restart) is replaced");
+				lines.Add("\t\tif (Int64.TryParse(killsUsed.Get<string>(\"watch\", \"\"), out var seen) && DateTime.UtcNow.Ticks - seen < TimeSpan.FromSeconds(10).Ticks)");
+				lines.Add("\t\t\treturn;");
+				lines.Add(String.Empty);
+				lines.Add("\t\tAction watch = null;");
+				lines.Add("\t\twatch = () =>");
+				lines.Add("\t\t{");
+				lines.Add("\t\t\tif (!spawner.Enabled)");
+				lines.Add("\t\t\t{");
+				lines.Add("\t\t\t\tkillsUsed.Set<string>(\"watch\", \"\");");
+				lines.Add("\t\t\t\treturn;");
+				lines.Add("\t\t\t}");
+				lines.Add(String.Empty);
+				lines.Add($"\t\t\tif (killCounts.Get<int>(killKey, 0) - killsUsed.Get<int>(killKey, 0) >= {Math.Max(1, KillsNeeded)})");
+				lines.Add("\t\t\t{");
+				lines.Add("\t\t\t\tkillsUsed.Set<string>(\"watch\", \"\");");
+				lines.Add(String.Empty);
+				lines.Add("\t\t\t\tif (!spawner.IsRunning)");
+				lines.Add("\t\t\t\t\tspawner.Start();");
+				lines.Add(String.Empty);
+				lines.Add("\t\t\t\tspawner.Spawn(); /* opens the wave, which spawns the rest */");
+				lines.Add("\t\t\t\treturn;");
+				lines.Add("\t\t\t}");
+				lines.Add(String.Empty);
+				lines.Add("\t\t\tkillsUsed.Set<string>(\"watch\", DateTime.UtcNow.Ticks.ToString());");
+				lines.Add("\t\t\tTimer.DelayCall(TimeSpan.FromSeconds(3), watch);");
+				lines.Add("\t\t};");
+				lines.Add(String.Empty);
+				lines.Add("\t\tkillsUsed.Set<string>(\"watch\", DateTime.UtcNow.Ticks.ToString());");
+				lines.Add("\t\tTimer.DelayCall(TimeSpan.FromSeconds(3), watch);");
+				lines.Add("\t};");
+			}
 		}
 
 		if (UseTimes)
@@ -300,6 +338,16 @@ public class SpawnTimeWindow
 		lines.Add("\tif (!allowed)");
 		lines.Add("\t{");
 		lines.Add($"\t\t{remove}");
+
+		// held only when the kills are what blocks it; a closed time window would otherwise restart it every few seconds
+		if (Holds)
+		{
+			lines.Add(String.Empty);
+			lines.Add("\t\tif (!killsMet)");
+			lines.Add("\t\t\tTimer.DelayCall(() => holdSpawner());");
+			lines.Add(String.Empty);
+		}
+
 		lines.Add("\t\treturn;");
 		lines.Add("\t}");
 
@@ -318,21 +366,23 @@ public class SpawnTimeWindow
 			lines.Add("\t\tvar others = spawner.Sum(entry => entry.Count) - (spawner.Any(entry => entry.Contains(spawn.Group)) ? 1 : 0);");
 			lines.Add("\t\tvar more = spawner.Sum(entry => entry.Minimum) - others - 1;");
 			lines.Add(String.Empty);
-			lines.Add("\t\tif (more > 0)");
+			lines.Add("\t\tkillsUsed.Set<string>(waveKey, DateTime.UtcNow.AddSeconds(30).Ticks.ToString());");
+			lines.Add(String.Empty);
+			lines.Add("\t\tTimer.DelayCall(() =>");
 			lines.Add("\t\t{");
-			lines.Add("\t\t\tkillsUsed.Set<string>(waveKey, DateTime.UtcNow.AddSeconds(30).Ticks.ToString());");
-			lines.Add(String.Empty);
-			lines.Add("\t\t\tTimer.DelayCall(() =>");
+			lines.Add("\t\t\tfor (var i = 0; i < more; i++)");
 			lines.Add("\t\t\t{");
-			lines.Add("\t\t\t\tfor (var i = 0; i < more; i++)");
-			lines.Add("\t\t\t\t{");
-			lines.Add("\t\t\t\t\tif (!spawner.Spawn())");
-			lines.Add("\t\t\t\t\t\tbreak;");
-			lines.Add("\t\t\t\t}");
+			lines.Add("\t\t\t\tif (!spawner.Spawn())");
+			lines.Add("\t\t\t\t\tbreak;");
+			lines.Add("\t\t\t}");
 			lines.Add(String.Empty);
-			lines.Add("\t\t\t\tkillsUsed.Set<string>(waveKey, \"\");");
-			lines.Add("\t\t\t});");
-			lines.Add("\t\t}");
+			lines.Add("\t\t\tkillsUsed.Set<string>(waveKey, \"\");");
+
+			// a held spawner stops again once its wave is out, so it makes nothing more until the next kills
+			if (Holds)
+				lines.Add("\t\t\tholdSpawner();");
+
+			lines.Add("\t\t});");
 			lines.Add("\t}");
 		}
 
@@ -345,65 +395,19 @@ public class SpawnTimeWindow
 	/// <summary>Writes the window into the script, replacing any earlier block and leaving the rest of the script as it was.</summary>
 	public void Apply(Script script) => Compose(script, ToBlock(), SpawnBroadcast.Read(script).ToBlock(), SpawnSound.Read(script).ToBlock());
 
-	private const string HoldBegin = "// worldforge-spawn-hold:";
-	private const string HoldEnd = "// end worldforge-spawn-hold";
-
 	/// <summary>Hold spawner until kills is on, and has kills to wait for.</summary>
 	private bool Holds => UseKills && HoldSpawner;
 
 	/// <summary>
-	/// The OnBeforeSpawn block for Hold spawner until kills, or an empty string. While the kills aren't met it stops the
-	/// spawner, the way Keshma's own spawners stop themselves in OnBeforeSpawn, and starts it again a few seconds later to
-	/// check. It only starts a spawner it stopped itself, and only while the spawner is enabled. If the server spawns anyway,
-	/// the OnAfterSpawn block still removes the creature, so it is never worse than without it.
+	/// Takes out the OnBeforeSpawn block an earlier Hold spawner until kills wrote, leaving the rest of the script exactly
+	/// as it was. Stopping the spawner there didn't cancel the spawn already under way, so the hold now lives in the
+	/// OnAfterSpawn block, and OnBeforeSpawn is left alone.
 	/// </summary>
-	public string ToHoldBlock()
+	public void ApplyHold(Script beforeSpawn)
 	{
-		if (!Holds)
-			return String.Empty;
-
-		var lines = new List<string>
-		{
-			$"{HoldBegin} kills={Math.Max(1, KillsNeeded)}",
-			"// Written by the Spawn after kills settings in Properties (Hold spawner until kills); change it there.",
-			"{",
-			"\tvar killsUsed = Storage.Get(\"WorldForge:KillsUsed:\" + spawner.Name);",
-			"\tvar killKey = killsUsed.Get<string>(\"key\", \"\");",
-			String.Empty,
-			"\t// nothing to hold on until OnAfterSpawn has checked once and set where counting starts",
-			"\tif (killKey.Length > 0 && spawner.IsRunning)",
-			"\t{",
-			$"\t\tvar killCount = Storage.Get({KillCountHook.Literal(KillCountHook.StorageName)}).Get<int>(killKey, 0);",
-			"\t\tvar killsFrom = killsUsed.Get<int>(killKey, -1);",
-			"\t\tvar waveOpen = Int64.TryParse(killsUsed.Get<string>(killKey + \":release\", \"\"), out var openUntil) && DateTime.UtcNow.Ticks < openUntil;",
-			String.Empty,
-			$"\t\tif (killsFrom >= 0 && !waveOpen && killCount - killsFrom < {Math.Max(1, KillsNeeded)})",
-			"\t\t{",
-			"\t\t\tspawner.Stop();",
-			"\t\t\tkillsUsed.Set<int>(\"held\", 1);",
-			String.Empty,
-			"\t\t\t// check again shortly; only a spawner this stopped is started, and never a disabled one",
-			"\t\t\tTimer.DelayCall(TimeSpan.FromSeconds(5), () =>",
-			"\t\t\t{",
-			"\t\t\t\tif (killsUsed.Get<int>(\"held\", 0) != 1)",
-			"\t\t\t\t\treturn;",
-			String.Empty,
-			"\t\t\t\tkillsUsed.Set<int>(\"held\", 0);",
-			String.Empty,
-			"\t\t\t\tif (spawner.Enabled && !spawner.IsRunning)",
-			"\t\t\t\t\tspawner.Start();",
-			"\t\t\t});",
-			"\t\t}",
-			"\t}",
-			"}",
-			HoldEnd,
-		};
-
-		return String.Join(Environment.NewLine, lines);
+		if (beforeSpawn.Body.Contains("// worldforge-spawn-hold:"))
+			ScriptBlocks.Write(beforeSpawn, []);
 	}
-
-	/// <summary>Writes or takes out the Hold spawner until kills block in OnBeforeSpawn, leaving the rest of it exactly as it was.</summary>
-	public void ApplyHold(Script beforeSpawn) => ScriptBlocks.Write(beforeSpawn, [ToHoldBlock()]);
 
 	/// <summary>
 	/// Writes the spawn time block, then the broadcast block, at the top of the script, above the script's own code.

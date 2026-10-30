@@ -442,7 +442,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	[Category("Spawn after kills")]
 	[DisplayName("Hold spawner until kills")]
 	[PropertyOrder(4)]
-	[Description("Experimental, off by default. While the kills aren't met, OnBeforeSpawn stops this spawner and starts it again 5 seconds later to check, so it doesn't make creatures that are then removed (the brief flash). If the server spawns anyway, they are still removed as before, so the flash may remain. Turning it off puts OnBeforeSpawn back exactly as it was.")]
+	[Description("Experimental, off by default. Once a wave is out, or a spawn is blocked for want of kills, this spawner is stopped, so it makes nothing that would be removed (the brief flash). A timer checks for the kills every 3 seconds, then starts the spawner and spawns the wave. Expect one flash after a restart, when the spawner first checks.")]
 	public bool HoldSpawner
 	{
 		get => CurrentSpawnTime.HoldSpawner;
