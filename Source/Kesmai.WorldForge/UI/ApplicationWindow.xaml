@@ -91,6 +91,15 @@
                 </MenuItem>
             </MenuItem>
 
+            <!-- brings back a panel that was closed -->
+            <MenuItem Header="_View">
+                <MenuItem Header="_Project" Click="OnShowPanel" Tag="Project" />
+                <MenuItem Header="P_roperties" Click="OnShowPanel" Tag="Properties" />
+                <MenuItem Header="Pro_blems" Click="OnShowPanel" Tag="Problems" />
+                <Separator />
+                <MenuItem Header="Show _all panels" Click="OnShowPanel" Tag="All" />
+            </MenuItem>
+
             <MenuItem Header="_Help">
                 <MenuItem Header="What's _New" Command="{Binding ShowChangesWindow}" />
                 <MenuItem Header="Launch _Wiki" Command="{Binding LaunchWiki}" />
@@ -181,17 +190,17 @@
                     <LayoutAnchorablePaneGroup DockWidth="300" Orientation="Vertical">
                         
                         <LayoutAnchorablePane DockHeight="*">
-                            <LayoutAnchorable Title="Project" CanDockAsTabbedDocument="False">
-                                <ui:SegmentTreeControl x:Name="_segmentTree" Segment="{Binding Segment}" RootsChanged="OnSegmentTreeRootsChanged" />
+                            <LayoutAnchorable x:Name="_projectPanel" Title="Project" ContentId="Project" CanDockAsTabbedDocument="False">
+                                <ui:SegmentTreeControl Segment="{Binding Segment}" RootsChanged="OnSegmentTreeRootsChanged" />
                             </LayoutAnchorable>
                         </LayoutAnchorablePane>
 
                         <LayoutAnchorablePane DockHeight="*">
-                            <LayoutAnchorable Title="Properties" CanDockAsTabbedDocument="False">
+                            <LayoutAnchorable x:Name="_propertiesPanel" Title="Properties" ContentId="Properties" CanDockAsTabbedDocument="False">
                                 <xctk:PropertyGrid SelectedObject="{Binding ActiveContent, Mode=OneWay}" />
                             </LayoutAnchorable>
 
-                            <LayoutAnchorable Title="Problems" CanDockAsTabbedDocument="False">
+                            <LayoutAnchorable x:Name="_problemsPanel" Title="Problems" ContentId="Problems" CanDockAsTabbedDocument="False">
                                 <ui:ProblemsPanel />
                             </LayoutAnchorable>
                         </LayoutAnchorablePane>
