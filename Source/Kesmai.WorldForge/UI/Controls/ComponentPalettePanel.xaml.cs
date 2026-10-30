@@ -36,6 +36,11 @@ public partial class ComponentPalettePanel : UserControl
 		ShowFloating(false);
 		ShowCategoryMode();
 
+		// repaints with View > Palette background; only while shown, so a closed region's palette isn't kept alive
+		ShowBackground();
+		Loaded += (_, _) => { ComponentPaletteSettings.BackgroundChanged += OnBackgroundChanged; ShowBackground(); };
+		Unloaded += (_, _) => ComponentPaletteSettings.BackgroundChanged -= OnBackgroundChanged;
+
 		// the top categories arrive as the palette loads, and change with the segment's own components
 		var palette = ServiceLocator.Current.GetInstance<ComponentPalette>();
 		palette.Categories.CollectionChanged += (_, _) => Dispatcher.BeginInvoke(BuildCategoryButtons);
@@ -136,6 +141,22 @@ public partial class ComponentPalettePanel : UserControl
 
 	private void OnFloatClicked(object sender, RoutedEventArgs args) => FloatToggled?.Invoke(this, EventArgs.Empty);
 
+	private void OnBackgroundChanged(object sender, EventArgs args) => ShowBackground();
+
+	private void ShowBackground()
+	{
+		var brush = new System.Windows.Media.SolidColorBrush(ComponentPaletteSettings.Background);
+		brush.Freeze();
+
+		_grid.Background = brush;
+		_categoryList.Background = brush;
+
+		// names stay readable on a dark color
+		var color = ComponentPaletteSettings.Background;
+		var dark = 0.299 * color.R + 0.587 * color.G + 0.114 * color.B < 128;
+		_categoryList.Foreground = dark ? System.Windows.Media.Brushes.White : System.Windows.Media.Brushes.Black;
+	}
+
 	// the categories as buttons on one line (with grid menus), or as the list; one or the other, to save room
 	private GridLength _listHeight = new GridLength(250);
 
@@ -186,6 +207,22 @@ public static class ComponentPaletteSettings
 
 	/// <summary>The categories show as buttons (true) or as the list (false).</summary>
 	public static bool CategoryButtons { get; set; } = true;
+
+	private static System.Windows.Media.Color _background = System.Windows.Media.Colors.White;
+
+	/// <summary>The color behind the tiles and the category list (View > Palette background).</summary>
+	public static System.Windows.Media.Color Background
+	{
+		get => _background;
+		set
+		{
+			_background = value;
+			BackgroundChanged?.Invoke(null, EventArgs.Empty);
+		}
+	}
+
+	/// <summary>Raised when the background color changes, so every open palette repaints.</summary>
+	public static event EventHandler BackgroundChanged;
 	public static Rect FloatBounds { get; set; } = Rect.Empty;
 
 	static ComponentPaletteSettings()
@@ -214,6 +251,10 @@ public static class ComponentPaletteSettings
 						break;
 					case "dockWidth" when Double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var width) && width is >= 150 and <= 3000:
 						DockWidth = width;
+						break;
+					case "background":
+						try { _background = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(value); }
+						catch (FormatException) { }
 						break;
 					case "categories":
 						CategoryButtons = value != "list";
@@ -252,6 +293,7 @@ public static class ComponentPaletteSettings
 				$"scale={Scale.ToString(CultureInfo.InvariantCulture)}",
 				$"dockWidth={DockWidth.ToString(CultureInfo.InvariantCulture)}",
 				$"categories={(CategoryButtons ? "buttons" : "list")}",
+				$"background={Background}",
 				$"floating={(Floating ? "true" : "false")}",
 				$"float={bounds}",
 			]);
