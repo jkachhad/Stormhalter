@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -33,6 +34,74 @@ public partial class ComponentPalettePanel : UserControl
 		_grid.TileScale = ComponentPaletteSettings.Scale;
 
 		ShowFloating(false);
+
+		// the top categories arrive as the palette loads, and change with the segment's own components
+		var palette = ServiceLocator.Current.GetInstance<ComponentPalette>();
+		palette.Categories.CollectionChanged += (_, _) => Dispatcher.BeginInvoke(BuildCategoryButtons);
+		BuildCategoryButtons();
+	}
+
+	private void BuildCategoryButtons()
+	{
+		var palette = ServiceLocator.Current.GetInstance<ComponentPalette>();
+
+		_categoryButtons.Children.Clear();
+
+		foreach (var category in palette.Categories.ToList())
+		{
+			var button = new Button
+			{
+				Content = (category.Subcategories?.Count ?? 0) > 0 ? $"{category.Name} ▾" : category.Name,
+				FontWeight = FontWeights.Bold,
+				FontSize = 12,
+				Padding = new Thickness(10, 3, 10, 3),
+				Margin = new Thickness(0, 0, 4, 4),
+				ToolTip = (category.Subcategories?.Count ?? 0) > 0 ? $"Pick a folder in {category.Name}" : $"Show the {category.Name} tiles",
+			};
+
+			button.Click += (_, _) =>
+			{
+				if ((category.Subcategories?.Count ?? 0) == 0)
+					Select(category);
+				else
+					GridMenu.Show(button, category.Name, Entries(category));
+			};
+
+			_categoryButtons.Children.Add(button);
+		}
+	}
+
+	/// <summary>A category's tiles first (when it has its own), then its folders.</summary>
+	private IReadOnlyList<GridMenu.Entry> Entries(ComponentsCategory category)
+	{
+		var entries = new List<GridMenu.Entry>();
+
+		if ((category.Components?.Count ?? 0) > 0)
+			entries.Add(new GridMenu.Entry { Name = $"All of {category.Name}", Open = () => Select(category) });
+
+		foreach (var subcategory in category.Subcategories ?? [])
+		{
+			var hasFolders = (subcategory.Subcategories?.Count ?? 0) > 0;
+
+			entries.Add(new GridMenu.Entry
+			{
+				Name = subcategory.Name,
+				// a folder of folders opens into them; one with only tiles shows them
+				Open = hasFolders && (subcategory.Components?.Count ?? 0) == 0 ? null : () => Select(subcategory),
+				Children = hasFolders ? () => Entries(subcategory) : null,
+			});
+		}
+
+		return entries;
+	}
+
+	/// <summary>Shows a category's tiles, and picks it in the list too.</summary>
+	private static void Select(ComponentsCategory category)
+	{
+		var palette = ServiceLocator.Current.GetInstance<ComponentPalette>();
+
+		palette.SelectedCategory = category;
+		category.IsSelected = true;
 	}
 
 	/// <summary>Updates the button for where the panel is: floating in its own window, or docked beside the map.</summary>

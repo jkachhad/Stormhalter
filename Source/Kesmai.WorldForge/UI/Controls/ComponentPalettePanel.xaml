@@ -10,6 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition x:Name="_categoriesRow" Height="250" MinHeight="60" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -33,15 +34,18 @@
             <Button x:Name="_float" DockPanel.Dock="Right" Padding="8,0" FontSize="12" Click="OnFloatClicked" />
         </DockPanel>
 
-        <ui:ComponentCategoryTreeView Grid.Row="1" Margin="5"
+        <!-- the top categories as buttons; one with folders opens a grid of them -->
+        <WrapPanel Grid.Row="1" x:Name="_categoryButtons" Margin="5,4,5,0" />
+
+        <ui:ComponentCategoryTreeView Grid.Row="2" Margin="5"
                                       ScrollViewer.VerticalScrollBarVisibility="Auto"
                                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                       SelectedItemChanged="OnCategorySelected" />
 
-        <GridSplitter Grid.Row="2" Height="4" HorizontalAlignment="Stretch" ResizeDirection="Rows"
+        <GridSplitter Grid.Row="3" Height="4" HorizontalAlignment="Stretch" ResizeDirection="Rows"
                       ToolTip="Drag to give the categories or the tiles more room" />
 
-        <ui:ComponentGrid x:Name="_grid" Grid.Row="3" Margin="5"
+        <ui:ComponentGrid x:Name="_grid" Grid.Row="4" Margin="5"
                           ItemsSource="{Binding SelectedCategory.Components, Source={StaticResource componentPalette}}"
                           SelectedItem="{Binding SelectedProvider, Source={StaticResource componentPalette}}" />
     </Grid>
