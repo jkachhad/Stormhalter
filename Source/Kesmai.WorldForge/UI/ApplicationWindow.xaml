@@ -98,6 +98,20 @@
                 <MenuItem Header="Pro_blems" Click="OnShowPanel" Tag="Problems" />
                 <Separator />
                 <MenuItem Header="Show _all panels" Click="OnShowPanel" Tag="All" />
+                <Separator />
+                <!-- the color behind the palette's tiles and category list -->
+                <MenuItem Header="Palette _background">
+                    <MenuItem Header="White" Click="OnPaletteBackground" Tag="#FFFFFFFF" />
+                    <MenuItem Header="Light gray" Click="OnPaletteBackground" Tag="#FFDDDDDD" />
+                    <MenuItem Header="Gray" Click="OnPaletteBackground" Tag="#FF9A9A9A" />
+                    <MenuItem Header="Dark gray" Click="OnPaletteBackground" Tag="#FF4A4A4A" />
+                    <MenuItem Header="Black" Click="OnPaletteBackground" Tag="#FF000000" />
+                    <MenuItem Header="Parchment" Click="OnPaletteBackground" Tag="#FFF1E4C3" />
+                    <MenuItem Header="Slate blue" Click="OnPaletteBackground" Tag="#FF3B4A6B" />
+                    <MenuItem Header="Forest green" Click="OnPaletteBackground" Tag="#FF2F4F2F" />
+                    <Separator />
+                    <MenuItem Header="_Custom..." Click="OnPaletteBackground" Tag="Custom" />
+                </MenuItem>
             </MenuItem>
 
             <MenuItem Header="_Help">

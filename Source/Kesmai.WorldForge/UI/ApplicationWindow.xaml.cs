@@ -43,6 +43,13 @@ public partial class ApplicationWindow : Window
 		_segmentToolbarTray.Visibility = _segmentToolbar.Items.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 	}
 
+	/// <summary>View > Palette background: one of the listed colors, or any color from Custom.</summary>
+	private void OnPaletteBackground(object sender, RoutedEventArgs args)
+	{
+		if (sender is System.Windows.Controls.MenuItem { Tag: string tag })
+			UI.PaletteBackgroundPicker.Apply(tag, this);
+	}
+
 	/// <summary>View menu: shows a closed or hidden panel again, back in its place beside the documents.</summary>
 	private void OnShowPanel(object sender, RoutedEventArgs args)
 	{
