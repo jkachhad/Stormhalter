@@ -1,0 +1,48 @@
+<UserControl x:Class="Kesmai.WorldForge.UI.ComponentPalettePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="375">
+    <!-- the region editor's component palette: categories, then their tiles, laid out as the bar above picks -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition x:Name="_categoriesRow" Height="250" MinHeight="60" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="5,5,5,0" LastChildFill="False">
+            <ComboBox x:Name="_layout" DockPanel.Dock="Left" Width="150" FontSize="12" SelectionChanged="OnLayoutChanged"
+                      ToolTip="How the tiles are laid out: a grid you scroll down, or rows you scroll left to right (the mouse wheel scrolls across)">
+                <ComboBoxItem Content="Grid (scroll down)" Tag="0" />
+                <ComboBoxItem Content="1 row (scroll across)" Tag="1" />
+                <ComboBoxItem Content="2 rows (scroll across)" Tag="2" />
+                <ComboBoxItem Content="3 rows (scroll across)" Tag="3" />
+                <ComboBoxItem Content="4 rows (scroll across)" Tag="4" />
+            </ComboBox>
+            <ComboBox x:Name="_size" DockPanel.Dock="Left" Width="80" Margin="4,0,0,0" FontSize="12" SelectionChanged="OnSizeChanged"
+                      ToolTip="How large the tiles are drawn">
+                <ComboBoxItem Content="Small" Tag="0.6" />
+                <ComboBoxItem Content="Medium" Tag="0.8" />
+                <ComboBoxItem Content="Large" Tag="1" />
+            </ComboBox>
+            <Button x:Name="_float" DockPanel.Dock="Right" Padding="8,0" FontSize="12" Click="OnFloatClicked" />
+        </DockPanel>
+
+        <ui:ComponentCategoryTreeView Grid.Row="1" Margin="5"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                      SelectedItemChanged="OnCategorySelected" />
+
+        <GridSplitter Grid.Row="2" Height="4" HorizontalAlignment="Stretch" ResizeDirection="Rows"
+                      ToolTip="Drag to give the categories or the tiles more room" />
+
+        <ui:ComponentGrid x:Name="_grid" Grid.Row="3" Margin="5"
+                          ItemsSource="{Binding SelectedCategory.Components, Source={StaticResource componentPalette}}"
+                          SelectedItem="{Binding SelectedProvider, Source={StaticResource componentPalette}}" />
+    </Grid>
+</UserControl>
