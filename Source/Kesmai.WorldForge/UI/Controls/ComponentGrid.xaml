@@ -19,7 +19,7 @@
 
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <StackPanel>
+            <StackPanel LayoutTransform="{Binding TileTransform, RelativeSource={RelativeSource AncestorType=ui:ComponentGrid}}">
                 <Border BorderThickness="2"
                         BorderBrush="{Binding Converter={StaticResource ComponentProviderBorderBrushConverter}}"
                         Margin="0,0,0,4">
@@ -37,7 +37,8 @@
     <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
             <!-- virtualizing, so large categories (STATIC) only build the visible items. -->
-            <wpfToolkit:VirtualizingWrapPanel SpacingMode="None" />
+            <wpfToolkit:VirtualizingWrapPanel SpacingMode="None"
+                                              Orientation="{Binding PanelOrientation, RelativeSource={RelativeSource AncestorType=ui:ComponentGrid}}" />
         </ItemsPanelTemplate>
     </ListBox.ItemsPanel>
 </ListBox>
