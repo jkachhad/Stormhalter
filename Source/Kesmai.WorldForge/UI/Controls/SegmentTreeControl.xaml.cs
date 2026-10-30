@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -233,9 +235,12 @@ public partial class SegmentTreeControl : UserControl
     private void Update()
     {
         _tree.Items.Clear();
-        
+
         if (Segment is null)
+        {
+            RootsChanged?.Invoke(this, EventArgs.Empty);
             return;
+        }
 
         EnsureSegmentNode();
         EnsureRegionsNode();
@@ -262,6 +267,94 @@ public partial class SegmentTreeControl : UserControl
         _tree.Items.Add(_componentsNode);
         _tree.Items.Add(_brushesNode);
         _tree.Items.Add(_templatesNode);
+
+        RootsChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>The tree's top items (Segment, Regions, Entities, ...), for the main toolbar's buttons.</summary>
+    public IEnumerable<TreeViewItem> Roots => _tree.Items.OfType<TreeViewItem>();
+
+    /// <summary>Raised when the top items are rebuilt, for a new or closed segment.</summary>
+    public event EventHandler RootsChanged;
+
+    /// <summary>
+    /// Fills a toolbar with a button for each top item. One with contents opens a grid of them; one without (Segment)
+    /// opens straight away.
+    /// </summary>
+    public void FillToolbar(ToolBar toolbar)
+    {
+        toolbar.Items.Clear();
+
+        foreach (var root in Roots)
+        {
+            var name = HeaderText(root);
+            var (icon, _) = HeaderLook(root);
+            var look = new StackPanel { Orientation = Orientation.Horizontal };
+
+            if (icon is not null)
+                look.Children.Add(new Image { Source = icon, Width = 20, Height = 20, Margin = new Thickness(0, 0, 3, 0) });
+
+            look.Children.Add(new TextBlock { Text = name, VerticalAlignment = VerticalAlignment.Center, FontSize = 12 });
+
+            var button = new Button { Content = look, Padding = new Thickness(4, 2, 4, 2), Margin = new Thickness(1, 0, 1, 0) };
+
+            button.Click += (_, _) =>
+            {
+                if (root.Items.Count == 0 && root.Tag is ISegmentObject segmentObject)
+                    Open(root, segmentObject);
+                else
+                    GridMenu.Show(button, name, MenuEntries(root));
+            };
+
+            button.ToolTip = root.Items.Count == 0 ? $"Open {name}" : $"Pick from {name}";
+            toolbar.Items.Add(button);
+        }
+    }
+
+    /// <summary>A tree item's shown name: the text in its header.</summary>
+    public static string HeaderText(TreeViewItem item) => item.Header switch
+    {
+        string text => text,
+        Panel panel => panel.Children.OfType<EditableTextBlock>().Select(t => t.Text).FirstOrDefault()
+                       ?? panel.Children.OfType<TextBlock>().Select(t => t.Text).FirstOrDefault()
+                       ?? String.Empty,
+        _ => item.Header?.ToString() ?? String.Empty,
+    };
+
+    /// <summary>A tree item's icon, or the colored mark segment objects have.</summary>
+    public static (ImageSource Icon, Brush Swatch) HeaderLook(TreeViewItem item) => item.Header is Panel panel
+        ? (panel.Children.OfType<Image>().Select(i => i.Source).FirstOrDefault(), panel.Children.OfType<Shape>().Select(s => s.Fill).FirstOrDefault())
+        : (null, null);
+
+    /// <summary>The tree's items as grid menu tiles: a segment object opens its document, a folder shows its contents.</summary>
+    public static IReadOnlyList<GridMenu.Entry> MenuEntries(ItemsControl parent) => parent.Items.OfType<TreeViewItem>()
+        .Select(child =>
+        {
+            var (icon, swatch) = HeaderLook(child);
+            var hasChildren = child.Items.OfType<TreeViewItem>().Any();
+
+            return new GridMenu.Entry
+            {
+                Name = HeaderText(child),
+                Icon = icon,
+                Swatch = swatch,
+                Open = child.Tag is ISegmentObject segmentObject ? () => Open(child, segmentObject) : null,
+                Children = hasChildren ? () => MenuEntries(child) : null,
+            };
+        })
+        .ToList();
+
+    /// <summary>Opens a segment object as picking it in the tree does, and picks it in the tree too.</summary>
+    public static void Open(TreeViewItem item, ISegmentObject segmentObject)
+    {
+        for (var parent = ItemsControl.ItemsControlFromItemContainer(item); parent is TreeViewItem folder; parent = ItemsControl.ItemsControlFromItemContainer(folder))
+            folder.IsExpanded = true;
+
+        item.IsSelected = true;
+        item.BringIntoView();
+
+        // picking it again (it was already selected) still opens it
+        WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(segmentObject));
     }
     
     private void OnItemSelected(object sender, RoutedPropertyChangedEventArgs<object> e)
