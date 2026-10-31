@@ -84,6 +84,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			
 			_componentFrames.Children.Clear();
 
+			// the frames are gone, so the Delete key must not act on the one picked before
+			_selectedComponentFrame = null;
+
 			if (selection.SurfaceArea is not 1)
 			{
 				_editingTile = null;
@@ -677,6 +680,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	private void Delete(ComponentFrame frame)
 	{
+		if (_editingTile is null)
+			return;
+
 		frame.Provider.RemoveComponent(_editingTile.Providers);
 		
 		if (_selectedComponentFrame == frame)
