@@ -340,6 +340,8 @@ public partial class SegmentTreeControl : UserControl
                 Swatch = swatch,
                 Open = child.Tag is ISegmentObject segmentObject ? () => Open(child, segmentObject) : null,
                 Children = hasChildren ? () => MenuEntries(child) : null,
+                // a region shows a small picture of its map
+                Preview = child.Tag is SegmentRegion region ? () => RegionPreview.Render(region) : null,
             };
         })
         .ToList();
