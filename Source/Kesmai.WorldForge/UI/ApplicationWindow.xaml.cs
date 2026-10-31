@@ -43,6 +43,13 @@ public partial class ApplicationWindow : Window
 		_segmentToolbarTray.Visibility = _segmentToolbar.Items.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 	}
 
+	/// <summary>View > Program background: one of the listed colors, any color from Custom, or Default.</summary>
+	private void OnProgramBackground(object sender, RoutedEventArgs args)
+	{
+		if (sender is System.Windows.Controls.MenuItem { Tag: string tag })
+			UI.PaletteBackgroundPicker.ApplyProgram(tag, this);
+	}
+
 	/// <summary>View > Palette background: one of the listed colors, or any color from Custom.</summary>
 	private void OnPaletteBackground(object sender, RoutedEventArgs args)
 	{
