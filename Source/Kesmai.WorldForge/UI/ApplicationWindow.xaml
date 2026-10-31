@@ -157,7 +157,7 @@
 
             <!-- the region being edited and the tile under the mouse -->
             <ToolBar x:Name="_regionInfo" Visibility="Collapsed" ToolTip="The region open in the editor, and the tile under the mouse">
-                <TextBlock FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="8,0">
+                <TextBlock FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="8,0" MinWidth="270">
                     <Run Text="Region" />
                     <Run Text="{Binding ActiveDocument.ID, Mode=OneWay, FallbackValue=''}" />
                     <Run Text="  " />

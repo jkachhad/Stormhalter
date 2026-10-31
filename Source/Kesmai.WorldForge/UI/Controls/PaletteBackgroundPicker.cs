@@ -50,6 +50,9 @@ public static class PaletteBackgroundPicker
 		ProgramTheme.Apply(color.Value);
 	}
 
+	/// <summary>Picks any color, starting from <paramref name="start"/>; null when cancelled.</summary>
+	public static Color? PickColor(Window owner, string title, Color start) => Pick(owner, title, start, _ => { });
+
 	/// <summary>A small window with a color canvas; the color shows live while picked. Null when cancelled.</summary>
 	private static Color? Pick(Window owner, string title, Color start, Action<Color> preview)
 	{
