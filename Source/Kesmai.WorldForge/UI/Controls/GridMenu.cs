@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -66,14 +67,18 @@ public static class GridMenu
 		body.Children.Add(empty);
 		body.Children.Add(new ScrollViewer { Content = tiles, VerticalScrollBarVisibility = ScrollBarVisibility.Auto, MaxHeight = 520 });
 
-		popup.Child = new Border
+		var frame = new Border
 		{
-			Background = new SolidColorBrush(Color.FromRgb(0xF4, 0xF4, 0xF4)),
 			BorderBrush = Brushes.Gray,
 			BorderThickness = new Thickness(1),
 			Width = 660,
 			Child = body,
 		};
+
+		// the bar color and its text, so View > Program background reaches the pop-up too
+		frame.SetResourceReference(Border.BackgroundProperty, "WorldForgeBarBrush");
+		frame.SetResourceReference(TextElement.ForegroundProperty, "WorldForgeBarTextBrush");
+		popup.Child = frame;
 
 		var current = (Title: title, Entries: entries);
 
