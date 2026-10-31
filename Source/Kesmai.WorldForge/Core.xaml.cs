@@ -95,6 +95,7 @@ public partial class Core : Application
 
 		// View > Program background, as it was left
 		UI.ProgramTheme.LoadSaved();
+		UI.ProgramFont.LoadSaved();
 		
 		_storageDirectory = new DirectoryInfo(StoragePath);
 			
