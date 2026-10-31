@@ -30,6 +30,19 @@ public partial class ApplicationWindow : Window
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ApplicationWindow"/> class.
 	/// </summary>
+	/// <summary>
+	/// Rebuilds the toolbar of the Project list's sections. A section with contents opens a grid of them; one without
+	/// (Segment) opens straight away.
+	/// </summary>
+	private void OnSegmentTreeRootsChanged(object sender, EventArgs args)
+	{
+		if (sender is not UI.SegmentTreeControl tree)
+			return;
+
+		tree.FillToolbar(_segmentToolbar);
+		_segmentToolbarTray.Visibility = _segmentToolbar.Items.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+	}
+
 	public ApplicationWindow()
 	{
 		InitializeComponent();
