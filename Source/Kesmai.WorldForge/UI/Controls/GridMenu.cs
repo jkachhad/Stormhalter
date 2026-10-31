@@ -28,6 +28,9 @@ public static class GridMenu
 		/// <summary>A picture drawn on the tile instead of the icon (a region's map), made as the tile is shown.</summary>
 		public Func<ImageSource> Preview { get; init; }
 
+		/// <summary>The preview is a map (pixels are tiles, drawn sharp on black) rather than a picture.</summary>
+		public bool PreviewIsMap { get; init; }
+
 		public bool IsFolder => Children is not null && Children().Count > 0;
 	}
 
@@ -106,8 +109,19 @@ public static class GridMenu
 			if (preview is not null)
 			{
 				var picture = new Image { Source = preview, Width = 104, Height = 64, Stretch = Stretch.Uniform, Margin = new Thickness(0, 2, 0, 2) };
-				RenderOptions.SetBitmapScalingMode(picture, BitmapScalingMode.NearestNeighbor);
-				look.Children.Add(new Border { Background = Brushes.Black, Child = picture });
+
+				// a map's pixels are tiles, kept sharp on black; a creature's picture is drawn as it is, no larger than itself
+				if (entry.PreviewIsMap)
+				{
+					RenderOptions.SetBitmapScalingMode(picture, BitmapScalingMode.NearestNeighbor);
+					look.Children.Add(new Border { Background = Brushes.Black, Child = picture });
+				}
+				else
+				{
+					picture.Stretch = Stretch.Uniform;
+					picture.StretchDirection = StretchDirection.DownOnly;
+					look.Children.Add(picture);
+				}
 			}
 			else if (entry.Icon is not null)
 				look.Children.Add(new Image { Source = entry.Icon, Width = 28, Height = 28, Margin = new Thickness(0, 2, 0, 2) });
