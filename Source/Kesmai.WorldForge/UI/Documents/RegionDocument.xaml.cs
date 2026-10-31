@@ -26,9 +26,16 @@ public partial class RegionDocument : UserControl
 		DataContextChanged += (_, _) => Refresh();
 	}
 
+	private void OnRegionToolsMoved(object sender, EventArgs args) => _toolsTray.HorizontalAlignment = RegionToolsPosition.Alignment;
+
 	private void OnLoaded(object sender, RoutedEventArgs args)
 	{
 		Refresh();
+
+		// View > Region tools position
+		_toolsTray.HorizontalAlignment = RegionToolsPosition.Alignment;
+		RegionToolsPosition.Changed -= OnRegionToolsMoved;
+		RegionToolsPosition.Changed += OnRegionToolsMoved;
 
 		if (!_isRegistered)
 		{
@@ -56,6 +63,8 @@ public partial class RegionDocument : UserControl
 	{
 		if (_isRegistered)
 			WeakReferenceMessenger.Default.UnregisterAll(this);
+
+		RegionToolsPosition.Changed -= OnRegionToolsMoved;
 
 		// another region's tab takes over the palette; this one floats it again when it comes back
 		_paletteWanted = false;

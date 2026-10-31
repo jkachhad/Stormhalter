@@ -104,6 +104,12 @@
                     <MenuItem Header="_Center" Click="OnToolbarPosition" Tag="Center" />
                     <MenuItem Header="_Right" Click="OnToolbarPosition" Tag="Right" />
                 </MenuItem>
+                <!-- the region editor's tool bars (Select, Draw, ... and the view toggles) -->
+                <MenuItem Header="Region _tools position">
+                    <MenuItem Header="_Left" Click="OnRegionToolsPosition" Tag="Left" />
+                    <MenuItem Header="_Center" Click="OnRegionToolsPosition" Tag="Center" />
+                    <MenuItem Header="_Right" Click="OnRegionToolsPosition" Tag="Right" />
+                </MenuItem>
                 <Separator />
                 <!-- one font for all of WorldForge's text -->
                 <MenuItem Header="_Font..." Click="OnProgramFont" />

@@ -22,7 +22,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <ToolBarTray Grid.Column="0" Grid.Row="0" DockPanel.Dock="Top">
+        <ToolBarTray Grid.Column="0" Grid.Row="0" DockPanel.Dock="Top" x:Name="_toolsTray">
             <!-- Tools -->
             <ToolBar ItemsSource="{Binding Tools, Source={StaticResource regionToolbar}}" 
                      Background="LightBlue" ToolTip="Tools" OverflowMode="Never">

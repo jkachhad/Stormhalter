@@ -64,6 +64,13 @@ public partial class ApplicationWindow : Window
 		}
 	}
 
+	/// <summary>View > Region tools position: the region editor's tool bars on the left, in the center or on the right.</summary>
+	private void OnRegionToolsPosition(object sender, RoutedEventArgs args)
+	{
+		if (sender is System.Windows.Controls.MenuItem { Tag: string position })
+			UI.RegionToolsPosition.Set(position);
+	}
+
 	private void SetToolbarPosition(string position)
 	{
 		_segmentToolbarTray.HorizontalAlignment = position switch
