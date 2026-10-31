@@ -25,6 +25,9 @@ public static class GridMenu
 		public Action Open { get; init; }
 		public Func<IReadOnlyList<Entry>> Children { get; init; }
 
+		/// <summary>A picture drawn on the tile instead of the icon (a region's map), made as the tile is shown.</summary>
+		public Func<ImageSource> Preview { get; init; }
+
 		public bool IsFolder => Children is not null && Children().Count > 0;
 	}
 
@@ -98,8 +101,15 @@ public static class GridMenu
 		UIElement Tile(Entry entry)
 		{
 			var look = new StackPanel { HorizontalAlignment = HorizontalAlignment.Center };
+			var preview = entry.Preview?.Invoke();
 
-			if (entry.Icon is not null)
+			if (preview is not null)
+			{
+				var picture = new Image { Source = preview, Width = 104, Height = 64, Stretch = Stretch.Uniform, Margin = new Thickness(0, 2, 0, 2) };
+				RenderOptions.SetBitmapScalingMode(picture, BitmapScalingMode.NearestNeighbor);
+				look.Children.Add(new Border { Background = Brushes.Black, Child = picture });
+			}
+			else if (entry.Icon is not null)
 				look.Children.Add(new Image { Source = entry.Icon, Width = 28, Height = 28, Margin = new Thickness(0, 2, 0, 2) });
 			else if (entry.Swatch is not null)
 				look.Children.Add(new Rectangle { Fill = entry.Swatch, Width = 16, Height = 16, Margin = new Thickness(0, 6, 0, 6) });
@@ -120,7 +130,7 @@ public static class GridMenu
 			{
 				Content = look,
 				Width = 118,
-				Height = 74,
+				Height = preview is not null ? 104 : 74,
 				Margin = new Thickness(3),
 				ToolTip = entry.Open is not null ? $"Open {entry.Name}" : $"Show what's in {entry.Name}",
 			};

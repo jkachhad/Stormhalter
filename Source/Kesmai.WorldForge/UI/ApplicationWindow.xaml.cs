@@ -43,6 +43,50 @@ public partial class ApplicationWindow : Window
 		_segmentToolbarTray.Visibility = _segmentToolbar.Items.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 	}
 
+	private static readonly string _toolbarSettings = System.IO.Path.Combine(".storage", "Toolbar.cfg");
+
+	/// <summary>View > Toolbar position: the top toolbar on the left, in the center or on the right; remembered.</summary>
+	private void OnToolbarPosition(object sender, RoutedEventArgs args)
+	{
+		if (sender is not System.Windows.Controls.MenuItem { Tag: string position })
+			return;
+
+		SetToolbarPosition(position);
+
+		try
+		{
+			System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_toolbarSettings)!);
+			System.IO.File.WriteAllText(_toolbarSettings, $"position={position}");
+		}
+		catch (Exception exception) when (exception is System.IO.IOException or UnauthorizedAccessException)
+		{
+			// the position just isn't remembered
+		}
+	}
+
+	private void SetToolbarPosition(string position)
+	{
+		_segmentToolbarTray.HorizontalAlignment = position switch
+		{
+			"Center" => System.Windows.HorizontalAlignment.Center,
+			"Right" => System.Windows.HorizontalAlignment.Right,
+			_ => System.Windows.HorizontalAlignment.Stretch,
+		};
+	}
+
+	private void LoadToolbarPosition()
+	{
+		try
+		{
+			if (System.IO.File.Exists(_toolbarSettings) && System.IO.File.ReadAllText(_toolbarSettings).Trim() is { } line && line.StartsWith("position="))
+				SetToolbarPosition(line.Substring("position=".Length));
+		}
+		catch (Exception exception) when (exception is System.IO.IOException or UnauthorizedAccessException)
+		{
+			// the toolbar starts on the left
+		}
+	}
+
 	/// <summary>View > Font: picks one font for all of WorldForge's text.</summary>
 	private void OnProgramFont(object sender, RoutedEventArgs args) => UI.ProgramFont.Pick(this);
 
@@ -89,6 +133,7 @@ public partial class ApplicationWindow : Window
 	public ApplicationWindow()
 	{
 		InitializeComponent();
+		LoadToolbarPosition();
 
 		// the toolbar's region and tile show while a region is the document being edited
 		if (DataContext is ApplicationPresenter presenter)
