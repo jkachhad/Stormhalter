@@ -74,6 +74,7 @@ public partial class OnSpawnAssetPanel : UserControl
 		// a script the builder couldn't read starts the form empty; writing it would replace that script
 		_unreadScript = result is { Succeeded: false };
 		SetBuilder(_unreadScript ? NewBuilder() : builder);
+		_status.Text = Describe(result);
 
 		return result;
 	}
@@ -95,6 +96,9 @@ public partial class OnSpawnAssetPanel : UserControl
 
 		if (!result.Succeeded)
 			return result.Problem!;
+
+		if (result.DtoOnly)
+			return $"OnSpawn picks between creatures with if or switch, so the builder edits only its CreatureDTO values ({result.Filled}): Name, Body, Level, Alignment, Attack, Defense, stats and sounds. Write changes those values where they stand; the rest of the script stays as typed, and other builder fields aren't written.";
 
 		var kept = result.KeptInitializers + result.KeptStatements;
 
