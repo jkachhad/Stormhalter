@@ -43,6 +43,32 @@ public partial class ApplicationWindow : Window
 		_segmentToolbarTray.Visibility = _segmentToolbar.Items.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 	}
 
+	/// <summary>View menu: shows a closed or hidden panel again, back in its place beside the documents.</summary>
+	private void OnShowPanel(object sender, RoutedEventArgs args)
+	{
+		if (sender is not System.Windows.Controls.MenuItem { Tag: string which })
+			return;
+
+		var panels = which switch
+		{
+			"Project" => new[] { _projectPanel },
+			"Properties" => new[] { _propertiesPanel },
+			"Problems" => new[] { _problemsPanel },
+			_ => new[] { _projectPanel, _propertiesPanel, _problemsPanel },
+		};
+
+		foreach (var panel in panels)
+		{
+			// a closed panel has left the layout; it goes back on the left, where the panels start
+			if (panel.Parent is null)
+				panel.AddToLayout(_dockingManager, AnchorableShowStrategy.Left);
+			else
+				panel.Show();
+
+			panel.IsActive = true;
+		}
+	}
+
 	public ApplicationWindow()
 	{
 		InitializeComponent();

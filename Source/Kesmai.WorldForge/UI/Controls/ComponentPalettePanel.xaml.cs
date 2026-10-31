@@ -34,6 +34,7 @@ public partial class ComponentPalettePanel : UserControl
 		_grid.TileScale = ComponentPaletteSettings.Scale;
 
 		ShowFloating(false);
+		ShowCategoryMode();
 
 		// the top categories arrive as the palette loads, and change with the segment's own components
 		var palette = ServiceLocator.Current.GetInstance<ComponentPalette>();
@@ -135,6 +136,35 @@ public partial class ComponentPalettePanel : UserControl
 
 	private void OnFloatClicked(object sender, RoutedEventArgs args) => FloatToggled?.Invoke(this, EventArgs.Empty);
 
+	// the categories as buttons on one line (with grid menus), or as the list; one or the other, to save room
+	private GridLength _listHeight = new GridLength(250);
+
+	private void OnCategoryModeClicked(object sender, RoutedEventArgs args)
+	{
+		ComponentPaletteSettings.CategoryButtons = !ComponentPaletteSettings.CategoryButtons;
+		ComponentPaletteSettings.Save();
+		ShowCategoryMode();
+	}
+
+	private void ShowCategoryMode()
+	{
+		var buttons = ComponentPaletteSettings.CategoryButtons;
+
+		if (buttons && _categoriesRow.Height.Value > 0)
+			_listHeight = _categoriesRow.Height;
+
+		_categoryButtons.Visibility = buttons ? Visibility.Visible : Visibility.Collapsed;
+		_categoryList.Visibility = buttons ? Visibility.Collapsed : Visibility.Visible;
+		_categorySplitter.Visibility = buttons ? Visibility.Collapsed : Visibility.Visible;
+		_categoriesRow.MinHeight = buttons ? 0 : 60;
+		_categoriesRow.Height = buttons ? new GridLength(0) : _listHeight;
+
+		_categoryMode.Content = buttons ? "List" : "Buttons";
+		_categoryMode.ToolTip = buttons
+			? "Show the categories as a list instead of buttons"
+			: "Show the categories as buttons on one line instead of a list, to save room";
+	}
+
 	private void OnCategorySelected(object sender, RoutedPropertyChangedEventArgs<object> args)
 	{
 		var componentPalette = ServiceLocator.Current.GetInstance<ComponentPalette>();
@@ -153,6 +183,9 @@ public static class ComponentPaletteSettings
 	public static double Scale { get; set; } = 1.0;
 	public static bool Floating { get; set; }
 	public static double DockWidth { get; set; } = 375;
+
+	/// <summary>The categories show as buttons (true) or as the list (false).</summary>
+	public static bool CategoryButtons { get; set; } = true;
 	public static Rect FloatBounds { get; set; } = Rect.Empty;
 
 	static ComponentPaletteSettings()
@@ -181,6 +214,9 @@ public static class ComponentPaletteSettings
 						break;
 					case "dockWidth" when Double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var width) && width is >= 150 and <= 3000:
 						DockWidth = width;
+						break;
+					case "categories":
+						CategoryButtons = value != "list";
 						break;
 					case "floating":
 						Floating = value == "true";
@@ -215,6 +251,7 @@ public static class ComponentPaletteSettings
 				$"rows={Rows}",
 				$"scale={Scale.ToString(CultureInfo.InvariantCulture)}",
 				$"dockWidth={DockWidth.ToString(CultureInfo.InvariantCulture)}",
+				$"categories={(CategoryButtons ? "buttons" : "list")}",
 				$"floating={(Floating ? "true" : "false")}",
 				$"float={bounds}",
 			]);
