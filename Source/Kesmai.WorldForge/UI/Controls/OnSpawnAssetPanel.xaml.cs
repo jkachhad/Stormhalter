@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.Messaging;
+using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Editor.Assets;
 
 namespace Kesmai.WorldForge.UI;
@@ -109,13 +111,44 @@ public partial class OnSpawnAssetPanel : UserControl
 
 		_builderRoot.DataContext = _builder;
 		_dialogueRoot.DataContext = _builder;
+		UpdateDialogueCheck();
 		_builderPreview.Text = _builder.Generate();
 
 		if (_catalog is not null)
 			ShowBuilderBodyAndHue();
 	}
 
-	private void OnBuilderChanged(object? sender, EventArgs e) => _builderPreview.Text = _builder.Generate();
+	private void OnBuilderChanged(object? sender, EventArgs e)
+	{
+		UpdateDialogueCheck();
+		_builderPreview.Text = _builder.Generate();
+	}
+
+	/// <summary>
+	/// Only humanoids have Shift+Right Click options. When the Builder's class isn't one, the Dialogue tab says so and
+	/// its options aren't written; when the class can't be followed, it warns but still writes them.
+	/// </summary>
+	private void UpdateDialogueCheck()
+	{
+		if (_catalog is null)
+			return;
+
+		var request = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+		var folder = request.HasReceivedResponse ? request.Response?.Directory : null;
+		var humanoid = HumanoidCheck.IsHumanoid(_builder.CreatureType, folder, _catalog.BaseTypes);
+		var type = String.IsNullOrWhiteSpace(_builder.CreatureType) ? "this class" : _builder.CreatureType.Trim();
+
+		_builder.DialogueAllowed = humanoid != false;
+
+		_dialogueWarning.Text = humanoid switch
+		{
+			false => $"Only humanoid creatures have Shift+Right Click options, and {type} isn't one. Pick a humanoid class in Builder, or remove these options. They won't be written to OnSpawn; options the script already has are kept as they are.",
+			null => $"Couldn't tell whether {type} is a humanoid. Only humanoid creatures have Shift+Right Click options, so check the class if the segment fails to compile.",
+			_ => String.Empty,
+		};
+		_dialogueWarningBox.Visibility = humanoid == true ? Visibility.Collapsed : Visibility.Visible;
+		_dialogueOptionsList.IsEnabled = _dialogueOption.IsEnabled = humanoid != false;
+	}
 
 	private void OnBuilderRead(object sender, RoutedEventArgs e)
 	{
