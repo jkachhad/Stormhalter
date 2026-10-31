@@ -313,6 +313,56 @@ public partial class SegmentTreeControl : UserControl
             button.ToolTip = root.Items.Count == 0 ? $"Open {name}" : $"Pick from {name}";
             toolbar.Items.Add(button);
         }
+
+        // every sound in the repo's sound list, by category; clicking one plays it
+        var soundsLook = new StackPanel { Orientation = Orientation.Horizontal };
+        soundsLook.Children.Add(new TextBlock { Text = "🔊", FontSize = 14, Margin = new Thickness(0, 0, 3, 0), VerticalAlignment = VerticalAlignment.Center });
+        soundsLook.Children.Add(new TextBlock { Text = "Sounds", VerticalAlignment = VerticalAlignment.Center, FontSize = 12 });
+
+        var sounds = new Button { Content = soundsLook, Padding = new Thickness(4, 2, 4, 2), Margin = new Thickness(1, 0, 1, 0), ToolTip = "All the sounds; click one to hear it" };
+        sounds.Click += (_, _) => GridMenu.Show(sounds, "Sounds", SoundEntries());
+        toolbar.Items.Add(sounds);
+    }
+
+    private static readonly System.Windows.Media.MediaPlayer _soundPlayer = new();
+
+    /// <summary>The sounds as grid menu tiles: a folder per category, and all of them; a tile plays its sound.</summary>
+    private static IReadOnlyList<GridMenu.Entry> SoundEntries()
+    {
+        var loading = AssetCatalog.LoadAsync();
+
+        if (!loading.IsCompletedSuccessfully)
+            return [new GridMenu.Entry { Name = "The sound list is still loading. Try again in a moment.", Glyph = "⏳" }];
+
+        IReadOnlyList<GridMenu.Entry> Tiles(IEnumerable<SoundAsset> list) => list
+            .OrderBy(s => s.Id)
+            .Select(sound => new GridMenu.Entry
+            {
+                Name = $"{sound.Id}  {sound.Name}",
+                Glyph = sound.FilePath is null ? "🔇" : "🔊",
+                KeepOpen = true,
+                ToolTip = sound.FilePath is null ? $"Sound {sound.Id} has no audio file in the repo, so it can't be played here" : $"Play sound {sound.Id} ({sound.Category})",
+                Open = () =>
+                {
+                    if (sound.FilePath is null)
+                        return;
+
+                    _soundPlayer.Open(new Uri(sound.FilePath));
+                    _soundPlayer.Play();
+                },
+            })
+            .ToList();
+
+        var all = loading.Result.Sounds;
+        var entries = new List<GridMenu.Entry>
+        {
+            new() { Name = $"All sounds ({all.Count})", Children = () => Tiles(all) },
+        };
+
+        foreach (var category in all.GroupBy(s => s.Category).OrderBy(g => g.Key))
+            entries.Add(new GridMenu.Entry { Name = $"{category.Key} ({category.Count()})", Children = () => Tiles(category) });
+
+        return entries;
     }
 
     /// <summary>A tree item's shown name: the text in its header.</summary>

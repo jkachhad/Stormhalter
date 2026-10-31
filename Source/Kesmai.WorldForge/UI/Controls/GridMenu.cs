@@ -32,6 +32,15 @@ public static class GridMenu
 		/// <summary>The preview is a map (pixels are tiles, drawn sharp on black) rather than a picture.</summary>
 		public bool PreviewIsMap { get; init; }
 
+		/// <summary>A symbol drawn on the tile when it has no icon (a speaker for a sound).</summary>
+		public string Glyph { get; init; }
+
+		/// <summary>Clicking the tile leaves the menu open (playing a sound), instead of closing it.</summary>
+		public bool KeepOpen { get; init; }
+
+		/// <summary>The tile's tooltip, instead of "Open …".</summary>
+		public string ToolTip { get; init; }
+
 		public bool IsFolder => Children is not null && Children().Count > 0;
 	}
 
@@ -132,6 +141,8 @@ public static class GridMenu
 				look.Children.Add(new Image { Source = entry.Icon, Width = 28, Height = 28, Margin = new Thickness(0, 2, 0, 2) });
 			else if (entry.Swatch is not null)
 				look.Children.Add(new Rectangle { Fill = entry.Swatch, Width = 16, Height = 16, Margin = new Thickness(0, 6, 0, 6) });
+			else if (entry.Glyph is not null)
+				look.Children.Add(new TextBlock { Text = entry.Glyph, FontSize = 20, HorizontalAlignment = HorizontalAlignment.Center });
 			else if (entry.IsFolder)
 				look.Children.Add(new TextBlock { Text = "📁", FontSize = 20, HorizontalAlignment = HorizontalAlignment.Center });
 
@@ -151,14 +162,16 @@ public static class GridMenu
 				Width = 118,
 				Height = preview is not null ? 104 : 74,
 				Margin = new Thickness(3),
-				ToolTip = entry.Open is not null ? $"Open {entry.Name}" : $"Show what's in {entry.Name}",
+				ToolTip = entry.ToolTip ?? (entry.Open is not null ? $"Open {entry.Name}" : $"Show what's in {entry.Name}"),
 			};
 
 			main.Click += (_, _) =>
 			{
 				if (entry.Open is not null)
 				{
-					popup.IsOpen = false;
+					if (!entry.KeepOpen)
+						popup.IsOpen = false;
+
 					entry.Open();
 				}
 				else if (entry.IsFolder)
