@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,10 +15,17 @@ public class ClipboardManager
 {
 	#region Static
 
+	/// <summary>
+	/// The clipboard format for copied tiles. The data is a byte array: for each tile in the copied area, its x and y
+	/// within the area, whether it has a tile, and the tile's XML. A byte array is copied out of the clipboard on every
+	/// read, so each paste gets its own data and pasting the same copy again works.
+	/// </summary>
+	public const string TilesFormat = "Kesmai.WorldForge.Tiles";
+
 	#endregion
 
 	#region Fields
-		
+
 	#endregion
 
 	#region Properties and Events
@@ -47,14 +55,11 @@ public class ClipboardManager
 
 		if (document is SegmentRegion region)
 		{
-			var rootElement = new XElement("data");
-				
-			var areas = selection;
-			var area = areas.FirstOrDefault<XNA.Rectangle>();
+			var area = selection.FirstOrDefault<XNA.Rectangle>();
 
-			var memoryStream = new MemoryStream();
-			var binaryWriter = new BinaryWriter(memoryStream);
-				
+			using var memoryStream = new MemoryStream();
+			using var binaryWriter = new BinaryWriter(memoryStream);
+
 			if (area != default(XNA.Rectangle))
 			{
 				for (int x = area.Left; x < area.Right; x++)
@@ -77,10 +82,44 @@ public class ClipboardManager
 				}
 			}
 
-			memoryStream.Position = 0;
-				
-			Clipboard.SetDataObject(new DataObject("MemoryStream", memoryStream));
+			binaryWriter.Flush();
+
+			Clipboard.SetDataObject(new DataObject(TilesFormat, memoryStream.ToArray()), copy: true);
 		}
+	}
+
+	/// <summary>
+	/// The copied tiles on the clipboard, each with its offset in the copied area, or an empty list when the clipboard
+	/// holds no tiles (text, nothing, or data that can't be read).
+	/// </summary>
+	public static List<(int X, int Y, XElement Tile)> ReadTiles()
+	{
+		var tiles = new List<(int X, int Y, XElement Tile)>();
+
+		if (Clipboard.GetDataObject() is not { } data || !data.GetDataPresent(TilesFormat) || data.GetData(TilesFormat) is not byte[] bytes)
+			return tiles;
+
+		try
+		{
+			using var reader = new BinaryReader(new MemoryStream(bytes));
+
+			while (reader.BaseStream.Position < reader.BaseStream.Length)
+			{
+				var x = reader.ReadInt32();
+				var y = reader.ReadInt32();
+
+				if (reader.ReadBoolean())
+					tiles.Add((x, y, XElement.Parse(reader.ReadString())));
+			}
+		}
+		catch (Exception exception) when (exception is EndOfStreamException or IOException or XmlException)
+		{
+			// clipboard data that doesn't read as tiles pastes nothing rather than half an area
+			Debug.WriteLine($"Clipboard paste: the copied tiles couldn't be read: {exception.Message}");
+			tiles.Clear();
+		}
+
+		return tiles;
 	}
 
 	/// <summary>
@@ -93,20 +132,20 @@ public class ClipboardManager
 
 		if (document is SegmentRegion region && selection.Region.ID==region.ID)
 		{
-			var areas = selection;
-			var area = areas.FirstOrDefault<XNA.Rectangle>();
+			var area = selection.FirstOrDefault<XNA.Rectangle>();
+			var tiles = ReadTiles();
 
-			if (area != default(XNA.Rectangle))
+			if (area != default(XNA.Rectangle) && tiles.Count > 0)
 			{
 				var edit = presenter.History.Begin("Paste");
-				
+
 				if (area is {Width:1,Height:1})
 				{
-					PasteToOne(area, region, edit);
-				} 
+					PasteToOne(area, region, edit, tiles);
+				}
 				else
 				{
-					PasteToMany(area, region, edit);
+					PasteToMany(area, region, edit, tiles);
 				}
 
 				edit.Commit();
@@ -114,51 +153,33 @@ public class ClipboardManager
 		}
 	}
 
+	private static void SetTile(SegmentRegion region, MapEdit edit, int mx, int my, XElement tile)
+	{
+		// each paste gets its own copy of the tile, with its new position
+		var tileElement = new XElement(tile);
+
+		tileElement.SetAttributeValue("x", mx);
+		tileElement.SetAttributeValue("y", my);
+
+		edit.Capture(region, mx, my);
+		region.SetTile(mx, my, new SegmentTile(tileElement));
+	}
+
 	/// <summary>
 	/// Pastes The whole buffer starting at the top left of the current 1x1 selection.
 	/// </summary>
-	private void PasteToOne(XNA.Rectangle area, SegmentRegion region, MapEdit edit)
+	private void PasteToOne(XNA.Rectangle area, SegmentRegion region, MapEdit edit, List<(int X, int Y, XElement Tile)> tiles)
 	{
-		if (Clipboard.GetDataObject() is DataObject data && data.GetDataPresent("MemoryStream")
-		                                                 && data.GetData("MemoryStream") is MemoryStream stream)
-		{
-			stream.Position = 0;
+		foreach (var (x, y, tile) in tiles)
+			SetTile(region, edit, area.Left + x, area.Top + y, tile);
 
-			using (var reader = new BinaryReader(stream))
-			{
-				var ox = area.Left;
-				var oy = area.Top;
-
-				while (stream.Position < stream.Length)
-				{
-					var x = reader.ReadInt32();
-					var y = reader.ReadInt32();
-					var valid = reader.ReadBoolean();
-
-					if (!valid)
-						continue;
-
-					var tileData = reader.ReadString();
-					var tileElement = XElement.Parse(tileData);
-
-					var mx = ox + x;
-					var my = oy + y;
-
-					tileElement.Add(new XAttribute("x", mx));
-					tileElement.Add(new XAttribute("y", my));
-
-					edit.Capture(region, mx, my);
-					region.SetTile(mx, my, new SegmentTile(tileElement));
-				}
-			}
-			region.UpdateTiles();
-		}
+		region.UpdateTiles();
 	}
 
 	/// <summary>
 	/// Tile the buffer until it has filled the current selection
 	/// </summary>
-	private void PasteToMany(XNA.Rectangle area, SegmentRegion region, MapEdit edit)
+	private void PasteToMany(XNA.Rectangle area, SegmentRegion region, MapEdit edit, List<(int X, int Y, XElement Tile)> tiles)
 	{
 		var ox = area.Left; // region to paste into bounded by selection "area"
 		var oy = area.Top;
@@ -171,62 +192,30 @@ public class ClipboardManager
 		var mx = ox; //current tile in paste operation
 		var my = oy;
 
-        var stopwatch = Stopwatch.StartNew();
-        while (cx <= maxx && cy <= maxy)
+		var stopwatch = Stopwatch.StartNew();
+
+		while (cx <= maxx && cy <= maxy)
 		{
-            //paste the buffer, but respect the right and bottom edges
-            try
-            {
-                if (stopwatch.Elapsed.TotalSeconds > 5)
+			//paste the buffer, but respect the right and bottom edges
+			foreach (var (x, y, tile) in tiles)
+			{
+				if (stopwatch.Elapsed.TotalSeconds > 5)
 					break;
-				if (Clipboard.GetDataObject() is DataObject data && data.GetDataPresent("MemoryStream")
-							  && data.GetData("MemoryStream") is MemoryStream stream)
-				{
-					stream.Position = 0;
-					using (var reader = new BinaryReader(stream))
-					{
-						while (stream.Position < stream.Length)
-						{
-							if (stopwatch.Elapsed.TotalSeconds > 5)
-								break;
 
-							var x = reader.ReadInt32();
-							var y = reader.ReadInt32();
-							var valid = reader.ReadBoolean();
+				mx = cx + x;
+				my = cy + y;
 
-							if (!valid)
-								continue;
-
-							var tileData = reader.ReadString();
-							var tileElement = XElement.Parse(tileData);
-
-							mx = cx + x;
-							my = cy + y;
-
-							if (mx <= maxx && my <= maxy)
-							{
-								tileElement.Add(new XAttribute("x", mx));
-								tileElement.Add(new XAttribute("y", my));
-
-								edit.Capture(region, mx, my);
-								region.SetTile(mx, my, new SegmentTile(tileElement));
-							}
-						}
-					}
-				}
-				else
-				{
-					break;
-				}
+				if (mx <= maxx && my <= maxy)
+					SetTile(region, edit, mx, my, tile);
 			}
-			catch (Exception ex)
-            {
-                // Optionally log or handle the exception as needed
-                System.Diagnostics.Debug.WriteLine($"Clipboard paste error: {ex}");
-            }
-            if (mx < maxx) { cx = mx + 1; } // if there's space to the right, move our target and run again
-            else { cx = ox; cy = my + 1; } // if we've reached the end horizontally, move down and return to origin x. If this moves us below our selection, the loop will stop.
+
+			if (stopwatch.Elapsed.TotalSeconds > 5)
+				break;
+
+			if (mx < maxx) { cx = mx + 1; } // if there's space to the right, move our target and run again
+			else { cx = ox; cy = my + 1; } // if we've reached the end horizontally, move down and return to origin x. If this moves us below our selection, the loop will stop.
 		}
+
 		region.UpdateTiles();
 	}
 	#endregion
