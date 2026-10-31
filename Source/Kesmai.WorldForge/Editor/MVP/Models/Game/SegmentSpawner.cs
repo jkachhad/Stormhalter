@@ -75,6 +75,8 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 	private Script AfterSpawnScript => _scripts.First(s => s.Name == "OnAfterSpawn");
 
+	private Script BeforeSpawnScript => _scripts.First(s => s.Name == "OnBeforeSpawn");
+
 	private SpawnTimeWindow CurrentSpawnTime
 	{
 		get
@@ -90,6 +92,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 		change(window);
 		window.Apply(AfterSpawnScript);
+		window.ApplyHold(BeforeSpawnScript);
 
 		if (window.IsAlways)
 			_unsavedSpawnTime = window;
@@ -325,6 +328,49 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 			SyncKillCounter(enemy);
 	}
 
+	/// <summary>
+	/// Puts the counters right when a segment opens: each entity a spawner waits on gets a counter under its own name,
+	/// and a counter no spawner needs (one copied along with an entity, for example) is taken out.
+	/// </summary>
+	/// <returns>The entities whose OnDeath changed.</returns>
+	public static List<SegmentEntity> SyncKillCounters(IEnumerable<SegmentEntity> entities, IEnumerable<SegmentSpawner> spawners)
+	{
+		var needed = spawners
+			.Select(s => SpawnTimeWindow.Read(s.AfterSpawnScript))
+			.Where(w => w.UseKills && !String.IsNullOrWhiteSpace(w.KillEnemy))
+			.Select(w => w.KillEnemy.Trim())
+			.ToHashSet(StringComparer.Ordinal);
+		var changed = new List<SegmentEntity>();
+
+		foreach (var entity in entities)
+		{
+			var onDeath = entity.Scripts.FirstOrDefault(s => s.Name == "OnDeath");
+
+			if (onDeath is null)
+				continue;
+
+			if (needed.Contains(entity.Name))
+			{
+				if (KillCountHook.IsInstalledFor(onDeath, entity.Name))
+					continue;
+
+				KillCountHook.Install(onDeath, entity.Name);
+			}
+			else if (KillCountHook.HasCounter(onDeath))
+			{
+				KillCountHook.Remove(onDeath);
+			}
+			else
+			{
+				continue;
+			}
+
+			changed.Add(entity);
+		}
+
+		return changed;
+	}
+
 	/// <summary>Adds the counter to the enemy's OnDeath while a spawner in the segment needs it, and takes it out once none does.</summary>
 	private void SyncKillCounter(string enemy)
 	{
@@ -338,9 +384,10 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 
 		var spawners = segment.Spawns.Location.Cast<SegmentSpawner>().Concat(segment.Spawns.Region).Append(this).Distinct();
 		var needed = spawners.Any(s => s.CurrentSpawnTime is { UseKills: true } w && String.Equals(w.KillEnemy.Trim(), enemy.Trim(), StringComparison.Ordinal));
-		var installed = KillCountHook.IsInstalled(onDeath);
+		// a counter under another name (copied along with the entity) counts as not installed, and is replaced
+		var installed = KillCountHook.IsInstalledFor(onDeath, enemy);
 
-		if (needed == installed)
+		if (needed == installed && (needed || !KillCountHook.HasCounter(onDeath)))
 			return;
 
 		if (needed)
@@ -375,7 +422,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	[Category("Spawn after kills")]
 	[DisplayName("Kills needed")]
 	[PropertyOrder(2)]
-	[Description("How many of the enemy must die before each spawn. After a spawn the count starts again, so the next spawn needs this many more kills.")]
+	[Description("How many of the enemy must die to release a wave: the spawner then spawns until it has its entries' minimum. After that the count starts again, so the next wave needs this many more kills.")]
 	public int KillsNeeded
 	{
 		get => CurrentSpawnTime.KillsNeeded;
@@ -390,6 +437,16 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	{
 		get => CurrentSpawnTime.KillsInRegion ? KillCountArea.Region : KillCountArea.Segment;
 		set => ChangeKills(w => w.KillsInRegion = value == KillCountArea.Region);
+	}
+
+	[Category("Spawn after kills")]
+	[DisplayName("Hold spawner until kills")]
+	[PropertyOrder(4)]
+	[Description("Experimental, off by default. Once a wave is out, or a spawn is blocked for want of kills, this spawner is stopped, so it makes nothing that would be removed (the brief flash). A timer checks for the kills every 3 seconds, then starts the spawner and spawns the wave. Expect one flash after a restart, when the spawner first checks.")]
+	public bool HoldSpawner
+	{
+		get => CurrentSpawnTime.HoldSpawner;
+		set => ChangeSpawnTime(w => w.HoldSpawner = value);
 	}
 
 	// Sound on spawn: also kept in the OnAfterSpawn script (see SpawnSound), remembered here while it is off.
@@ -520,7 +577,10 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		var spawnTime = SpawnTimeWindow.Read(AfterSpawnScript);
 
 		if (!spawnTime.IsAlways)
+		{
 			spawnTime.Apply(AfterSpawnScript);
+			spawnTime.ApplyHold(BeforeSpawnScript);
+		}
 	}
 	
 	protected SegmentSpawner()

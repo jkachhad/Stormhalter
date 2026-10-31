@@ -44,6 +44,12 @@ public class SpawnTimeWindow
 	/// <summary>With UseKills: count only deaths in the spawner's region, rather than anywhere in the segment.</summary>
 	public bool KillsInRegion { get; set; }
 
+	/// <summary>
+	/// With UseKills, experimental: OnBeforeSpawn stops the spawner while the kills aren't met and starts it again a few
+	/// seconds later, so it doesn't make creatures that would only be removed.
+	/// </summary>
+	public bool HoldSpawner { get; set; }
+
 	/// <summary>No condition is on, so the spawner works as normal and nothing is written.</summary>
 	public bool IsAlways => !UsePhases && !UseClock && !UseTimes && !UseKills;
 	public HashSet<string> AllowedPhases { get; } = new(StringComparer.OrdinalIgnoreCase);
@@ -64,7 +70,7 @@ public class SpawnTimeWindow
 
 	public SpawnTimeWindow Clone()
 	{
-		var copy = new SpawnTimeWindow { UsePhases = UsePhases, UseClock = UseClock, UseTimes = UseTimes, UseKills = UseKills, KillEnemy = KillEnemy, KillsNeeded = KillsNeeded, KillsInRegion = KillsInRegion, From = From, Until = Until, RemoveAll = RemoveAll, WindowMinutes = WindowMinutes, PerTime = PerTime };
+		var copy = new SpawnTimeWindow { UsePhases = UsePhases, UseClock = UseClock, UseTimes = UseTimes, UseKills = UseKills, KillEnemy = KillEnemy, KillsNeeded = KillsNeeded, KillsInRegion = KillsInRegion, HoldSpawner = HoldSpawner, From = From, Until = Until, RemoveAll = RemoveAll, WindowMinutes = WindowMinutes, PerTime = PerTime };
 		copy.AllowedPhases.UnionWith(AllowedPhases);
 		copy.Times.AddRange(Times);
 		return copy;
@@ -130,6 +136,9 @@ public class SpawnTimeWindow
 				case "killsIn":
 					window.KillsInRegion = value == "region";
 					break;
+				case "hold":
+					window.HoldSpawner = value == "true";
+					break;
 			}
 		}
 
@@ -168,9 +177,11 @@ public class SpawnTimeWindow
 		var used = new[] { UsePhases ? "phases" : null, UseClock ? "clock" : null, UseTimes ? "times" : null, UseKills ? "kills" : null }.Where(u => u != null);
 		var settings = $"use={String.Join(",", used)}; phases={String.Join(",", phases)}; from={From:hh\\:mm}; until={Until:hh\\:mm}; removeAll={(RemoveAll ? "true" : "false")}"
 		               + $"; times={FormatTimes(Times).Replace(" ", String.Empty)}; window={WindowMinutes}; perTime={PerTime}"
-		               + $"; enemy={Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(KillEnemy))}; kills={KillsNeeded}; killsIn={(KillsInRegion ? "region" : "segment")}";
+		               + $"; enemy={Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(KillEnemy))}; kills={KillsNeeded}; killsIn={(KillsInRegion ? "region" : "segment")}"
+		               + (Holds ? "; hold=true" : String.Empty);
 		// removed on the next tick: the server is still working with the new spawn when OnAfterSpawn runs, and deleting it
-		// there throws inside Spawner.Spawn and crashes the server
+		// there throws inside Spawner.Spawn and crashes the server. It isn't made invisible first: on the server, an
+		// invisible spawn wasn't removed, and blocked spawns piled up
 		var remove = RemoveAll
 			? "Timer.DelayCall(() => spawner.Despawn()); /* remove everything this spawner made, once it has finished spawning */"
 			: "Timer.DelayCall(() => spawn.Delete()); /* remove the new spawn, once the spawner has finished with it */";
@@ -232,8 +243,61 @@ public class SpawnTimeWindow
 			lines.Add("\t\tkillsUsed.Set<int>(killKey, killsFrom);");
 			lines.Add("\t}");
 			lines.Add(String.Empty);
-			lines.Add($"\tif (killCount - killsFrom < {Math.Max(1, KillsNeeded)})");
+
+			lines.Add(String.Empty);
+			// the kills release one wave, spawned all at once below; it is open only while that fill runs (with a time
+			// limit, so a restart in the middle can't leave it open), so creatures killed later need new kills
+			lines.Add("\t// a wave the kills released is open only while it is being spawned");
+			lines.Add("\tvar waveKey = killKey + \":release\";");
+			lines.Add("\tvar waveOpen = Int64.TryParse(killsUsed.Get<string>(waveKey, \"\"), out var openUntil) && DateTime.UtcNow.Ticks < openUntil;");
+			lines.Add($"\tvar killsMet = waveOpen || killCount - killsFrom >= {Math.Max(1, KillsNeeded)};");
+			lines.Add(String.Empty);
+			lines.Add("\tif (!killsMet)");
 			lines.Add("\t\tallowed = false;");
+
+			if (Holds)
+			{
+				// Stopping the spawner in OnBeforeSpawn doesn't cancel the spawn already under way (Tim's server), but a
+				// stopped spawner tries no more (Keshma stops its Yasnaki spawners on a boss's death). So while the kills
+				// aren't met the spawner is stopped, and a timer watches for them, then starts it and spawns the wave
+				lines.Add(String.Empty);
+				lines.Add("\t// Hold spawner until kills: stopped while the kills aren't met, with a timer watching for them");
+				lines.Add("\tAction holdSpawner = () =>");
+				lines.Add("\t{");
+				lines.Add("\t\tspawner.Stop();");
+				lines.Add(String.Empty);
+				lines.Add("\t\t// one watcher at a time; one that stopped (a restart) is replaced");
+				lines.Add("\t\tif (Int64.TryParse(killsUsed.Get<string>(\"watch\", \"\"), out var seen) && DateTime.UtcNow.Ticks - seen < TimeSpan.FromSeconds(10).Ticks)");
+				lines.Add("\t\t\treturn;");
+				lines.Add(String.Empty);
+				lines.Add("\t\tAction watch = null;");
+				lines.Add("\t\twatch = () =>");
+				lines.Add("\t\t{");
+				lines.Add("\t\t\tif (!spawner.Enabled)");
+				lines.Add("\t\t\t{");
+				lines.Add("\t\t\t\tkillsUsed.Set<string>(\"watch\", \"\");");
+				lines.Add("\t\t\t\treturn;");
+				lines.Add("\t\t\t}");
+				lines.Add(String.Empty);
+				lines.Add($"\t\t\tif (killCounts.Get<int>(killKey, 0) - killsUsed.Get<int>(killKey, 0) >= {Math.Max(1, KillsNeeded)})");
+				lines.Add("\t\t\t{");
+				lines.Add("\t\t\t\tkillsUsed.Set<string>(\"watch\", \"\");");
+				lines.Add(String.Empty);
+				lines.Add("\t\t\t\tif (!spawner.IsRunning)");
+				lines.Add("\t\t\t\t\tspawner.Start();");
+				lines.Add(String.Empty);
+				lines.Add("\t\t\t\tspawner.Spawn(); /* opens the wave, which spawns the rest */");
+				lines.Add("\t\t\t\treturn;");
+				lines.Add("\t\t\t}");
+				lines.Add(String.Empty);
+				lines.Add("\t\t\tkillsUsed.Set<string>(\"watch\", DateTime.UtcNow.Ticks.ToString());");
+				lines.Add("\t\t\tTimer.DelayCall(TimeSpan.FromSeconds(3), watch);");
+				lines.Add("\t\t};");
+				lines.Add(String.Empty);
+				lines.Add("\t\tkillsUsed.Set<string>(\"watch\", DateTime.UtcNow.Ticks.ToString());");
+				lines.Add("\t\tTimer.DelayCall(TimeSpan.FromSeconds(3), watch);");
+				lines.Add("\t};");
+			}
 		}
 
 		if (UseTimes)
@@ -274,14 +338,52 @@ public class SpawnTimeWindow
 		lines.Add("\tif (!allowed)");
 		lines.Add("\t{");
 		lines.Add($"\t\t{remove}");
+
+		// held only when the kills are what blocks it; a closed time window would otherwise restart it every few seconds
+		if (Holds)
+		{
+			lines.Add(String.Empty);
+			lines.Add("\t\tif (!killsMet)");
+			lines.Add("\t\t\tTimer.DelayCall(() => holdSpawner());");
+			lines.Add(String.Empty);
+		}
+
 		lines.Add("\t\treturn;");
 		lines.Add("\t}");
 
 		if (UseKills)
 		{
-			// this spawn used the kills up; the next one needs as many again, counted from now
+			// opening a wave uses the kills up; the next wave needs as many again, counted from now. The server spawns one
+			// group a tick, so the rest of the wave is spawned straight away with spawner.Spawn(), from a timer the way
+			// Keshma's Water Drake Trap calls it. The spawner's entries hold its live groups; the new spawn's may not be
+			// among them yet
 			lines.Add(String.Empty);
-			lines.Add("\tkillsUsed.Set<int>(killKey, killCount);");
+			lines.Add("\t// this spawn opens a wave: the rest of it is spawned straight away, then the wave closes");
+			lines.Add("\tif (!waveOpen)");
+			lines.Add("\t{");
+			lines.Add("\t\tkillsUsed.Set<int>(killKey, killCount);");
+			lines.Add(String.Empty);
+			lines.Add("\t\tvar others = spawner.Sum(entry => entry.Count) - (spawner.Any(entry => entry.Contains(spawn.Group)) ? 1 : 0);");
+			lines.Add("\t\tvar more = spawner.Sum(entry => entry.Minimum) - others - 1;");
+			lines.Add(String.Empty);
+			lines.Add("\t\tkillsUsed.Set<string>(waveKey, DateTime.UtcNow.AddSeconds(30).Ticks.ToString());");
+			lines.Add(String.Empty);
+			lines.Add("\t\tTimer.DelayCall(() =>");
+			lines.Add("\t\t{");
+			lines.Add("\t\t\tfor (var i = 0; i < more; i++)");
+			lines.Add("\t\t\t{");
+			lines.Add("\t\t\t\tif (!spawner.Spawn())");
+			lines.Add("\t\t\t\t\tbreak;");
+			lines.Add("\t\t\t}");
+			lines.Add(String.Empty);
+			lines.Add("\t\t\tkillsUsed.Set<string>(waveKey, \"\");");
+
+			// a held spawner stops again once its wave is out, so it makes nothing more until the next kills
+			if (Holds)
+				lines.Add("\t\t\tholdSpawner();");
+
+			lines.Add("\t\t});");
+			lines.Add("\t}");
 		}
 
 		lines.Add("}");
@@ -292,6 +394,20 @@ public class SpawnTimeWindow
 
 	/// <summary>Writes the window into the script, replacing any earlier block and leaving the rest of the script as it was.</summary>
 	public void Apply(Script script) => Compose(script, ToBlock(), SpawnBroadcast.Read(script).ToBlock(), SpawnSound.Read(script).ToBlock());
+
+	/// <summary>Hold spawner until kills is on, and has kills to wait for.</summary>
+	private bool Holds => UseKills && HoldSpawner;
+
+	/// <summary>
+	/// Takes out the OnBeforeSpawn block an earlier Hold spawner until kills wrote, leaving the rest of the script exactly
+	/// as it was. Stopping the spawner there didn't cancel the spawn already under way, so the hold now lives in the
+	/// OnAfterSpawn block, and OnBeforeSpawn is left alone.
+	/// </summary>
+	public void ApplyHold(Script beforeSpawn)
+	{
+		if (beforeSpawn.Body.Contains("// worldforge-spawn-hold:"))
+			ScriptBlocks.Write(beforeSpawn, []);
+	}
 
 	/// <summary>
 	/// Writes the spawn time block, then the broadcast block, at the top of the script, above the script's own code.
