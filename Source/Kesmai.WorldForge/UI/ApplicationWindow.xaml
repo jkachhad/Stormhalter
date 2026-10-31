@@ -138,6 +138,16 @@
         <!-- the Project list's sections as buttons: one with contents opens a grid of them to pick from -->
         <ToolBarTray Grid.Row="1" x:Name="_segmentToolbarTray" Background="#FFEEEEEE" Visibility="Collapsed">
             <ToolBar x:Name="_segmentToolbar" OverflowMode="AsNeeded" />
+
+            <!-- the region being edited and the tile under the mouse -->
+            <ToolBar x:Name="_regionInfo" Visibility="Collapsed" ToolTip="The region open in the editor, and the tile under the mouse">
+                <TextBlock FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="8,0">
+                    <Run Text="Region" />
+                    <Run Text="{Binding ActiveDocument.ID, Mode=OneWay, FallbackValue=''}" />
+                    <Run Text="  " />
+                    <Run Text="{Binding TileCoordinateDisplay, Mode=OneWay}" />
+                </TextBlock>
+            </ToolBar>
         </ToolBarTray>
 
         <DockingManager x:Name="_dockingManager" Grid.Row="2"

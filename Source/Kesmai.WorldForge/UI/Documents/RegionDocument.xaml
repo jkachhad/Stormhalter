@@ -99,14 +99,7 @@
             </ToolBar>
         </ToolBarTray>
 
-        <!-- the region and the tile under the mouse, centered over the toolbars; clicks pass through to them -->
-        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   FontWeight="Bold" FontSize="16" IsHitTestVisible="False">
-            <Run Text="Region" />
-            <Run Text="{Binding ID, Mode=OneWay}" />
-            <Run Text="  " />
-            <Run Text="{Binding TileCoordinateDisplay, Source={StaticResource applicationPresenter}, Mode=OneWay}" />
-        </TextBlock>
+        <!-- the region and the tile under the mouse are on the main toolbar -->
 
         <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" BorderThickness="1">
             <worldForge:RegionPresentationTarget Region="{Binding}" x:Name="_presenter" />
