@@ -99,8 +99,23 @@
                 <Separator />
                 <MenuItem Header="Show _all panels" Click="OnShowPanel" Tag="All" />
                 <Separator />
+                <!-- the color of WorldForge's windows and its large white areas -->
+                <MenuItem Header="Program _background">
+                    <MenuItem Header="Default" Click="OnProgramBackground" Tag="Default" />
+                    <Separator />
+                    <MenuItem Header="White" Click="OnProgramBackground" Tag="#FFFFFFFF" />
+                    <MenuItem Header="Light gray" Click="OnProgramBackground" Tag="#FFDDDDDD" />
+                    <MenuItem Header="Gray" Click="OnProgramBackground" Tag="#FF9A9A9A" />
+                    <MenuItem Header="Dark gray" Click="OnProgramBackground" Tag="#FF3C3C3C" />
+                    <MenuItem Header="Black" Click="OnProgramBackground" Tag="#FF1A1A1A" />
+                    <MenuItem Header="Parchment" Click="OnProgramBackground" Tag="#FFF1E4C3" />
+                    <MenuItem Header="Slate blue" Click="OnProgramBackground" Tag="#FF3B4A6B" />
+                    <MenuItem Header="Forest green" Click="OnProgramBackground" Tag="#FF2F4F2F" />
+                    <Separator />
+                    <MenuItem Header="_Custom..." Click="OnProgramBackground" Tag="Custom" />
+                </MenuItem>
                 <!-- the color behind the palette's tiles and category list -->
-                <MenuItem Header="Palette _background">
+                <MenuItem Header="_Palette background">
                     <MenuItem Header="White" Click="OnPaletteBackground" Tag="#FFFFFFFF" />
                     <MenuItem Header="Light gray" Click="OnPaletteBackground" Tag="#FFDDDDDD" />
                     <MenuItem Header="Gray" Click="OnPaletteBackground" Tag="#FF9A9A9A" />

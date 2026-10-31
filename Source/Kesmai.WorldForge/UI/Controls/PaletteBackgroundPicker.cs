@@ -6,35 +6,56 @@ using Xceed.Wpf.Toolkit;
 
 namespace Kesmai.WorldForge.UI;
 
-/// <summary>Sets the palette's background color from the View menu, with a color picker for Custom.</summary>
+/// <summary>Sets the palette's or the whole program's background color from the View menu, with a color picker for Custom.</summary>
 public static class PaletteBackgroundPicker
 {
+	/// <summary>View > Palette background.</summary>
 	public static void Apply(string choice, Window owner)
 	{
-		Color color;
+		var before = ComponentPaletteSettings.Background;
+		var color = choice == "Custom"
+			? Pick(owner, "Palette background", before, live => ComponentPaletteSettings.Background = live)
+			: (Color)ColorConverter.ConvertFromString(choice);
 
-		if (choice == "Custom")
+		if (color is null)
 		{
-			if (Pick(owner) is not { } picked)
-				return;
-
-			color = picked;
-		}
-		else
-		{
-			color = (Color)ColorConverter.ConvertFromString(choice);
+			ComponentPaletteSettings.Background = before;
+			return;
 		}
 
-		ComponentPaletteSettings.Background = color;
+		ComponentPaletteSettings.Background = color.Value;
 		ComponentPaletteSettings.Save();
 	}
 
-	/// <summary>A small window with a color canvas, starting at the current color; null when cancelled.</summary>
-	private static Color? Pick(Window owner)
+	/// <summary>View > Program background; Default puts WorldForge's own look back.</summary>
+	public static void ApplyProgram(string choice, Window owner)
+	{
+		if (choice == "Default")
+		{
+			ProgramTheme.Apply(null);
+			return;
+		}
+
+		var before = ProgramTheme.Background;
+		var color = choice == "Custom"
+			? Pick(owner, "Program background", before ?? Color.FromRgb(0xDD, 0xDD, 0xDD), live => ProgramTheme.Apply(live, save: false))
+			: (Color)ColorConverter.ConvertFromString(choice);
+
+		if (color is null)
+		{
+			ProgramTheme.Apply(before, save: false);
+			return;
+		}
+
+		ProgramTheme.Apply(color.Value);
+	}
+
+	/// <summary>A small window with a color canvas; the color shows live while picked. Null when cancelled.</summary>
+	private static Color? Pick(Window owner, string title, Color start, Action<Color> preview)
 	{
 		var canvas = new ColorCanvas
 		{
-			SelectedColor = ComponentPaletteSettings.Background,
+			SelectedColor = start,
 			UsingAlphaChannel = false,
 			Margin = new Thickness(8),
 		};
@@ -52,7 +73,7 @@ public static class PaletteBackgroundPicker
 
 		var window = new Window
 		{
-			Title = "Palette background",
+			Title = title,
 			Content = layout,
 			Owner = owner,
 			SizeToContent = SizeToContent.WidthAndHeight,
@@ -61,20 +82,16 @@ public static class PaletteBackgroundPicker
 			ShowInTaskbar = false,
 		};
 
-		// the palette shows the color while it is being picked, and goes back if cancelled
-		var before = ComponentPaletteSettings.Background;
 		canvas.SelectedColorChanged += (_, _) =>
 		{
 			if (canvas.SelectedColor is { } live)
-				ComponentPaletteSettings.Background = live;
+				preview(Color.FromRgb(live.R, live.G, live.B));
 		};
 
 		ok.Click += (_, _) => window.DialogResult = true;
 
-		if (window.ShowDialog() == true && canvas.SelectedColor is { } chosen)
-			return Color.FromRgb(chosen.R, chosen.G, chosen.B);
-
-		ComponentPaletteSettings.Background = before;
-		return null;
+		return window.ShowDialog() == true && canvas.SelectedColor is { } chosen
+			? Color.FromRgb(chosen.R, chosen.G, chosen.B)
+			: null;
 	}
 }
