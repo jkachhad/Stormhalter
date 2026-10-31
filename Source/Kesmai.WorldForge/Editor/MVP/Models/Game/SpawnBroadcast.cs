@@ -129,5 +129,5 @@ public class SpawnBroadcast
 	}
 
 	/// <summary>Writes the broadcast into the script, after any spawn time block and above the script's own code.</summary>
-	public void Apply(Script script) => SpawnTimeWindow.Compose(script, SpawnTimeWindow.Read(script).ToBlock(), ToBlock());
+	public void Apply(Script script) => SpawnTimeWindow.Compose(script, SpawnTimeWindow.Read(script).ToBlock(), ToBlock(), SpawnSound.Read(script).ToBlock());
 }

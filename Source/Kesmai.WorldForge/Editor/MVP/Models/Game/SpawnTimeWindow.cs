@@ -234,17 +234,17 @@ public class SpawnTimeWindow
 	}
 
 	/// <summary>Writes the window into the script, replacing any earlier block and leaving the rest of the script as it was.</summary>
-	public void Apply(Script script) => Compose(script, ToBlock(), SpawnBroadcast.Read(script).ToBlock());
+	public void Apply(Script script) => Compose(script, ToBlock(), SpawnBroadcast.Read(script).ToBlock(), SpawnSound.Read(script).ToBlock());
 
 	/// <summary>
 	/// Writes the spawn time block, then the broadcast block, at the top of the script, above the script's own code.
 	/// With neither, the script goes back to just its own code.
 	/// </summary>
-	internal static void Compose(Script script, string timeBlock, string broadcastBlock)
+	internal static void Compose(Script script, string timeBlock, string broadcastBlock, string soundBlock)
 	{
 		var nl = Environment.NewLine;
-		var rest = RemoveBlock(RemoveBlock(script.Body, Begin, End), SpawnBroadcast.Begin, SpawnBroadcast.End).Trim('\r', '\n');
-		var block = String.Join(nl + nl, new[] { timeBlock, broadcastBlock }.Where(b => b.Length > 0));
+		var rest = RemoveBlock(RemoveBlock(RemoveBlock(script.Body, Begin, End), SpawnBroadcast.Begin, SpawnBroadcast.End), SpawnSound.Begin, SpawnSound.End).Trim('\r', '\n');
+		var block = String.Join(nl + nl, new[] { timeBlock, broadcastBlock, soundBlock }.Where(b => b.Length > 0));
 
 		if (block.Length == 0)
 		{
