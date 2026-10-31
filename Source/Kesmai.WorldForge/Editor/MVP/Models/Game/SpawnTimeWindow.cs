@@ -21,8 +21,6 @@ public class SpawnTimeWindow
 
 	private const string Begin = "// worldforge-spawn-time:";
 	private const string End = "// end worldforge-spawn-time";
-	private const string KeptOpen = "#if false // WorldForge: this code was in a disabled script; Spawn time enabled the script";
-	private const string KeptClose = "#endif // WorldForge";
 
 	/// <summary>Only during the ticked in-game light phases.</summary>
 	public bool UsePhases { get; set; }
@@ -34,7 +32,20 @@ public class SpawnTimeWindow
 	public bool UseTimes { get; set; }
 
 	/// <summary>No condition is on, so the spawner works as normal and nothing is written.</summary>
-	public bool IsAlways => !UsePhases && !UseClock && !UseTimes;
+	/// <summary>Only once enough of an enemy have been killed since the last spawn.</summary>
+	public bool UseKills { get; set; }
+
+	/// <summary>With UseKills: the entity whose deaths count.</summary>
+	public string KillEnemy { get; set; } = String.Empty;
+
+	/// <summary>With UseKills: how many deaths it takes.</summary>
+	public int KillsNeeded { get; set; } = 10;
+
+	/// <summary>With UseKills: count only deaths in the spawner's region, rather than anywhere in the segment.</summary>
+	public bool KillsInRegion { get; set; }
+
+	/// <summary>No condition is on, so the spawner works as normal and nothing is written.</summary>
+	public bool IsAlways => !UsePhases && !UseClock && !UseTimes && !UseKills;
 	public HashSet<string> AllowedPhases { get; } = new(StringComparer.OrdinalIgnoreCase);
 	public TimeSpan From { get; set; } = new(20, 0, 0);
 	public TimeSpan Until { get; set; } = new(2, 0, 0);
@@ -53,7 +64,7 @@ public class SpawnTimeWindow
 
 	public SpawnTimeWindow Clone()
 	{
-		var copy = new SpawnTimeWindow { UsePhases = UsePhases, UseClock = UseClock, UseTimes = UseTimes, From = From, Until = Until, RemoveAll = RemoveAll, WindowMinutes = WindowMinutes, PerTime = PerTime };
+		var copy = new SpawnTimeWindow { UsePhases = UsePhases, UseClock = UseClock, UseTimes = UseTimes, UseKills = UseKills, KillEnemy = KillEnemy, KillsNeeded = KillsNeeded, KillsInRegion = KillsInRegion, From = From, Until = Until, RemoveAll = RemoveAll, WindowMinutes = WindowMinutes, PerTime = PerTime };
 		copy.AllowedPhases.UnionWith(AllowedPhases);
 		copy.Times.AddRange(Times);
 		return copy;
@@ -87,6 +98,7 @@ public class SpawnTimeWindow
 					window.UsePhases = used.Contains("phases");
 					window.UseClock = used.Contains("clock");
 					window.UseTimes = used.Contains("times");
+					window.UseKills = used.Contains("kills");
 					break;
 				case "phases":
 					window.AllowedPhases.UnionWith(value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Where(p => Phases.Contains(p)));
@@ -108,6 +120,15 @@ public class SpawnTimeWindow
 					break;
 				case "perTime" when Int32.TryParse(value, out var count):
 					window.PerTime = count;
+					break;
+				case "enemy":
+					try { window.KillEnemy = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(value)); } catch (FormatException) { }
+					break;
+				case "kills" when Int32.TryParse(value, out var kills):
+					window.KillsNeeded = kills;
+					break;
+				case "killsIn":
+					window.KillsInRegion = value == "region";
 					break;
 			}
 		}
@@ -144,9 +165,10 @@ public class SpawnTimeWindow
 
 		var nl = Environment.NewLine;
 		var phases = Phases.Where(AllowedPhases.Contains).ToList();
-		var used = new[] { UsePhases ? "phases" : null, UseClock ? "clock" : null, UseTimes ? "times" : null }.Where(u => u != null);
+		var used = new[] { UsePhases ? "phases" : null, UseClock ? "clock" : null, UseTimes ? "times" : null, UseKills ? "kills" : null }.Where(u => u != null);
 		var settings = $"use={String.Join(",", used)}; phases={String.Join(",", phases)}; from={From:hh\\:mm}; until={Until:hh\\:mm}; removeAll={(RemoveAll ? "true" : "false")}"
-		               + $"; times={FormatTimes(Times).Replace(" ", String.Empty)}; window={WindowMinutes}; perTime={PerTime}";
+		               + $"; times={FormatTimes(Times).Replace(" ", String.Empty)}; window={WindowMinutes}; perTime={PerTime}"
+		               + $"; enemy={Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(KillEnemy))}; kills={KillsNeeded}; killsIn={(KillsInRegion ? "region" : "segment")}";
 		var remove = RemoveAll ? "spawner.Despawn(); /* remove everything this spawner made */" : "spawn.Delete(); /* remove the new spawn */";
 
 		var lines = new List<string>
@@ -184,6 +206,19 @@ public class SpawnTimeWindow
 			lines.Add("\tvar timeOfDay = DateTime.Now.TimeOfDay;");
 			lines.Add(String.Empty);
 			lines.Add($"\tif (!({test}))");
+			lines.Add("\t\tallowed = false;");
+		}
+
+		if (UseKills)
+		{
+			// the enemy's OnDeath counts its deaths in Storage (see KillCountHook); this spawner remembers the count it last used
+			lines.Add(String.Empty);
+			lines.Add("\t// kills of an enemy since this spawner last spawned");
+			lines.Add($"\tvar killKey = {KillCountHook.CounterKey(KillEnemy, KillsInRegion ? "spawn.RegionIndex" : null)};");
+			lines.Add($"\tvar killCounts = Storage.Get({KillCountHook.Literal(KillCountHook.StorageName)});");
+			lines.Add("\tvar killsUsed = Storage.Get(\"WorldForge:KillsUsed:\" + spawner.Name);");
+			lines.Add(String.Empty);
+			lines.Add($"\tif (killCounts.Get<int>(killKey, 0) - killsUsed.Get<int>(killKey, 0) < {Math.Max(1, KillsNeeded)})");
 			lines.Add("\t\tallowed = false;");
 		}
 
@@ -227,6 +262,14 @@ public class SpawnTimeWindow
 		lines.Add($"\t\t{remove}");
 		lines.Add("\t\treturn;");
 		lines.Add("\t}");
+
+		if (UseKills)
+		{
+			// this spawn used the kills up; the next one needs as many again, counted from now
+			lines.Add(String.Empty);
+			lines.Add("\tkillsUsed.Set<int>(killKey, killCounts.Get<int>(killKey, 0));");
+		}
+
 		lines.Add("}");
 		lines.Add(End);
 
@@ -241,53 +284,5 @@ public class SpawnTimeWindow
 	/// With neither, the script goes back to just its own code.
 	/// </summary>
 	internal static void Compose(Script script, string timeBlock, string broadcastBlock, string soundBlock)
-	{
-		var nl = Environment.NewLine;
-		var rest = RemoveBlock(RemoveBlock(RemoveBlock(script.Body, Begin, End), SpawnBroadcast.Begin, SpawnBroadcast.End), SpawnSound.Begin, SpawnSound.End).Trim('\r', '\n');
-		var block = String.Join(nl + nl, new[] { timeBlock, broadcastBlock, soundBlock }.Where(b => b.Length > 0));
-
-		if (block.Length == 0)
-		{
-			// code that was only kept switched off goes back to a switched-off script
-			if (rest.StartsWith(KeptOpen) && rest.EndsWith(KeptClose))
-			{
-				script.Body = rest.Substring(KeptOpen.Length, rest.Length - KeptOpen.Length - KeptClose.Length).Trim('\r', '\n');
-				script.IsEnabled = false;
-				return;
-			}
-
-			script.Body = rest;
-
-			if (rest.Trim().Length == 0)
-				script.IsEnabled = false;
-
-			return;
-		}
-
-		// the block only runs in an enabled script; code the script held while switched off stays switched off
-		if (!script.IsEnabled && rest.Trim().Length > 0 && !rest.StartsWith(KeptOpen))
-			rest = KeptOpen + nl + rest + nl + KeptClose;
-
-		script.Body = rest.Length == 0 ? block : block + nl + nl + rest;
-		script.IsEnabled = true;
-	}
-
-	/// <summary>The script without one of the marked blocks.</summary>
-	private static string RemoveBlock(string body, string begin, string end)
-	{
-		var lines = body.Replace("\r\n", "\n").Split('\n').ToList();
-		var start = lines.FindIndex(l => l.Trim().StartsWith(begin));
-
-		if (start < 0)
-			return body;
-
-		var last = lines.FindIndex(start, l => l.Trim() == end);
-
-		if (last < 0)
-			return body;
-
-		lines.RemoveRange(start, last - start + 1);
-
-		return String.Join(Environment.NewLine, lines);
-	}
+		=> ScriptBlocks.Write(script, [timeBlock, broadcastBlock, soundBlock]);
 }
