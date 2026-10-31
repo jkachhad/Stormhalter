@@ -92,6 +92,9 @@ public partial class Core : Application
 	protected override void OnStartup(StartupEventArgs e)
 	{
 		Version = Assembly.GetExecutingAssembly().GetName().Version;
+
+		// View > Program background, as it was left
+		UI.ProgramTheme.LoadSaved();
 		
 		_storageDirectory = new DirectoryInfo(StoragePath);
 			
