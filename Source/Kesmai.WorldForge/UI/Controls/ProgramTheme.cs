@@ -135,6 +135,9 @@ public static class ProgramTheme
 		foreach (var window in Application.Current.Windows.OfType<Window>())
 			Paint(window);
 
+		// a text color picked in View > Font stays over this one
+		ProgramFont.ReapplyColor();
+
 		if (save)
 			Save();
 	}
@@ -142,17 +145,24 @@ public static class ProgramTheme
 	private static void Paint(Window window)
 	{
 		// the window's own color is remembered the first time, so Default puts it back
-		var original = _originals.GetValue(window, w => new ThemeOriginal(w.ReadLocalValue(Control.BackgroundProperty), w.ReadLocalValue(Control.ForegroundProperty)));
+		// a text color View > Font set isn't the window's own; the one from before it is
+		var original = _originals.GetValue(window, w => new ThemeOriginal(w.ReadLocalValue(Control.BackgroundProperty),
+			ProgramFont.TryGetOriginalForeground(w, out var beforeFont) ? beforeFont : w.ReadLocalValue(Control.ForegroundProperty)));
 
 		if (Background is { } chosen)
 		{
 			window.Background = Frozen(chosen);
 			window.Foreground = IsDark(chosen) ? Brushes.White : Brushes.Black;
-			return;
+		}
+		else
+		{
+			Restore(window, Control.BackgroundProperty, original.Background);
+			Restore(window, Control.ForegroundProperty, original.Foreground);
 		}
 
-		Restore(window, Control.BackgroundProperty, original.Background);
-		Restore(window, Control.ForegroundProperty, original.Foreground);
+		// a text color picked in View > Font wins over the one worked out here
+		if (ProgramFont.TextColor is { } text)
+			window.Foreground = Frozen(text);
 	}
 
 	private static void Restore(Window window, DependencyProperty property, object original)
