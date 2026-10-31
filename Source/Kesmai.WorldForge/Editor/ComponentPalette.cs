@@ -76,6 +76,120 @@ public class ComponentPalette : ObservableRecipient
 	private void OnCategoryComponentsChanged(object sender, NotifyCollectionChangedEventArgs args)
 	{
 		_componentsByNameInvalidated = true;
+		ScheduleFavoritesRefresh();
+	}
+
+	// FAVORITES: tiles picked with right click > Add to Favorites, in the order they were added. Each is kept by the
+	// element a tile refers to it with, in .storage, and found again among the palette's components as they load (the
+	// EDITOR ones arrive in the background, the SEGMENT ones with each segment).
+	private static readonly string _favoritesPath = System.IO.Path.Combine(".storage", "Favorites.cfg");
+	private ComponentsCategory _favoritesCategory;
+	private List<string> _favoriteKeys;
+	private bool _favoritesRefreshPending;
+
+	private static string FavoriteKey(IComponentProvider provider)
+		=> provider.GetReferencingElement()?.ToString(SaveOptions.DisableFormatting) ?? provider.Name;
+
+	private List<string> FavoriteKeys
+	{
+		get
+		{
+			if (_favoriteKeys is not null)
+				return _favoriteKeys;
+
+			_favoriteKeys = new List<string>();
+
+			try
+			{
+				if (System.IO.File.Exists(_favoritesPath))
+					_favoriteKeys.AddRange(System.IO.File.ReadAllLines(_favoritesPath).Where(l => !String.IsNullOrWhiteSpace(l)).Distinct());
+			}
+			catch (Exception exception) when (exception is System.IO.IOException or UnauthorizedAccessException)
+			{
+				// favorites that can't be read start empty
+			}
+
+			return _favoriteKeys;
+		}
+	}
+
+	public bool IsFavorite(IComponentProvider provider) => provider is not null && FavoriteKeys.Contains(FavoriteKey(provider));
+
+	public void AddFavorite(IComponentProvider provider)
+	{
+		if (provider is null || IsFavorite(provider))
+			return;
+
+		FavoriteKeys.Add(FavoriteKey(provider));
+		SaveFavorites();
+		RefreshFavorites();
+	}
+
+	public void RemoveFavorite(IComponentProvider provider)
+	{
+		if (provider is null || !FavoriteKeys.Remove(FavoriteKey(provider)))
+			return;
+
+		SaveFavorites();
+		RefreshFavorites();
+	}
+
+	private void SaveFavorites()
+	{
+		try
+		{
+			System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_favoritesPath)!);
+			System.IO.File.WriteAllLines(_favoritesPath, FavoriteKeys);
+		}
+		catch (Exception exception) when (exception is System.IO.IOException or UnauthorizedAccessException)
+		{
+			// the favorites just aren't remembered
+		}
+	}
+
+	private void ScheduleFavoritesRefresh()
+	{
+		if (_favoritesRefreshPending || _favoritesCategory is null || System.Windows.Application.Current is not { } application)
+			return;
+
+		// many components arrive at once as a category loads; one refresh after them
+		_favoritesRefreshPending = true;
+		application.Dispatcher.BeginInvoke(() =>
+		{
+			_favoritesRefreshPending = false;
+			RefreshFavorites();
+		}, System.Windows.Threading.DispatcherPriority.Background);
+	}
+
+	/// <summary>Fills FAVORITES with the saved tiles that are loaded now, in the order they were added.</summary>
+	private void RefreshFavorites()
+	{
+		if (_favoritesCategory is null)
+			return;
+
+		var loaded = new Dictionary<string, IComponentProvider>();
+
+		void collect(ComponentsCategory category)
+		{
+			foreach (var provider in category.Components)
+				loaded.TryAdd(FavoriteKey(provider), provider);
+
+			foreach (var subcategory in category.Subcategories)
+				collect(subcategory);
+		}
+
+		foreach (var root in _rootCategories.Where(c => c != _favoritesCategory))
+			collect(root);
+
+		var favorites = FavoriteKeys.Select(k => loaded.GetValueOrDefault(k)).Where(p => p is not null).ToList();
+
+		if (favorites.SequenceEqual(_favoritesCategory.Components))
+			return;
+
+		_favoritesCategory.Components.Clear();
+
+		foreach (var provider in favorites)
+			_favoritesCategory.Components.Add(provider);
 	}
 
 	public void Initialize()
@@ -124,7 +238,11 @@ public class ComponentPalette : ObservableRecipient
 			var documentStream = await NuGetResolver.ResolveStream(packageReader, "Components.xml");
 			var document = XDocument.Load(documentStream);
 
-			await dispatcher.InvokeAsync(() => Load("EDITOR", document));
+			await dispatcher.InvokeAsync(() =>
+			{
+				Load("EDITOR", document);
+				RefreshFavorites();
+			});
 		});
 
 		// create segment category
@@ -166,6 +284,16 @@ public class ComponentPalette : ObservableRecipient
 		_allCategories.Add(_segmentComponentsCategory);
 		_allCategories.Add(_segmentBrushCategory);
 		_allCategories.Add(_segmentTemplateCategory);
+
+		// FAVORITES, after SEGMENT; not in the name lookup, since its tiles are the same ones as in their own categories
+		_favoritesCategory = new ComponentsCategory
+		{
+			Name = "FAVORITES",
+			IsRoot = true
+		};
+
+		_rootCategories.Add(_favoritesCategory);
+		RefreshFavorites();
 		
 		// setup message registration for adding segment components.
 		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentAdded>(this, (r, m) =>

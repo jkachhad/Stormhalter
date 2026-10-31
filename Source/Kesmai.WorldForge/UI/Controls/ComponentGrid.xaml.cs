@@ -61,7 +61,36 @@ public partial class ComponentGrid : ListBox
 		InitializeComponent();
 
 		PreviewMouseWheel += OnPreviewMouseWheel;
+		PreviewMouseRightButtonUp += OnPreviewMouseRightButtonUp;
 		UpdateLayoutMode();
+	}
+
+	/// <summary>Right click on a tile: add it to FAVORITES, or take it out.</summary>
+	private void OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs args)
+	{
+		if (args.OriginalSource is not DependencyObject source || ItemsControl.ContainerFromElement(this, source) is not ListBoxItem { DataContext: Kesmai.WorldForge.IComponentProvider provider } item)
+			return;
+
+		var palette = CommonServiceLocator.ServiceLocator.Current.GetInstance<ComponentPalette>();
+		var favorite = palette.IsFavorite(provider);
+
+		var menuItem = new MenuItem
+		{
+			Header = favorite ? $"Remove \"{provider.Name}\" from Favorites" : $"Save \"{provider.Name}\" into Favorites",
+		};
+		menuItem.Click += (_, _) =>
+		{
+			if (favorite)
+				palette.RemoveFavorite(provider);
+			else
+				palette.AddFavorite(provider);
+		};
+
+		var menu = new ContextMenu { PlacementTarget = item };
+		menu.Items.Add(menuItem);
+		menu.IsOpen = true;
+
+		args.Handled = true;
 	}
 
 	private void UpdateLayoutMode()
