@@ -87,6 +87,16 @@ public partial class ApplicationWindow : Window
 	{
 		InitializeComponent();
 
+		// the toolbar's region and tile show while a region is the document being edited
+		if (DataContext is ApplicationPresenter presenter)
+		{
+			presenter.PropertyChanged += (_, args) =>
+			{
+				if (args.PropertyName == nameof(ApplicationPresenter.ActiveDocument))
+					_regionInfo.Visibility = presenter.ActiveDocument is SegmentRegion ? Visibility.Visible : Visibility.Collapsed;
+			};
+		}
+
 		WeakReferenceMessenger.Default.Register<ApplicationWindow, ActivateDocument>(this, (r, m) =>
 		{
 			if (m.Content is null)
