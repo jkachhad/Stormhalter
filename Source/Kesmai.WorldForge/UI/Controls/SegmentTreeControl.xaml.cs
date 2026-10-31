@@ -12,6 +12,7 @@ using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Editor.Assets;
 using Kesmai.WorldForge.UI.Controls;
 
 namespace Kesmai.WorldForge.UI;
@@ -285,6 +286,9 @@ public partial class SegmentTreeControl : UserControl
     {
         toolbar.Items.Clear();
 
+        // the body pictures the Entities grid shows load in the background, ready for the first click
+        _ = AssetCatalog.LoadAsync();
+
         foreach (var root in Roots)
         {
             var name = HeaderText(root);
@@ -341,10 +345,41 @@ public partial class SegmentTreeControl : UserControl
                 Open = child.Tag is ISegmentObject segmentObject ? () => Open(child, segmentObject) : null,
                 Children = hasChildren ? () => MenuEntries(child) : null,
                 // a region shows a small picture of its map
-                Preview = child.Tag is SegmentRegion region ? () => RegionPreview.Render(region) : null,
+                Preview = child.Tag switch
+                {
+                    SegmentRegion region => () => RegionPreview.Render(region),
+                    // an entity shows its body, from the body id its OnSpawn sets
+                    SegmentEntity entity => () => BodyPicture(entity),
+                    _ => null,
+                },
+                PreviewIsMap = child.Tag is SegmentRegion,
             };
         })
         .ToList();
+
+    // "Body = 431" in the creature's braces wins over the CreatureDTO's "bodyId: 431", as it does on the server
+    private static readonly System.Text.RegularExpressions.Regex _bodyAssignment = new(@"\bBody\s*=\s*(\d+)");
+    private static readonly System.Text.RegularExpressions.Regex _bodyArgument = new(@"\bbodyId\s*:\s*(\d+)");
+
+    /// <summary>
+    /// The picture of an entity's body, from the body id its OnSpawn sets; null when it sets none, or while the body
+    /// pictures are still loading (the toolbar starts loading them, so they're normally ready by the first click).
+    /// </summary>
+    private static ImageSource BodyPicture(SegmentEntity entity)
+    {
+        var loading = AssetCatalog.LoadAsync();
+
+        if (!loading.IsCompletedSuccessfully)
+            return null;
+
+        var script = entity.Scripts.FirstOrDefault(s => s.Name == "OnSpawn")?.Body ?? String.Empty;
+        var match = _bodyAssignment.Matches(script).LastOrDefault() ?? _bodyArgument.Matches(script).LastOrDefault();
+
+        if (match is null || !Int32.TryParse(match.Groups[1].Value, out var id))
+            return null;
+
+        return loading.Result.Bodies.FirstOrDefault(b => b.Id == id)?.Image;
+    }
 
     /// <summary>Opens a segment object as picking it in the tree does, and picks it in the tree too.</summary>
     public static void Open(TreeViewItem item, ISegmentObject segmentObject)
