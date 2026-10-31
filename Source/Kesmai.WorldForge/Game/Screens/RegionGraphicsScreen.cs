@@ -210,7 +210,27 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 
 		yield return _contextMenu.Create("Convert to Segment Template", convertTemplate);
-		
+
+		// a sky tile can fill the destinations of the sky tiles joined to it, moved by their distance from it
+		if (SkyDestinationFill.SkyOn(segmentTile) is { } sky)
+		{
+			yield return _contextMenu.CreateSeparator();
+			yield return _contextMenu.Create($"Fill joined Sky destinations from here ({sky.DestinationX}, {sky.DestinationY}, region {sky.DestinationRegion})", fillSky);
+		}
+
+		void fillSky(object sender, EventArgs e)
+		{
+			var edit = applicationPresenter.History.Begin("Fill Sky Destinations");
+
+			if (SkyDestinationFill.Fill(region, segmentTile.X, segmentTile.Y, edit) > 0)
+			{
+				edit.Commit();
+
+				_teleportersInvalidated = true;
+				InvalidateRender();
+			}
+		}
+
 		void convertTemplate(object sender, EventArgs e)
 		{
 			OnConvertTemplate(segmentTile);
