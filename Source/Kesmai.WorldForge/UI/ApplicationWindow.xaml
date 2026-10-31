@@ -99,6 +99,8 @@
                 <Separator />
                 <MenuItem Header="Show _all panels" Click="OnShowPanel" Tag="All" />
                 <Separator />
+                <!-- one font for all of WorldForge's text -->
+                <MenuItem Header="_Font..." Click="OnProgramFont" />
                 <!-- the color of WorldForge's windows and its large white areas -->
                 <MenuItem Header="Program _background">
                     <MenuItem Header="Default" Click="OnProgramBackground" Tag="Default" />

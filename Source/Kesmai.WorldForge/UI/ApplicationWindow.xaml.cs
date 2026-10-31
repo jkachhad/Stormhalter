@@ -43,6 +43,9 @@ public partial class ApplicationWindow : Window
 		_segmentToolbarTray.Visibility = _segmentToolbar.Items.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 	}
 
+	/// <summary>View > Font: picks one font for all of WorldForge's text.</summary>
+	private void OnProgramFont(object sender, RoutedEventArgs args) => UI.ProgramFont.Pick(this);
+
 	/// <summary>View > Program background: one of the listed colors, any color from Custom, or Default.</summary>
 	private void OnProgramBackground(object sender, RoutedEventArgs args)
 	{
