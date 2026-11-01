@@ -17,6 +17,14 @@
             <Setter Property="Margin" Value="0,3" />
             <Setter Property="IsEditable" Value="True" />
             <Setter Property="IsTextSearchEnabled" Value="True" />
+            <!-- ComboBox creates every item when it opens; only create the visible ones. -->
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="4,3,0,3" />
