@@ -29,6 +29,10 @@
             <Setter Property="Margin" Value="0,0,0,8" />
             <Setter Property="Padding" Value="6" />
         </Style>
+        <!-- the item and entity dropdowns list hundreds of names: only create the rows in view -->
+        <ItemsPanelTemplate x:Key="VirtualizingItems">
+            <VirtualizingStackPanel />
+        </ItemsPanelTemplate>
     </UserControl.Resources>
 
     <Grid Margin="6">
@@ -178,7 +182,7 @@
                                 <ColumnDefinition Width="70" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Kill entity" Style="{StaticResource FieldLabel}" />
-                            <ComboBox Grid.Column="1" Margin="0,3" IsEditable="True"
+                            <ComboBox Grid.Column="1" Margin="0,3" IsEditable="True" ItemsPanel="{StaticResource VirtualizingItems}"
                                       ItemsSource="{Binding DataContext.EntityNames, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                       Text="{Binding Target, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock Grid.Column="2" Text="Count" Style="{StaticResource FieldLabel}" Margin="8,3,6,3" />
@@ -203,7 +207,7 @@
                                     <ColumnDefinition Width="70" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Item type" Style="{StaticResource FieldLabel}" />
-                                <ComboBox Grid.Column="1" Margin="0,3" IsEditable="True" IsTextSearchEnabled="True"
+                                <ComboBox Grid.Column="1" Margin="0,3" IsEditable="True" ItemsPanel="{StaticResource VirtualizingItems}" IsTextSearchEnabled="True"
                                           ItemsSource="{Binding DataContext.ItemTypes, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                           Text="{Binding Target, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Column="2" Text="Count" Style="{StaticResource FieldLabel}" Margin="8,3,6,3" />
