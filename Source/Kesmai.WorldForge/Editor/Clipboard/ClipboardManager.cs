@@ -98,14 +98,18 @@ public class ClipboardManager
 
 			if (area != default(XNA.Rectangle))
 			{
+				var edit = presenter.History.Begin("Paste");
+				
 				if (area is {Width:1,Height:1})
 				{
-					PasteToOne(area, region);
+					PasteToOne(area, region, edit);
 				} 
 				else
 				{
-					PasteToMany(area, region);
+					PasteToMany(area, region, edit);
 				}
+
+				edit.Commit();
 			}
 		}
 	}
@@ -113,7 +117,7 @@ public class ClipboardManager
 	/// <summary>
 	/// Pastes The whole buffer starting at the top left of the current 1x1 selection.
 	/// </summary>
-	private void PasteToOne(XNA.Rectangle area, SegmentRegion region)
+	private void PasteToOne(XNA.Rectangle area, SegmentRegion region, MapEdit edit)
 	{
 		if (Clipboard.GetDataObject() is DataObject data && data.GetDataPresent("MemoryStream")
 		                                                 && data.GetData("MemoryStream") is MemoryStream stream)
@@ -143,6 +147,7 @@ public class ClipboardManager
 					tileElement.Add(new XAttribute("x", mx));
 					tileElement.Add(new XAttribute("y", my));
 
+					edit.Capture(region, mx, my);
 					region.SetTile(mx, my, new SegmentTile(tileElement));
 				}
 			}
@@ -153,7 +158,7 @@ public class ClipboardManager
 	/// <summary>
 	/// Tile the buffer until it has filled the current selection
 	/// </summary>
-	private void PasteToMany(XNA.Rectangle area, SegmentRegion region)
+	private void PasteToMany(XNA.Rectangle area, SegmentRegion region, MapEdit edit)
 	{
 		var ox = area.Left; // region to paste into bounded by selection "area"
 		var oy = area.Top;
@@ -203,6 +208,7 @@ public class ClipboardManager
 								tileElement.Add(new XAttribute("x", mx));
 								tileElement.Add(new XAttribute("y", my));
 
+								edit.Capture(region, mx, my);
 								region.SetTile(mx, my, new SegmentTile(tileElement));
 							}
 						}
