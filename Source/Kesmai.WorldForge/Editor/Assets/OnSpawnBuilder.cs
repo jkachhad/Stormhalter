@@ -28,6 +28,34 @@ public class OnSpawnBuilder : ObservableObject
 	public static readonly string[] HueModes = ["None", "Named", "Custom"];
 	public static readonly string[] AttackTypes = ["CreatureBasicAttack", "CreatureAttack"];
 
+	// Parse's patterns, created once. Parse uses more patterns than Regex's static cache holds (15), so
+	// the static Regex.Match calls re-parsed most of them for every script.
+	private static readonly Regex _declarationPattern = new(@"var\s+(\w+)\s*=\s*new\s+([\w<>.]+)\s*\(");
+	private static readonly Regex _namePattern = new(@"\bName\s*=\s*""((?:[^""\\]|\\.)*)""");
+	private static readonly Regex _maxHealthPattern = new(@"\bMaxHealth\s*=\s*(\d+)");
+	private static readonly Regex _baseDodgePattern = new(@"\bBaseDodge\s*=\s*(\d+)");
+	private static readonly Regex _experiencePattern = new(@"\bExperience\s*=\s*(\d+)");
+	private static readonly Regex _bodyPattern = new(@"\bBody\s*=\s*(\d+)");
+	private static readonly Regex _movementPattern = new(@"\bMovement\s*=\s*(\d+)");
+	private static readonly Regex _penetrationPattern = new(@"ShieldPenetration\.(\w+)");
+	private static readonly Regex _alignmentPattern = new(@"Alignment\s*=\s*Alignment\.(\w+)");
+	private static readonly Regex _searchStrategyPattern = new(@"CombatantSearchStrategy\s*=\s*new\s+(\w+)");
+	private static readonly Regex _brainPattern = new(@"\.Brain\s*=\s*new\s+(\w+)");
+	private static readonly Regex _goldPattern = new(@"\.AddGold\(\s*(\d+)");
+	private static readonly Regex _customHuePattern = new(@"Hue\s*=\s*Color\.FromArgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(\d+)\s*)?\)");
+	private static readonly Regex _namedHuePattern = new(@"Hue\s*=\s*Color\.(\w+)");
+	private static readonly Regex _immunityPattern = new(@"Immunity\s*=\s*([^,;\r\n]+)");
+	private static readonly Regex _weaknessPattern = new(@"Weakness\s*=\s*([^,;\r\n]+)");
+	private static readonly Regex _wieldPattern = new(@"\.Wield\(\s*new\s+(\w+)");
+	private static readonly Regex _equipPattern = new(@"\.Equip\(\s*new\s+(\w+)");
+	private static readonly Regex _attackPattern = new(@"new\s+(CreatureBasicAttack|CreatureAttack)\(([^\r\n]*?)\)\s*(?:,\s*(\d+)\s*\})?\s*,?\s*(?=\r?$)", RegexOptions.Multiline);
+	private static readonly Regex _spellPattern = new(@"CreatureSpell<(\w+)>\(\s*(\d+)[^)]*\)\s*,\s*(\d+)\s*,\s*(?:TimeSpan\.FromSeconds\(\s*(\d+)\s*\)|TimeSpan\.Zero)");
+	private static readonly Regex _blockPattern = new(@"new\s+CreatureBlock\(\s*(\d+)\s*,\s*""((?:[^""\\]|\\.)*)""");
+	private static readonly Regex _lootPattern = new(@"new\s+LootPackEntry\(\s*(true|false)\s*,\s*(\w+)\s*,\s*(\d+)");
+
+	private static readonly Dictionary<string, Regex> _flagPatterns =
+		FlagNames.ToDictionary(name => name, name => new Regex($@"\b{name}\s*=\s*(true|false)"));
+
 	/// <summary>Raised whenever anything in the form changes, including list rows.</summary>
 	public event EventHandler? Changed;
 
@@ -325,9 +353,9 @@ public class OnSpawnBuilder : ObservableObject
 		var found = 0;
 		var match = Match.Empty;
 
-		bool Find(string pattern)
+		bool Find(Regex pattern)
 		{
-			match = Regex.Match(script, pattern);
+			match = pattern.Match(script);
 
 			if (match.Success)
 				found++;
@@ -335,25 +363,25 @@ public class OnSpawnBuilder : ObservableObject
 			return match.Success;
 		}
 
-		if (Find(@"var\s+(\w+)\s*=\s*new\s+([\w<>.]+)\s*\("))
+		if (Find(_declarationPattern))
 		{
 			Variable = match.Groups[1].Value;
 			CreatureType = match.Groups[2].Value;
 		}
 
-		if (Find(@"\bName\s*=\s*""((?:[^""\\]|\\.)*)""")) Name = Regex.Unescape(match.Groups[1].Value);
-		if (Find(@"\bMaxHealth\s*=\s*(\d+)")) MaxHealth = match.Groups[1].Value;
-		if (Find(@"\bBaseDodge\s*=\s*(\d+)")) BaseDodge = match.Groups[1].Value;
-		if (Find(@"\bExperience\s*=\s*(\d+)")) Experience = match.Groups[1].Value;
-		if (Find(@"\bBody\s*=\s*(\d+)")) Body = match.Groups[1].Value;
-		if (Find(@"\bMovement\s*=\s*(\d+)")) Movement = match.Groups[1].Value;
-		if (Find(@"ShieldPenetration\.(\w+)")) Penetration = match.Groups[1].Value;
-		if (Find(@"Alignment\s*=\s*Alignment\.(\w+)")) Alignment = match.Groups[1].Value;
-		if (Find(@"CombatantSearchStrategy\s*=\s*new\s+(\w+)")) SearchStrategy = match.Groups[1].Value;
-		if (Find(@"\.Brain\s*=\s*new\s+(\w+)")) Brain = match.Groups[1].Value;
-		if (Find(@"\.AddGold\(\s*(\d+)")) Gold = match.Groups[1].Value;
+		if (Find(_namePattern)) Name = Regex.Unescape(match.Groups[1].Value);
+		if (Find(_maxHealthPattern)) MaxHealth = match.Groups[1].Value;
+		if (Find(_baseDodgePattern)) BaseDodge = match.Groups[1].Value;
+		if (Find(_experiencePattern)) Experience = match.Groups[1].Value;
+		if (Find(_bodyPattern)) Body = match.Groups[1].Value;
+		if (Find(_movementPattern)) Movement = match.Groups[1].Value;
+		if (Find(_penetrationPattern)) Penetration = match.Groups[1].Value;
+		if (Find(_alignmentPattern)) Alignment = match.Groups[1].Value;
+		if (Find(_searchStrategyPattern)) SearchStrategy = match.Groups[1].Value;
+		if (Find(_brainPattern)) Brain = match.Groups[1].Value;
+		if (Find(_goldPattern)) Gold = match.Groups[1].Value;
 
-		if (Find(@"Hue\s*=\s*Color\.FromArgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(\d+)\s*)?\)"))
+		if (Find(_customHuePattern))
 		{
 			var values = Enumerable.Range(1, 4).Select(i => match.Groups[i].Success ? Byte.Parse(match.Groups[i].Value) : (byte?)null).ToArray();
 
@@ -362,7 +390,7 @@ public class OnSpawnBuilder : ObservableObject
 				? (values[0]!.Value, values[1]!.Value, values[2]!.Value, b)
 				: ((byte)255, values[0]!.Value, values[1]!.Value, values[2]!.Value);
 		}
-		else if (Find(@"Hue\s*=\s*Color\.(\w+)"))
+		else if (Find(_namedHuePattern))
 		{
 			HueMode = "Named";
 			HueName = match.Groups[1].Value;
@@ -370,7 +398,7 @@ public class OnSpawnBuilder : ObservableObject
 
 		foreach (var flag in Flags)
 		{
-			var flagMatch = Regex.Match(script, $@"\b{flag.Name}\s*=\s*(true|false)");
+			var flagMatch = _flagPatterns[flag.Name].Match(script);
 
 			if (flagMatch.Success)
 			{
@@ -379,7 +407,7 @@ public class OnSpawnBuilder : ObservableObject
 			}
 		}
 
-		var immunity = Regex.Match(script, @"Immunity\s*=\s*([^,;\r\n]+)");
+		var immunity = _immunityPattern.Match(script);
 		if (immunity.Success)
 		{
 			foreach (var option in Immunities)
@@ -387,7 +415,7 @@ public class OnSpawnBuilder : ObservableObject
 			found++;
 		}
 
-		var weakness = Regex.Match(script, @"Weakness\s*=\s*([^,;\r\n]+)");
+		var weakness = _weaknessPattern.Match(script);
 		if (weakness.Success)
 		{
 			foreach (var option in Weaknesses)
@@ -395,7 +423,7 @@ public class OnSpawnBuilder : ObservableObject
 			found++;
 		}
 
-		var wielded = Regex.Matches(script, @"\.Wield\(\s*new\s+(\w+)").Select(m => m.Groups[1].Value).ToList();
+		var wielded = _wieldPattern.Matches(script).Select(m => m.Groups[1].Value).ToList();
 		if (wielded.Count > 0)
 		{
 			Weapon = wielded.FirstOrDefault(w => !shields.Contains(w)) ?? String.Empty;
@@ -403,7 +431,7 @@ public class OnSpawnBuilder : ObservableObject
 			found++;
 		}
 
-		var equipped = Regex.Matches(script, @"\.Equip\(\s*new\s+(\w+)").Select(m => m.Groups[1].Value).ToList();
+		var equipped = _equipPattern.Matches(script).Select(m => m.Groups[1].Value).ToList();
 		if (equipped.Count > 0)
 		{
 			Armor = equipped.FirstOrDefault(e => armor.Contains(e)) ?? String.Empty;
@@ -413,7 +441,7 @@ public class OnSpawnBuilder : ObservableObject
 			found++;
 		}
 
-		var attacks = Regex.Matches(script, @"new\s+(CreatureBasicAttack|CreatureAttack)\(([^\r\n]*?)\)\s*(?:,\s*(\d+)\s*\})?\s*,?\s*(?=\r?$)", RegexOptions.Multiline);
+		var attacks = _attackPattern.Matches(script);
 		if (attacks.Count > 0)
 		{
 			Attacks.Clear();
@@ -424,7 +452,7 @@ public class OnSpawnBuilder : ObservableObject
 			found++;
 		}
 
-		var spells = Regex.Matches(script, @"CreatureSpell<(\w+)>\(\s*(\d+)[^)]*\)\s*,\s*(\d+)\s*,\s*(?:TimeSpan\.FromSeconds\(\s*(\d+)\s*\)|TimeSpan\.Zero)");
+		var spells = _spellPattern.Matches(script);
 		if (spells.Count > 0)
 		{
 			Spells.Clear();
@@ -435,7 +463,7 @@ public class OnSpawnBuilder : ObservableObject
 			found++;
 		}
 
-		var blocks = Regex.Matches(script, @"new\s+CreatureBlock\(\s*(\d+)\s*,\s*""((?:[^""\\]|\\.)*)""");
+		var blocks = _blockPattern.Matches(script);
 		if (blocks.Count > 0)
 		{
 			Blocks.Clear();
@@ -446,7 +474,7 @@ public class OnSpawnBuilder : ObservableObject
 			found++;
 		}
 
-		var loot = Regex.Matches(script, @"new\s+LootPackEntry\(\s*(true|false)\s*,\s*(\w+)\s*,\s*(\d+)");
+		var loot = _lootPattern.Matches(script);
 		if (loot.Count > 0)
 		{
 			Loot.Clear();
@@ -478,6 +506,11 @@ public class FlagOption : ObservableObject
 
 public class AttackRow : ObservableObject
 {
+	private static readonly Regex _messagePattern = new(@"""((?:[^""\\]|\\.)*)""");
+	private static readonly Regex _effectPattern = new(@"new\s+(\w+)\(\s*(\d+)?\s*(?:,\s*(\d+)\s*)?\)");
+	private static readonly Regex _messageOrEffectPattern = new(@"""(?:[^""\\]|\\.)*""|new\s+\w+\([^)]*\)");
+	private static readonly Regex _numberPattern = new(@"\d+");
+
 	private string _type = "CreatureBasicAttack";
 	private string _skill = "10";
 	private string _minDamage = String.Empty;
@@ -505,11 +538,11 @@ public class AttackRow : ObservableObject
 	{
 		var row = new AttackRow { Type = type, Weight = weight };
 
-		var message = Regex.Match(arguments, @"""((?:[^""\\]|\\.)*)""");
+		var message = _messagePattern.Match(arguments);
 		if (message.Success)
 			row.Message = Regex.Unescape(message.Groups[1].Value);
 
-		var effect = Regex.Match(arguments, @"new\s+(\w+)\(\s*(\d+)?\s*(?:,\s*(\d+)\s*)?\)");
+		var effect = _effectPattern.Match(arguments);
 		if (effect.Success)
 		{
 			row.Effect = effect.Groups[1].Value;
@@ -517,8 +550,8 @@ public class AttackRow : ObservableObject
 			row.EffectValue2 = effect.Groups[3].Value;
 		}
 
-		var plain = Regex.Replace(arguments, @"""(?:[^""\\]|\\.)*""|new\s+\w+\([^)]*\)", String.Empty);
-		var numbers = Regex.Matches(plain, @"\d+").Select(m => m.Value).ToList();
+		var plain = _messageOrEffectPattern.Replace(arguments, String.Empty);
+		var numbers = _numberPattern.Matches(plain).Select(m => m.Value).ToList();
 
 		if (numbers.Count > 0)
 			row.Skill = numbers[0];
