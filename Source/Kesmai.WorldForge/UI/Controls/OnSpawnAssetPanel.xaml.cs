@@ -3,11 +3,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Kesmai.WorldForge.Editor.Assets;
 
@@ -43,6 +45,10 @@ public partial class OnSpawnAssetPanel : UserControl
 	private BodyAsset? _body;
 	private Color _hue = Colors.White;
 	private bool _syncing;
+
+	// the body shown in the hue preview, and a count that lets a newer preview replace one still loading.
+	private BodyAsset? _previewBody;
+	private int _previewVersion;
 
 	// the lists are filtered through views of their own, since the catalog is shared by every panel.
 	private ListCollectionView? _bodiesView;
@@ -506,12 +512,21 @@ public partial class OnSpawnAssetPanel : UserControl
 
 	private void UpdateHuePreview()
 	{
-		_hueArgb.Text = $"ARGB #{_hue.A:X2}{_hue.R:X2}{_hue.G:X2}{_hue.B:X2}";
-		_huePreview.Source = _body?.Tint(_hue);
+		var body = _body;
+		var hue = _hue;
+		var version = ++_previewVersion;
+
+		_hueArgb.Text = $"ARGB #{hue.A:X2}{hue.R:X2}{hue.G:X2}{hue.B:X2}";
+
+		// don't leave the previous creature's body showing while this one loads.
+		if (!ReferenceEquals(body, _previewBody))
+			_huePreview.Source = null;
+
+		_previewBody = body;
 
 		var id = _bodyId.Text.Trim();
 
-		if (_body is null)
+		if (body is null)
 		{
 			_bodyTitle.Text = id.Length == 0 ? "No body" : $"Body {id}";
 			_bodyInfo.Text = id.Length == 0
@@ -520,14 +535,45 @@ public partial class OnSpawnAssetPanel : UserControl
 			return;
 		}
 
-		_bodyTitle.Text = String.IsNullOrEmpty(_body.Name) ? $"Body {_body.Id}" : $"Body {_body.Id} · {_body.Name}";
+		_bodyTitle.Text = String.IsNullOrEmpty(body.Name) ? $"Body {body.Id}" : $"Body {body.Id} · {body.Name}";
+		_bodyInfo.Text = body.Source is Int32Rect source ? $"{body.Texture} · {source.Width}×{source.Height}px" : body.Texture;
 
-		var image = _body.Image;
-		var size = _body.Source is Int32Rect source ? $"{source.Width}×{source.Height}px"
-			: image is not null ? $"{image.PixelWidth}×{image.PixelHeight}px"
-			: "texture not found";
+		ShowTintedBody(body, hue, version);
+	}
 
-		_bodyInfo.Text = $"{_body.Texture} · {size}";
+	/// <summary>
+	/// Tints the body off the UI thread: the first body shown from a texture decodes it, which takes up to ~50 ms,
+	/// and this runs on every creature selected, even with the Body &amp; Hue tab hidden.
+	/// </summary>
+	private void ShowTintedBody(BodyAsset body, Color hue, int version)
+	{
+		Task.Run(() =>
+		{
+			BitmapSource? tinted = null, image = null;
+
+			try
+			{
+				tinted = body.Tint(hue);
+				image = body.Image;
+			}
+			catch
+			{
+				// shown as no preview, as when the texture is missing.
+			}
+
+			// the images are frozen, so the UI thread can show them.
+			Dispatcher.InvokeAsync(() =>
+			{
+				// a newer body or hue has been shown since this one started.
+				if (version != _previewVersion)
+					return;
+
+				_huePreview.Source = tinted;
+
+				if (body.Source is null)
+					_bodyInfo.Text = $"{body.Texture} · {(image is not null ? $"{image.PixelWidth}×{image.PixelHeight}px" : "texture not found")}";
+			});
+		});
 	}
 
 	/// <summary>A one-click hue on the Body &amp; Hue tab.</summary>
