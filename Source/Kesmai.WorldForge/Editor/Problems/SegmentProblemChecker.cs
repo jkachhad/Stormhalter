@@ -59,6 +59,9 @@ public static class SegmentProblemChecker
 		foreach (var spawner in segment.Spawns.Region)
 			CheckRegionSpawner(problems, regionsById, spawner);
 
+		foreach (var segmentComponent in segment.Components)
+			CheckSegmentComponentTeleporter(problems, segmentComponent);
+
 		return problems
 			.OrderByDescending(problem => problem.Severity)
 			.ToList();
@@ -80,15 +83,6 @@ public static class SegmentProblemChecker
 				continue;
 			}
 
-			// a zero value isn't saved, and the server only reads a destination with all three values present.
-			if (dx == 0 || dy == 0)
-			{
-				problems.Add(new SegmentProblem(ProblemSeverity.Error,
-					$"Teleporter leads to ({dx}, {dy}); a 0 coordinate isn't saved, so the server ignores this teleporter.",
-					region, tile.X, tile.Y));
-				continue;
-			}
-
 			if (!regionsById.TryGetValue(destinationId, out var destination))
 			{
 				problems.Add(new SegmentProblem(ProblemSeverity.Error,
@@ -102,6 +96,31 @@ public static class SegmentProblemChecker
 					$"Teleporter leads to ({dx}, {dy}) in '{destination.Name}', which has no tile.", region, tile.X, tile.Y));
 			}
 		}
+	}
+
+	/// <summary>
+	/// Segment components are saved from their stored definition rather than re-serialized, so a teleporter
+	/// definition saved before zero coordinates were always written can still leave one out.
+	/// </summary>
+	private static void CheckSegmentComponentTeleporter(List<SegmentProblem> problems, SegmentComponent segmentComponent)
+	{
+		var element = segmentComponent.Element;
+
+		if (element is null || !segmentComponent.GetComponents().OfType<TeleportComponent>().Any())
+			return;
+
+		// the server only reads a destination when all three values are present.
+		var missing = new[] { "destinationX", "destinationY", "destinationRegion" }
+			.Where(name => element.Element(name) is null)
+			.ToArray();
+
+		// no values at all is a teleporter with no destination, which the tile checks already report.
+		if (missing.Length is 0 || missing.Length is 3)
+			return;
+
+		problems.Add(new SegmentProblem(ProblemSeverity.Error,
+			$"Segment component '{segmentComponent.Name}' is a teleporter whose definition leaves out {string.Join(" and ", missing)}, so the server ignores its destination. Add the missing value (0) to the definition.",
+			segmentComponent));
 	}
 
 	private static void CheckStatics(List<SegmentProblem> problems, SegmentRegion region, SegmentTile tile,
