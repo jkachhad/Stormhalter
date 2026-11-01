@@ -53,10 +53,11 @@
                 <DockPanel Margin="4">
                     <DockPanel DockPanel.Dock="Top" Margin="0,0,0,4">
                         <TextBlock Text="Search" Style="{StaticResource FieldLabel}" />
-                        <TextBox x:Name="_bodySearch" TextChanged="OnBodySearchChanged" VerticalContentAlignment="Center" />
+                        <TextBox x:Name="_bodySearch" TextChanged="OnSearchChanged" VerticalContentAlignment="Center" />
                     </DockPanel>
                     <TextBlock DockPanel.Dock="Bottom" Text="Double-click a body to set Body = id." Foreground="DimGray" FontSize="11" Margin="0,4,0,0" />
                     <ListBox x:Name="_bodies"
+                             IsSynchronizedWithCurrentItem="False"
                              MouseDoubleClick="OnBodyDoubleClick"
                              SelectionChanged="OnBodySelectionChanged"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -114,11 +115,11 @@
                 <DockPanel Margin="4">
                     <DockPanel DockPanel.Dock="Top" Margin="0,0,0,4">
                         <TextBlock Text="Search" Style="{StaticResource FieldLabel}" />
-                        <TextBox x:Name="_soundSearch" TextChanged="OnSoundSearchChanged" VerticalContentAlignment="Center" />
+                        <TextBox x:Name="_soundSearch" TextChanged="OnSearchChanged" VerticalContentAlignment="Center" />
                     </DockPanel>
                     <TextBlock DockPanel.Dock="Bottom" TextWrapping="Wrap" Foreground="DimGray" FontSize="11" Margin="0,4,0,0"
                                Text="A creature's attack and death sounds come from its class, so OnSpawn can't set them. Copy an id for traps, OnDeath and other scripts." />
-                    <ListView x:Name="_sounds">
+                    <ListView x:Name="_sounds" IsSynchronizedWithCurrentItem="False">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel>

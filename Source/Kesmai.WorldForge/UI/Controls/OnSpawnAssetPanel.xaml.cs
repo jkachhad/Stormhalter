@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Kesmai.WorldForge.Editor.Assets;
 
 namespace Kesmai.WorldForge.UI;
@@ -24,9 +26,20 @@ public partial class OnSpawnAssetPanel : UserControl
 	private readonly MediaPlayer _player = new();
 	private int _optionRow;
 
+	// the lists are filtered through views of their own, since the catalog is shared by every panel.
+	private ListCollectionView? _bodiesView;
+	private ListCollectionView? _soundsView;
+	private string _bodyQuery = String.Empty;
+	private string _soundQuery = String.Empty;
+
+	/// <summary>Waits for a pause in typing before filtering, rather than filtering on every keystroke.</summary>
+	private readonly DispatcherTimer _searchDelay = new() { Interval = TimeSpan.FromMilliseconds(200) };
+
 	public OnSpawnAssetPanel()
 	{
 		InitializeComponent();
+
+		_searchDelay.Tick += OnSearchDelayElapsed;
 
 		Loaded += OnLoaded;
 	}
@@ -41,8 +54,15 @@ public partial class OnSpawnAssetPanel : UserControl
 
 		BuildOptions(_catalog);
 
-		_bodies.ItemsSource = _catalog.Bodies;
-		_sounds.ItemsSource = _catalog.Sounds;
+		_bodiesView = new ListCollectionView(_catalog.Bodies.ToList());
+		_soundsView = new ListCollectionView(_catalog.Sounds.ToList());
+
+		_bodies.ItemsSource = _bodiesView;
+		_sounds.ItemsSource = _soundsView;
+
+		// apply anything typed while the catalog was loading.
+		ApplySearch();
+
 		_hueNames.ItemsSource = _catalog.NamedColors;
 		_huePicker.SelectedColor = Colors.White;
 
@@ -135,18 +155,43 @@ public partial class OnSpawnAssetPanel : UserControl
 		_optionRow++;
 	}
 
-	private void OnBodySearchChanged(object sender, TextChangedEventArgs e)
+	private void OnSearchChanged(object sender, TextChangedEventArgs e)
 	{
-		if (_catalog is null)
-			return;
+		_searchDelay.Stop();
+		_searchDelay.Start();
+	}
 
-		var query = _bodySearch.Text.Trim();
+	private void OnSearchDelayElapsed(object? sender, EventArgs e)
+	{
+		_searchDelay.Stop();
 
-		_bodies.ItemsSource = query.Length == 0
-			? _catalog.Bodies
-			: _catalog.Bodies.Where(b => b.Id.ToString().StartsWith(query)
-			                             || b.Name.Contains(query, StringComparison.OrdinalIgnoreCase)
-			                             || b.Texture.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
+		ApplySearch();
+	}
+
+	private void ApplySearch()
+	{
+		var bodyQuery = _bodySearch.Text.Trim();
+
+		// only refresh a list whose search changed; refreshing rebuilds its items.
+		if (_bodiesView != null && bodyQuery != _bodyQuery)
+		{
+			_bodyQuery = bodyQuery;
+			_bodiesView.Filter = bodyQuery.Length == 0 ? null : item => item is BodyAsset b
+				&& (b.Id.ToString().StartsWith(bodyQuery)
+				    || b.Name.Contains(bodyQuery, StringComparison.OrdinalIgnoreCase)
+				    || b.Texture.Contains(bodyQuery, StringComparison.OrdinalIgnoreCase));
+		}
+
+		var soundQuery = _soundSearch.Text.Trim();
+
+		if (_soundsView != null && soundQuery != _soundQuery)
+		{
+			_soundQuery = soundQuery;
+			_soundsView.Filter = soundQuery.Length == 0 ? null : item => item is SoundAsset s
+				&& (s.Id.ToString().Contains(soundQuery)
+				    || s.Name.Contains(soundQuery, StringComparison.OrdinalIgnoreCase)
+				    || s.Category.Contains(soundQuery, StringComparison.OrdinalIgnoreCase));
+		}
 	}
 
 	private void OnBodyDoubleClick(object sender, MouseButtonEventArgs e)
@@ -218,19 +263,5 @@ public partial class OnSpawnAssetPanel : UserControl
 
 		Clipboard.SetText(sound.Id.ToString());
 		_status.Text = $"Copied sound id {sound.Id}.";
-	}
-
-	private void OnSoundSearchChanged(object sender, TextChangedEventArgs e)
-	{
-		if (_catalog is null)
-			return;
-
-		var query = _soundSearch.Text.Trim();
-
-		_sounds.ItemsSource = query.Length == 0
-			? _catalog.Sounds
-			: _catalog.Sounds.Where(s => s.Id.ToString().Contains(query)
-			                             || s.Name.Contains(query, StringComparison.OrdinalIgnoreCase)
-			                             || s.Category.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
 	}
 }
