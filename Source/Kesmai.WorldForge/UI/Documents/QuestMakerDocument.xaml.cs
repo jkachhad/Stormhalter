@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -53,12 +54,41 @@ public partial class QuestMakerDocument : UserControl
 	/// </summary>
 	private const int MaxBranchDepth = 8;
 
+	/* what the branch map was last drawn from, so edits that don't change it (most typing) skip the rebuild */
+	private QuestDefinition? _branchQuest;
+	private string? _branchKey;
+
+	/// <summary>Everything the branch map shows: the first stage, and each stage's name, description and choices.</summary>
+	private static string BranchKey(QuestDefinition quest)
+	{
+		var key = new StringBuilder(quest.StartStage).Append('\n');
+
+		foreach (var stage in quest.Stages)
+		{
+			key.Append(stage.Id).Append('\t').Append(Describe(stage));
+
+			foreach (var choice in stage.Choices)
+				key.Append('\t').Append(choice.Label).Append('\t').Append(choice.Next);
+
+			key.Append('\n');
+		}
+
+		return key.ToString();
+	}
+
 	/// <summary>Draws the quest as a tree of paths from the first stage: each choice leads into the stage it opens.</summary>
 	private void BuildBranchMap()
 	{
-		_branches.Items.Clear();
-
 		var quest = _viewModel?.Quest;
+		var key = quest is null ? null : BranchKey(quest);
+
+		if (ReferenceEquals(quest, _branchQuest) && key == _branchKey)
+			return;
+
+		_branchQuest = quest;
+		_branchKey = key;
+
+		_branches.Items.Clear();
 
 		if (quest is null)
 			return;
