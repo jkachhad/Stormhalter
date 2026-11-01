@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
+             xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              
@@ -11,6 +12,8 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="340" MinWidth="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
@@ -57,6 +60,14 @@
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
+        </Border>
+        
+        <GridSplitter Grid.Row="0" Grid.Column="1" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                      ResizeBehavior="PreviousAndNext" />
+        
+        <!-- OnSpawn assets: server types, bodies, hues and sounds that edit the OnSpawn script -->
+        <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="2" BorderBrush="Black" BorderThickness="1">
+            <ui:OnSpawnAssetPanel x:Name="_assetPanel" />
         </Border>
         
         <Border Grid.Row="1" Grid.Column="0" Margin="2" BorderBrush="Black" BorderThickness="1">

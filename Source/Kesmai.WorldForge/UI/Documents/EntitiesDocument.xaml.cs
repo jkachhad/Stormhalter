@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -21,6 +22,36 @@ public partial class EntitiesDocument : UserControl
 		InitializeComponent();
 		
 		DataContextChanged += OnDataContextChanged;
+		
+		_assetPanel.EditRequested += OnAssetEditRequested;
+	}
+
+	/// <summary>
+	/// Applies an edit from the asset panel to the OnSpawn script, through its editor so the change shows
+	/// immediately and flows back to the script.
+	/// </summary>
+	private void OnAssetEditRequested(Func<string, string> edit)
+	{
+		if (_viewModel?.Entity is null)
+			return;
+
+		var onSpawn = _viewModel.Entity.Scripts.FirstOrDefault(s => s.Name == "OnSpawn");
+
+		if (onSpawn is null)
+			return;
+
+		if (!ReferenceEquals(_viewModel.SelectedScript, onSpawn))
+		{
+			_viewModel.SelectedScript = onSpawn;
+			_scriptsTabControl.UpdateLayout();
+		}
+
+		var editor = _scriptsTabControl.FindDescendant<ScriptEditor>();
+
+		if (editor is null)
+			return;
+
+		editor.SetCurrentValue(ScriptEditor.BodyProperty, edit(editor.Body ?? String.Empty));
 	}
 
 	private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs args)
