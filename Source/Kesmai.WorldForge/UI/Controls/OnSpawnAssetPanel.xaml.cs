@@ -347,7 +347,10 @@ public partial class OnSpawnAssetPanel : UserControl
 	private void OnBodyIdChanged(object sender, TextChangedEventArgs e)
 	{
 		_body = Int32.TryParse(_bodyId.Text.Trim(), out var id) && _bodyById.TryGetValue(id, out var body) ? body : null;
-		UpdateHuePreview();
+
+		// while the tab is being filled, the hue that follows shows the preview.
+		if (!_syncing)
+			UpdateHuePreview();
 	}
 
 	private void OnHueModeChanged(object sender, SelectionChangedEventArgs e)
@@ -410,7 +413,10 @@ public partial class OnSpawnAssetPanel : UserControl
 	/// <summary>Fills the Body &amp; Hue tab from the builder, so it shows the selected creature's body and hue.</summary>
 	private void ShowBuilderBodyAndHue()
 	{
+		// SetHue below previews the body, so setting the id doesn't preview it as well.
+		_syncing = true;
 		_bodyId.Text = _builder.Body;
+		_syncing = false;
 
 		switch (_builder.HueMode)
 		{
