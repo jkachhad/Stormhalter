@@ -326,13 +326,91 @@ public class QuestMakerViewModel : ObservableObject
 
 		_loadingFile = false;
 
-		EntityNames.Clear();
+		RefreshEntityNames();
+	}
 
-		if (_segment is not null)
+	/* the entities the kill dropdown is listening to, so it follows entities being added, removed and renamed */
+	private SegmentEntities? _watchedEntityList;
+	private readonly HashSet<SegmentEntity> _watchedEntities = new();
+	private bool _entityNamesPending;
+
+	private void RefreshEntityNames()
+	{
+		_entityNamesPending = false;
+
+		WatchEntities();
+
+		var names = _segment?.Entities.Select(e => e.Name).Where(n => !String.IsNullOrWhiteSpace(n)).Distinct().OrderBy(n => n).ToList() ?? [];
+
+		/* update in place so the editable combo box keeps its text */
+		var wanted = names.ToHashSet();
+
+		for (var i = EntityNames.Count - 1; i >= 0; i--)
 		{
-			foreach (var name in _segment.Entities.Select(e => e.Name).Where(n => !String.IsNullOrWhiteSpace(n)).OrderBy(n => n))
-				EntityNames.Add(name);
+			if (!wanted.Contains(EntityNames[i]))
+				EntityNames.RemoveAt(i);
 		}
+
+		for (var i = 0; i < names.Count; i++)
+		{
+			if (i < EntityNames.Count && EntityNames[i] == names[i])
+				continue;
+
+			var at = EntityNames.IndexOf(names[i]);
+
+			if (at >= 0)
+				EntityNames.Move(at, i);
+			else
+				EntityNames.Insert(i, names[i]);
+		}
+	}
+
+	private void WatchEntities()
+	{
+		var list = _segment?.Entities;
+
+		if (!ReferenceEquals(list, _watchedEntityList))
+		{
+			if (_watchedEntityList is not null)
+				_watchedEntityList.CollectionChanged -= OnEntitiesChanged;
+
+			_watchedEntityList = list;
+
+			if (list is not null)
+				list.CollectionChanged += OnEntitiesChanged;
+		}
+
+		var current = list?.ToHashSet() ?? [];
+
+		foreach (var entity in _watchedEntities.Where(e => !current.Contains(e)).ToList())
+		{
+			entity.PropertyChanged -= OnEntityChanged;
+			_watchedEntities.Remove(entity);
+		}
+
+		foreach (var entity in current)
+		{
+			if (_watchedEntities.Add(entity))
+				entity.PropertyChanged += OnEntityChanged;
+		}
+	}
+
+	private void OnEntitiesChanged(object? sender, NotifyCollectionChangedEventArgs e) => ScheduleEntityNames();
+
+	private void OnEntityChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		if (e.PropertyName == nameof(SegmentEntity.Name))
+			ScheduleEntityNames();
+	}
+
+	/* coalesced, so loading or pasting many entities updates the list once */
+	private void ScheduleEntityNames()
+	{
+		if (_entityNamesPending)
+			return;
+
+		_entityNamesPending = true;
+		_refresh.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(RefreshEntityNames));
 	}
 
 	private void Open(QuestFile file)
