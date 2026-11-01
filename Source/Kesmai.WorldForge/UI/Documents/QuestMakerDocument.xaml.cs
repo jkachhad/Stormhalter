@@ -46,6 +46,13 @@ public partial class QuestMakerDocument : UserControl
 		}
 	}
 
+	/// <summary>
+	/// How deep the branch map nests before a path carries on as its own top-level entry. Each level is a nested
+	/// TreeViewItem: a 40-stage chain took ~125 ms to lay out instead of ~85 ms, and a ~150-stage chain overflowed
+	/// the stack in WPF's layout and closed WorldForge. Eight levels also still fit the panel's width.
+	/// </summary>
+	private const int MaxBranchDepth = 8;
+
 	/// <summary>Draws the quest as a tree of paths from the first stage: each choice leads into the stage it opens.</summary>
 	private void BuildBranchMap()
 	{
@@ -57,8 +64,9 @@ public partial class QuestMakerDocument : UserControl
 			return;
 
 		var shown = new HashSet<string>();
+		var continued = new Queue<string>();
 
-		TreeViewItem StageItem(string id, string? via)
+		TreeViewItem StageItem(string id, string? via, int depth)
 		{
 			var stage = quest.Stages.FirstOrDefault(s => s.Id == id);
 			var label = stage is null ? $"{id} (missing!)" : $"{id} · {Describe(stage)}";
@@ -76,26 +84,51 @@ public partial class QuestMakerDocument : UserControl
 				return item;
 			}
 
-			if (!shown.Add(id))
+			if (shown.Contains(id))
 			{
 				item.Header += "  (see above)";
 				return item;
 			}
 
+			if (depth >= MaxBranchDepth && stage.Choices.Count > 0)
+			{
+				item.Header += "  (continued below)";
+				continued.Enqueue(id);
+				return item;
+			}
+
+			shown.Add(id);
+
 			foreach (var choice in stage.Choices)
-				item.Items.Add(StageItem(choice.Next, choice.Label));
+				item.Items.Add(StageItem(choice.Next, choice.Label, depth + 1));
 
 			return item;
 		}
 
-		_branches.Items.Add(StageItem(quest.StartStage, null));
+		/* adds a top-level path, then the paths it was too deep to show in place */
+		void AddRoot(TreeViewItem item)
+		{
+			_branches.Items.Add(item);
+
+			while (continued.TryDequeue(out var id))
+			{
+				if (shown.Contains(id))
+					continue;
+
+				var next = StageItem(id, null, 0);
+				next.Header = $"{next.Header}  (continued)";
+				_branches.Items.Add(next);
+			}
+		}
+
+		AddRoot(StageItem(quest.StartStage, null, 0));
 
 		foreach (var id in QuestCodeGenerator.Unreachable(quest))
 		{
-			var item = StageItem(id, null);
+			var item = StageItem(id, null, 0);
 			item.Header = $"{item.Header}  (unreachable)";
 			item.Foreground = System.Windows.Media.Brushes.Gray;
-			_branches.Items.Add(item);
+			AddRoot(item);
 		}
 	}
 
