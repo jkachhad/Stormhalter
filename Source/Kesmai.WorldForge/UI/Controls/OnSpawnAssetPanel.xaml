@@ -64,7 +64,7 @@
                             <DataTemplate>
                                 <StackPanel Width="78" ToolTip="{Binding Texture}">
                                     <Border Width="64" Height="64" Background="#FFE8E8E8">
-                                        <Image Source="{Binding Image}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                                        <Image Source="{Binding Image, IsAsync=True}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" />
                                     </Border>
                                     <TextBlock Text="{Binding Id}" FontWeight="Bold" TextAlignment="Center" />
                                     <TextBlock Text="{Binding Name}" FontSize="10" TextAlignment="Center" TextTrimming="CharacterEllipsis" />
