@@ -36,6 +36,9 @@ public class AssetCatalog
 	public IReadOnlyList<string> Boots { get; private set; } = [];
 	public IReadOnlyList<string> Jewelry { get; private set; } = [];
 	public IReadOnlyList<string> Spells { get; private set; } = [];
+
+	/// <summary>Every concrete item class, for the Quest Maker's collect stages.</summary>
+	public IReadOnlyList<string> Items { get; private set; } = [];
 	public IReadOnlyList<string> SearchStrategies { get; private set; } = [];
 	public IReadOnlyList<string> AttackComponents { get; private set; } = [];
 	public IReadOnlyList<string> ShieldPenetration { get; private set; } = [];
@@ -129,6 +132,7 @@ public class AssetCatalog
 		Boots = Concrete("Boots");
 		Jewelry = Concrete("Ring", "Amulet", "Bracelet");
 		Spells = Concrete("Spell");
+		Items = Concrete("ItemEntity");
 		SearchStrategies = Concrete("CombatantSearchStrategy");
 		AttackComponents = Concrete("CreatureAttackComponent");
 
