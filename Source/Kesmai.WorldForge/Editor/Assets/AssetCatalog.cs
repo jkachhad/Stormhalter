@@ -293,8 +293,14 @@ public class BodyAsset
 		if (parts.Length == 4 && parts.All(p => p >= 0))
 			source = new Int32Rect(parts[0], parts[1], parts[2], parts[3]);
 
-		// the body's name is kept in the comment just above it
-		var comment = element.NodesBeforeSelf().LastOrDefault(n => n is not XText) as XComment;
+		// the body's name is kept in the comment just above it. Step back over whitespace rather than
+		// searching every earlier node, which made reading the file quadratic in the number of bodies.
+		var previous = element.PreviousNode;
+
+		while (previous is XText)
+			previous = previous.PreviousNode;
+
+		var comment = previous as XComment;
 
 		return new BodyAsset(texturePath)
 		{
