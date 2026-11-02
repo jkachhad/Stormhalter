@@ -33,6 +33,14 @@
             <Setter Property="Margin" Value="0,3" />
             <Setter Property="IsEditable" Value="True" />
             <Setter Property="IsTextSearchEnabled" Value="True" />
+            <!-- ComboBox creates every item when it opens; only create the visible ones. -->
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="4,3,0,3" />
@@ -536,10 +544,11 @@
                     <DockPanel x:Name="_bodyBrowser" Visibility="Collapsed" Margin="0,6,0,0">
                     <DockPanel DockPanel.Dock="Top" Margin="0,0,0,4">
                         <TextBlock Text="Search" Style="{StaticResource FieldLabel}" />
-                        <TextBox x:Name="_bodySearch" TextChanged="OnBodySearchChanged" VerticalContentAlignment="Center" />
+                        <TextBox x:Name="_bodySearch" TextChanged="OnSearchChanged" VerticalContentAlignment="Center" />
                     </DockPanel>
                     <TextBlock DockPanel.Dock="Bottom" Text="Click a body to preview it. Double-click to pick it and close the list." Foreground="DimGray" FontSize="11" Margin="0,4,0,0" />
                     <ListBox x:Name="_bodies"
+                             IsSynchronizedWithCurrentItem="False"
                              MouseDoubleClick="OnBodyDoubleClick"
                              SelectionChanged="OnBodySelectionChanged"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -555,7 +564,7 @@
                             <DataTemplate>
                                 <StackPanel Width="78" ToolTip="{Binding Texture}">
                                     <Border Width="64" Height="64" Background="#FFE8E8E8">
-                                        <Image Source="{Binding Image}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                                        <Image Source="{Binding Image, IsAsync=True}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" />
                                     </Border>
                                     <TextBlock Text="{Binding Id}" FontWeight="Bold" TextAlignment="Center" />
                                     <TextBlock Text="{Binding Name}" FontSize="10" TextAlignment="Center" TextTrimming="CharacterEllipsis" />
@@ -571,11 +580,11 @@
                 <DockPanel Margin="4">
                     <DockPanel DockPanel.Dock="Top" Margin="0,0,0,4">
                         <TextBlock Text="Search" Style="{StaticResource FieldLabel}" />
-                        <TextBox x:Name="_soundSearch" TextChanged="OnSoundSearchChanged" VerticalContentAlignment="Center" />
+                        <TextBox x:Name="_soundSearch" TextChanged="OnSearchChanged" VerticalContentAlignment="Center" />
                     </DockPanel>
                     <TextBlock DockPanel.Dock="Bottom" TextWrapping="Wrap" Foreground="DimGray" FontSize="11" Margin="0,4,0,0"
                                Text="A creature's attack and death sounds come from its class, so OnSpawn can't set them. Copy an id for traps, OnDeath and other scripts." />
-                    <ListView x:Name="_sounds">
+                    <ListView x:Name="_sounds" IsSynchronizedWithCurrentItem="False">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel>
