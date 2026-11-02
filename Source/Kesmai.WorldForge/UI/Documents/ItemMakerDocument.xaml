@@ -1,0 +1,270 @@
+<UserControl x:Class="Kesmai.WorldForge.UI.Documents.ItemMakerDocument"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:wpfToolkit="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1200"
+             FontFamily="Tahoma" FontSize="13">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="Visible" />
+        <Style TargetType="TextBlock" x:Key="FieldLabel">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,3,8,3" />
+        </Style>
+        <Style TargetType="TextBlock" x:Key="Hint">
+            <Setter Property="Foreground" Value="DimGray" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,2,0,4" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,3" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="0,3" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="0,3,4,3" />
+            <Setter Property="Padding" Value="8,2" />
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="Padding" Value="6" />
+        </Style>
+        <DrawingBrush x:Key="Checker" TileMode="Tile" Viewport="0,0,16,16" ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#FFE8E8E8" Geometry="M0,0 H2 V2 H0 Z" />
+                    <GeometryDrawing Brush="#FFC4C4C4" Geometry="M0,0 H1 V1 H0 Z M1,1 H2 V2 H1 Z" />
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+    </UserControl.Resources>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left: the files this maker wrote -->
+        <DockPanel Grid.Column="0">
+            <DockPanel DockPanel.Dock="Top">
+                <Button DockPanel.Dock="Right" Content="↻" ToolTip="Look for files again" Click="OnRefreshFiles" Margin="0,3" />
+                <TextBlock VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="Items" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsWeapon}" Value="True">
+                                    <Setter Property="Text" Value="Weapons" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </DockPanel>
+            <WrapPanel DockPanel.Dock="Bottom">
+                <Button Content="New" Click="OnNew" />
+                <Button Content="Delete" Click="OnDelete" />
+            </WrapPanel>
+            <TextBlock DockPanel.Dock="Bottom" Style="{StaticResource Hint}"
+                       Text="Each one is a C# class in the segment's Source\Items folder. Scripts and loot create it with new ClassName()." />
+            <ListBox ItemsSource="{Binding ItemFiles}" SelectedItem="{Binding SelectedFile}" />
+        </DockPanel>
+
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <!-- Middle: the form -->
+        <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" DataContext="{Binding Item}">
+            <StackPanel Margin="0,0,6,0">
+                <GroupBox Header="Name and value">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Class name" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ClassName, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="Letters and digits, no spaces. Scripts create it with new ClassName()." />
+                        <TextBlock Grid.Row="1" Text="Name players see" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource Hint}"
+                                   Text="{Binding DataContext.NameInfo, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                        <TextBlock Grid.Row="3" Text="Price" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="4" Text="Weight" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Row="5" Text="Carried in" Style="{StaticResource FieldLabel}" />
+                        <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding DataContext.Categories, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                  DisplayMemberPath="Label" SelectedValuePath="Number" SelectedValue="{Binding Category}" />
+                        <CheckBox Grid.Row="6" Grid.Column="1" Content="Can be bound to its owner" IsChecked="{Binding CanBind}" Margin="0,4" />
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Look">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Art id" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ItemId, UpdateSourceTrigger=PropertyChanged}" ToolTip="Pick from the art list on the right, or type a game art id" />
+                        <TextBlock Grid.Row="1" Text="Hue" Style="{StaticResource FieldLabel}" />
+                        <ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding Hue, UpdateSourceTrigger=PropertyChanged}"
+                                  ItemsSource="{Binding DataContext.Colors, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                  ToolTip="A color name such as Red, or A,R,G,B numbers. Empty for none." />
+                        <TextBlock Grid.Row="2" Text="Alternate art" Style="{StaticResource FieldLabel}"
+                                   Visibility="{Binding DataContext.IsWeapon, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource Visible}}" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AlternateItemId, UpdateSourceTrigger=PropertyChanged}"
+                                 Visibility="{Binding DataContext.IsWeapon, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource Visible}}"
+                                 ToolTip="Daggers: the poisoned art. Bows: the nocked art. 0 uses the same art." />
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Weapon" Visibility="{Binding DataContext.IsWeapon, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource Visible}}">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Type" Style="{StaticResource FieldLabel}" />
+                            <ComboBox Grid.Row="0" Grid.Column="1" SelectedItem="{Binding WeaponType}"
+                                      ItemsSource="{Binding DataContext.WeaponTypes, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <TextBlock Grid.Row="1" Text="Skill" Style="{StaticResource FieldLabel}" />
+                            <ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding Skill, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding DataContext.Skills, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                      ToolTip="Empty uses the type's own skill" />
+                            <TextBlock Grid.Row="2" Text="Damage" Style="{StaticResource FieldLabel}" />
+                            <UniformGrid Grid.Row="2" Grid.Column="1" Columns="2">
+                                <TextBox Margin="0,3,2,3" Text="{Binding MinimumDamage, UpdateSourceTrigger=PropertyChanged}" ToolTip="Minimum" />
+                                <TextBox Margin="2,3,0,3" Text="{Binding MaximumDamage, UpdateSourceTrigger=PropertyChanged}" ToolTip="Maximum" />
+                            </UniformGrid>
+                            <TextBlock Grid.Row="3" Text="Attack bonus" Style="{StaticResource FieldLabel}" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding AttackBonus, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="4" Text="Block bonus" Style="{StaticResource FieldLabel}" />
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ArmorBonus, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="5" Text="Shield penetration" Style="{StaticResource FieldLabel}" />
+                            <ComboBox Grid.Row="5" Grid.Column="1" IsEditable="True" Text="{Binding Penetration, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding DataContext.Penetrations, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                      ToolTip="Empty uses the type's own" />
+                        </Grid>
+                        <TextBlock Text="Flags (none ticked keeps the type's own)" FontWeight="Bold" Margin="0,6,0,0" />
+                        <ItemsControl ItemsSource="{Binding Flags}">
+                            <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate><DataTemplate>
+                                <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}" Margin="0,2,10,2" />
+                            </DataTemplate></ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Who can use it">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Level at least" Style="{StaticResource FieldLabel}" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RequiredLevel, UpdateSourceTrigger=PropertyChanged}" ToolTip="0 for any level" />
+                        <TextBlock Grid.Row="1" Text="Profession" Style="{StaticResource FieldLabel}" />
+                        <ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" Text="{Binding RequiredProfession, UpdateSourceTrigger=PropertyChanged}"
+                                  ItemsSource="{Binding DataContext.Professions, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                  ToolTip="Empty for anyone" />
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Description">
+                    <StackPanel>
+                        <TextBlock Text="When looked at" Style="{StaticResource FieldLabel}" />
+                        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="False" TextWrapping="Wrap" MinHeight="44" VerticalContentAlignment="Top" />
+                        <TextBlock Text="Added once identified" Style="{StaticResource FieldLabel}" />
+                        <TextBox Text="{Binding IdentifiedDescription, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" MinHeight="44" VerticalContentAlignment="Top" />
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <GridSplitter Grid.Column="3" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <!-- Right: art, problems, code, save -->
+        <Grid Grid.Column="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0">
+                <Border DockPanel.Dock="Left" Width="72" Height="72" Background="{StaticResource Checker}" BorderBrush="Gray" BorderThickness="1" Margin="0,0,8,4">
+                    <Image Source="{Binding ArtPreview}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                </Border>
+                <StackPanel>
+                    <TextBlock Text="{Binding ArtInfo}" TextWrapping="Wrap" FontSize="11" />
+                    <DockPanel Margin="0,4,0,0">
+                        <TextBlock Text="Find art" Style="{StaticResource FieldLabel}" />
+                        <TextBox Text="{Binding ArtSearch, UpdateSourceTrigger=PropertyChanged}" />
+                    </DockPanel>
+                </StackPanel>
+            </DockPanel>
+
+            <ListBox Grid.Row="1" x:Name="_art" ItemsSource="{Binding Art}" SelectionChanged="OnArtChosen"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.ScrollUnit="Pixel">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <wpfToolkit:VirtualizingWrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Width="70" ToolTip="{Binding Texture}">
+                            <Border Width="56" Height="56" Background="{StaticResource Checker}">
+                                <Image Source="{Binding Image}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                            </Border>
+                            <TextBlock Text="{Binding Id}" FontWeight="Bold" TextAlignment="Center" />
+                            <TextBlock Text="{Binding Name}" FontSize="10" TextAlignment="Center" TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <TextBlock Grid.Row="2" Text="{Binding Problems}" TextWrapping="Wrap" Margin="0,6,0,4" />
+
+            <TextBox Grid.Row="3" Text="{Binding Preview, Mode=OneWay}" IsReadOnly="True" FontFamily="Consolas" FontSize="12"
+                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalContentAlignment="Top" />
+
+            <StackPanel Grid.Row="4">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Save" Click="OnSave" FontWeight="Bold" />
+                    <Button Content="Copy code" Click="OnCopyCode" />
+                </StackPanel>
+                <TextBlock Text="{Binding Status}" Style="{StaticResource Hint}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
