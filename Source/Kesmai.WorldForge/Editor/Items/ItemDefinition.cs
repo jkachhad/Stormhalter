@@ -126,11 +126,14 @@ public class ItemDefinition : ObservableObject
 
 	public void SetFlagChoices(System.Collections.Generic.IEnumerable<string> names)
 	{
-		var checkedNames = Flags.Where(f => f.IsChecked == true).Select(f => f.Name).ToHashSet();
+		var checkedNames = Flags.Where(f => f.IsChecked == true).Select(f => f.Name).ToList();
+		var choices = names.ToList();
 
 		Flags.Clear();
 
-		foreach (var name in names)
+		// a ticked flag the list doesn't name (the server types didn't load, or the flag was renamed) stays ticked,
+		// so opening and saving a weapon never drops it
+		foreach (var name in choices.Concat(checkedNames.Except(choices)))
 		{
 			var option = new FlagOption(name) { IsChecked = checkedNames.Contains(name) };
 
