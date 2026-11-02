@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -46,19 +47,56 @@ public partial class QuestMakerDocument : UserControl
 		}
 	}
 
+	/// <summary>
+	/// How deep the branch map nests before a path carries on as its own top-level entry. Each level is a nested
+	/// TreeViewItem: a 40-stage chain took ~125 ms to lay out instead of ~85 ms, and a ~150-stage chain overflowed
+	/// the stack in WPF's layout and closed WorldForge. Eight levels also still fit the panel's width.
+	/// </summary>
+	private const int MaxBranchDepth = 8;
+
+	/* what the branch map was last drawn from, so edits that don't change it (most typing) skip the rebuild */
+	private QuestDefinition? _branchQuest;
+	private string? _branchKey;
+
+	/// <summary>Everything the branch map shows: the first stage, and each stage's name, description and choices.</summary>
+	private static string BranchKey(QuestDefinition quest)
+	{
+		var key = new StringBuilder(quest.StartStage).Append('\n');
+
+		foreach (var stage in quest.Stages)
+		{
+			key.Append(stage.Id).Append('\t').Append(Describe(stage));
+
+			foreach (var choice in stage.Choices)
+				key.Append('\t').Append(choice.Label).Append('\t').Append(choice.Next);
+
+			key.Append('\n');
+		}
+
+		return key.ToString();
+	}
+
 	/// <summary>Draws the quest as a tree of paths from the first stage: each choice leads into the stage it opens.</summary>
 	private void BuildBranchMap()
 	{
-		_branches.Items.Clear();
-
 		var quest = _viewModel?.Quest;
+		var key = quest is null ? null : BranchKey(quest);
+
+		if (ReferenceEquals(quest, _branchQuest) && key == _branchKey)
+			return;
+
+		_branchQuest = quest;
+		_branchKey = key;
+
+		_branches.Items.Clear();
 
 		if (quest is null)
 			return;
 
 		var shown = new HashSet<string>();
+		var continued = new Queue<string>();
 
-		TreeViewItem StageItem(string id, string? via)
+		TreeViewItem StageItem(string id, string? via, int depth)
 		{
 			var stage = quest.Stages.FirstOrDefault(s => s.Id == id);
 			var label = stage is null ? $"{id} (missing!)" : $"{id} · {Describe(stage)}";
@@ -76,26 +114,51 @@ public partial class QuestMakerDocument : UserControl
 				return item;
 			}
 
-			if (!shown.Add(id))
+			if (shown.Contains(id))
 			{
 				item.Header += "  (see above)";
 				return item;
 			}
 
+			if (depth >= MaxBranchDepth && stage.Choices.Count > 0)
+			{
+				item.Header += "  (continued below)";
+				continued.Enqueue(id);
+				return item;
+			}
+
+			shown.Add(id);
+
 			foreach (var choice in stage.Choices)
-				item.Items.Add(StageItem(choice.Next, choice.Label));
+				item.Items.Add(StageItem(choice.Next, choice.Label, depth + 1));
 
 			return item;
 		}
 
-		_branches.Items.Add(StageItem(quest.StartStage, null));
+		/* adds a top-level path, then the paths it was too deep to show in place */
+		void AddRoot(TreeViewItem item)
+		{
+			_branches.Items.Add(item);
+
+			while (continued.TryDequeue(out var id))
+			{
+				if (shown.Contains(id))
+					continue;
+
+				var next = StageItem(id, null, 0);
+				next.Header = $"{next.Header}  (continued)";
+				_branches.Items.Add(next);
+			}
+		}
+
+		AddRoot(StageItem(quest.StartStage, null, 0));
 
 		foreach (var id in QuestCodeGenerator.Unreachable(quest))
 		{
-			var item = StageItem(id, null);
+			var item = StageItem(id, null, 0);
 			item.Header = $"{item.Header}  (unreachable)";
 			item.Foreground = System.Windows.Media.Brushes.Gray;
-			_branches.Items.Add(item);
+			AddRoot(item);
 		}
 	}
 
@@ -190,8 +253,18 @@ public class QuestMakerViewModel : ObservableObject
 		get => _segment;
 		set
 		{
+			var previous = _segment;
+
 			if (SetProperty(ref _segment, value))
 			{
+				// the open file belongs to the segment being left: keep the quest as an unsaved draft here, so saving
+				// doesn't treat the other segment's file as this quest's old name and offer to delete it
+				if (previous is not null && _loadedPath is not null)
+				{
+					_loadedPath = null;
+					Status = "Another segment was opened. This quest isn't saved in it yet.";
+				}
+
 				RefreshFiles();
 				Refresh();
 			}
@@ -263,13 +336,91 @@ public class QuestMakerViewModel : ObservableObject
 
 		_loadingFile = false;
 
-		EntityNames.Clear();
+		RefreshEntityNames();
+	}
 
-		if (_segment is not null)
+	/* the entities the kill dropdown is listening to, so it follows entities being added, removed and renamed */
+	private SegmentEntities? _watchedEntityList;
+	private readonly HashSet<SegmentEntity> _watchedEntities = new();
+	private bool _entityNamesPending;
+
+	private void RefreshEntityNames()
+	{
+		_entityNamesPending = false;
+
+		WatchEntities();
+
+		var names = _segment?.Entities.Select(e => e.Name).Where(n => !String.IsNullOrWhiteSpace(n)).Distinct().OrderBy(n => n).ToList() ?? [];
+
+		/* update in place so the editable combo box keeps its text */
+		var wanted = names.ToHashSet();
+
+		for (var i = EntityNames.Count - 1; i >= 0; i--)
 		{
-			foreach (var name in _segment.Entities.Select(e => e.Name).Where(n => !String.IsNullOrWhiteSpace(n)).OrderBy(n => n))
-				EntityNames.Add(name);
+			if (!wanted.Contains(EntityNames[i]))
+				EntityNames.RemoveAt(i);
 		}
+
+		for (var i = 0; i < names.Count; i++)
+		{
+			if (i < EntityNames.Count && EntityNames[i] == names[i])
+				continue;
+
+			var at = EntityNames.IndexOf(names[i]);
+
+			if (at >= 0)
+				EntityNames.Move(at, i);
+			else
+				EntityNames.Insert(i, names[i]);
+		}
+	}
+
+	private void WatchEntities()
+	{
+		var list = _segment?.Entities;
+
+		if (!ReferenceEquals(list, _watchedEntityList))
+		{
+			if (_watchedEntityList is not null)
+				_watchedEntityList.CollectionChanged -= OnEntitiesChanged;
+
+			_watchedEntityList = list;
+
+			if (list is not null)
+				list.CollectionChanged += OnEntitiesChanged;
+		}
+
+		var current = list?.ToHashSet() ?? [];
+
+		foreach (var entity in _watchedEntities.Where(e => !current.Contains(e)).ToList())
+		{
+			entity.PropertyChanged -= OnEntityChanged;
+			_watchedEntities.Remove(entity);
+		}
+
+		foreach (var entity in current)
+		{
+			if (_watchedEntities.Add(entity))
+				entity.PropertyChanged += OnEntityChanged;
+		}
+	}
+
+	private void OnEntitiesChanged(object? sender, NotifyCollectionChangedEventArgs e) => ScheduleEntityNames();
+
+	private void OnEntityChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		if (e.PropertyName == nameof(SegmentEntity.Name))
+			ScheduleEntityNames();
+	}
+
+	/* coalesced, so loading or pasting many entities updates the list once */
+	private void ScheduleEntityNames()
+	{
+		if (_entityNamesPending)
+			return;
+
+		_entityNamesPending = true;
+		_refresh.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(RefreshEntityNames));
 	}
 
 	private void Open(QuestFile file)

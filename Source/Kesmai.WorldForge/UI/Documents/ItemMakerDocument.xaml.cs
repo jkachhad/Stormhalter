@@ -130,8 +130,18 @@ public class ItemMakerViewModel : ObservableObject
 		get => _segment;
 		set
 		{
+			var previous = _segment;
+
 			if (SetProperty(ref _segment, value))
 			{
+				// the open file belongs to the segment being left: keep the item as an unsaved draft here, so saving
+				// doesn't treat the other segment's file as this item's old name and offer to delete it
+				if (previous is not null && _loadedPath is not null)
+				{
+					_loadedPath = null;
+					Status = $"Another segment was opened. {_item.ClassName} isn't saved in it yet.";
+				}
+
 				RefreshFiles();
 				Refresh();
 			}

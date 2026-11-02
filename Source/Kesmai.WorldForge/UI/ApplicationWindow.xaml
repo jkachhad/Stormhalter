@@ -213,12 +213,17 @@
                 
             </LayoutRoot>
             
-            <DockingManager.LayoutItemContainerStyle>
-                <Style TargetType="{x:Type LayoutItem}" >
-                    <Setter Property="Title" Value="{Binding Model.Name}" />
-                </Style>
-            </DockingManager.LayoutItemContainerStyle>
-
+            <!-- Documents take their title from their content; panels keep the Title set on them above. -->
+            <DockingManager.LayoutItemContainerStyleSelector>
+                <ui:LayoutItemStyleSelector>
+                    <ui:LayoutItemStyleSelector.DocumentStyle>
+                        <Style TargetType="{x:Type LayoutDocumentItem}">
+                            <Setter Property="Title" Value="{Binding Model.Name}" />
+                        </Style>
+                    </ui:LayoutItemStyleSelector.DocumentStyle>
+                </ui:LayoutItemStyleSelector>
+            </DockingManager.LayoutItemContainerStyleSelector>
+           
         </DockingManager>
 
         <!-- Start: while no segment is open, the empty document area offers to create or open one -->

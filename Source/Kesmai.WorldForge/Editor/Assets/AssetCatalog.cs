@@ -1,6 +1,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -304,53 +305,75 @@ public class BodyAsset
 	public string Texture { get; init; } = String.Empty;
 	public Int32Rect? Source { get; init; }
 
+	/// <summary>
+	/// Decoded textures, shared by every body cut from them (150 bodies use entities001 alone). Bodies load
+	/// from background threads, so each texture is decoded once here and frozen before any body sees it,
+	/// rather than relying on WPF's own image cache.
+	/// </summary>
+	private static readonly ConcurrentDictionary<string, Lazy<BitmapSource?>> _textures = new(StringComparer.OrdinalIgnoreCase);
+
 	private readonly string _texturePath = String.Empty;
-	private BitmapSource? _image;
-	private bool _imageLoaded;
+	private readonly Lazy<BitmapSource?> _image;
 
 	public string Label => String.IsNullOrEmpty(Name) ? Id.ToString() : $"{Id}  {Name}";
 
-	/// <summary>The body's first frame, cropped from its texture. Loaded the first time it is shown.</summary>
-	public BitmapSource? Image
-	{
-		get
-		{
-			if (_imageLoaded)
-				return _image;
-
-			_imageLoaded = true;
-
-			try
-			{
-				if (!File.Exists(_texturePath))
-					return null;
-
-				var bitmap = new BitmapImage();
-				bitmap.BeginInit();
-				bitmap.CacheOption = BitmapCacheOption.OnLoad;
-				bitmap.UriSource = new Uri(_texturePath);
-				bitmap.EndInit();
-
-				BitmapSource image = bitmap;
-
-				if (Source is Int32Rect source && source.X + source.Width <= bitmap.PixelWidth && source.Y + source.Height <= bitmap.PixelHeight)
-					image = new CroppedBitmap(bitmap, source);
-
-				image.Freeze();
-				_image = image;
-			}
-			catch
-			{
-				_image = null;
-			}
-
-			return _image;
-		}
-	}
+	/// <summary>
+	/// The body's first frame, cropped from its texture. Loaded the first time it is shown; safe to read from
+	/// any thread, so the gallery loads it off the UI thread.
+	/// </summary>
+	public BitmapSource? Image => _image.Value;
 
 	private BodyAsset(string texturePath)
 	{
 		_texturePath = texturePath;
+		_image = new Lazy<BitmapSource?>(LoadImage);
+	}
+
+	private BitmapSource? LoadImage()
+	{
+		try
+		{
+			var texture = _textures.GetOrAdd(_texturePath, path => new Lazy<BitmapSource?>(() => LoadTexture(path))).Value;
+
+			if (texture is null)
+				return null;
+
+			BitmapSource image = texture;
+
+			if (Source is Int32Rect source && source.X + source.Width <= texture.PixelWidth && source.Y + source.Height <= texture.PixelHeight)
+				image = new CroppedBitmap(texture, source);
+
+			image.Freeze();
+
+			return image;
+		}
+		catch
+		{
+			return null;
+		}
+	}
+
+	private static BitmapSource? LoadTexture(string path)
+	{
+		try
+		{
+			if (!File.Exists(path))
+				return null;
+
+			var bitmap = new BitmapImage();
+			bitmap.BeginInit();
+			bitmap.CacheOption = BitmapCacheOption.OnLoad;
+			bitmap.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+			bitmap.UriSource = new Uri(path);
+			bitmap.EndInit();
+			bitmap.Freeze();
+
+			return bitmap;
+		}
+		catch
+		{
+			return null;
+		}
 	}
 
 	public static BodyAsset? FromElement(XElement element, string contentPath)
@@ -368,8 +391,14 @@ public class BodyAsset
 		if (parts.Length == 4 && parts.All(p => p >= 0))
 			source = new Int32Rect(parts[0], parts[1], parts[2], parts[3]);
 
-		// the body's name is kept in the comment just above it
-		var comment = element.NodesBeforeSelf().LastOrDefault(n => n is not XText) as XComment;
+		// the body's name is kept in the comment just above it. Step back over whitespace rather than
+		// searching every earlier node, which made reading the file quadratic in the number of bodies.
+		var previous = element.PreviousNode;
+
+		while (previous is XText)
+			previous = previous.PreviousNode;
+
+		var comment = previous as XComment;
 
 		return new BodyAsset(texturePath)
 		{

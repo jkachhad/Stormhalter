@@ -19,6 +19,10 @@ public static class ItemCodeGenerator
 
 		if (!ItemDefinition.IsIdentifier(item.ClassName))
 			problems.Add($"The class name \"{item.ClassName}\" must be letters, digits and underscores, starting with a letter.");
+		else if (SyntaxFacts.GetKeywordKind(item.ClassName) != SyntaxKind.None || SyntaxFacts.GetContextualKeywordKind(item.ClassName) != SyntaxKind.None)
+			problems.Add($"The class name \"{item.ClassName}\" is a C# word; pick another.");
+		else if (String.Equals(item.ClassName, item.Kind == ItemKind.Weapon ? item.WeaponType : "ItemEntity", StringComparison.Ordinal))
+			problems.Add($"The class can't be named \"{item.ClassName}\", the same as the class it's built on. Try {item.ClassName}2 or a more specific name.");
 
 		if (String.IsNullOrWhiteSpace(item.DisplayName))
 			problems.Add("Give the item a name players will see.");
