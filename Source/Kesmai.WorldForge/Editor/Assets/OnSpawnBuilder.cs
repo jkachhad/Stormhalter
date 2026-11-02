@@ -252,6 +252,8 @@ public class OnSpawnBuilder : ObservableObject
 
 	private void Watch<T>(ObservableCollection<T> collection) where T : INotifyPropertyChanged
 	{
+		_watched.Add(collection);
+
 		collection.CollectionChanged += (_, args) =>
 		{
 			if (args.NewItems != null)
@@ -266,14 +268,159 @@ public class OnSpawnBuilder : ObservableObject
 					item.PropertyChanged -= OnRowChanged;
 			}
 
-			Changed?.Invoke(this, EventArgs.Empty);
+			if (!_copying)
+				Changed?.Invoke(this, EventArgs.Empty);
 		};
 
 		foreach (var item in collection)
 			item.PropertyChanged += OnRowChanged;
 	}
 
-	private void OnRowChanged(object? sender, PropertyChangedEventArgs e) => Changed?.Invoke(this, EventArgs.Empty);
+	private void OnRowChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		if (!_copying)
+			Changed?.Invoke(this, EventArgs.Empty);
+	}
+
+	// the lists Watch listens to, and whether CopyFrom is filling this builder (it reports one change at the end)
+	private readonly List<System.Collections.IEnumerable> _watched = new();
+	private bool _copying;
+
+	/// <summary>
+	/// The fields CopyFrom copies: every instance field of the builder except the Changed event and CopyFrom's
+	/// own state. Found by reflection so a field added later is copied too.
+	/// </summary>
+	private static readonly System.Reflection.FieldInfo[] _copiedFields = typeof(OnSpawnBuilder)
+		.GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.DeclaredOnly)
+		.Where(f => !typeof(Delegate).IsAssignableFrom(f.FieldType) && f.Name is not (nameof(_watched) or nameof(_copying)))
+		.ToArray();
+
+	private static bool IsRowList(Type type) => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ObservableCollection<>);
+
+	/// <summary>
+	/// Whether <see cref="CopyFrom"/> can copy every field. A read-only field must be a row list, a list or a set,
+	/// whose contents are copied; otherwise the panel shows a parsed builder by swapping it in instead.
+	/// </summary>
+	public static bool CanCopy { get; } = _copiedFields.All(f => !f.IsInitOnly || IsRowList(f.FieldType)
+		|| typeof(System.Collections.IList).IsAssignableFrom(f.FieldType) || f.FieldType == typeof(HashSet<string>));
+
+	/// <summary>
+	/// Makes this builder a copy of another, usually one that just parsed a script. This builder keeps its own
+	/// lists and the rows in them, and rows are updated rather than replaced where they can be, so a form bound to
+	/// it updates its fields instead of rebuilding its grids. Raises <see cref="Changed"/> once.
+	/// </summary>
+	public void CopyFrom(OnSpawnBuilder source)
+	{
+		if (!CanCopy)
+			throw new InvalidOperationException("OnSpawnBuilder has a read-only field CopyFrom can't copy.");
+
+		_copying = true;
+
+		try
+		{
+			foreach (var field in _copiedFields)
+			{
+				var value = field.GetValue(source);
+				var current = field.GetValue(this);
+
+				if (ReferenceEquals(value, current))
+					continue;
+
+				if (IsRowList(field.FieldType))
+				{
+					CopyRows((System.Collections.IList)current!, (System.Collections.IList)value!);
+				}
+				else if (field.IsInitOnly && current is System.Collections.IList list)
+				{
+					list.Clear();
+
+					foreach (var item in (System.Collections.IList)value!)
+						list.Add(item);
+				}
+				else if (field.IsInitOnly && current is HashSet<string> set)
+				{
+					set.Clear();
+					set.UnionWith((HashSet<string>)value!);
+				}
+				else
+				{
+					field.SetValue(this, value);
+				}
+			}
+		}
+		finally
+		{
+			_copying = false;
+		}
+
+		// rows moved over from the source no longer report to it
+		source.Unwatch();
+
+		// every property may have changed
+		OnPropertyChanged(String.Empty);
+		Changed?.Invoke(this, EventArgs.Empty);
+	}
+
+	private void Unwatch()
+	{
+		foreach (var list in _watched)
+		{
+			foreach (INotifyPropertyChanged item in list)
+				item.PropertyChanged -= OnRowChanged;
+		}
+	}
+
+	/// <summary>Makes <paramref name="target"/> hold the same rows as <paramref name="source"/>, keeping its own rows where it can.</summary>
+	private static void CopyRows(System.Collections.IList target, System.Collections.IList source)
+	{
+		for (var i = 0; i < source.Count; i++)
+		{
+			if (i < target.Count && CopyRow(target[i]!, source[i]!))
+				continue;
+
+			if (i < target.Count)
+				target[i] = source[i];
+			else
+				target.Add(source[i]);
+		}
+
+		while (target.Count > source.Count)
+			target.RemoveAt(target.Count - 1);
+	}
+
+	private static readonly Dictionary<Type, (System.Reflection.PropertyInfo[] Settable, System.Reflection.PropertyInfo[] Fixed, System.Reflection.FieldInfo[] Fields)> _rowMembers = new();
+
+	/// <summary>
+	/// Copies one row's values into another of the same type through its properties, so bindings to it update.
+	/// False when it can't: another type, a get-only property that differs, or state no property sets.
+	/// </summary>
+	private static bool CopyRow(object target, object source)
+	{
+		var type = source.GetType();
+
+		if (target.GetType() != type)
+			return false;
+
+		if (!_rowMembers.TryGetValue(type, out var members))
+		{
+			var properties = type.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public)
+				.Where(p => p.GetIndexParameters().Length == 0).ToArray();
+
+			_rowMembers[type] = members = (
+				properties.Where(p => p.CanWrite).ToArray(),
+				properties.Where(p => !p.CanWrite).ToArray(),
+				type.GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.DeclaredOnly)
+					.Where(f => !typeof(Delegate).IsAssignableFrom(f.FieldType)).ToArray());
+		}
+
+		if (members.Fixed.Any(p => !Equals(p.GetValue(target), p.GetValue(source))))
+			return false;
+
+		foreach (var property in members.Settable)
+			property.SetValue(target, property.GetValue(source));
+
+		return members.Fields.All(f => Equals(f.GetValue(target), f.GetValue(source)));
+	}
 
 	private static bool Has(string? text) => !String.IsNullOrWhiteSpace(text);
 

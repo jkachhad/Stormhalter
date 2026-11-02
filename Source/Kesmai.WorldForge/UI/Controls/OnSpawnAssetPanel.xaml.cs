@@ -90,9 +90,48 @@ public partial class OnSpawnAssetPanel : UserControl
 
 		// a script the builder couldn't read starts the form empty; writing it would replace that script
 		_unreadScript = result is { Succeeded: false };
-		SetBuilder(_unreadScript ? NewBuilder() : builder);
+		ShowBuilder(_unreadScript ? NewBuilder() : builder);
 
 		return result;
+	}
+
+	/// <summary>
+	/// Shows a newly parsed builder by copying it into the one on screen. Swapping in the new builder gave every
+	/// grid new rows to build, which was about two thirds of selecting a creature with the Builder tab open.
+	/// </summary>
+	private void ShowBuilder(OnSpawnBuilder builder)
+	{
+		if (!OnSpawnBuilder.CanCopy)
+		{
+			SetBuilder(builder);
+			return;
+		}
+
+		// an edit in progress belongs to the creature being left, not to the row that is about to show the next one
+		foreach (var grid in FindGrids(_builderRoot))
+		{
+			grid.CancelEdit(DataGridEditingUnit.Cell);
+			grid.CancelEdit(DataGridEditingUnit.Row);
+		}
+
+		_builder.CopyFrom(builder);
+
+		if (_catalog is not null)
+			ShowBuilderBodyAndHue();
+	}
+
+	private static IEnumerable<DataGrid> FindGrids(DependencyObject parent)
+	{
+		for (var i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+		{
+			var child = VisualTreeHelper.GetChild(parent, i);
+
+			if (child is DataGrid grid)
+				yield return grid;
+			else
+				foreach (var nested in FindGrids(child))
+					yield return nested;
+		}
 	}
 
 	private OnSpawnBuilder NewBuilder()
