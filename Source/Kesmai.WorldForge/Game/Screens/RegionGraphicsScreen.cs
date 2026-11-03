@@ -211,6 +211,37 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 		yield return _contextMenu.Create("Convert to Segment Template", convertTemplate);
 
+		// a tile teleporters lead to (the teleporter overlay's squares) can jump to each teleporter that leads here
+		var sources = new List<(SegmentRegion Region, int X, int Y)>();
+
+		foreach (var sourceRegion in segment.Regions)
+		foreach (var sourceTile in sourceRegion.GetTiles())
+		{
+			if (FindTeleporter(sourceTile.Providers) is { } teleporter && teleporter.DestinationRegion == region.ID
+			    && teleporter.DestinationX == mx && teleporter.DestinationY == my)
+				sources.Add((sourceRegion, sourceTile.X, sourceTile.Y));
+		}
+
+		if (sources.Count > 0)
+			yield return _contextMenu.CreateSeparator();
+
+		foreach (var (sourceRegion, sx, sy) in sources.Take(10))
+		{
+			var label = sourceRegion == region
+				? $"Go to source: here ({sx}, {sy})"
+				: $"Go to source: region {sourceRegion.ID} {sourceRegion.Name} ({sx}, {sy})";
+
+			yield return _contextMenu.Create(label, (_, _) =>
+			{
+				// the region's view shows and selects the tile once it is up (as the problems panel does)
+				applicationPresenter.PendingNavigation = new RegionNavigation(sourceRegion, sx, sy);
+				sourceRegion.Present(applicationPresenter);
+			});
+		}
+
+		if (sources.Count > 10)
+			yield return _contextMenu.Create($"... and {sources.Count - 10} more teleporters lead here", (_, _) => { });
+
 		// a sky tile can fill the destinations of the sky tiles joined to it, moved by their distance from it
 		if (SkyDestinationFill.SkyOn(segmentTile) is { } sky)
 		{
