@@ -210,6 +210,16 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 
 		yield return _contextMenu.Create("Convert to Segment Template", convertTemplate);
+		yield return _contextMenu.Create($"Bookmark this tile ({mx}, {my})...", (_, _) =>
+		{
+			var dialog = new Kesmai.WorldForge.UI.Documents.InputDialog("Bookmark name", $"{region.Name} ({mx}, {my})")
+			{
+				Owner = System.Windows.Application.Current.MainWindow,
+			};
+
+			if (dialog.ShowDialog() is true && !string.IsNullOrWhiteSpace(dialog.Input))
+				Bookmarks.Add(new Bookmarks.Bookmark(Bookmarks.KeyFor(segment), dialog.Input.Trim(), region.ID, mx, my));
+		});
 		yield return _contextMenu.Create(_selection.Region == region && _selection.SurfaceArea > 0
 			? "Find & replace tiles in selection..." : "Find & replace tiles in region...", replaceTiles);
 
