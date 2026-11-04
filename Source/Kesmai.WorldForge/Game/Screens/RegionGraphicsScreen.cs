@@ -189,6 +189,13 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		_editingSnapshot = TileSnapshot.Capture(_editingTile);
 	}
 	
+	/// <summary>
+	/// A menu handler that opens a window: it runs after the map's frame, since a window opened while the map is
+	/// drawing lets the map draw again inside it, which crashes.
+	/// </summary>
+	private static EventHandler<EventArgs> AfterFrame(Action action)
+		=> (_, _) => System.Windows.Application.Current.Dispatcher.BeginInvoke(action);
+
 	protected override IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
 	{
 		var services = ServiceLocator.Current;
@@ -210,7 +217,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 
 		yield return _contextMenu.Create("Convert to Segment Template", convertTemplate);
-		yield return _contextMenu.Create($"Bookmark this tile ({mx}, {my})...", (_, _) =>
+		yield return _contextMenu.Create($"Bookmark this tile ({mx}, {my})...", AfterFrame(() =>
 		{
 			var dialog = new Kesmai.WorldForge.UI.Documents.InputDialog("Bookmark name", $"{region.Name} ({mx}, {my})")
 			{
@@ -219,15 +226,15 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 			if (dialog.ShowDialog() is true && !string.IsNullOrWhiteSpace(dialog.Input))
 				Bookmarks.Add(new Bookmarks.Bookmark(Bookmarks.KeyFor(segment), dialog.Input.Trim(), region.ID, mx, my));
-		});
+		}));
 		yield return _contextMenu.Create(_selection.Region == region && _selection.SurfaceArea > 0
-			? "Find & replace tiles in selection..." : "Find & replace tiles in region...", replaceTiles);
+			? "Find & replace tiles in selection..." : "Find & replace tiles in region...", AfterFrame(replaceTiles));
 
 		yield return _contextMenu.CreateSeparator();
-		yield return _contextMenu.Create($"Stamps: paste at ({mx}, {my})...", openStamps);
+		yield return _contextMenu.Create($"Stamps: paste at ({mx}, {my})...", AfterFrame(openStamps));
 
 		if (_selection.Region == region && _selection.FirstOrDefault() is { IsEmpty: false } stampArea)
-			yield return _contextMenu.Create($"Save selection as a stamp ({stampArea.Width} x {stampArea.Height})...", saveStamp);
+			yield return _contextMenu.Create($"Save selection as a stamp ({stampArea.Width} x {stampArea.Height})...", AfterFrame(saveStamp));
 
 		// the copied tiles can be turned or mirrored before Ctrl+V pastes them
 		if (TileBlock.FromClipboard() is { } copied)
@@ -345,7 +352,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			}
 		}
 
-		void replaceTiles(object sender, EventArgs e)
+		void replaceTiles()
 		{
 			var tiles = TileReplace.Tiles(region, _selection);
 			var inSelection = _selection.Region == region && _selection.SurfaceArea > 0;
@@ -375,7 +382,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			}
 		}
 
-		void openStamps(object sender, EventArgs e)
+		void openStamps()
 		{
 			var window = new Kesmai.WorldForge.UI.Windows.StampsWindow($"({mx}, {my})", block =>
 			{
@@ -395,7 +402,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			window.ShowDialog();
 		}
 
-		void saveStamp(object sender, EventArgs e)
+		void saveStamp()
 		{
 			var area = _selection.FirstOrDefault();
 			var dialog = new Kesmai.WorldForge.UI.Documents.InputDialog("Stamp name", $"Stamp {area.Width}x{area.Height}")
