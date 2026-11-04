@@ -1406,6 +1406,113 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 					spriteBatch.DrawRectangle(bounds, regionBorderColor);
 				}
 			}
+
+			// what each spawner spawns: its creatures' body pictures, with its name when the tiles are big enough
+			var labels = TileSize >= 40;
+
+			foreach (var locationSpawner in segment.Spawns.Location)
+			{
+				if (locationSpawner.Region != region.ID || !viewRectangle.Contains(locationSpawner.X, locationSpawner.Y))
+					continue;
+
+				var bounds = GetRenderRectangle(viewRectangle, locationSpawner.X, locationSpawner.Y);
+
+				DrawSpawnerBodies(spriteBatch, locationSpawner, bounds.Location, 1);
+
+				if (labels)
+					DrawLabel(spriteBatch, locationSpawner.Name, new Vector2(bounds.X + 2, bounds.Bottom + 1), locationBorderColor);
+			}
+
+			foreach (var regionSpawner in segment.Spawns.Region)
+			{
+				if (regionSpawner.Region != region.ID)
+					continue;
+
+				foreach (var inclusion in regionSpawner.Inclusions)
+				{
+					if (!viewRectangle.Intersects(inclusion.ToRectangle()))
+						continue;
+
+					var area = inclusion.ToRectangle();
+					var bounds = GetRenderRectangle(viewRectangle, area);
+
+					// along the area's top, as many as fit
+					DrawSpawnerBodies(spriteBatch, regionSpawner, new Point(bounds.X, bounds.Y), Math.Max(1, area.Width));
+
+					if (labels)
+						DrawLabel(spriteBatch, regionSpawner.Name, new Vector2(bounds.X + 3, bounds.Y + TileSize + 1), regionBorderColor);
+				}
+			}
 		}
+	}
+
+	// body pictures drawn on the map, made once for each body
+	private readonly Dictionary<int, Texture2D> _bodyTextures = new();
+
+	/// <summary>The body pictures of a spawner's creatures, one tile each, from <paramref name="at"/> to the right.</summary>
+	private void DrawSpawnerBodies(SpriteBatch spriteBatch, SegmentSpawner spawner, Point at, int room)
+	{
+		var size = TileSize;
+		var drawn = 0;
+
+		foreach (var entity in spawner.Entries.Select(e => e.SegmentEntity).Where(e => e is not null).Distinct())
+		{
+			if (drawn >= room)
+				break;
+
+			if (BodyTexture(spriteBatch.GraphicsDevice, entity) is not { } texture)
+				continue;
+
+			// fit the picture in the tile, keeping its shape
+			var scale = Math.Min((float)size / texture.Width, (float)size / texture.Height);
+			var width = (int)(texture.Width * scale);
+			var height = (int)(texture.Height * scale);
+			var left = at.X + drawn * size + (size - width) / 2;
+			var top = at.Y + (size - height) / 2;
+
+			spriteBatch.Draw(texture, new Rectangle(left, top, width, height), Color.White);
+			drawn++;
+		}
+	}
+
+	private Texture2D BodyTexture(GraphicsDevice device, SegmentEntity entity)
+	{
+		if (Kesmai.WorldForge.Editor.Assets.EntityBody.IdOf(entity) is not { } id)
+			return null;
+
+		if (_bodyTextures.TryGetValue(id, out var texture))
+			return texture;
+
+		// still loading: asked again on the next frame
+		if (Kesmai.WorldForge.Editor.Assets.EntityBody.PictureOf(entity) is not { } picture)
+			return null;
+
+		System.Windows.Media.Imaging.BitmapSource source = picture;
+
+		if (source.Format != System.Windows.Media.PixelFormats.Pbgra32)
+			source = new System.Windows.Media.Imaging.FormatConvertedBitmap(source, System.Windows.Media.PixelFormats.Pbgra32, null, 0);
+
+		var bytes = new byte[source.PixelWidth * source.PixelHeight * 4];
+		source.CopyPixels(bytes, source.PixelWidth * 4, 0);
+
+		// premultiplied BGRA to the premultiplied RGBA the sprite batch blends
+		var colors = new Color[source.PixelWidth * source.PixelHeight];
+
+		for (var i = 0; i < colors.Length; i++)
+			colors[i] = new Color(bytes[i * 4 + 2], bytes[i * 4 + 1], bytes[i * 4], bytes[i * 4 + 3]);
+
+		texture = new Texture2D(device, source.PixelWidth, source.PixelHeight);
+		texture.SetData(colors);
+
+		_bodyTextures[id] = texture;
+		return texture;
+	}
+
+	private void DrawLabel(SpriteBatch spriteBatch, string text, Vector2 at, Color color)
+	{
+		if (string.IsNullOrEmpty(text))
+			return;
+
+		_font.DrawString(spriteBatch, RenderTransform.Identity, text, at, color);
 	}
 }
