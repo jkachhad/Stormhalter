@@ -219,6 +219,15 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		if (_selection.Region == region && _selection.FirstOrDefault() is { IsEmpty: false } stampArea)
 			yield return _contextMenu.Create($"Save selection as a stamp ({stampArea.Width} x {stampArea.Height})...", saveStamp);
 
+		// the copied tiles can be turned or mirrored before Ctrl+V pastes them
+		if (TileBlock.FromClipboard() is { } copied)
+		{
+			yield return _contextMenu.Create($"Copied tiles ({copied.Width} x {copied.Height}): rotate clockwise", (_, _) => TileBlock.FromClipboard()?.Rotate(true).ToClipboard());
+			yield return _contextMenu.Create("Copied tiles: rotate counterclockwise", (_, _) => TileBlock.FromClipboard()?.Rotate(false).ToClipboard());
+			yield return _contextMenu.Create("Copied tiles: flip left to right", (_, _) => TileBlock.FromClipboard()?.FlipHorizontal().ToClipboard());
+			yield return _contextMenu.Create("Copied tiles: flip top to bottom", (_, _) => TileBlock.FromClipboard()?.FlipVertical().ToClipboard());
+		}
+
 		// a tile teleporters lead to (the teleporter overlay's squares) can jump to each teleporter that leads here
 		var sources = new List<(SegmentRegion Region, int X, int Y)>();
 
