@@ -344,6 +344,19 @@ public partial class SegmentTreeControl : UserControl
                 new Kesmai.WorldForge.UI.Windows.CreatureTableWindow(segment) { Owner = Window.GetWindow(this) }.Show();
         };
         toolbar.Items.Add(creatures);
+
+        // one search over entities, spawners, scripts, named things and tiles
+        var searchLook = new StackPanel { Orientation = Orientation.Horizontal };
+        searchLook.Children.Add(new TextBlock { Text = "🔍", FontSize = 14, Margin = new Thickness(0, 0, 3, 0), VerticalAlignment = VerticalAlignment.Center });
+        searchLook.Children.Add(new TextBlock { Text = "Search", VerticalAlignment = VerticalAlignment.Center, FontSize = 12 });
+
+        var search = new Button { Content = searchLook, Padding = new Thickness(4, 2, 4, 2), Margin = new Thickness(1, 0, 1, 0), ToolTip = "Search the whole segment: names, body ids, script text and tiles" };
+        search.Click += (_, _) =>
+        {
+            if (Segment is { } segment)
+                new Kesmai.WorldForge.UI.Windows.SearchWindow(segment) { Owner = Window.GetWindow(this) }.Show();
+        };
+        toolbar.Items.Add(search);
     }
 
     /// <summary>The segment's bookmarks as grid menu tiles, with a folder to remove them.</summary>
