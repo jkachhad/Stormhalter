@@ -357,6 +357,19 @@ public partial class SegmentTreeControl : UserControl
                 new Kesmai.WorldForge.UI.Windows.SearchWindow(segment) { Owner = Window.GetWindow(this) }.Show();
         };
         toolbar.Items.Add(search);
+
+        // every script compiled against the server, without starting it
+        var checkLook = new StackPanel { Orientation = Orientation.Horizontal };
+        checkLook.Children.Add(new TextBlock { Text = "✔", FontSize = 14, Margin = new Thickness(0, 0, 3, 0), VerticalAlignment = VerticalAlignment.Center });
+        checkLook.Children.Add(new TextBlock { Text = "Compile check", VerticalAlignment = VerticalAlignment.Center, FontSize = 12 });
+
+        var check = new Button { Content = checkLook, Padding = new Thickness(4, 2, 4, 2), Margin = new Thickness(1, 0, 1, 0), ToolTip = "Test-compile every OnSpawn, OnDeath and other script against the server's reference package" };
+        check.Click += (_, _) =>
+        {
+            if (Segment is { } segment)
+                new Kesmai.WorldForge.UI.Windows.CompileCheckWindow(segment) { Owner = Window.GetWindow(this) }.Show();
+        };
+        toolbar.Items.Add(check);
     }
 
     /// <summary>The segment's bookmarks as grid menu tiles, with a folder to remove them.</summary>
