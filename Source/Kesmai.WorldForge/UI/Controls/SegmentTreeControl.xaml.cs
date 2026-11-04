@@ -331,6 +331,19 @@ public partial class SegmentTreeControl : UserControl
         var bookmarks = new Button { Content = bookmarksLook, Padding = new Thickness(4, 2, 4, 2), Margin = new Thickness(1, 0, 1, 0), ToolTip = "Go to a bookmarked spot (right click a tile on the map to bookmark it)" };
         bookmarks.Click += (_, _) => GridMenu.Show(bookmarks, "Bookmarks", BookmarkEntries());
         toolbar.Items.Add(bookmarks);
+
+        // every entity with its OnSpawn values, sortable and editable in place
+        var creaturesLook = new StackPanel { Orientation = Orientation.Horizontal };
+        creaturesLook.Children.Add(new TextBlock { Text = "📋", FontSize = 14, Margin = new Thickness(0, 0, 3, 0), VerticalAlignment = VerticalAlignment.Center });
+        creaturesLook.Children.Add(new TextBlock { Text = "Creature table", VerticalAlignment = VerticalAlignment.Center, FontSize = 12 });
+
+        var creatures = new Button { Content = creaturesLook, Padding = new Thickness(4, 2, 4, 2), Margin = new Thickness(1, 0, 1, 0), ToolTip = "All the entities and their OnSpawn values in one table" };
+        creatures.Click += (_, _) =>
+        {
+            if (Segment is { } segment)
+                new Kesmai.WorldForge.UI.Windows.CreatureTableWindow(segment) { Owner = Window.GetWindow(this) }.Show();
+        };
+        toolbar.Items.Add(creatures);
     }
 
     /// <summary>The segment's bookmarks as grid menu tiles, with a folder to remove them.</summary>
