@@ -28,6 +28,16 @@ public sealed class TileBlock
 		Tiles = tiles.ToList();
 	}
 
+	/// <summary>The block turned a quarter turn, clockwise or not; its width and height swap.</summary>
+	public TileBlock Rotate(bool clockwise)
+		=> new(Height, Width, Tiles.Select(t => clockwise ? (Height - 1 - t.Y, t.X, t.Tile) : (t.Y, Width - 1 - t.X, t.Tile)));
+
+	/// <summary>The block mirrored left to right.</summary>
+	public TileBlock FlipHorizontal() => new(Width, Height, Tiles.Select(t => (Width - 1 - t.X, t.Y, t.Tile)));
+
+	/// <summary>The block mirrored top to bottom.</summary>
+	public TileBlock FlipVertical() => new(Width, Height, Tiles.Select(t => (t.X, Height - 1 - t.Y, t.Tile)));
+
 	/// <summary>The tiles in a rectangle of a region (its right and bottom are outside it).</summary>
 	public static TileBlock FromRegion(SegmentRegion region, XNA.Rectangle area)
 	{

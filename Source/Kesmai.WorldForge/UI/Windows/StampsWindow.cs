@@ -44,12 +44,19 @@ public class StampsWindow : Window
 			return button;
 		}
 
+		// turning and mirroring change the stamp for this paste; the saved stamp stays as it is
+		Add("Rotate ↻", "Turns the stamp a quarter turn clockwise", () => Display(Block?.Rotate(true)));
+		Add("Rotate ↺", "Turns the stamp a quarter turn counterclockwise", () => Display(Block?.Rotate(false)));
+		Add("Flip ↔", "Mirrors the stamp left to right", () => Display(Block?.FlipHorizontal()));
+		Add("Flip ↕", "Mirrors the stamp top to bottom", () => Display(Block?.FlipVertical()));
+
 		Add($"Paste at {target}", "Sets the stamp's tiles with its top left on this tile (one undo)", () =>
 		{
 			if (Block is not null && _paste(Block))
 				Close();
 		});
 		Add("Copy", "Puts the stamp on the clipboard, for Ctrl+V", () => Block?.ToClipboard());
+		Add("Save as...", "Saves the stamp as it is now, turned or mirrored, under a name", SaveAs);
 		Add("Delete", "Deletes the saved stamp", Delete);
 
 		_list = new ListBox { Width = 200, Margin = new Thickness(0, 0, 10, 0) };
@@ -117,6 +124,25 @@ public class StampsWindow : Window
 			Display(null);
 			_size.Text = $"This stamp couldn't be read: {exception.Message}";
 		}
+	}
+
+	private void SaveAs()
+	{
+		if (Block is null)
+			return;
+
+		var dialog = new Kesmai.WorldForge.UI.Documents.InputDialog("Stamp name", (_list.SelectedItem as ListBoxItem)?.Content as string ?? "Stamp") { Owner = this };
+
+		if (dialog.ShowDialog() is not true || string.IsNullOrWhiteSpace(dialog.Input))
+			return;
+
+		var path = Stamps.Save(dialog.Input.Trim(), Block);
+
+		Refresh();
+
+		foreach (ListBoxItem item in _list.Items)
+			if (item.Tag as string == path)
+				_list.SelectedItem = item;
 	}
 
 	private void Delete()
