@@ -213,6 +213,12 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		yield return _contextMenu.Create(_selection.Region == region && _selection.SurfaceArea > 0
 			? "Find & replace tiles in selection..." : "Find & replace tiles in region...", replaceTiles);
 
+		yield return _contextMenu.CreateSeparator();
+		yield return _contextMenu.Create($"Stamps: paste at ({mx}, {my})...", openStamps);
+
+		if (_selection.Region == region && _selection.FirstOrDefault() is { IsEmpty: false } stampArea)
+			yield return _contextMenu.Create($"Save selection as a stamp ({stampArea.Width} x {stampArea.Height})...", saveStamp);
+
 		// a tile teleporters lead to (the teleporter overlay's squares) can jump to each teleporter that leads here
 		var sources = new List<(SegmentRegion Region, int X, int Y)>();
 
@@ -310,6 +316,47 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				_teleportersInvalidated = true;
 				InvalidateRender();
 			}
+		}
+
+		void openStamps(object sender, EventArgs e)
+		{
+			var window = new Kesmai.WorldForge.UI.Windows.StampsWindow($"({mx}, {my})", block =>
+			{
+				var edit = applicationPresenter.History.Begin("Paste stamp");
+
+				block.Paste(region, mx, my, edit);
+				edit.Commit();
+
+				_teleportersInvalidated = true;
+				InvalidateRender();
+				return true;
+			})
+			{
+				Owner = System.Windows.Application.Current.MainWindow,
+			};
+
+			window.ShowDialog();
+		}
+
+		void saveStamp(object sender, EventArgs e)
+		{
+			var area = _selection.FirstOrDefault();
+			var dialog = new Kesmai.WorldForge.UI.Documents.InputDialog("Stamp name", $"Stamp {area.Width}x{area.Height}")
+			{
+				Owner = System.Windows.Application.Current.MainWindow,
+			};
+
+			if (dialog.ShowDialog() is not true || string.IsNullOrWhiteSpace(dialog.Input))
+				return;
+
+			var name = dialog.Input.Trim();
+
+			if (Stamps.List().Any(s => string.Equals(s.Name, name, StringComparison.OrdinalIgnoreCase))
+			    && System.Windows.MessageBox.Show($"A stamp named \"{name}\" is saved already. Replace it?", "Stamps",
+				    System.Windows.MessageBoxButton.YesNo) != System.Windows.MessageBoxResult.Yes)
+				return;
+
+			Stamps.Save(name, TileBlock.FromRegion(region, area));
 		}
 
 		void convertTemplate(object sender, EventArgs e)
