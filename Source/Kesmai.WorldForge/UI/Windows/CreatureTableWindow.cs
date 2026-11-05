@@ -22,6 +22,9 @@ public class CreatureTableWindow : Window
 	private readonly DataGrid _grid;
 	private readonly TextBox _filter;
 	private readonly TextBlock _status;
+	private readonly ComboBox _bulkColumn;
+	private readonly ComboBox _bulkMode;
+	private readonly TextBox _bulkAmount;
 	private ListCollectionView _view;
 
 	public CreatureTableWindow(Segment segment)
@@ -53,6 +56,32 @@ public class CreatureTableWindow : Window
 		_status = new TextBlock { Margin = new Thickness(0, 6, 0, 0), TextWrapping = TextWrapping.Wrap };
 		DockPanel.SetDock(_status, Dock.Bottom);
 		layout.Children.Add(_status);
+
+		// bulk edit: one change to a value of every selected row
+		var bulk = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 6, 0, 0) };
+		bulk.Children.Add(new TextBlock { Text = "Selected rows:", VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 6, 0) });
+
+		_bulkColumn = new ComboBox { Width = 130, Margin = new Thickness(0, 0, 6, 0) };
+		_bulkColumn.Items.Add(new ComboBoxItem { Content = "Group", Tag = nameof(CreatureRow.Group) });
+
+		foreach (var (property, header) in CreatureRow.Columns)
+			_bulkColumn.Items.Add(new ComboBoxItem { Content = header, Tag = property });
+
+		_bulkColumn.SelectedIndex = 3;
+		bulk.Children.Add(_bulkColumn);
+
+		_bulkMode = new ComboBox { Width = 110, Margin = new Thickness(0, 0, 6, 0), ItemsSource = CreatureRow.BulkModes, SelectedIndex = 0 };
+		bulk.Children.Add(_bulkMode);
+
+		_bulkAmount = new TextBox { Width = 120, Margin = new Thickness(0, 0, 6, 0), VerticalContentAlignment = VerticalAlignment.Center };
+		bulk.Children.Add(_bulkAmount);
+
+		var apply = new Button { Content = "Apply to selected", Padding = new Thickness(8, 1, 8, 1), ToolTip = "Ctrl or Shift click rows to pick several; Ctrl+A picks every row shown" };
+		apply.Click += (_, _) => ApplyBulk();
+		bulk.Children.Add(apply);
+
+		DockPanel.SetDock(bulk, Dock.Bottom);
+		layout.Children.Add(bulk);
 
 		_grid = new DataGrid
 		{
@@ -121,6 +150,71 @@ public class CreatureTableWindow : Window
 		_status.Text = $"{rows.Count} entities. Type in a cell to change it (Enter or leave the cell to write it to OnSpawn). "
 			+ (unreadable > 0 ? $"{unreadable} can't have their OnSpawn values changed here; the Note column says why. " : "")
 			+ "Click a header to sort; right click a row to open it.";
+	}
+
+	private void ApplyBulk()
+	{
+		var rows = _grid.SelectedItems.OfType<CreatureRow>().ToList();
+		var property = (_bulkColumn.SelectedItem as ComboBoxItem)?.Tag as string;
+		var header = (_bulkColumn.SelectedItem as ComboBoxItem)?.Content;
+		var mode = _bulkMode.SelectedItem as string;
+		var amount = _bulkAmount.Text.Trim();
+
+		if (rows.Count == 0 || property is null || mode is null)
+		{
+			_status.Text = "Pick rows first (Ctrl or Shift click, or Ctrl+A for every row shown).";
+			return;
+		}
+
+		if (amount.Length == 0 && mode != CreatureRow.BulkModes[0])
+		{
+			_status.Text = $"Type the amount to {mode.ToLowerInvariant()}.";
+			return;
+		}
+
+		if (MessageBox.Show(this, $"{mode} {amount} for {header} on {rows.Count} entit{(rows.Count == 1 ? "y" : "ies")}?", "Bulk edit",
+			    MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+			return;
+
+		// finish a cell being typed in first, so it doesn't write over the bulk change
+		_grid.CommitEdit(DataGridEditingUnit.Row, true);
+
+		var changed = 0;
+		var skipped = 0;
+
+		foreach (var row in rows)
+		{
+			var isGroup = property == nameof(CreatureRow.Group);
+
+			if (!isGroup && !row.CanEdit)
+			{
+				skipped++;
+				continue;
+			}
+
+			var current = isGroup ? row.Group : row[property];
+			var value = CreatureRow.Bulk(current, mode, amount);
+
+			if (value is null)
+			{
+				skipped++;
+				continue;
+			}
+
+			if (value == current)
+				continue;
+
+			if (isGroup)
+				row.Group = value;
+			else
+				row[property] = value;
+
+			changed++;
+		}
+
+		_view.Refresh();
+		_status.Text = $"Changed {header} on {changed} entit{(changed == 1 ? "y" : "ies")}."
+			+ (skipped > 0 ? $" {skipped} skipped (no number there to change, or an OnSpawn this table can't write)." : "");
 	}
 
 	private bool Matches(object item)

@@ -120,6 +120,40 @@ public class CreatureRow : ObservableObject
 		}
 	}
 
+	/// <summary>The ways a bulk edit can change a value.</summary>
+	public static readonly string[] BulkModes = ["Set to", "Add", "Multiply by", "Change by %"];
+
+	/// <summary>
+	/// A value after a bulk edit: <paramref name="amount"/> itself for "Set to", otherwise the number worked out from
+	/// the current one (whole numbers stay whole). Null when the current value or the amount isn't a number.
+	/// </summary>
+	public static string Bulk(string current, string mode, string amount)
+	{
+		if (mode == BulkModes[0])
+			return amount;
+
+		static bool Number(string text, out double value)
+			=> double.TryParse((text ?? "").Replace("_", "").Trim(), System.Globalization.NumberStyles.Float,
+				System.Globalization.CultureInfo.InvariantCulture, out value);
+
+		if (!Number(current, out var value) || !Number(amount, out var by))
+			return null;
+
+		var result = mode switch
+		{
+			"Add" => value + by,
+			"Multiply by" => value * by,
+			"Change by %" => value * (1 + by / 100),
+			_ => value,
+		};
+
+		var whole = !(current ?? "").Contains('.');
+
+		return whole
+			? Math.Round(result, MidpointRounding.AwayFromZero).ToString(System.Globalization.CultureInfo.InvariantCulture)
+			: result.ToString(System.Globalization.CultureInfo.InvariantCulture);
+	}
+
 	public static List<CreatureRow> For(Segment segment, AssetCatalog catalog)
 		=> segment.Entities.Select(entity => new CreatureRow(entity, catalog)).ToList();
 }
