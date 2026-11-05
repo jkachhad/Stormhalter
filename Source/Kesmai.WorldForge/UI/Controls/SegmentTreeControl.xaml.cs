@@ -322,6 +322,61 @@ public partial class SegmentTreeControl : UserControl
         var sounds = new Button { Content = soundsLook, Padding = new Thickness(4, 2, 4, 2), Margin = new Thickness(1, 0, 1, 0), ToolTip = "All the sounds; click one to hear it" };
         sounds.Click += (_, _) => GridMenu.Show(sounds, "Sounds", SoundEntries());
         toolbar.Items.Add(sounds);
+
+        // the spots saved with right click > Bookmark this tile on the map; clicking one goes there
+        var bookmarksLook = new StackPanel { Orientation = Orientation.Horizontal };
+        bookmarksLook.Children.Add(new TextBlock { Text = "🔖", FontSize = 14, Margin = new Thickness(0, 0, 3, 0), VerticalAlignment = VerticalAlignment.Center });
+        bookmarksLook.Children.Add(new TextBlock { Text = "Bookmarks", VerticalAlignment = VerticalAlignment.Center, FontSize = 12 });
+
+        var bookmarks = new Button { Content = bookmarksLook, Padding = new Thickness(4, 2, 4, 2), Margin = new Thickness(1, 0, 1, 0), ToolTip = "Go to a bookmarked spot (right click a tile on the map to bookmark it)" };
+        bookmarks.Click += (_, _) => GridMenu.Show(bookmarks, "Bookmarks", BookmarkEntries());
+        toolbar.Items.Add(bookmarks);
+    }
+
+    /// <summary>The segment's bookmarks as grid menu tiles, with a folder to remove them.</summary>
+    private IReadOnlyList<GridMenu.Entry> BookmarkEntries()
+    {
+        if (Segment is not { } segment)
+            return [];
+
+        var saved = Bookmarks.For(segment);
+
+        if (saved.Count == 0)
+            return [new GridMenu.Entry { Name = "No bookmarks yet: right click a tile on the map > Bookmark this tile", Glyph = "🔖" }];
+
+        string Label(Bookmarks.Bookmark b) => $"{b.Name}\nregion {b.Region} ({b.X}, {b.Y})";
+
+        var entries = saved.OrderBy(b => b.Name, StringComparer.OrdinalIgnoreCase).Select(bookmark => new GridMenu.Entry
+        {
+            Name = Label(bookmark),
+            Glyph = "🔖",
+            ToolTip = segment.Regions.FirstOrDefault(r => r.ID == bookmark.Region) is { } region
+                ? $"Go to {region.Name}, tile ({bookmark.X}, {bookmark.Y})" : $"Region {bookmark.Region} is not in this segment any more",
+            Open = () => GoTo(segment, bookmark.Region, bookmark.X, bookmark.Y),
+        }).ToList();
+
+        entries.Add(new GridMenu.Entry
+        {
+            Name = "Remove a bookmark",
+            Glyph = "✖",
+            Children = () => Bookmarks.For(segment).OrderBy(b => b.Name, StringComparer.OrdinalIgnoreCase)
+                .Select(bookmark => new GridMenu.Entry { Name = Label(bookmark), Glyph = "✖", ToolTip = "Remove this bookmark", Open = () => Bookmarks.Remove(bookmark) })
+                .ToList(),
+        });
+
+        return entries;
+    }
+
+    private static void GoTo(Segment segment, int regionId, int x, int y)
+    {
+        if (segment.Regions.FirstOrDefault(r => r.ID == regionId) is not { } region)
+            return;
+
+        var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+
+        // the region's view shows and selects the tile once it is up
+        presenter.PendingNavigation = new RegionNavigation(region, x, y);
+        region.Present(presenter);
     }
 
     private static readonly System.Windows.Media.MediaPlayer _soundPlayer = new();
