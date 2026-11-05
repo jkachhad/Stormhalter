@@ -277,6 +277,44 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			});
 		}
 
+		// link a teleporter in two right clicks: pick it, then where it lands, in any region
+		if (TeleporterLink.Pending is { } pending && segment.Regions.Contains(pending.Region) && TeleporterLink.PendingTeleporter is not null)
+		{
+			var picked = pending.Region == region ? $"({pending.X}, {pending.Y})" : $"region {pending.Region.ID} ({pending.X}, {pending.Y})";
+			var landingTeleporter = TeleporterLink.TeleporterOn(segmentTile);
+
+			yield return _contextMenu.CreateSeparator();
+
+			if (pending.Region != region || pending.X != mx || pending.Y != my)
+			{
+				yield return _contextMenu.Create($"Land the teleporter from {picked} here", (_, _) => land(false));
+
+				if (landingTeleporter is not null)
+					yield return _contextMenu.Create($"Land the teleporter from {picked} here, and this one leads back", (_, _) => land(true));
+			}
+
+			yield return _contextMenu.Create($"Cancel linking the teleporter at {picked}", (_, _) => TeleporterLink.Pending = null);
+		}
+		else if (TeleporterLink.TeleporterOn(segmentTile) is not null)
+		{
+			yield return _contextMenu.CreateSeparator();
+			yield return _contextMenu.Create("Link this teleporter: right click where it lands next (any region)",
+				(_, _) => TeleporterLink.Pending = (region, mx, my));
+		}
+
+		void land(bool back)
+		{
+			var edit = applicationPresenter.History.Begin(back ? "Link teleporters" : "Link teleporter");
+
+			if (TeleporterLink.Land(region, mx, my, back, edit) > 0)
+			{
+				edit.Commit();
+
+				_teleportersInvalidated = true;
+				InvalidateRender();
+			}
+		}
+
 		// a sky tile can fill the destinations of the sky tiles joined to it, moved by their distance from it
 		if (SkyDestinationFill.SkyOn(segmentTile) is { } sky)
 		{
