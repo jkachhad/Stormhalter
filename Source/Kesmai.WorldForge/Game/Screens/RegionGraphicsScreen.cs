@@ -242,6 +242,24 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		if (sources.Count > 10)
 			yield return _contextMenu.Create($"... and {sources.Count - 10} more teleporters lead here", (_, _) => { });
 
+		// a teleporter tile can jump to where it leads
+		if (segmentTile is not null && FindTeleporter(segmentTile.Providers) is { } own
+		    && segment.Regions.FirstOrDefault(r => r.ID == own.DestinationRegion) is { } destinationRegion)
+		{
+			if (sources.Count == 0)
+				yield return _contextMenu.CreateSeparator();
+
+			var label = destinationRegion == region
+				? $"Go to destination: here ({own.DestinationX}, {own.DestinationY})"
+				: $"Go to destination: region {destinationRegion.ID} {destinationRegion.Name} ({own.DestinationX}, {own.DestinationY})";
+
+			yield return _contextMenu.Create(label, (_, _) =>
+			{
+				applicationPresenter.PendingNavigation = new RegionNavigation(destinationRegion, own.DestinationX, own.DestinationY);
+				destinationRegion.Present(applicationPresenter);
+			});
+		}
+
 		// a sky tile can fill the destinations of the sky tiles joined to it, moved by their distance from it
 		if (SkyDestinationFill.SkyOn(segmentTile) is { } sky)
 		{
@@ -1078,10 +1096,11 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				}
 				else
 				{
-					// in this region, skip unless it's a source here.
+					// in this region and leading to another: the teleporter's own tile is marked here; its
+					// destination's coordinates belong to the other region, so they mean nothing on this map.
 					if (teleporter.DestinationRegion != region.ID)
 					{
-						global.Add((teleporter.DestinationX, teleporter.DestinationY));
+						global.Add((segmentTile.X, segmentTile.Y));
 					}
 					else
 					{
