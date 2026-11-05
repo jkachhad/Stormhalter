@@ -210,6 +210,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 
 		yield return _contextMenu.Create("Convert to Segment Template", convertTemplate);
+		yield return _contextMenu.Create(_selection.Region == region && _selection.SurfaceArea > 0
+			? "Find & replace tiles in selection..." : "Find & replace tiles in region...", replaceTiles);
 
 		// a tile teleporters lead to (the teleporter overlay's squares) can jump to each teleporter that leads here
 		var sources = new List<(SegmentRegion Region, int X, int Y)>();
@@ -272,6 +274,36 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			var edit = applicationPresenter.History.Begin("Fill Sky Destinations");
 
 			if (SkyDestinationFill.Fill(region, segmentTile.X, segmentTile.Y, edit) > 0)
+			{
+				edit.Commit();
+
+				_teleportersInvalidated = true;
+				InvalidateRender();
+			}
+		}
+
+		void replaceTiles(object sender, EventArgs e)
+		{
+			var tiles = TileReplace.Tiles(region, _selection);
+			var inSelection = _selection.Region == region && _selection.SurfaceArea > 0;
+			var census = TileReplace.Census(tiles);
+
+			if (census.Count == 0)
+				return;
+
+			var palette = services.GetInstance<ComponentPalette>();
+			var window = new Kesmai.WorldForge.UI.Windows.TileReplaceWindow(
+				inSelection ? $"the selection ({tiles.Count} tiles)" : $"region {region.ID} {region.Name}", census, palette.SelectedProvider)
+			{
+				Owner = System.Windows.Application.Current.MainWindow,
+			};
+
+			if (window.ShowDialog() is not true)
+				return;
+
+			var edit = applicationPresenter.History.Begin("Replace tiles");
+
+			if (TileReplace.Replace(region, tiles, window.FindKey, window.Replacement, edit) > 0)
 			{
 				edit.Commit();
 
