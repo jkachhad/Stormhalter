@@ -34,6 +34,12 @@ public class LargeWhitePearl : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200295)); /* [You are looking at] [an enormous white pearl.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200295)); /* an enormous white pearl. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

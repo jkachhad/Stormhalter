@@ -45,6 +45,12 @@ public class CrashingWavesRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250129)); /* The ring contains a spell of Water Walking. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200283)); /* a ring with crashing ocean waves. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -102,6 +108,14 @@ public class CrashingWavesRing : Ring, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610004); /* Lets you walk on water. */
 	}
 }
 	

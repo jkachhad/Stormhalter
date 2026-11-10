@@ -39,6 +39,12 @@ public class StunResistanceBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250055)); /* The bracelet contains the spell of Stun Resistance. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200077)); /* a jade bracelet. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -95,5 +101,13 @@ public class StunResistanceBracelet : Bracelet, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 551); /* Grants Stun Resistance. */
 	}
 }

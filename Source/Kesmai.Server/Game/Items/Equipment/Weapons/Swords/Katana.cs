@@ -8,6 +8,9 @@ namespace Kesmai.Server.Items;
 public class Katana : Sword
 {
 	/// <inheritdoc />
+	public override bool RequiresIdentification => false;
+
+	/// <inheritdoc />
 	public override int LabelNumber => 6000054;
 
 	/// <inheritdoc />
@@ -55,6 +58,12 @@ public class Katana : Sword
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250088)); /* The katana appears quite ordinary. */
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200150)); /* a sharp steel katana. */
 	}
 
 	/// <inheritdoc />

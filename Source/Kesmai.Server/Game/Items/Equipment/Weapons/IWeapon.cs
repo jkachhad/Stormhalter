@@ -22,6 +22,25 @@ public interface IWeapon
 	/// <param name="attacker">The attacking entity.</param>
 	/// <param name="defender">The defending entity.</param>
 	void OnHit(MobileEntity attacker, MobileEntity defender);
+
+	/// <summary>
+	/// Invoked when an attack with this <see cref="IWeapon"/> lands a critical strike, after <see cref="OnHit"/>.
+	/// </summary>
+	/// <param name="attacker">The attacking entity.</param>
+	/// <param name="defender">The defending entity.</param>
+	void OnCriticalHit(MobileEntity attacker, MobileEntity defender)
+	{
+	}
+
+	/// <summary>
+	/// Invoked when an attack with this <see cref="IWeapon"/> misses: the attack roll fails, so the defender dodges or
+	/// blocks it.
+	/// </summary>
+	/// <param name="attacker">The attacking entity.</param>
+	/// <param name="defender">The defending entity.</param>
+	void OnMiss(MobileEntity attacker, MobileEntity defender)
+	{
+	}
 		
 	/// <summary>
 	/// Gets the attack bonus provided by this <see cref="IWeapon"/> for <see cref="MobileEntity"/>.

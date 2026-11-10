@@ -42,6 +42,12 @@ public class IceProtectionRing : Ring, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250047)); /* The ring contains the spell of Protection from Ice. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200060)); /* a dazzling diamond. */
+	}
 		
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
@@ -103,5 +109,13 @@ public class IceProtectionRing : Ring, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 542); /* Grants Protection from Ice. */
 	}
 }

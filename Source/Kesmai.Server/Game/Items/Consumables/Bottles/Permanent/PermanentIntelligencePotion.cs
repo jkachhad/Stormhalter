@@ -48,6 +48,12 @@ public class PermanentIntelligencePotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200095)); /* a porcelain bottle stamped with a golden sun. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

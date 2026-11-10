@@ -44,6 +44,12 @@ public class DeathResistanceRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250045)); /* The ring contains the spell of Death Resistance. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200057)); /* a shiny gold ring set with a tiny bejeweled scarab. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -104,5 +110,13 @@ public class DeathResistanceRing : Ring, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 548); /* Grants Death Resistance. */
 	}
 }

@@ -35,6 +35,12 @@ public class TigerStatuette : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200306)); /* [You are looking at] [a minute ivory carving of a tiger.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200306)); /* a minute ivory carving of a tiger. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

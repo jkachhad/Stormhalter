@@ -47,6 +47,18 @@ public abstract class Armor : Equipment, IArmored
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProjectileProtection => 0;
 
+	/// <inheritdoc />
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int MeleeDamageMitigation => 0;
+
+	/// <inheritdoc />
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int RangedDamageMitigation => 0;
+
+	/// <inheritdoc />
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int ProjectileDamageMitigation => 0;
+
 	#endregion
 
 	/// <summary>
@@ -131,7 +143,7 @@ public abstract class Armor : Equipment, IArmored
 	{
 		base.GetClientProperties(observer, properties);
 
-		if (RequiresIdentification && !Identified)
+		if (!Identified)
 			return;
 
 		if (BaseArmorBonus != 0)
@@ -148,6 +160,35 @@ public abstract class Armor : Equipment, IArmored
 
 		if (ProjectileProtection != 0)
 			properties.Set(ItemPropertyId.ProjectileProtection, ProjectileProtection);
+
+		if (MeleeDamageMitigation != 0)
+			properties.Set(ItemPropertyId.MeleeDamageMitigation, MeleeDamageMitigation);
+
+		if (RangedDamageMitigation != 0)
+			properties.Set(ItemPropertyId.RangedDamageMitigation, RangedDamageMitigation);
+
+		if (ProjectileDamageMitigation != 0)
+			properties.Set(ItemPropertyId.ProjectileDamageMitigation, ProjectileDamageMitigation);
+	}
+
+	/// <inheritdoc />
+	protected override StatModifierSet GetBaseModifiers(MobileEntity wearer)
+	{
+		var modifiers = base.GetBaseModifiers(wearer);
+
+		if (CanApplyStatModifiers(wearer))
+		{
+			if (MeleeDamageMitigation != 0)
+				modifiers.Add(EntityStat.MeleeDamageMitigation, MeleeDamageMitigation);
+
+			if (RangedDamageMitigation != 0)
+				modifiers.Add(EntityStat.RangedDamageMitigation, RangedDamageMitigation);
+
+			if (ProjectileDamageMitigation != 0)
+				modifiers.Add(EntityStat.ProjectileDamageMitigation, ProjectileDamageMitigation);
+		}
+
+		return modifiers;
 	}
 
 	/// <summary>

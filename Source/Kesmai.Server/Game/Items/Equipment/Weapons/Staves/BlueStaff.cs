@@ -43,6 +43,12 @@ public class BlueStaff : Staff, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200140)); /* [You are looking at] [a long, surprisingly light staff composed of a bluish metal.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200140)); /* a long, surprisingly light staff composed of a bluish metal. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

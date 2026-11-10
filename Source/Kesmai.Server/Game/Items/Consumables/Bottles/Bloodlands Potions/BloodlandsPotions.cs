@@ -46,6 +46,12 @@ public class ForestBlood : Bottle
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200375)); /* a clear glass bottle. */
+	}
 		
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
@@ -111,6 +117,12 @@ public class KeepBlood : Bottle
 		entries.Add(new LocalizationEntry(6200000, 6200362)); /* [You are looking at] [a clear glass bottle.] */
 
 		base.GetDescription(entries);
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200362)); /* a clear glass bottle. */
 	}
 
 	/// <inheritdoc />
@@ -180,6 +192,12 @@ public class LandBlood : Bottle
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200363)); /* a clear glass bottle. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
@@ -243,6 +261,12 @@ public class ShadowBlood : Bottle
 		entries.Add(new LocalizationEntry(6200000, 6200364)); /* [You are looking at] [a clear glass bottle.] */
 
 		base.GetDescription(entries);
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200364)); /* a clear glass bottle. */
 	}
 
 	/// <inheritdoc />
@@ -312,6 +336,12 @@ public class CorruptedBlood : Bottle
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200365)); /* a clear glass bottle. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
@@ -375,6 +405,12 @@ public class MakersBlood : Bottle
 		entries.Add(new LocalizationEntry(6200000, 6200366)); /* [You are looking at] [a clear glass bottle.] */
 
 		base.GetDescription(entries);
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200366)); /* a clear glass bottle. */
 	}
 
 	/// <inheritdoc />
@@ -444,6 +480,12 @@ public class UshersBlood : Bottle
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200367)); /* a clear glass bottle. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
@@ -507,6 +549,12 @@ public class FeralBlood : Bottle
 		entries.Add(new LocalizationEntry(6200000, 6200368)); /* [You are looking at] [a clear glass bottle.] */
 
 		base.GetDescription(entries);
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200368)); /* a clear glass bottle. */
 	}
 
 	/// <inheritdoc />
@@ -576,6 +624,12 @@ public class FlameBlood : Bottle
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200369)); /* a clear glass bottle. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
@@ -639,6 +693,12 @@ public class AirBlood : Bottle
 		entries.Add(new LocalizationEntry(6200000, 6200370)); /* [You are looking at] [a clear glass bottle.] */
 
 		base.GetDescription(entries);
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200370)); /* a clear glass bottle. */
 	}
 
 	/// <inheritdoc />
@@ -708,6 +768,12 @@ public class IceBlood : Bottle
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200371)); /* a clear glass bottle. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
@@ -771,6 +837,12 @@ public class WaterBlood : Bottle
 		entries.Add(new LocalizationEntry(6200000, 6200372)); /* [You are looking at] [a clear glass bottle.] */
 
 		base.GetDescription(entries);
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200372)); /* a clear glass bottle. */
 	}
 
 	/// <inheritdoc />
@@ -840,6 +912,12 @@ public class RegenerationBlood : Bottle
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200373)); /* a clear glass bottle. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
@@ -903,6 +981,12 @@ public class DeadBlood : Bottle
 		entries.Add(new LocalizationEntry(6200000, 6200374)); /* [You are looking at] [a clear glass bottle.] */
 
 		base.GetDescription(entries);
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200374)); /* a clear glass bottle. */
 	}
 
 	/// <inheritdoc />

@@ -42,6 +42,12 @@ public class SpectreCloak : Robe, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry("The robe is visible when inspected closely."));
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200398)); /* an experimental cloak. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

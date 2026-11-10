@@ -39,6 +39,12 @@ public class BlindFearProtectionBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250032)); /* The bracelet contains the spell of Protection from Blind and Fear. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200042)); /* a wavy silver bracelet set with aquamarines. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -95,5 +101,13 @@ public class BlindFearProtectionBracelet : Bracelet, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 541); /* Grants Protection from Blind and Fear. */
 	}
 }

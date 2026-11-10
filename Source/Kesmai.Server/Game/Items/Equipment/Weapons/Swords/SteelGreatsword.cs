@@ -30,4 +30,10 @@ public class SteelGreatsword : Greatsword
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200153));
+	}
 }

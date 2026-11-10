@@ -28,6 +28,12 @@ public class AlligatorVest : Armor
 	/// <inheritdoc />
 	public override int BashingProtection => 1;
 
+	/// <inheritdoc />
+	public override int MeleeDamageMitigation => 1;
+
+	/// <inheritdoc />
+	public override int RangedDamageMitigation => 1;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AlligatorVest"/> class.
 	/// </summary>
@@ -43,23 +49,18 @@ public class AlligatorVest : Armor
 	}
 	
 	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
-	{
-		var modifiers = base.GetStatModifiers(wearer);
-
-		modifiers.Add(EntityStat.MeleeDamageMitigation, 1);
-		modifiers.Add(EntityStat.RangedDamageMitigation, 1);
-
-		return modifiers;
-	}
-
-	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200175)); /* [You are looking at] [a vest made from the hide of a alligator.] */
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250097)); /* The vest appears quite ordinary. */
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200175)); /* a vest made from the hide of a alligator. */
 	}
 	
 	/// <inheritdoc />

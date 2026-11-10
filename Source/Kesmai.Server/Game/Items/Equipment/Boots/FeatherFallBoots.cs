@@ -40,6 +40,12 @@ public class FeatherFallBoots : Boots, ITreasure
 			entries.Add(new LocalizationEntry(6250029)); /* The boots contain the spell of Feather Fall. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200039)); /* a pair of gray boots rimmed with white fur. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -96,5 +102,13 @@ public class FeatherFallBoots : Boots, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 514); /* Grants Feather Fall. */
 	}
 }

@@ -44,6 +44,12 @@ public class FireProtectionAmulet : Amulet, ITreasure
 			entries.Add(new LocalizationEntry(6250049)); /* The amulet contains the spell of Protection from Fire. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200065)); /* a diamond necklace with a glistening ruby. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -104,5 +110,13 @@ public class FireProtectionAmulet : Amulet, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 543); /* Grants Protection from Fire. */
 	}
 }

@@ -40,6 +40,12 @@ public class StrongShieldBracelet : ShieldBracelet, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250054)); /* The bracelet contains a strong spell of Shield. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200074)); /* a silver bracelet made of scales. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

@@ -1,7 +1,9 @@
 using System;
+using System.Globalization;
 using System.IO;
 
 using Kesmai.Server.Game;
+using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
@@ -29,6 +31,16 @@ public abstract class Dagger : MeleeWeapon
 	public override Skill Skill => Skill.Dagger;
 
 	public double PoisonMultiplier { get; set; } = 1.0;
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		// OnHit multiplies the potency of the venom it delivers.
+		if (PoisonMultiplier > 1)
+			tooltip.AddEffect(TooltipEffectTrigger.Hit, 6610041, PoisonMultiplier.ToString("0.#", CultureInfo.InvariantCulture)); /* Venom on this dagger poisons at {0} times its potency. */
+	}
 
 	/// <inheritdoc />
 	public override WeaponFlags Flags => WeaponFlags.Piercing | WeaponFlags.Throwable | WeaponFlags.QuickThrow;
