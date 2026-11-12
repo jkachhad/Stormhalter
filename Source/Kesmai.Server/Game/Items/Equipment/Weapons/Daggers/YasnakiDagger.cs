@@ -50,6 +50,12 @@ public class YasnakiDagger : Dagger, IReturningWeapon, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250002)); /* The combat adds for this weapon are +5. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200164)); /* a fine throwing dagger with the symbol of the yasnaki marking the hilt. */
+	}
 		
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

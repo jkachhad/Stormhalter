@@ -38,6 +38,12 @@ public class LightningResistanceRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250046)); /* The ring contains the spell of Lightning Resist. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200058)); /* a steel ring of a sinuous dragon biting its own tail. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -94,5 +100,13 @@ public class LightningResistanceRing : Ring, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 550); /* Grants Lightning Resistance. */
 	}
 }

@@ -68,6 +68,12 @@ public class OakGroveBow : Bow, ITreasure
 			entries.Add(new LocalizationEntry(6300406)); /* It has combat adds of +5 and is neutral in alignment. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6300405)); /* a longbow made of faint blue wood. The string appears to be woven from strands of silver. */
+	}
+
 	/* Bows actually take two turns to shoot, so the skill gain multiplier should be double. */
 	public override TimeSpan GetSwingDelay(MobileEntity entity)
 	{

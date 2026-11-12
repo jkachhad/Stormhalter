@@ -44,6 +44,12 @@ public class FireIceProtectionRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250038)); /* The ring contains the spell of Protection from Fire and Ice. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200048)); /* a gold ring set with four small diamonds encircling a fiery ruby. */
+	}
+
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
@@ -122,5 +128,14 @@ public class FireIceProtectionRing : Ring, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 543); /* Grants Protection from Fire. */
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 542); /* Grants Protection from Ice. */
 	}
 }

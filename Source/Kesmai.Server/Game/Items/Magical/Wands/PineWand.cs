@@ -41,6 +41,12 @@ public class PineWand : Wand, ITreasure
 			entries.Add(new LocalizationEntry(6250117)); /* The wand contains the spell of Fireball. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200228)); /* a pine wand inscribed with tiny red runes. */
+	}
+
 	public override Spell GetSpell()
 	{
 		return new FireballSpell

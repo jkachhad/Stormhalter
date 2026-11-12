@@ -45,6 +45,12 @@ public class WeakStrengthRing : StrengthRing
 			entries.Add(new LocalizationEntry(6250009)); /* The ring contains a weak spell of Strength. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200010)); /* a gold ring with a small red gem set into it. */
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

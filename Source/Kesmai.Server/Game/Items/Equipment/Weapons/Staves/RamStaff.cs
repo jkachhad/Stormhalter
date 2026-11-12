@@ -62,4 +62,10 @@ public class RamStaff : Staff, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6290013)); /* a large gnarled staff with a ram skull attached. */
+	}
 }

@@ -34,6 +34,12 @@ public class SpiderJacket : Jacket
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200201)); /* a black jacket made from the fur of a spider. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

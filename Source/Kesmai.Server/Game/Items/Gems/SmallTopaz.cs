@@ -33,6 +33,12 @@ public class SmallTopaz : Gem
 		entries.Add(new LocalizationEntry(6200000, 6200022)); /* [You are looking at] [a small yellow gem.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200022)); /* a small yellow gem. */
+	}
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>

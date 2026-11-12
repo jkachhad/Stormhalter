@@ -43,6 +43,12 @@ public class SerpentRobe : Robe, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250030)); /* The robe looks thick and heavy. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200183)); /* a black robe with a gold serpent. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

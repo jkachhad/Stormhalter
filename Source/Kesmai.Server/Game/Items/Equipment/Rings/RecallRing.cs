@@ -110,6 +110,12 @@ public class RecallRing : Ring
 		entries.Add(new LocalizationEntry(6200000, 6200030)); /* [You are looking at] [a small gold ring emitting a faint blue glow.] */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200030)); /* a small gold ring emitting a faint blue glow. */
+	}
+
 	/// <summary>
 	/// Determines whether this instance can be equipped.
 	/// </summary>
@@ -275,5 +281,13 @@ public class RecallRing : Ring
 
 		if (BoundSegment != null && BoundLocation != Point2D.Zero)
 			_isActive = true;
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(beholder, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610053); /* Remembers where you put it on. Taking it off returns you there and destroys the ring. */
 	}
 }

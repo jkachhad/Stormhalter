@@ -35,6 +35,12 @@ public class IceStormOrb : SpellOrb, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200276)); /* a small sphere of blue glass. */
+	}
+
+	/// <inheritdoc />
 	protected override void PlaceEffect(MobileEntity source, Point2D location)
 	{
 		var spell = new IceStormSpell

@@ -8,6 +8,9 @@ namespace Kesmai.Server.Items;
 public class Longsword : Sword
 {
 	/// <inheritdoc />
+	public override bool RequiresIdentification => false;
+
+	/// <inheritdoc />
 	public override int LabelNumber => 6000059;
 
 	/// <inheritdoc />
@@ -59,6 +62,12 @@ public class Longsword : Sword
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250013)); /* The longsword appears quite ordinary. */
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200014)); /* a fine longsword. */
 	}
 	
 	/// <inheritdoc />

@@ -49,6 +49,12 @@ public class Kimono : Robe, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200202)); /* a satiny kimono of brilliant green silk in which golden threads weave a pattern of tiny dragons. */
+	}
+
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

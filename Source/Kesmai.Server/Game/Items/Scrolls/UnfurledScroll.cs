@@ -35,6 +35,12 @@ public class UnfurledScroll : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200316)); /* [You are looking at] [a small scroll, made out of a strange leather.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200316)); /* a small scroll, made out of a strange leather. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

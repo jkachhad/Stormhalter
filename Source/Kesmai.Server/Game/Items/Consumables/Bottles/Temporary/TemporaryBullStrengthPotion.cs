@@ -52,4 +52,10 @@ public class TemporaryBullStrengthPotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200384)); /* a steel bottle stamped with the icon of a bull.] [Inside is a dark crimson liquid that smells of earth and mushrooms. */
+	}
 }

@@ -50,6 +50,12 @@ public class DexterityRing : Ring, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250044)); /* The ring greatly increases dexterity. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200056)); /* a wide platinum band engraved with many tiny runes. */
+	}
 		
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.

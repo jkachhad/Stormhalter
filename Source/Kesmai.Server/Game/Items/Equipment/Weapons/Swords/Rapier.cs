@@ -8,6 +8,9 @@ namespace Kesmai.Server.Items;
 public class Rapier : Sword
 {
 	/// <inheritdoc />
+	public override bool RequiresIdentification => false;
+
+	/// <inheritdoc />
 	public override int LabelNumber => 6000071;
 
 	/// <inheritdoc />
@@ -62,6 +65,12 @@ public class Rapier : Sword
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250012)); /* The rapier appears quite ordinary. */
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200013)); /* a shiny steel rapier. */
 	}
 	
 	/// <inheritdoc />

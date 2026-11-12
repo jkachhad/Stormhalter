@@ -53,6 +53,12 @@ public class SteelMace : Mace
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250017)); /* The mace appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200018)); /* a steel mace. */
+	}
 		
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

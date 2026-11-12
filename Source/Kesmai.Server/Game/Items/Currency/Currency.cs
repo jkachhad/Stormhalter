@@ -16,6 +16,9 @@ public abstract class Currency : ItemEntity, ITreasure
 	/// </summary>
 	public override int Category => 13;
 
+	/// <inheritdoc />
+	public override bool RequiresIdentification => false;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Currency"/> class.
 	/// </summary>
