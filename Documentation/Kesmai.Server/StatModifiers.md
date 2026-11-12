@@ -24,7 +24,7 @@ When the source is removed, the stored snapshot is removed without recalculating
 | `StatModifierSet.AddMaximumValue(...)` | Changes the maximum-value constraint of an `EntityStat`. |
 | `UpdateStatModifiers()` | Replaces this source's active snapshot after one of its dependencies changes and marks the item's client modifier snapshot stale. While the source is inactive it only marks the client snapshot stale. |
 | `MobileEntity.UpdateStatModifiers()` | Refreshes every registered item and status source for the wearer, then sends updated client property and modifier snapshots for the items the mobile carries or looks at to every attached client, including players peeking at it. |
-| `GetClientProperties(PlayerEntity observer, ItemPropertySet properties)` | Adds client-facing item property values for the observing player. See [Client Item Properties](#client-item-properties). |
+| `GetClientProperties(TooltipContext context, ItemPropertySet properties)` | Adds client-facing item property values for the player looking at the item (`context.Observer`), calculated for whoever holds it (`context.Wearer`). See [Client Item Properties](#client-item-properties). |
 | `InvalidateProperties()` | Marks the item's client property snapshot stale after a transmitted value or its visibility changes. |
 | `InvalidateModifiers()` | Marks the item's client modifier snapshot stale. `UpdateStatModifiers()` calls it. |
 | `IStatModifierSource` | Provides the shared public `UpdateStatModifiers()` refresh contract. |
@@ -65,15 +65,15 @@ Always call the corresponding base method. Base equipment classes may already pr
 
 ## Client Item Properties
 
-Client-facing item properties are separate from the gameplay modifier snapshot. Use `ItemEntity.GetClientProperties(PlayerEntity observer, ItemPropertySet properties)` to add semantic values that the client may display or use for tooltip decisions. Call the base implementation first so inherited properties remain present, then write values with the shared property-set API:
+Client-facing item properties are separate from the gameplay modifier snapshot. Use `ItemEntity.GetClientProperties(TooltipContext context, ItemPropertySet properties)` to add semantic values that the client may display or use for tooltip decisions. Call the base implementation first so inherited properties remain present, then write values with the shared property-set API:
 
 ```csharp
-public override void GetClientProperties(PlayerEntity observer, ItemPropertySet properties)
+public override void GetClientProperties(TooltipContext context, ItemPropertySet properties)
 {
-    base.GetClientProperties(observer, properties);
+    base.GetClientProperties(context, properties);
 
     // only the owner can see how much this cursed robe hinders them.
-    if (observer != Owner)
+    if (context.Observer != Owner)
         properties.Remove(ItemPropertyId.Hindrance);
 }
 ```
@@ -94,9 +94,9 @@ Property snapshots are complete replacements and are calculated separately for e
 
 The server transports contextual item modifiers separately from ordinary item properties through `ServerItemModifiersUpdate`. Each item entry contains complete replacements for both `Modifiers` and `MaximumValueModifiers`, preserving repeated entries and list order. The client exposes these values through `ItemEntity.ModifierSet`, so tooltip consumers can observe modifier changes through the same client property/notification system used by item properties.
 
-`UpdateStatModifiers()` invalidates the modifier snapshot with `InvalidateModifiers()`. The transmitted value is `GetModifierSet(observer)`, which is based on `GetStatModifiers(observer)` only, and is empty until the item is identified. `GetBaseModifiers` remains the server-side gameplay conversion of intrinsic item properties and is not duplicated in the client snapshot. `BaseDodge` is not part of this transport contract.
+`UpdateStatModifiers()` invalidates the modifier snapshot with `InvalidateModifiers()`. The transmitted value is `GetModifierSet(context)`, which is based on `GetStatModifiers(context.Wearer)` only, and is empty until the item is identified. `GetBaseModifiers` remains the server-side gameplay conversion of intrinsic item properties and is not duplicated in the client snapshot. `BaseDodge` is not part of this transport contract.
 
-To build the client snapshot, `GetStatModifiers` is called with the observing player as its `wearer` argument. That player may not be wearing the item: it may be in a backpack, on the ground, or on a mobile the player is peeking at. Calculate the snapshot from the argument without assuming the item is equipped by it; a `CanApplyStatModifiers(wearer)` check then reflects whether the observer could use the item.
+To build the client snapshot, `GetStatModifiers` is called with the item's holder as its `wearer` argument: the player or creature carrying it, even when someone else is looking. A player looking at another player's equipment sees the bonuses as they apply to that player, and the tooltip names them ("Equipped by Ana"). For an item nobody carries, such as one on the ground, the wearer is the player looking at it. The holder may not be wearing the item (it may be in their backpack), so calculate the snapshot from the argument without assuming the item is equipped by it.
 
 While an item is inactive, `UpdateStatModifiers()` leaves the wearer's stats unchanged but still marks the client modifier snapshot stale, so an unequipped item's displayed modifiers stay current. The `Quality` setter relies on this.
 

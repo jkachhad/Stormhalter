@@ -150,9 +150,9 @@ public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 	}
 
 	/// <inheritdoc />
-	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 	{
-		base.GetTooltipEntries(beholder, tooltip);
+		base.GetTooltipEntries(context, tooltip);
 
 		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610002, 515); /* Casts Locate. */
 	}

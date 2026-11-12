@@ -216,9 +216,9 @@ public class JewelerRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 	{
-		base.GetTooltipEntries(beholder, tooltip);
+		base.GetTooltipEntries(context, tooltip);
 
 		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610051); /* Turns a gem into gold, then recharges for 60 rounds. */
 	}
