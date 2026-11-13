@@ -197,9 +197,9 @@ public class ScorpionAmulet : Amulet, ITreasure, ICharged
 	}
 
 	/// <inheritdoc />
-	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 	{
-		base.GetTooltipEntries(beholder, tooltip);
+		base.GetTooltipEntries(context, tooltip);
 
 		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610003, 535); /* Casts Neutralize Poison on a target. */
 	}

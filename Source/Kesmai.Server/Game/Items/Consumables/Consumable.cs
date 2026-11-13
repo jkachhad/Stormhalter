@@ -273,9 +273,9 @@ public abstract class Consumable : ItemEntity
 	}
 		
 	/// <inheritdoc />
-	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 	{
-		base.GetTooltipEntries(beholder, tooltip);
+		base.GetTooltipEntries(context, tooltip);
 
 		// an emptied consumable has no content, so it has no effect line.
 		if (_content is { } content)

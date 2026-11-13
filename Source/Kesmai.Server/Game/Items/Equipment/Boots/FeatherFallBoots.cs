@@ -105,9 +105,9 @@ public class FeatherFallBoots : Boots, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void GetTooltipEntries(PlayerEntity beholder, Tooltip tooltip)
+	public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
 	{
-		base.GetTooltipEntries(beholder, tooltip);
+		base.GetTooltipEntries(context, tooltip);
 
 		tooltip.AddEffect(TooltipEffectTrigger.Equip, 6610000, 514); /* Grants Feather Fall. */
 	}
