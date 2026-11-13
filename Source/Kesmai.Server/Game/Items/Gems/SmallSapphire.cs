@@ -32,6 +32,12 @@ public class SmallSapphire : Gem
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200116)); /* [You are looking at] [a small blue sapphire.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200116)); /* a small blue sapphire. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

@@ -41,6 +41,12 @@ public class SteelWand : Wand, ITreasure
 			entries.Add(new LocalizationEntry(6250112)); /* The wand contains the spell of Lightning Bolt. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200223)); /* a steel wand. */
+	}
+
 	public override Spell GetSpell()
 	{
 		return new LightningBoltSpell

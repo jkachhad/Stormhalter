@@ -39,6 +39,12 @@ public class Halloween2023 : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200395)); /* [You are looking at] [a beautifully wrapped gift box.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200395)); /* a beautifully wrapped gift box. */
+	}
 		
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

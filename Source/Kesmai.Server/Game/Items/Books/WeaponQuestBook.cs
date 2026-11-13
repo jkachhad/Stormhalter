@@ -28,4 +28,10 @@ public class WeaponBook : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200315)); /* [You are looking at] [a book detailing historical weapon techniques nearly lost to the ages.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200315)); /* a book detailing historical weapon techniques nearly lost to the ages. */
+	}
 }

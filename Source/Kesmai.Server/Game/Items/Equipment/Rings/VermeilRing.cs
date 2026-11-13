@@ -46,6 +46,12 @@ public class VermeilRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200007)); /* a vermeil ring. */
+	}
+
+	/// <inheritdoc />
 	public override ActionType GetAction()
 	{
 		var parent = Parent;
@@ -136,5 +142,13 @@ public class VermeilRing : Ring, ITreasure
 				break;
 			}
 		}
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(context, tooltip);
+
+		tooltip.AddEffect(TooltipEffectTrigger.Use, 6610052); /* Identifies the item in your right hand. Use it from your left hand. */
 	}
 }

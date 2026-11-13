@@ -49,6 +49,12 @@ public class IvoryBrooch : StunDeathProtectionAmulet
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250052)); /* The amulet contains the spell of Protection from Stun and Death. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200071)); /* an ivory brooch of seven intertwined dragons. */
+	}
 	
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

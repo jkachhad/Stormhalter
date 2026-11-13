@@ -45,6 +45,12 @@ public class CureBlindnessPotion : Bottle
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200091)); /* a clear bottle with a brown label. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

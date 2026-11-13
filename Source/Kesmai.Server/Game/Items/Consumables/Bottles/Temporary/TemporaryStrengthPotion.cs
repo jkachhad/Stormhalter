@@ -53,6 +53,12 @@ public class TemporaryStrengthPotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200090)); /* a clear bottle made of yellowish glass.] [Inside is a clear red liquid. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

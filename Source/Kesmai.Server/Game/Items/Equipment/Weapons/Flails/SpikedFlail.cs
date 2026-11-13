@@ -47,6 +47,12 @@ public class SpikedFlail : Flail
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250090)); /* The flail appears quite ordinary. */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200166)); /* a heavy flail with a huge spiked ball on a steel chain. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

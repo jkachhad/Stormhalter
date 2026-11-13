@@ -37,6 +37,15 @@ public class DragonScaleArmor : Armor, ITreasure
 	/// <inheritdoc />
 	public override int ProtectionFromIce => 5;
 
+	/// <inheritdoc />
+	public override int MeleeDamageMitigation => 3;
+
+	/// <inheritdoc />
+	public override int RangedDamageMitigation => 3;
+
+	/// <inheritdoc />
+	public override int ProjectileDamageMitigation => 3;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DragonScaleArmor"/> class.
 	/// </summary>
@@ -52,26 +61,18 @@ public class DragonScaleArmor : Armor, ITreasure
 	}
 	
 	/// <inheritdoc />
-	protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
-	{
-		var modifiers = base.GetStatModifiers(wearer);
-
-		modifiers.Add(EntityStat.MeleeDamageMitigation, 3);
-		modifiers.Add(EntityStat.RangedDamageMitigation, 3);
-		modifiers.Add(EntityStat.ProjectileDamageMitigation, 3);
-
-		return modifiers;
-	}
-
-
-		
-	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200173)); /* [You are looking at] [a vest made of dragon scales.] */
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250096)); /* The armor appears to have some magical properties. */
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200173)); /* a vest made of dragon scales. */
 	}
 	
 	/// <inheritdoc />

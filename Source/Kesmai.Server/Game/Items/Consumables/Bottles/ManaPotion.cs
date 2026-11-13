@@ -50,6 +50,12 @@ public class ManaPotion : Bottle, ITreasure
 
 		base.GetDescription(entries);
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200085)); /* a white porcelain bottle adorned with lotus blossoms. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

@@ -35,6 +35,12 @@ public class Conch : ItemEntity, ITreasure
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200288)); /* [You are looking at] [a conch.] */
 	}
+
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200288)); /* a conch. */
+	}
 	
 	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)

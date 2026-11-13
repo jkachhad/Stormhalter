@@ -45,6 +45,12 @@ public class OakWand : Wand, ITreasure
 			entries.Add(new LocalizationEntry(6250113)); /* The wand contains the spell of Death. */
 	}
 
+	/// <inheritdoc />
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200224)); /* an oak wand adorned with black lines. */
+	}
+
 	public override Spell GetSpell()
 	{
 		return new DeathSpell
