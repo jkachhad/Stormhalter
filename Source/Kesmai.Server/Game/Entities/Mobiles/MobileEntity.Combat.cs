@@ -24,7 +24,28 @@ public abstract partial class MobileEntity
 	/// </summary>
 	public int CalculateRangedMitigation(ItemEntity weapon)
 		=> Stats[EntityStat.RangedDamageMitigation].Value;
-		
+
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> attack bonus, on the d20 scale, for a melee attack (an attack, kick or
+	/// jumpkick) with the specified <see cref="ItemEntity"/>. It is added to <see cref="CalculateAttackBonus"/>.
+	/// </summary>
+	public int CalculateMeleeAttackBonus(ItemEntity weapon)
+		=> Stats[EntityStat.MeleeAttackBonus].Value;
+
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> attack bonus, on the d20 scale, for throwing the specified
+	/// <see cref="ItemEntity"/>. It is added to <see cref="CalculateAttackBonus"/>.
+	/// </summary>
+	public int CalculateRangedAttackBonus(ItemEntity weapon)
+		=> Stats[EntityStat.RangedAttackBonus].Value;
+
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> attack bonus, on the d20 scale, for a shot from the specified
+	/// <see cref="ItemEntity"/>. It is added to <see cref="CalculateAttackBonus"/>.
+	/// </summary>
+	public int CalculateProjectileAttackBonus(ItemEntity weapon)
+		=> Stats[EntityStat.ProjectileAttackBonus].Value;
+
 	/// <summary>
 	/// Checks if the <see cref="ShieldPenetration"/> value can penetrate the shield for this instance.
 	/// </summary>
