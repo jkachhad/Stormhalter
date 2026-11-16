@@ -185,7 +185,12 @@ public class CritiqueSkillInteraction : InteractionEntry
 {
 	private Skill Skill { get; }
 
-	public CritiqueSkillInteraction(Skill skill) : base(new LocalizationEntry(6500021, skill.Name.FirstLetterToUpperCase()), range: 0)
+	/// <summary>
+	/// A critique only tells the player about their skill, so it works away from the counter too.
+	/// </summary>
+	public override bool RequiresCounter => false;
+
+	public CritiqueSkillInteraction(Skill skill) : base(new LocalizationEntry(6500021, skill.Name.FirstLetterToUpperCase()))
 	{
 		Skill = skill;
 	}
@@ -209,7 +214,12 @@ public class CritiqueTrainingInteraction : InteractionEntry
 {
 	private Skill Skill { get; }
 
-	public CritiqueTrainingInteraction(Skill skill) : base(new LocalizationEntry(6500021, $"{skill.Name.FirstLetterToUpperCase()} training"), range: 0)
+	/// <summary>
+	/// A critique only tells the player about their training, so it works away from the counter too.
+	/// </summary>
+	public override bool RequiresCounter => false;
+
+	public CritiqueTrainingInteraction(Skill skill) : base(new LocalizationEntry(6500021, $"{skill.Name.FirstLetterToUpperCase()} training"))
 	{
 		Skill = skill;
 	}
