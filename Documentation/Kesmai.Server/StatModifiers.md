@@ -121,6 +121,29 @@ The default modifier type is `ModifierType.Constant`. Specify another type only 
 
 Repeated entries are preserved. This is important for multiplicative modifiers, where two entries may not be equivalent to one combined entry.
 
+## Attack Bonus
+
+Three stats make attacks more likely to hit:
+
+| Stat | Attacks it helps |
+| --- | --- |
+| `EntityStat.MeleeAttackBonus` | attacks, kicks and jumpkicks |
+| `EntityStat.RangedAttackBonus` | throws |
+| `EntityStat.ProjectileAttackBonus` | shots from a bow or crossbow |
+
+They use the same scale as other attack bonuses, such as an enchanted weapon's "+2 Attack Bonus" or a point of Dexterity above 17: each point makes a hit about 5% more likely. These gloves help with thrown weapons only:
+
+```csharp
+protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
+{
+    var modifiers = base.GetStatModifiers(wearer);
+    modifiers.Add(EntityStat.RangedAttackBonus, 2);
+    return modifiers;
+}
+```
+
+The tooltip shows this as "+2 Ranged Attack Bonus". A bonus for every kind of attack adds all three stats. A negative value makes attacks less likely to hit and shows in red.
+
 ## Changing a Stat's Maximum Value
 
 Use `AddMaximumValue` when the item changes an attribute's allowed maximum rather than its current calculated value:
