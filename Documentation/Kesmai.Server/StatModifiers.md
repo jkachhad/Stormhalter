@@ -94,7 +94,7 @@ Property snapshots are complete replacements and are calculated separately for e
 
 The server transports contextual item modifiers separately from ordinary item properties through `ServerItemModifiersUpdate`. Each item entry contains complete replacements for both `Modifiers` and `MaximumValueModifiers`, preserving repeated entries and list order. The client exposes these values through `ItemEntity.ModifierSet`, so tooltip consumers can observe modifier changes through the same client property/notification system used by item properties.
 
-`UpdateStatModifiers()` invalidates the modifier snapshot with `InvalidateModifiers()`. The transmitted value is `GetModifierSet(context)`, which is based on `GetStatModifiers(context.Wearer)` only, and is empty until the item is identified. `GetBaseModifiers` remains the server-side gameplay conversion of intrinsic item properties and is not duplicated in the client snapshot. `BaseDodge` is not part of this transport contract.
+`UpdateStatModifiers()` invalidates the modifier snapshot with `InvalidateModifiers()`. The transmitted value is `GetModifierSet(context)`, which is based on `GetStatModifiers(context.Wearer)` only, and is empty until the item is identified. `GetBaseModifiers` remains the server-side gameplay conversion of intrinsic item properties and is not duplicated in the client snapshot. The older `StatModifierSet.BaseDodge` is not part of this transport contract; dodge given with `EntityStat.Dodge` is.
 
 To build the client snapshot, `GetStatModifiers` is called with the item's holder as its `wearer` argument: the player or creature carrying it, even when someone else is looking. A player looking at another player's equipment sees the bonuses as they apply to that player, and the tooltip names them ("Equipped by Ana"). For an item nobody carries, such as one on the ground, the wearer is the player looking at it. The holder may not be wearing the item (it may be in their backpack), so calculate the snapshot from the argument without assuming the item is equipped by it.
 
@@ -421,20 +421,24 @@ Not every calculated equipment value belongs in a snapshot. Properties read only
 
 Refresh a stat snapshot only when the item contributes to an `EntityStat` or an attribute maximum. Values the client displays belong in `GetClientProperties`; call `InvalidateProperties()` when they change. Use an item delta only for item-update fields such as the label or icon.
 
-## BaseDodge Compatibility
+## Dodge
 
-`StatModifierSet.BaseDodge` is a temporary compatibility path because dodge is not yet represented by an `EntityStat`. Use it only for an equipped item's continuous dodge contribution:
+A creature's `BaseDodge`, set in its template, is its own dodge. Dodge that an item or a status gives goes in `EntityStat.Dodge`, which the server adds to `BaseDodge` when it works out how hard the wearer is to hit. Each point makes attacks against the wearer about 5% less likely to land, the same scale as `BaseDodge`. This cloak gives +1:
 
 ```csharp
 protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 {
     var modifiers = base.GetStatModifiers(wearer);
-    modifiers.BaseDodge += 1;
+    modifiers.Add(EntityStat.Dodge, 1);
     return modifiers;
 }
 ```
 
-Do not add new direct `wearer.BaseDodge += value` and `-= value` pairs for equipment. When Dodge becomes an `EntityStat`, this special snapshot field will be replaced by a normal `Add` call.
+The tooltip shows it as "+1 Dodge". A negative value makes the wearer easier to hit and shows in red.
+
+`MobileEntity.Dodge` is the total, `BaseDodge` plus `EntityStat.Dodge`. Code that rolls its own hit chance should read `Dodge`, not `BaseDodge`, so that it counts items and statuses too.
+
+Older code adds dodge with `modifiers.BaseDodge += 1` or with direct `wearer.BaseDodge += value` and `-= value` pairs. Both still work, but neither shows on the tooltip, and the pairs have the problems listed under [Direct add/remove pairs](#direct-addremove-pairs). Use `EntityStat.Dodge` in new code.
 
 ## Pitfalls to Avoid
 
