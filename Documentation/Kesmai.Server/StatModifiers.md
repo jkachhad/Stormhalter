@@ -144,6 +144,29 @@ protected override StatModifierSet GetStatModifiers(MobileEntity wearer)
 
 The tooltip shows this as "+2 Ranged Attack Bonus". A bonus for every kind of attack adds all three stats. A negative value makes attacks less likely to hit and shows in red.
 
+## Dexterity From Rings
+
+Dexterity rings don't stack: however many a player wears, together they add at most +2 Dexterity. The hidden `AgileStatus` gives that Dexterity. Every worn `DexterityRing` is one of its item sources, and the status adds up the rings' `BonusDexterity` and stops at +2. A ring that derives from `DexterityRing` only sets the amount. This one gives +1:
+
+```csharp
+public class ExampleDexterityRing : DexterityRing
+{
+    public ExampleDexterityRing()
+    {
+    }
+
+    public ExampleDexterityRing(Serial serial) : base(serial)
+    {
+    }
+
+    public override int BonusDexterity => 1;
+}
+```
+
+Don't also add `EntityStat.Dexterity` in the ring's `GetStatModifiers`: the player would get the bonus twice. An item that should add Dexterity on top of the rings' +2 adds `EntityStat.Dexterity` as usual.
+
+Because the Dexterity belongs to the status, not to the ring, the ring's tooltip shows it as a "+2 Dexterity" line of its own until tooltips can show what a status gives.
+
 ## Changing a Stat's Maximum Value
 
 Use `AddMaximumValue` when the item changes an attribute's allowed maximum rather than its current calculated value:

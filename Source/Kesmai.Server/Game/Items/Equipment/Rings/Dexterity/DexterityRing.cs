@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
+using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
@@ -60,13 +62,25 @@ public class DexterityRing : Ring, ITreasure
 	/// <summary>
 	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
 	/// </summary>
+	/// <remarks>
+	/// The Dexterity comes from <see cref="AgileStatus"/>, with this ring as one of its sources, so that the rings a
+	/// player wears add at most +2 Dexterity together.
+	/// </remarks>
 	protected override void OnActivateModifiers(MobileEntity entity)
 	{
 		base.OnActivateModifiers(entity);
 
-		/* Bonus dexterity is not modified like strength rings.
-		 * There is a cap of max +2, calculated by DexterityAttribute. */
-		entity.Stats[EntityStat.Dexterity].Update();
+		if (entity.GetStatus(typeof(AgileStatus), out var status))
+		{
+			status.AddSource(new ItemSource(this));
+		}
+		else
+		{
+			status = new AgileStatus(entity);
+			status.AddSource(new ItemSource(this));
+
+			entity.AddStatus(status);
+		}
 	}
 
 	/// <summary>
@@ -76,7 +90,21 @@ public class DexterityRing : Ring, ITreasure
 	{
 		base.OnInactivateModifiers(entity);
 
-		entity.Stats[EntityStat.Dexterity].Update();
+		if (entity.GetStatus(typeof(AgileStatus), out var status))
+			status.RemoveSource(this);
+	}
+
+	/// <inheritdoc />
+	public override void GetTooltipEntries(TooltipContext context, Tooltip tooltip)
+	{
+		base.GetTooltipEntries(context, tooltip);
+
+		/* The Dexterity comes from AgileStatus, not from this ring's own modifiers, so the tooltip's bonus lines can't
+		 * show it. This line stands in, in the same color as those lines, until statuses show their bonuses on
+		 * tooltips. The bonus is passed as signed text, since an int argument is read as a localization number. */
+		if (BonusDexterity > 0)
+			tooltip.AddLocalizedText(6600064, Color.FromArgb(180, 220, 255), TooltipTextStyle.Normal, -15000,
+				$"{BonusDexterity:+0;-0}"); /* {0} Dexterity */
 	}
 	
 	/// <inheritdoc />
