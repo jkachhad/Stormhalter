@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- For editing in an IDE only. Servers download this folder and compile it themselves when they start, as they
+         do segments (a <github> entry with path="Source/Modules/Stormhalter.Library" in Configuration/Modules.xml). -->
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net11.0</TargetFramework>
+        <AssemblyName>Stormhalter.Library</AssemblyName>
+        <RootNamespace>Kesmai.Publications</RootNamespace>
+
+        <!-- The newest C# the server's module compiler supports. -->
+        <LangVersion>14</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Kesmai.Server.Reference" Version="*" />
+    </ItemGroup>
+
+</Project>

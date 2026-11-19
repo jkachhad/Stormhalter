@@ -5,6 +5,7 @@ This repository is public. Write commits, pull request descriptions, comments an
 ## What's here
 - `Source/Kesmai.Server` holds the game scripts: items, spells, creatures, commands and more. They are compiled into the game server when it is built, so they use .NET 11 and the latest C#.
 - `Source/Kesmai.Shared` is compiled into both the server and the game client.
+- `Source/Modules/Stormhalter.Library` holds the library's books and scrolls. It isn't built into the server: servers download it from `master` and compile it when they start, as they do segments, so it stays within C# 14.
 - `Source/Kesmai.WorldForge` is the map editor, which ships with the game client. It links the prebuilt DigitalRune DLLs in `Dependencies/DigitalRune`, which don't update on their own.
 - `Content/Localization/Enu.xml` holds the server's messages. A new message shows as `#<index>` in the game client until the next client content release.
 - Guides for content authors are in `Documentation/`.
