@@ -394,7 +394,7 @@ public static class QuestCodeGenerator
 			b.AppendLine("\t\t\t}");
 			b.AppendLine();
 			b.AppendLine("\t\t\tCreatureGroup.Instantiate(escort, giver.Facet, giver.Segment, giver.Location);");
-			b.AppendLine("\t\t\tplayer.SendMessage(Color.Yellow, $\"Order {escort.Name} to follow you, then lead them to safety.\");");
+			b.AppendLine("\t\t\tplayer.SendMessage(Color.Yellow, $\"Choose Follow me or Trail me in {escort.Name}'s menu, then lead them to safety.\");");
 			b.AppendLine("\t\t}");
 			b.AppendLine();
 			b.AppendLine("\t\tinternal static void OnEscortArrived(PlayerEntity player, string stage)");
@@ -524,6 +524,9 @@ public static class QuestCodeGenerator
 		b.AppendLine("\t{");
 		b.AppendLine("\t\tpublic override bool CanOrderFollow => true;");
 		b.AppendLine();
+		b.AppendLine("\t\t/* Recruited from the menu (Follow me / Trail me), by the player on the quest only. */");
+		b.AppendLine("\t\tpublic override bool IsEscort => true;");
+		b.AppendLine();
 		b.AppendLine("\t\tpublic PlayerEntity QuestOwner { get; private set; }");
 		b.AppendLine("\t\tpublic string QuestStage { get; private set; }");
 		b.AppendLine();
@@ -552,6 +555,13 @@ public static class QuestCodeGenerator
 		b.AppendLine("\t\t\t};");
 		b.AppendLine();
 		b.AppendLine("\t\t\tBrain = new RescueAI(this) { Aggressive = false };");
+		b.AppendLine("\t\t}");
+		b.AppendLine();
+		b.AppendLine("\t\tpublic override bool CanBeEscortedBy(PlayerEntity player, out string refusal)");
+		b.AppendLine("\t\t{");
+		b.AppendLine("\t\t\trefusal = (player == QuestOwner) ? null : \"I'm waiting for someone else.\";");
+		b.AppendLine();
+		b.AppendLine("\t\t\treturn player == QuestOwner;");
 		b.AppendLine("\t\t}");
 		b.AppendLine();
 		b.AppendLine($"\t\tpublic {q}Escort(Serial serial) : base(serial)");
