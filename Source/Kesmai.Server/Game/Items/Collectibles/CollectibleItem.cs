@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Collections;
@@ -156,18 +157,43 @@ public abstract class CollectibleItem : ItemEntity
 			return CollectionAddResult.UnknownEntry;
 		}
 
-		var result = collection.TryAdd(player, entry.Id, CreateState(player));
+		/* CreateState and OnAdded are often a segment's code. An error in either is logged here: left to the caller, it
+		 * would disconnect the player. */
+		byte[] state;
+
+		try
+		{
+			state = CreateState(player);
+		}
+		catch (Exception exception)
+		{
+			Log.Error($"Collections: {GetType().FullName}.CreateState failed for '{collection.Id}' entry {entry.Id}: {exception}");
+
+			player.SendServerMessage("Nothing happens.");
+			return CollectionAddResult.Invalid;
+		}
+
+		var result = collection.TryAdd(player, entry.Id, state);
 
 		switch (result)
 		{
 			case CollectionAddResult.Added:
 			{
-				player.SendServerMessage($"The {entry.Title} has been added to your {collection.Title} collection.");
-
-				OnAdded(player, collection, entry);
-
+				/* Used up before OnAdded, so that an error there can't leave an item that adds the entry again for
+				 * another character or account. */
 				if (ConsumeOnAdd)
 					Delete();
+
+				player.SendServerMessage($"The {entry.Title} has been added to your {collection.Title} collection.");
+
+				try
+				{
+					OnAdded(player, collection, entry);
+				}
+				catch (Exception exception)
+				{
+					Log.Error($"Collections: {GetType().FullName}.OnAdded failed for '{collection.Id}' entry {entry.Id}: {exception}");
+				}
 
 				break;
 			}
@@ -187,12 +213,14 @@ public abstract class CollectibleItem : ItemEntity
 	}
 
 	/// <summary>
-	/// Creates the entry's starting state when it's added, or <c>null</c> for none.
+	/// Creates the entry's starting state when it's added, or <c>null</c> for none. If it throws, the error is logged
+	/// and nothing is added.
 	/// </summary>
 	protected virtual byte[] CreateState(PlayerEntity player) => null;
 
 	/// <summary>
-	/// Called after the entry was added, before the item is deleted.
+	/// Called after the entry was added and, when <see cref="ConsumeOnAdd"/>, the item deleted; its properties can
+	/// still be read. If it throws, the error is logged and the entry stays added.
 	/// </summary>
 	protected virtual void OnAdded(PlayerEntity player, Collection collection, CollectionEntry entry)
 	{
