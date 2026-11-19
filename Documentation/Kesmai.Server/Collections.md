@@ -27,7 +27,7 @@ Each entry can be collected once. Players can't remove entries.
 
 ## Adding a book or scroll to the library
 
-A book or scroll is a class that derives from `PublishedBook` or `PublishedScroll`, in [Stormhalter-Library](https://github.com/jkachhad/Stormhalter-Library) or in a segment. Give it a fixed id that starts with the repository or segment that adds it, and its pages:
+A book or scroll is a class that derives from `PublishedBook` or `PublishedScroll`, in the library module (`Source/Modules/Stormhalter.Library` in this repository) or in a segment. Give it a fixed id that starts with the repository or segment that adds it, and its pages:
 
 ```csharp
 public class KeshmaHistory : PublishedBook
@@ -43,7 +43,9 @@ public class KeshmaHistory : PublishedBook
 }
 ```
 
-`Title` and `ItemId` (the sprite of the book in hand) are what players see first; set them, or the server warns at startup. The books and scrolls that come with the game take these details from the game's `Library.xml` instead, which also puts them first in the library.
+`Title` and `ItemId` (the sprite of the book in hand) are what players see first; set them, or the server warns at startup. The books in the library module set them the same way, for example `Source/Modules/Stormhalter.Library/Books/Mechanics/Strength.cs`, with ids that start with `stormhalter.`.
+
+The library module isn't built into the game server. Like a segment, servers download it from `master` and compile it when they start, each night, so a book merged into `master` reaches players at the next restart, without a server release. It's compiled with C# 14, as segments are, and an error in it stops the server from starting, so build `Stormhalter.Library.csproj` before you merge.
 
 Players add a book to their library by reading it: they hold the book and double-click it, and the book is used up. Staff can create one with `add Book ng.keshma-history`. The same `Book` item shows scrolls.
 
