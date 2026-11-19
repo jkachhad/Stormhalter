@@ -180,25 +180,45 @@ if (CollectionRegistry.TryGetCollection("stormhalter.trophies", out var trophies
 
 ## Reacting when an entry is added
 
-`EventSink.CollectionEntryAdded`, `CollectionEntryRemoved` and `CollectionEntryStateChanged` are raised after every change to any collection, for example to grant something when a player completes one:
+`EventSink.CollectionEntryAdded`, `CollectionEntryRemoved` and `CollectionEntryStateChanged` are raised after every change to any collection, for example to grant something when a player completes one. Subscribe once, from a `[ServerConfigure]` method. In a segment it runs once the segment is loaded (see [EventSink in a segment](EventSink.md#in-a-segment)):
 
 ```csharp
-EventSink.CollectionEntryAdded += args =>
+public static class FigurineRewards
 {
-	if (args.Collection.Id == CarvedFigurines.CollectionId && args.Collection.IsComplete(args.Record))
-		args.Player.SendServerMessage("You've found every carved figurine!");
-};
+	[ServerConfigure]
+	public static void Configure()
+	{
+		EventSink.CollectionEntryAdded += OnEntryAdded;
+	}
+
+	private static void OnEntryAdded(CollectionEntryEventArgs args)
+	{
+		if (args.Collection.Id == CarvedFigurines.CollectionId && args.Collection.IsComplete(args.Record))
+			args.Player.SendServerMessage("You've found every carved figurine!");
+	}
+}
 ```
 
-Check the collection first: the events fire for every collection, the library included. A handler runs in the middle of adding the entry, so keep it short, and don't let it throw: an error there stops the code that added the entry, for example before a `CollectibleItem` is used up.
+Check the collection first: the events fire for every collection, the library included. A handler runs in the middle of adding the entry, so keep it short. If it throws, the server logs the error and carries on: the entry stays added and the other handlers still run, but whatever your handler was doing is lost.
+
+Don't subscribe from a segment's `OnInitialize` or an item's `OnSpawn`: they run more than once, and each run adds the handler again, so it would run twice or more for every entry.
 
 ## Details that change per player
 
 Some entries show details that differ between players, such as how long ago a figurine was found.
 
-- **Calculated details:** override `GetOwnerProperties(player, entry, owned)` and return properties built from `owned.Acquired` (when the player got the entry). Nothing extra is saved.
+- **Calculated details:** override `GetOwnerProperties(player, entry, owned)` and return properties built from `owned.Acquired` (when the player got the entry). Nothing extra is saved. If it throws, the server logs the error once and shows the entries without these details.
 - **Saved details:** give the entry a state when it's added (`CreateState`, or the last argument of `TryAdd`), and change it later with `collection.UpdateState(player, entryId, state)`. Write and read it with `CollectionState.Write` and `CollectionState.Read`, and start it with a version number so you can change its format later. The library saves each book's current page this way.
 
 ## Opening an entry
 
-Players can click an entry the client view makes clickable, which asks the server to open it. Override `OnAccess(player, entry, owned)` in the collection to respond, for example by showing a gump; the library opens the book again. Players can only open entries they own.
+Players open an entry they own by double-clicking it on the collection's page (in the library, one click opens a book). That asks the server to open it. Override `OnAccess(player, entry, owned)` in the collection to respond, for example by showing a gump or sending a message; the library opens the book again. Without an override, nothing happens. Players can only open entries they own.
+
+```csharp
+public override void OnAccess(PlayerEntity player, CollectionEntry entry, OwnedEntry owned)
+{
+	player.SendServerMessage($"You turn the {entry.Title} over in your hands.");
+}
+```
+
+If `OnAccess` throws, the server logs the error and tells the player the entry can't be opened right now.

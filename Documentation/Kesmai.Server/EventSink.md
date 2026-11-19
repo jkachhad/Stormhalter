@@ -184,6 +184,21 @@ private static void AfterLoad()
 }
 ```
 
+## In a segment
+
+Segments are compiled while the server starts, after the server's own `[ServerConfigure]` methods have run. A `[ServerConfigure]` method in a segment still runs, once, a little later:
+
+- after every segment is loaded and every collection is registered, so it can look them up;
+- before saved data is loaded, so a `Deserialized` handler it adds runs when the world has loaded.
+
+Handlers it adds to `ServerStarted` run straight after it, so the startup registration example above works the same in a segment.
+
+If it throws, the server doesn't start, and the error names the segment, as a compile error does.
+
+Subscribe there rather than in a segment's `OnInitialize` or an item's `OnSpawn`. Those run more than once (once per facet, or once per item), and every run adds the handler again.
+
+`[ServerProcess]` methods don't run in a segment, and the server logs a warning for each one. Use a timer (`Timer.DelayCall`) for repeating work.
+
 ## A useful mental model
 
 Think about `EventSink` like this:
