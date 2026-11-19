@@ -132,8 +132,10 @@ Change what happens by overriding:
 | Override | Use it to |
 | --- | --- |
 | `ConsumeOnAdd` | Return `false` to keep the item after its entry is added, for a trophy the player keeps carrying. |
-| `OnAdded(player, collection, entry)` | Do something extra when the entry is added. |
+| `OnAdded(player, collection, entry)` | Do something extra when the entry is added. The item is already used up by then, unless `ConsumeOnAdd` is `false`, but you can still read its properties. |
 | `CreateState(player)` | Give the entry a starting state (see below). |
+
+If `CreateState` throws, the server logs the error, the player is told "Nothing happens.", and nothing is added. If `OnAdded` throws, the server logs the error and the entry stays added.
 
 Staff can create one with `add CarvedFigurine stormhalter.griffin-figurine`, where `stormhalter.griffin-figurine` is the entry id. The item shows the entry's icon, so one item class covers every figurine.
 
