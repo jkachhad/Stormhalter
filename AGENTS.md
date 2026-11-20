@@ -14,6 +14,11 @@ This repository is public. Write commits, pull request descriptions, comments an
 - A change that also needs server engine work uses the same branch name in each repository, so the engine's tests build against this branch.
 - Open pull requests against `master`. Maintainers merge them.
 
+## Patch notes
+- Players read the patch notes at https://www.stormhalter.com/updates/. They are kept in `Updates/`, one file per patch (`Updates/0.119.2.0.md`), written in the pull request that raises the version. `Updates/README.md` has the format.
+- A change players will notice goes in the next patch's file. Leave out what players can't see, such as refactors and tests.
+- Segments keep their notes in their own repositories.
+
 ## Conventions
 - Commit subjects are plain imperative sentences, with no type prefix and no trailing period. Example: "Prompt the player when Identify asks for a target". WorldForge commits start with "WorldForge: ".
 - Files use LF line endings, and some start with a BOM. Keep both as they are, and change only the lines you edit.
