@@ -21,7 +21,6 @@ When the client starts, it loads its own data files first, then the `*-External.
 | `Custom/Data/Body.xml` | Body (creature) graphics | as `Content/Data/Body-External.xml` |
 | `Custom/Data/Audio.xml` | Sound definitions | as `Content/Data/Audio-External.xml` |
 | `Custom/Data/Spells.xml` | Spell icons | `<spell id="…">` entries with a `<texture>` and `<source>`, like items |
-| `Custom/Data/Library.xml` | Books and scrolls | `<book>` and `<scroll>` entries |
 
 Every file is optional; leave out the ones you don't need. Note that the names have no `-External` suffix.
 

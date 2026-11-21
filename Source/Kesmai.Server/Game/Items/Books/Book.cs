@@ -13,7 +13,7 @@ namespace Kesmai.Server.Items;
 
 public class Book : ItemEntity
 {
-	private uint _publicationId;
+	private string _publicationId;
 	
 	/// <inheritdoc />
 	public override int Weight => 5;
@@ -25,10 +25,10 @@ public class Book : ItemEntity
 	public override int Category => ItemCategory.Miscellaneous.Id;
 
 	/// <summary>
-	/// Gets or sets the publication id.
+	/// Gets or sets the publication id, the publication's entry id in the library collection.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public uint PublicationId
+	public string PublicationId
 	{
 		get => _publicationId;
 		set
@@ -79,7 +79,7 @@ public class Book : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Book"/> class.
 	/// </summary>
-	public Book(uint publicationId) : base(152)
+	public Book(string publicationId) : base(152)
 	{
 		PublicationId = publicationId;
 	}
@@ -131,38 +131,7 @@ public class Book : ItemEntity
 		
 		if (entity is PlayerEntity player)
 		{
-			var account = player.Account;
-			var client = player.Client;
-
-			if (!publication.IsOwned(account, out var record))
-			{
-				publication.Own(account, record = new PublicationRecord(account, publication));
-				
-				player.SendServerMessage($"A book titled '{publication.Title}' has been added to your library.");
-
-				if (client.UpdateLibrary)
-					client.SendPacket(new LibraryUpdatePacket(record));
-			}
-			
-			if (publication is PublishedBook book)
-			{
-#if (DEBUG)
-				book.Refresh();
-#endif
-				entity.CloseGumps<BookGump>();
-				entity.SendGump(new BookGump(player, book));
-			}
-			else if (publication is PublishedScroll scroll)
-			{
-#if (DEBUG)
-				scroll.Refresh();
-#endif
-				entity.CloseGumps<ScrollGump>();
-				entity.SendGump(new ScrollGump(player, scroll));
-				
-				// scrolls are marked as complete when read.
-				record.Complete();
-			}
+			Library.Read(player, publication);
 
 			Delete();
 		}
@@ -177,7 +146,7 @@ public class Book : ItemEntity
 	{
 		base.Serialize(writer);
 
-		writer.Write((short)1);	/* version */
+		writer.Write((short)2);	/* version */
 		writer.Write(PublicationId);
 	}
 
@@ -192,9 +161,15 @@ public class Book : ItemEntity
 
 		switch (version)
 		{
+			case 2:
+			{
+				PublicationId = reader.ReadString();
+				break;
+			}
 			case 1:
 			{
-				PublicationId = reader.ReadUInt32();
+				/* Version 1 saved a numeric publication id. No publication was released under one, so it's dropped. */
+				reader.ReadUInt32();
 				break;
 			}
 		}
@@ -217,7 +192,7 @@ public class BookGump : Gump
 		_player = player;
 		_publication = publication;
 
-		_record = record ?? publication.GetRecord(player.Account);
+		_record = record ?? Library.GetRecord(player, publication);
 
 		if (_record is not null)
 		{
