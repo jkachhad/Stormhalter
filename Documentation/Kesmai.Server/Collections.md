@@ -1,6 +1,6 @@
 # Collections
 
-A collection is a set of things players can collect. Players see their collections in the Collections window, opened from the Titan bar: one card per collection with its progress, and a page per collection with everything they've found.
+A collection is a set of things players can collect. Players see their collections in the Collections window, opened from the Titan bar. It has a tab for each collection along the bottom. A tab lists what's in that collection, with the player's progress, and shows the selected entry beside the list: a large picture, its title, description and details.
 
 The library is the collection that ships with the game: every book and scroll a player has read is in it, and they can open it again from there. This page shows how to add a book to it, how to add a collection of your own, in this repository or in a segment, and the items that fill it.
 
@@ -214,7 +214,7 @@ Some entries show details that differ between players, such as how long ago a fi
 
 ## Opening an entry
 
-Players open an entry they own by double-clicking it on the collection's page (in the library, one click opens a book). That asks the server to open it. Override `OnAccess(player, entry, owned)` in the collection to respond, for example by showing a gump or sending a message; the library opens the book again. Without an override, nothing happens. Players can only open entries they own.
+Players open an entry they own by double-clicking it in the collection's list (in the library, by selecting a book and pressing **Read**). That asks the server to open it. Override `OnAccess(player, entry, owned)` in the collection to respond, for example by showing a gump or sending a message; the library opens the book again. Without an override, nothing happens. Players can only open entries they own.
 
 ```csharp
 public override void OnAccess(PlayerEntity player, CollectionEntry entry, OwnedEntry owned)
