@@ -173,7 +173,7 @@ public abstract class CollectibleItem : ItemEntity
 			return CollectionAddResult.Invalid;
 		}
 
-		var result = collection.TryAdd(player, entry.Id, state);
+		var result = collection.TryAdd(player, entry.Id, state, CollectionAudit.GetItemSource(this));
 
 		switch (result)
 		{
