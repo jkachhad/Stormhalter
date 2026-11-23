@@ -8,13 +8,11 @@ public class BrawlingWithScience : PublishedScroll
 	public BrawlingWithScience() : base("stormhalter.punch-me-for-science",
 		new Page(
 			new CompositePageElement(new BodyPageElement(32), new TerrainPageElement(114), new BodyPageElement(49)),
-			new ParagraphPageElement("It began when one of them, Varek, a wiry fighter, found something glinting in the sand-- a platinum ring, etched with faintly shimmering runes. He shared a look with Tak, a martial-artist with heavy fists."),
-			new ParagraphPageElement("Neither knew what the ring did; they also failed to bring a thief in their party, because a simple Identify spell could tell-- I digress! They decided to test it. Tak would use a newly learned circular kicking technique against Varek's head, and Varek would-- he would-- he had no skills, he was just a fighter."),
-			new ParagraphPageElement("They each took turns slipping the ring onto their fingers, but there was no magical chime or hum to signal their newly gained power."),
+			new ParagraphPageElement("Varek, a wiry fighter, found a platinum ring in the sand. Nobody could tell what it did, because nobody had thought to bring a thief to cast Identify."),
+			new ParagraphPageElement("So they tested it scientifically. Varek put it on, and Tak, a martial artist with heavy fists, tried to kick him in the head."),
 			new CompositePageElement(new ItemPageElement(19)),
-			new ParagraphPageElement("As Varek wore the ring, his movements grew more precise. He now dodged Tak's attacks with ease, and Tak, despite his usual dexterity, struggled to even graze him. It didn't make Varek invincible; Tak landed a few hits, but they were fewer and farther between."),
-			new ParagraphPageElement("Varek seemed to notice, too, his confidence building as he found openings he hadn't seen before. Tak was visibly frustrated, fighting a shadow that danced just out of reach."),
-			new ParagraphPageElement("At the end of the match, Varek slipped the ring off, handing it to Tak. The two exchanged respectful nods, still unsure of the ring's power, but only bound by the thrill of roundhouse kicks for science.")
+			new ParagraphPageElement("Tak missed. Then he missed again. Varek ducked most of the kicks and landed more of his own punches than ever. Tak still connected now and then; science is never perfect."),
+			new ParagraphPageElement("It was a ring of dexterity, which helps you hit and helps you dodge. The two parted with bruises and a deep respect for peer review.")
 		))
 	{
 		Title = "Punch Me. For Science!";

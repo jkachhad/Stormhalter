@@ -8,19 +8,17 @@ public class GreatestTrialOfReginald : PublishedScroll
 	public GreatestTrialOfReginald() : base("stormhalter.greatest-trial-of-reginald",
 		new Page(
 			new CompositePageElement(new BodyPageElement(151), new FloorPageElement(164)),
-			new ParagraphPageElement("In the frozen land of Axe Glacier, Reginald, the self-proclaimed \"strongest knight in all the lands,\" found himself standing before an anvil. This very anvil could forge mighty weapons- the returning axe and the silver great axe. \"No doubt, only a knight of my strength could manage this,\" he muttered, glancing around as if someone might overhear and spread the word."),
-			new CompositePageElement(new ItemPageElement(77), new ItemPageElement(125)),
-			new ParagraphPageElement("He crouched down, gripped the anvil, and pulled with all his strength. The anvil didn't move an inch. Confused, he tried again, groaning louder this time for dramatic effect. Still nothing."),
+			new ParagraphPageElement("Reginald, self-proclaimed strongest knight in all the lands, came to Axe Glacier to carry an anvil home to Vulcan. He gripped it, heaved, and groaned loudly for effect. The anvil did not move."),
 			new CompositePageElement(new BodyPageElement(56)),
-			new ParagraphPageElement("As he stood, baffled, an ice lizard slithered nearby, observing him. The creature let out a low, mocking snarl. Reginald scowled, drawing his sword. One quick swipe, and the lizard was done."),
+			new ParagraphPageElement("An ice lizard snickered. One swing later it had stopped snickering, and Reginald found a ring of strength on its claw."),
 			new CompositePageElement(new ItemPageElement(2), new ItemPageElement(43), new ItemPageElement(53)),
-			new ParagraphPageElement("To his surprise, a small ring gleamed on the creature's claw. With a shrug, he slipped it on- and instantly felt a rush of strength. Testing his new power, he returned to the anvil, gripping it once more. This time, it lifted with ease. \"See?\" he grinned, even though no one was around. \"Strongest knight, as always.\" he shouted in the direction of the dead lizard."),
-			new ParagraphPageElement("And with that, he hauled the anvil back to Vulcan, quietly grateful the lizard wouldn't live to tell the tale of his brief struggle.")
+			new ParagraphPageElement("He slipped it on, and the anvil came up like a loaf of bread. \"Strongest knight, as always,\" he told the lizard, who was in no state to argue."),
+			new ParagraphPageElement("Strength decides how much you can carry, and the heavier your load, the more each step tires you. Rings and spells of strength raise it, and a great deal of it makes your blows hurt more.")
 		))
 	{
 		Title = "The Greatest Trial of Reginald";
 		Author = "Goldenrain";
-		Description = "A tale of strength, anvil, and a very judgmental ice lizard.";
+		Description = "A tale of strength, an anvil, and a very judgmental ice lizard.";
 		ItemId = 461;
 	}
 }
