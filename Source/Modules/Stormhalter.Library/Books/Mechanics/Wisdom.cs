@@ -10,7 +10,7 @@ public class AWiseCheat : PublishedScroll
 			new CompositePageElement(new BodyPageElement(219)),
 			new ParagraphPageElement("A certain thaum in Kesmai's library learned his spells in hours while his classmates took days. His secret was a stash of wisdom potions, each one making him a little wiser for good."),
 			new CompositePageElement(new ItemPageElement(274), new ItemPageElement(274), new ItemPageElement(274)),
-			new ParagraphPageElement("Wisdom made him a quick study and gave him more mana each time he gained a level. It did not make him charming. His dates tended to leave during his lecture on ancient treaties, well before the footnotes."),
+			new ParagraphPageElement("Wisdom made him a quick study and gave him more mana each time he gained a level. It did not make him charming. His dates tended to leave during his lecture on ancient treaties. \"One does not simply skip the footnotes,\" he would call after them."),
 			new ParagraphPageElement("Wisdom is to thaumaturges what intelligence is to wizards and thieves: faster magic learning and more mana each level. It does nothing for conversation.")
 		))
 	{

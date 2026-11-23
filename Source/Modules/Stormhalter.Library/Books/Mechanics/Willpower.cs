@@ -12,7 +12,7 @@ public class SlipperyWill : PublishedScroll
 			new CompositePageElement(new FloorPageElement(17), new ItemPageElement(131)),
 			new ParagraphPageElement("Then the drake roared, and his nerve went. He leapt for a finishing jumpkick, his boots met the ice, and the ice won. He landed on his head, and the drake had lunch."),
 			new CompositePageElement(new FloorPageElement(105), new TerrainPageElement(325), new TerrainPageElement(325), new BodyPageElement(66)),
-			new ParagraphPageElement("Willpower keeps your nerve. It helps you shrug off fear, stuns and blindness, take less harm from death and lightning spells, and keep moving across ice, fire and webs. He had very little of it, and is now a very humble ghost.")
+			new ParagraphPageElement("Willpower keeps your nerve. It helps you shrug off fear, stuns and blindness, take less harm from death and lightning spells, and keep moving across ice, fire and webs. He had very little of it. He used to be an adventurer like you, until he took a patch of ice to the head.")
 		))
 	{
 		Title = "Slippery Will";

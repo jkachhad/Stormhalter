@@ -12,7 +12,7 @@ public class SlowLearnerSpellbook : PublishedScroll
 			new ParagraphPageElement("One day he found the spellbook of his ancestor, Grimgar the Great. Under Fireball it read: \"Think of something hot. Wave your hands. Keep waving.\" Under Levitate: \"Jump. Hope.\""),
 			new CompositePageElement(new FloorPageElement(135), new FloorPageElement(9), new FloorPageElement(214)),
 			new CompositePageElement(new BodyPageElement(66)),
-			new ParagraphPageElement("Grimgar's ghost rose from the last page, beaming. \"Took me forty years to learn those!\" Magnus learned them all before supper."),
+			new ParagraphPageElement("Grimgar's ghost rose from the last page, glowing faintly blue. \"Forty years to learn those, it took me!\" Magnus learned them all before supper."),
 			new ParagraphPageElement("Intelligence decides how fast wizards and thieves learn magic, and how much mana they gain each level. It does nothing for anyone else, which Magnus finds very sad.")
 		))
 	{
