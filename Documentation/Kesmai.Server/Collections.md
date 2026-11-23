@@ -171,7 +171,7 @@ Any code can add an entry, for example a quest reward:
 ```csharp
 if (CollectionRegistry.TryGetCollection("stormhalter.trophies", out var trophies))
 {
-	var result = trophies.TryAdd(player, "stormhalter.dragon-slayer");
+	var result = trophies.TryAdd(player, "stormhalter.dragon-slayer", source: "quest:dragon-slayer");
 
 	if (result == CollectionAddResult.Added)
 		player.SendServerMessage("You earned the Dragon Slayer trophy.");
@@ -179,6 +179,15 @@ if (CollectionRegistry.TryGetCollection("stormhalter.trophies", out var trophies
 ```
 
 `TryAdd` returns `Added`, `AlreadyOwned`, `UnknownEntry` (the collection has no such entry) or `Invalid` (no player or account). Collections never send messages or delete items themselves; the code that adds the entry decides.
+
+### Saying what caused it
+
+Every entry added or removed is recorded in the server's audit trail, which staff search in Sage when a player asks how they got an entry or where one went. Each record names the account, the character, the collection and the entry, and a **source**: what caused the change.
+
+- Pass `source:` to `TryAdd` or `Remove` to say what caused it, in a few words, such as `quest:dragon-slayer`. Up to 64 characters are kept.
+- Without one, the record names the module whose code made the call, such as your segment's.
+- Items that add themselves (`CollectibleItem`) record the item's serial and type, for example `item 1073742001 TigerFigurine`, so staff can find the item. Use `CollectionAudit.GetItemSource(item)` to do the same from your own item.
+- Books and scrolls record `library`.
 
 ## Reacting when an entry is added
 
