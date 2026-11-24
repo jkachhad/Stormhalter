@@ -24,6 +24,10 @@ public class Book : ItemEntity
 	/// <inheritdoc />
 	public override int Category => ItemCategory.Miscellaneous.Id;
 
+	/// <inheritdoc />
+	/// <remarks>Its title and author show to anyone, so there's nothing to identify.</remarks>
+	public override bool RequiresIdentification => false;
+
 	/// <summary>
 	/// Gets or sets the publication id, the publication's entry id in the library collection.
 	/// </summary>
