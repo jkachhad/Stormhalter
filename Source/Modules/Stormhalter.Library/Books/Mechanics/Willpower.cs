@@ -19,5 +19,7 @@ public class SlipperyWill : PublishedScroll
 		Author = "Goldenrain";
 		Description = "Low willpower turns a sure victory into a slip on the ice.";
 		ItemId = 461;
+		Group = "Basics";
+		Order = 1;
 	}
 }

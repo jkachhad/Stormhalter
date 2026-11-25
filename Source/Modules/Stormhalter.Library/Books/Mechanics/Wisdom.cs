@@ -18,5 +18,7 @@ public class AWiseCheat : PublishedScroll
 		Author = "Goldenrain";
 		Description = "A thaum learns quickly but bores everyone with endless history lectures.";
 		ItemId = 461;
+		Group = "Basics";
+		Order = 1;
 	}
 }

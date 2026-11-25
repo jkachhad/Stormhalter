@@ -18,5 +18,7 @@ public class ThePortalHasMoved : PublishedScroll
 		Author = "The Kesmai Town Council";
 		Description = "A notice from Kesmai's council about where the portal to Oakvael went.";
 		ItemId = 461;
+		Group = "Oakvael";
+		Order = 2;
 	}
 }

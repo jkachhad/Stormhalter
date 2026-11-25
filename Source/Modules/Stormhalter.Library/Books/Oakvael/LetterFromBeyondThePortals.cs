@@ -19,5 +19,7 @@ public class LetterFromBeyondThePortals : PublishedScroll
 		Author = "AseLaind";
 		Description = "An explorer writes home from a land of giant oaks, somewhere beyond Kesmai's portals.";
 		ItemId = 461;
+		Group = "Oakvael";
+		Order = 2;
 	}
 }

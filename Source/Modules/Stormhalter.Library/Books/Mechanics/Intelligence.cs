@@ -20,5 +20,7 @@ public class SlowLearnerSpellbook : PublishedScroll
 		Author = "Goldenrain";
 		Description = "Missteps of a wizard who took years to learn what others mastered in days.";
 		ItemId = 461;
+		Group = "Basics";
+		Order = 1;
 	}
 }

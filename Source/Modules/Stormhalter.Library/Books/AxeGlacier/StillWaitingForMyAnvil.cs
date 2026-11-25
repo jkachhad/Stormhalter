@@ -19,5 +19,7 @@ public class StillWaitingForMyAnvil : PublishedScroll
 		Author = "Vulcan";
 		Description = "A smith of Axe Glacier would like his anvil, and gives directions to the coldest place in the lands.";
 		ItemId = 461;
+		Group = "Axe Glacier";
+		Order = 4;
 	}
 }
