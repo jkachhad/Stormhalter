@@ -18,6 +18,6 @@ public class ColdFeet : PublishedScroll
 		Description = "An explorer writes from somewhere very cold, and very slippery.";
 		ItemId = 461;
 		Group = "Axe Glacier";
-		Order = 4;
+		Order = 7;
 	}
 }

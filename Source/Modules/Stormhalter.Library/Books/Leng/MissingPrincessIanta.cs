@@ -19,6 +19,6 @@ public class MissingPrincessIanta : PublishedScroll
 		Description = "A royal plea for a wandering princess, with directions to a land of sand.";
 		ItemId = 461;
 		Group = "Leng";
-		Order = 3;
+		Order = 6;
 	}
 }

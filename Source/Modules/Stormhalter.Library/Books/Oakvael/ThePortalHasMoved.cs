@@ -19,6 +19,6 @@ public class ThePortalHasMoved : PublishedScroll
 		Description = "A notice from Kesmai's council about where the portal to Oakvael went.";
 		ItemId = 461;
 		Group = "Oakvael";
-		Order = 2;
+		Order = 5;
 	}
 }

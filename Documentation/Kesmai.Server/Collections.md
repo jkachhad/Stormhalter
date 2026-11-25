@@ -47,16 +47,21 @@ public class KeshmaHistory : PublishedBook
 
 `Title` and `ItemId` (the sprite of the book in hand) are what players see first; set them, or the server warns at startup. The books in the library module set them the same way, for example `Source/Modules/Stormhalter.Library/Books/Mechanics/Strength.cs`, with ids that start with `stormhalter.`.
 
-`Group` is the heading the library lists the book under, and `Order` places it: lower numbers first, and books with the same order by id. The library module gives the books of a group the same order, so a new book only needs its group's two lines:
+`Group` is the heading the library lists the book under, and `Order` places it: lower numbers first, and books with the same order by id. The library module gives the books of a kind the same order, so a new book only needs its kind's two lines:
 
 | Group | Order | Books |
 | --- | --- | --- |
 | `Basics` | 0 | The introduction, `StormhalterIntroduction.cs` |
 | `Basics` | 1 | The attribute scrolls, `Books/Mechanics` |
-| `Oakvael` | 2 | `Books/Oakvael` |
-| `Leng` | 3 | `Books/Leng` |
-| `Axe Glacier` | 4 | `Books/AxeGlacier` |
-| `Underkingdom` | 5 | `Books/Underkingdom` |
+| `Kesmai` | 2 | Zod the Mighty's histories, `Books/Kesmai/History` |
+| `Kesmai` | 3 | Adventurers' accounts of the bosses, `Books/Kesmai/Bosses` |
+| `Kesmai` | 4 | The field notes on monsters, `Books/Kesmai/FieldNotes` |
+| `Oakvael` | 5 | `Books/Oakvael` |
+| `Leng` | 6 | `Books/Leng` |
+| `Axe Glacier` | 7 | `Books/AxeGlacier` |
+| `Underkingdom` | 8 | `Books/Underkingdom` |
+
+The groups follow the order players reach the lands, starting with Kesmai, where they begin.
 
 A book without a group is listed last, under "Other". Headings only show while the library is in its own order; sorting it by name, quality or newest lists the books without them.
 
