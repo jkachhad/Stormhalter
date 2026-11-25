@@ -15,18 +15,18 @@ namespace Kesmai.Server.Items;
 public abstract class KeepsakeDefinition
 {
 	/// <summary>
-	/// Gets the entry id, such as <c>og.marlis-coin-pouch</c>. Start it with the repository or segment that adds the
-	/// keepsake. Players' collections are saved by it, so it must never change.
+	/// Gets the entry id, such as <c>og.kesmai-coin-pouch</c>. Start it with the repository that adds the keepsake and
+	/// its land. Players' collections are saved by it, so it must never change.
 	/// </summary>
 	public string Id { get; }
 
 	/// <summary>
-	/// Gets the title, such as "Coin Pouch of Marlis". Messages put "The" before it.
+	/// Gets the title, "Lost" and the thing, such as "Lost Coin Pouch". Messages put "The" before it.
 	/// </summary>
 	public string Title { get; protected set; }
 
 	/// <summary>
-	/// Gets who the keepsake belonged to, such as "Marlis, the banker". The collection shows it as the entry's owner.
+	/// Gets who the keepsake belonged to, such as "Kesmai's banker". The collection shows it as the entry's owner.
 	/// </summary>
 	public string Owner { get; protected set; }
 

@@ -5,7 +5,7 @@ namespace Kesmai.Server.Items;
 /// </summary>
 /// <remarks>
 /// It shows its keepsake's sprite and item name, so one item covers every keepsake. Staff can create one with
-/// <c>add Keepsake og.marlis-coin-pouch</c>, where <c>og.marlis-coin-pouch</c> is the keepsake's id.
+/// <c>add Keepsake og.kesmai-coin-pouch</c>, where <c>og.kesmai-coin-pouch</c> is the keepsake's id.
 /// </remarks>
 public class Keepsake : CollectibleItem
 {

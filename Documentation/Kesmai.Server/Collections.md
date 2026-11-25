@@ -51,16 +51,16 @@ Players add a book to their library by reading it: they hold the book and double
 
 A keepsake is something one of a land's people lost, such as the banker's coin pouch. Players find it on the creature that took it, and add it to their Keepsakes by using it in hand. The window lists keepsakes under their land, and shows a blank slot for each one a player hasn't found yet.
 
-A keepsake is a class that derives from `KeepsakeDefinition`, in this repository or in a segment. Give it a fixed id that starts with the repository or segment that adds it:
+A keepsake is a class that derives from `KeepsakeDefinition`, in this repository or in a segment. Give it a fixed id that starts with the repository that adds it and its land:
 
 ```csharp
-public class MarlisCoinPouch : KeepsakeDefinition
+public class LostCoinPouch : KeepsakeDefinition
 {
-	public MarlisCoinPouch() : base("og.marlis-coin-pouch")
+	public LostCoinPouch() : base("og.kesmai-coin-pouch")
 	{
-		Title = "Coin Pouch of Marlis";
-		Owner = "Marlis, the banker";
-		Description = "Marlis keeps the town's gold in the bank and her own in this pouch, or did, until a kobold took a fancy to it.";
+		Title = "Lost Coin Pouch";
+		Owner = "Kesmai's banker";
+		Description = "The banker keeps the town's gold in the vault and a little of their own in this pouch, or did, until a kobold took a fancy to it.";
 		ItemId = 391;
 		LabelNumber = 6000099; /* pouch */
 		Quality = ItemQuality.Uncommon;
@@ -72,7 +72,7 @@ public class MarlisCoinPouch : KeepsakeDefinition
 
 | Property | Meaning |
 | --- | --- |
-| `Title` | The keepsake's name. Players are told "The Coin Pouch of Marlis has been added to your Keepsakes collection.", so choose a name that reads well after "The". |
+| `Title` | "Lost" and the thing, such as "Lost Coin Pouch". Say whose it was in `Owner`, not in the title. Players are told "The Lost Coin Pouch has been added to your Keepsakes collection." |
 | `Owner` | Who lost it. The window shows it under the keepsake. |
 | `Description` | Its story, shown in the window and when a player looks at the item. |
 | `ItemId` | The sprite, on the item and in the window. Set it and `Title`, or the server warns at startup. |
@@ -84,14 +84,14 @@ public class MarlisCoinPouch : KeepsakeDefinition
 Players get a keepsake as a `Keepsake` item made with its id, for example from a treasure table in a segment's `Treasures.xml`:
 
 ```xml
-<treasure name="keepsakeMarlis">
+<treasure name="keepsakeCoinPouch">
   <entry weight="1">
-    <script name="OnCreate" enabled="true"><![CDATA[	return new Keepsake("og.marlis-coin-pouch");]]></script>
+    <script name="OnCreate" enabled="true"><![CDATA[	return new Keepsake("og.kesmai-coin-pouch");]]></script>
   </entry>
 </treasure>
 ```
 
-The item shows the keepsake's sprite and name, so one item covers every keepsake. Using it adds the keepsake and uses the item up. Staff can create one with `add Keepsake og.marlis-coin-pouch`.
+The item shows the keepsake's sprite and name, so one item covers every keepsake. Using it adds the keepsake and uses the item up. Staff can create one with `add Keepsake og.kesmai-coin-pouch`.
 
 > **Never change or reuse a keepsake's id.** Players' collections are saved by it.
 
@@ -149,7 +149,7 @@ The path is where the server finds the file: `Data/Collections/<file>` for a fil
 
 ## Adding the items that fill it
 
-Derive from `CollectibleItem`. The item takes its icon, quality and description from its collection entry, and adds the entry when a player uses it in hand.
+Derive from `CollectibleItem`. The item takes its icon, quality and description from its collection entry, names the entry in its tooltip, and adds the entry when a player uses it in hand.
 
 ```csharp
 public class CarvedFigurine : CollectibleItem
