@@ -2,7 +2,7 @@
 
 A collection is a set of things players can collect. Players see their collections in the Collections window, opened from the Titan bar. It has a tab for each collection along the bottom. A tab lists what's in that collection, with the player's progress, and shows the selected entry beside the list: a large picture, its title, description and details.
 
-The library is the collection that ships with the game: every book and scroll a player has read is in it, and they can open it again from there. This page shows how to add a book to it, how to add a collection of your own, in this repository or in a segment, and the items that fill it.
+Two collections ship with the game. The library holds every book and scroll a player has read, and they can open it again from there. Keepsakes holds the things the people of each land lost, which players find on the creatures that took them. This page shows how to add a book or a keepsake, how to add a collection of your own, in this repository or in a segment, and the items that fill it.
 
 ## Where a collection can live
 
@@ -46,6 +46,54 @@ public class KeshmaHistory : PublishedBook
 `Title` and `ItemId` (the sprite of the book in hand) are what players see first; set them, or the server warns at startup. The books and scrolls that come with the game take these details from the game's `Library.xml` instead, which also puts them first in the library.
 
 Players add a book to their library by reading it: they hold the book and double-click it, and the book is used up. Staff can create one with `add Book ng.keshma-history`. The same `Book` item shows scrolls.
+
+## Adding a keepsake
+
+A keepsake is something one of a land's people lost, such as the banker's coin pouch. Players find it on the creature that took it, and add it to their Keepsakes by using it in hand. The window lists keepsakes under their land, and shows a blank slot for each one a player hasn't found yet.
+
+A keepsake is a class that derives from `KeepsakeDefinition`, in this repository or in a segment. Give it a fixed id that starts with the repository that adds it and its land:
+
+```csharp
+public class LostCoinPouch : KeepsakeDefinition
+{
+	public LostCoinPouch() : base("og.kesmai-coin-pouch")
+	{
+		Title = "Lost Coin Pouch";
+		Owner = "Kesmai's banker";
+		Description = "The banker keeps the town's gold in the vault and a little of their own in this pouch, or did, until a kobold took a fancy to it.";
+		ItemId = 391;
+		LabelNumber = 6000099; /* pouch */
+		Quality = ItemQuality.Uncommon;
+		Group = "Kesmai";
+		Order = 1;
+	}
+}
+```
+
+| Property | Meaning |
+| --- | --- |
+| `Title` | "Lost" and the thing, such as "Lost Coin Pouch". Say whose it was in `Owner`, not in the title. Players are told "The Lost Coin Pouch has been added to your Keepsakes collection." |
+| `Owner` | Who lost it. The window shows it under the keepsake. |
+| `Description` | Its story, shown in the window and when a player looks at the item. |
+| `ItemId` | The sprite, on the item and in the window. Set it and `Title`, or the server warns at startup. |
+| `LabelNumber` | The item's name in the game, one of the item names in `Content/Localization/Enu.xml` (6000001 onwards), such as 6000099 for "pouch". The game client already has them, so a keepsake needs no new text. |
+| `Quality` | Colors the title. `Common` unless you set it. |
+| `Group` | The land the keepsake is listed under. |
+| `Order` | The land's place in the list. Keepsakes of one land share it, and are listed by id. Kesmai's use 1. Lands are listed in the order players reach them, so give a new land the next number. |
+
+Players get a keepsake as a `Keepsake` item made with its id, for example from a treasure table in a segment's `Treasures.xml`:
+
+```xml
+<treasure name="keepsakeCoinPouch">
+  <entry weight="1">
+    <script name="OnCreate" enabled="true"><![CDATA[	return new Keepsake("og.kesmai-coin-pouch");]]></script>
+  </entry>
+</treasure>
+```
+
+The item shows the keepsake's sprite and name, so one item covers every keepsake. Using it adds the keepsake and uses the item up. Staff can create one with `add Keepsake og.kesmai-coin-pouch`.
+
+> **Never change or reuse a keepsake's id.** Players' collections are saved by it.
 
 ## Adding a collection from XML
 
@@ -101,7 +149,7 @@ The path is where the server finds the file: `Data/Collections/<file>` for a fil
 
 ## Adding the items that fill it
 
-Derive from `CollectibleItem`. The item takes its icon, quality and description from its collection entry, and adds the entry when a player uses it in hand.
+Derive from `CollectibleItem`. The item takes its icon, quality and description from its collection entry, names the entry in its tooltip, and adds the entry when a player uses it in hand.
 
 ```csharp
 public class CarvedFigurine : CollectibleItem
@@ -162,7 +210,7 @@ public class Trophies : Collection
 
 Entries built in code are shown by their `Order` (0 unless you set it), then by id.
 
-`ReflectionCollection<T>` makes one entry for every class of a type the server knows about, in any repository or segment. The library is one: an entry for every `Publication`. Each class needs a constructor without parameters, and `CreateEntry` must give each one a fixed id.
+`ReflectionCollection<T>` makes one entry for every class of a type the server knows about, in any repository or segment. The library is one, with an entry for every `Publication`, and Keepsakes is another, with one for every `KeepsakeDefinition`. Each class needs a constructor without parameters, and `CreateEntry` must give each one a fixed id.
 
 ## Adding entries from other code
 

@@ -112,6 +112,21 @@ public abstract class CollectibleItem : ItemEntity
 	}
 
 	/// <inheritdoc />
+	/// <remarks>The entry's title, so the tooltip names the item, such as "the Lost Badge." under "pin".</remarks>
+	public override void GetTooltipDescription(List<LocalizationEntry> entries)
+	{
+		var entry = Entry;
+
+		if (entry is null)
+		{
+			base.GetTooltipDescription(entries);
+			return;
+		}
+
+		entries.Add(new LocalizationEntry($"the {entry.Title}."));
+	}
+
+	/// <inheritdoc />
 	public override ActionType GetAction()
 	{
 		if (Container is Hands)
