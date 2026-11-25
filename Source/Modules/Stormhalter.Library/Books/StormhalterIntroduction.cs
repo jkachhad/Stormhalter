@@ -59,5 +59,7 @@ public class StormhalterIntroduction : PublishedBook
 		Author = "Luxx";
 		ItemId = 411;
 		Quality = ItemQuality.Epic;
+		Group = "Basics";
+		Order = 0;
 	}
 }

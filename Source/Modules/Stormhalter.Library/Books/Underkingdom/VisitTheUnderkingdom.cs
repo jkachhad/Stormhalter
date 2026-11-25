@@ -19,5 +19,7 @@ public class VisitTheUnderkingdom : PublishedScroll
 		Author = "Googog";
 		Description = "A jungle merchant's flyer for a kingdom of friendly kobolds and unfriendly trolls.";
 		ItemId = 461;
+		Group = "Underkingdom";
+		Order = 5;
 	}
 }

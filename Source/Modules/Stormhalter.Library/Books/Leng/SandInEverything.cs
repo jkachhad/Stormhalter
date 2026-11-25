@@ -17,5 +17,7 @@ public class SandInEverything : PublishedScroll
 		Author = "AseLaind";
 		Description = "An explorer writes from somewhere very hot, and very sandy.";
 		ItemId = 461;
+		Group = "Leng";
+		Order = 3;
 	}
 }

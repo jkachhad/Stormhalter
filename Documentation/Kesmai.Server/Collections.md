@@ -39,11 +39,26 @@ public class KeshmaHistory : PublishedBook
 		Author = "Unknown";
 		Description = "A short history of the town.";
 		Quality = ItemQuality.Uncommon;
+		Group = "Keshma";
+		Order = 6;
 	}
 }
 ```
 
 `Title` and `ItemId` (the sprite of the book in hand) are what players see first; set them, or the server warns at startup. The books in the library module set them the same way, for example `Source/Modules/Stormhalter.Library/Books/Mechanics/Strength.cs`, with ids that start with `stormhalter.`.
+
+`Group` is the heading the library lists the book under, and `Order` places it: lower numbers first, and books with the same order by id. The library module gives the books of a group the same order, so a new book only needs its group's two lines:
+
+| Group | Order | Books |
+| --- | --- | --- |
+| `Basics` | 0 | The introduction, `StormhalterIntroduction.cs` |
+| `Basics` | 1 | The attribute scrolls, `Books/Mechanics` |
+| `Oakvael` | 2 | `Books/Oakvael` |
+| `Leng` | 3 | `Books/Leng` |
+| `Axe Glacier` | 4 | `Books/AxeGlacier` |
+| `Underkingdom` | 5 | `Books/Underkingdom` |
+
+A book without a group is listed last, under "Other". Headings only show while the library is in its own order; sorting it by name, quality or newest lists the books without them.
 
 The library module isn't built into the game server. Like a segment, servers download it from `master` and compile it when they start, each night, so a book merged into `master` reaches players at the next restart, without a server release. It's compiled with C# 14, as segments are, and an error in it stops the server from starting, so build `Stormhalter.Library.csproj` before you merge.
 
@@ -74,6 +89,7 @@ Most collections are a list of entries in an XML file.
 | `itemId` | no | The item sprite used as the entry's icon. |
 | `title`, `description` | no | Shown in the collection window. |
 | `quality` | no | `Poor`, `Common` (the default), `Uncommon`, `Rare`, `Epic`, `Legendary`, `Artifact` or `Mythical`. Colors the title. |
+| `group` | no | A heading to list the entry under, such as `Beasts`. The window puts each group's entries together under its heading, the groups in the order of their first entries, and the entries without a group last, under "Other". A missing entry of a hidden collection is listed under its group too. |
 | `order` | no | Display order, a number. Entries are shown in the order of the file otherwise. |
 
 `<property>` elements add details the window shows under the entry, such as what a figurine is made of. Keys are lowercase words separated by dots (`material`, `figurine.size`). The optional `type` attribute is `string` (the default), `int`, `float`, `bool`, `datetime` or `timespan`.
@@ -162,7 +178,7 @@ public class Trophies : Collection
 }
 ```
 
-Entries built in code are shown by their `Order` (0 unless you set it), then by id.
+Entries built in code are shown by their `Order` (0 unless you set it), then by id. Set `Group` on an entry to list it under a heading, as the `group` attribute does.
 
 `ReflectionCollection<T>` makes one entry for every class of a type the server knows about, in any repository or segment. The library is one: an entry for every `Publication`. Each class needs a constructor without parameters, and `CreateEntry` must give each one a fixed id.
 

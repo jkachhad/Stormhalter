@@ -19,5 +19,7 @@ public class PorridgeAndPastries : PublishedScroll
 		Author = "Anonymous";
 		Description = "Two friends level up together, but only one of them gets the hit points.";
 		ItemId = 461;
+		Group = "Basics";
+		Order = 1;
 	}
 }

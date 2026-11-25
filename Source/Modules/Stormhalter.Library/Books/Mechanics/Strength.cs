@@ -20,5 +20,7 @@ public class GreatestTrialOfReginald : PublishedScroll
 		Author = "Goldenrain";
 		Description = "A tale of strength, an anvil, and a very judgmental ice lizard.";
 		ItemId = 461;
+		Group = "Basics";
+		Order = 1;
 	}
 }

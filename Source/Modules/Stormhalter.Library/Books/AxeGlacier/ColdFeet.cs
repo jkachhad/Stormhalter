@@ -17,5 +17,7 @@ public class ColdFeet : PublishedScroll
 		Author = "AseLaind";
 		Description = "An explorer writes from somewhere very cold, and very slippery.";
 		ItemId = 461;
+		Group = "Axe Glacier";
+		Order = 4;
 	}
 }

@@ -20,5 +20,7 @@ public class TheYasnakiMustPay : PublishedScroll
 		Author = "Ydnac";
 		Description = "An evil thaumaturge's grudge against the Yasnaki, and where to find them.";
 		ItemId = 461;
+		Group = "Underkingdom";
+		Order = 5;
 	}
 }

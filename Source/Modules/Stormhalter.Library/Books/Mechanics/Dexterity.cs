@@ -19,5 +19,7 @@ public class BrawlingWithScience : PublishedScroll
 		Author = "Goldenrain";
 		Description = "Two brilliant warriors explore science by punching each other in the head.";
 		ItemId = 461;
+		Group = "Basics";
+		Order = 1;
 	}
 }

@@ -19,5 +19,7 @@ public class MindTheGap : PublishedScroll
 		Author = "The AirWalkers Society";
 		Description = "A welcome from the people who live in Oakvael's great oak, and keep falling out of it.";
 		ItemId = 461;
+		Group = "Oakvael";
+		Order = 2;
 	}
 }
