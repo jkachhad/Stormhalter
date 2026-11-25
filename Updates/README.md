@@ -54,6 +54,29 @@ One `## <section>` for each part that changed, in this order, leaving out the re
 6. `Collaborators`: changes segment authors have to act on, with the type names and the document to read. This is the
    only section that names code.
 
+## Screenshots
+
+A change players can see (a window, a menu, a setting, an item or creature) can show it in a screenshot under its
+bullet. Put the image in a folder named like the note, beside it (`Updates/0.119.2.0/` for `Updates/0.119.2.0.md`), and
+write it on its own line under the change, indented two spaces:
+
+```
+## Client
+- Right-clicking a chat tab opens a menu: `Rename...`, `Font Size ▸`, `Chat Settings...` and more.
+  - `Chat Settings...` opens the chat settings at that tab.
+  ![The menu on a chat tab, with `Font Size` open](0.119.2.0/chat-tab-menu.webp)
+```
+
+- The text in brackets is the caption players read under the image, and its alt text: say what it shows.
+- The page shows it after the change's details. Two or more under one change sit side by side, and a click opens
+  one at full size.
+- Save it as WebP at quality 90 (`cwebp -q 90`), named in lower case with hyphens; flat windows are sometimes smaller
+  lossless. A cropped window is 15–40 KB. The page takes at most 400 KB and 1920 pixels on each side, and every file
+  in the folder has to be shown by the note.
+- Show what players will see: the new look only, cropped to the change, with no staff windows, debug text or test
+  characters' names. A few per patch is plenty.
+- This repository is public, so a screenshot is visible here as soon as its note merges, before the patch goes live.
+
 ## Writing the notes
 
 - One change per `- ` bullet, on one line. Put details under it, indented two spaces, at most three levels deep.
