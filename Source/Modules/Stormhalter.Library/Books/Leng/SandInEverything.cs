@@ -18,6 +18,6 @@ public class SandInEverything : PublishedScroll
 		Description = "An explorer writes from somewhere very hot, and very sandy.";
 		ItemId = 461;
 		Group = "Leng";
-		Order = 3;
+		Order = 6;
 	}
 }
